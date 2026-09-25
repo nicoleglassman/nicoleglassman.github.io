@@ -377,7 +377,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
 </head>
 <body>
 <div class="nav"><div class="wrap">
-  <a class="brand" href="../">Nicole Glassman<span>Buildcheck · campaign build QA demo</span></a>
+  <a class="brand" href="../">Nicole Glassman<span>Buildcheck demo</span></a>
   <nav aria-label="Sections">
     <a href="../">Home</a><a href="#how">How it works</a><a href="#run">Live run</a><a href="#platforms">Platforms</a><a href="#ai">AI</a><a href="#about">About</a><a href="../pov/">Strategy POV</a>
   </nav>
@@ -388,13 +388,13 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
   <div>
     <div class="notice"><i></i>Interactive demo · synthetic data for a fictional brand · no client information</div>
     <h1>Every ad checked against the plan, with evidence, before it spends.</h1>
-    <p class="lede">Before a campaign spends, Buildcheck checks every ad in the account against the media plan and flags what doesn't match — a wrong budget, a wrong link, a missing headline — with the evidence for each finding. Rolled out across the agency's Meta and TikTok teams, it turned a four-day, four-person review into one 20-minute run and caught errors before launch that used to be found after the money was spent.</p>
+    <p class="lede">Before a campaign spends, Buildcheck checks every ad in the account against the media plan and flags what doesn't match — a wrong budget, a wrong link, a missing headline — with the evidence for each finding. In production on Meta and used by a media team on live batches, it turned a four-day, four-person review into one 20-minute run and caught errors before launch that used to be found after the money was spent.</p>
     <div class="actions"><button class="btn" id="btn-hero-run" type="button">Run the QA now</button><a class="btn quiet" href="#how">How it works</a></div>
     <div class="byline"><b>Built by Nicole Glassman</b> — social media marketer and strategist with the operational depth to run paid social end to end. Open to in-house social roles · <a href="https://www.linkedin.com/in/nicoleglassman">message me on LinkedIn</a> · <a href="../pov/">read my point of view on brand social</a>.</div>
     <div class="facts">
       <div><b>4 days → 20 min</b>a four-person review of 2,000 ads, now one run</div>
       <div><b>Caught before launch</b>French copy mismatches, unintended Advantage+ settings, missing Stories headlines</div>
-      <div><b>Meta &amp; TikTok</b>rolled out across the agency's teams and used on live budgets</div>
+      <div><b>310,000+</b>formulas, 0 errors after full recalculation</div>
     </div>
   </div>
   <div class="card finding-preview" aria-label="Example finding">
@@ -486,7 +486,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
   <p class="lede" style="margin:14px 0 26px">One media plan holds every platform's lines; each line is checked in the workbook for its platform. The tabs, the feeds and the engine are the same — a platform brings its own export contract, vocabulary and naming profile.</p>
   <div class="plat">
     <div><h3>Meta</h3><div class="state">In production — Facebook &amp; Instagram</div><ul><li>Uploaded creative, boosted posts and creator partnership ads, each with its own check set and identity model.</li><li>Placement buckets (feed, story, reels, explore) so one 9:16 file across three placements is expected, not flagged.</li><li>Budget type verified by which export column is filled; delivery intent mapped to status; instants compared in account time.</li></ul></div>
-    <div><h3>TikTok</h3><div class="state">In production — same architecture, TikTok vocabulary</div><ul><li>Campaign → ad group → ad, with Business Center identities and Spark Ads (creator and brand posts) as the existing-post case.</li><li>TikTok's own shapes handled in the feed: toggles that export blank when off, dates as <span class="mono">yyyy/m/d HH:mm</span>, amounts with cents, pixel labels resolved to website-event codes.</li><li>Reservation buys never appear in an export, so their rows cascade to N/A instead of MISSING. 306,000+ formulas, 0 errors.</li><li>Try it: <a href="#run" data-go="tiktok">switch the live run to TikTok</a>.</li></ul></div>
+    <div><h3>TikTok</h3><div class="state">Built — same architecture, TikTok vocabulary</div><ul><li>Campaign → ad group → ad, with Business Center identities and Spark Ads (creator and brand posts) as the existing-post case.</li><li>TikTok's own shapes handled in the feed: toggles that export blank when off, dates as <span class="mono">yyyy/m/d HH:mm</span>, amounts with cents, pixel labels resolved to website-event codes.</li><li>Reservation buys never appear in an export, so their rows cascade to N/A instead of MISSING. 306,000+ formulas, 0 errors.</li><li>Try it: <a href="#run" data-go="tiktok">switch the live run to TikTok</a>.</li></ul></div>
     <div><h3>Next</h3><div class="state">Designed for — not built yet</div><p>Pinterest, Google and Snap need three things the design already separates out: an export contract (which columns come back and how they render), a vocabulary map from planner labels to platform values, and a name-part profile.</p><p>Everything else — the plan tabs, the plan-check gate, the feeds, the report, the register — stays as it is.</p></div>
   </div>
 </div></section>
@@ -498,7 +498,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
     <div><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to "check the campaign". I wrote the rulebook first — what counts as proven, what a blank means, what it must never invent, which ad type gets which checks — and gave the AI those rules as versioned reference files, not chat instructions.</p></div>
     <div><h4>Make it show its evidence</h4><p>Every finding cites the plan value, the export value and the rule that decided it. Anything unverified is a review, not a failure. Anything new is a proposal a human accepts. A report you can't audit is an opinion.</p></div>
     <div><h4>Pair on the build, own the outcome</h4><p>Claude wrote the build and test scripts to my spec; I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the fixtures, not into memory.</p></div>
-    <div><h4>Ship it to real people</h4><p>The skill was rolled out across the agency's Meta and TikTok teams and used on live batches. Eleven releases in twelve days came from that feedback loop — a manager's "this doesn't read as auto-fill" became the grey-cell design two versions later.</p></div>
+    <div><h4>Ship it to real people</h4><p>The skill was shared org-wide and used by a media team on live batches. Eleven releases in twelve days came from that feedback loop — a manager's "this doesn't read as auto-fill" became the grey-cell design two versions later.</p></div>
   </div>
 </div></section>
 
@@ -523,7 +523,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
     <div><h4>Build and test tooling</h4><p>Python build scripts regenerate every version from a registry, so nothing is hand-edited twice. A fixture suite of executable rule cases plus structural checks (row alignment, stale references, changelog conformance) runs before a release ships.</p></div>
     <div><h4>Auto-fill layer</h4><p>A Google Apps Script menu expands a media-grid line into the build, fills derived values in grey and applies the account profile. Re-running is safe: a second click adds nothing.</p></div>
     <div><h4>Change control</h4><p>A changelog with before, after, reason, downstream impact, regression test and the run that validated it — 180+ entries — and a conformance check that must read YES. Rule changes ship as versioned files, never as edits in chat.</p></div>
-    <div><h4>The AI layer</h4><p>A Claude skill: a skill page, reference files for the run rules, the report spec and known failure modes, an HTML report template and a standing run message. Deployed as a shared skill across the agency's Meta and TikTok teams; runs with the workbook uploaded directly.</p></div>
+    <div><h4>The AI layer</h4><p>A Claude skill: a skill page, reference files for the run rules, the report spec and known failure modes, an HTML report template and a standing run message. First deployed as a shared org-wide skill; now runs with the workbook uploaded directly.</p></div>
     <div><h4>Real exports, not assumptions</h4><p>Every mapping was proven against live Ads Manager exports — up to 500+ columns wide — and the largest end-to-end test reconciled a plan against a 974-row live account export.</p></div>
   </div>
   <div class="timeline">
