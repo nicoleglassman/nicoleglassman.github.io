@@ -4,10 +4,34 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nicole Glassman — social media marketer and strategist</title>
-<meta name="description" content="Portfolio: Buildcheck, an AI-assisted QA system for paid-social campaign builds, and a point of view on what I'd change about most brands' social.">
+<meta name="description" content="Paid social strategy, planning and measurement for national brands — and Buildcheck, an AI-assisted QA system a media team used on live budgets. Open to in-house social roles.">
+<link rel="canonical" href="https://nicoleglassman.github.io/">
+<meta name="author" content="Nicole Glassman">
+<meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nicole Glassman">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://nicoleglassman.github.io/">
+<meta property="og:title" content="Nicole Glassman — social media marketer and strategist">
+<meta property="og:description" content="Paid social strategy, planning and measurement for national brands — and Buildcheck, an AI-assisted QA system a media team used on live budgets. Open to in-house social roles.">
+<meta property="og:image" content="https://nicoleglassman.github.io/og/home.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Nicole Glassman — social media marketer and strategist. $20.5M annual plan across six channels; 15% of the U.S. population reached by one campaign; −72% cost per interaction, creator vs brand creative; a four-day QA that became 20 minutes.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nicole Glassman — social media marketer and strategist">
+<meta name="twitter:description" content="Paid social strategy, planning and measurement for national brands — and Buildcheck, an AI-assisted QA system a media team used on live budgets. Open to in-house social roles.">
+<meta name="twitter:image" content="https://nicoleglassman.github.io/og/home.png">
+<meta name="twitter:image:alt" content="Nicole Glassman — social media marketer and strategist. $20.5M annual plan across six channels; 15% of the U.S. population reached by one campaign; −72% cost per interaction, creator vs brand creative; a four-day QA that became 20 minutes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Nicole Glassman","url":"https://nicoleglassman.github.io/","jobTitle":"Social media marketer and strategist","email":"mailto:nicolebglassman@gmail.com","sameAs":["https://www.linkedin.com/in/nicoleglassman"],"knowsAbout":["Paid social","Media planning","Creative testing","Brand lift measurement","Campaign QA","AI tooling"]}</script>
 <style>
 :root{
   --paper:#f4f5f2; --surface:#ffffff; --surface-2:#eef0ec;
@@ -313,32 +337,170 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 @media print{ .nav,.controls,.btn{display:none!important} .section{padding:24px 0} }
 </style>
 <style>
-.landing{min-height:100%;display:flex;flex-direction:column}
-.landing .wrap{max-width:880px}
-.landing-hero{padding:96px 0 40px}
-.landing-hero h1{font-size:clamp(34px,5vw,50px);margin-bottom:14px}
-.landing-hero .lede{max-width:56ch}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:12px 0 64px}
-.cards a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:24px 26px;text-decoration:none;color:var(--ink)}
-.cards a:hover{border-color:var(--accent)}
-.cards h2{font-size:24px;margin-bottom:8px}
-.cards p{font-size:15px;color:var(--ink-2);margin:0 0 12px}
-.cards .go{font-size:14px;color:var(--accent-ink);font-weight:500}
-.contact{font-size:15px;color:var(--ink-2);padding-bottom:64px}
-@media (max-width:900px){ .cards{grid-template-columns:1fr} .landing-hero{padding:56px 0 24px} }
+/* landing */
+.home-hero{padding:88px 0 64px}
+.home-hero h1{max-width:none;font-size:clamp(40px,6vw,66px);margin-bottom:16px}
+.home-hero .lede{max-width:58ch}
+.home-hero .facts{display:grid;grid-template-columns:1fr 1fr;gap:20px 28px;max-width:520px}
+.home-hero .facts div{max-width:none}
+.loop{padding:20px 22px 12px;box-shadow:0 20px 50px -30px rgba(20,30,60,.35)}
+.loop .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:8px}
+.loop .top b{font-family:var(--sans);font-weight:600;font-size:14px}
+.loop .top small{color:var(--ink-3);font-size:12px;white-space:nowrap}
+.loop ol{list-style:none;margin:0;padding:0;counter-reset:loop}
+.loop li{position:relative;padding:11px 0 11px 34px;border-top:1px solid var(--line-2);font-size:14.5px;color:var(--ink-2);line-height:1.45}
+.loop li:first-child{border-top:none}
+.loop li::before{counter-increment:loop;content:counter(loop);position:absolute;left:0;top:12px;width:22px;height:22px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);font:600 12px/22px var(--sans);text-align:center}
+.loop li b{color:var(--ink);font-weight:600}
+.loop .foot{font-size:12.5px;color:var(--ink-3);border-top:1px dashed var(--line);padding:10px 0 4px;margin-top:2px}
+
+.work{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+.work-card{display:flex;flex-direction:column;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 28px;text-decoration:none;color:var(--ink);transition:border-color .15s ease,box-shadow .15s ease}
+.work-card:hover{border-color:var(--accent);box-shadow:0 16px 40px -30px rgba(20,30,60,.35)}
+.work-card .kind{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-3);flex-wrap:wrap}
+.work-card h3{font-size:27px;line-height:1.12;letter-spacing:-.015em}
+.work-card > p{font-size:15px;color:var(--ink-2);margin:0}
+.work-card .go{margin-top:auto;padding-top:8px;font-size:14.5px;color:var(--accent-ink);font-weight:500}
+.work-card:hover .go{text-decoration:underline}
+ol.mini{margin:6px 0 0;padding:0;list-style:none;counter-reset:m;display:grid;gap:7px}
+ol.mini li{position:relative;padding-left:30px;font-size:14px;color:var(--ink-2);line-height:1.4}
+ol.mini li::before{counter-increment:m;content:counter(m);position:absolute;left:0;top:0;width:20px;height:20px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);font:600 11px/20px var(--sans);text-align:center}
+.work-card .preview{border:1px solid var(--line-2);border-radius:10px;padding:14px 14px 12px;margin-top:6px;background:color-mix(in srgb,var(--surface-2) 40%,var(--surface))}
+.work-card .preview .cap{font-size:12px;color:var(--ink-3);margin-bottom:10px;display:flex;justify-content:space-between;gap:10px}
+.work-card .preview .rule{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+
+.about h2{margin-bottom:16px}
+.about p{font-size:15.5px;color:var(--ink-2);max-width:62ch}
+.about .aside h3{font-family:var(--sans);font-weight:600;font-size:16px}
+.about .aside .skills{margin-top:14px}
+.about .aside .cert{margin-top:26px;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:14.5px;color:var(--ink-2)}
+.about .aside .cert b{display:block;color:var(--ink);font-weight:600;margin-bottom:4px}
+.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+
+.cta{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:34px 38px;display:grid;grid-template-columns:1fr auto;gap:18px 40px;align-items:center}
+.cta h2{margin-bottom:8px}
+.cta p{margin:0;font-size:15.5px;color:var(--ink-2);max-width:56ch}
+.cta .actions{display:flex;gap:10px;flex-wrap:wrap}
+.cta .actions .btn{white-space:nowrap}
+
+@media (max-width:900px){
+  .home-hero{padding:52px 0 44px}
+  .work{grid-template-columns:1fr}
+  .cta{grid-template-columns:1fr;padding:24px}
+  .work-card{padding:22px 20px}
+}
+@media (max-width:520px){ .cta .actions{flex-direction:column;align-items:stretch} .cta .actions .btn{justify-content:center;white-space:normal} }
 </style>
 </head>
-<body class="landing">
-<main>
-<section class="landing-hero"><div class="wrap">
-  <h1>Nicole Glassman</h1>
-  <p class="lede">Social media marketer and strategist. Four years planning and running paid social for national brands — most recently a $20.5M plan across six channels — and the builder of an AI-assisted QA system a media team used on live budgets. Open to in-house social roles.</p>
+<body>
+<div class="nav"><div class="wrap">
+  <a class="brand" href="#top">Nicole Glassman<span>social media marketer and strategist</span></a>
+  <nav aria-label="Sections"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a><a href="https://www.linkedin.com/in/nicoleglassman" rel="me">LinkedIn</a></nav>
+</div></div>
+
+<main id="top">
+<section class="hero home-hero"><div class="wrap">
+  <div>
+    <div class="notice"><i></i>Open to in-house social media marketing and strategy roles</div>
+    <h1>Nicole Glassman</h1>
+    <p class="lede">Social media marketer and strategist. Four years planning and running paid social for national brands — most recently a $20.5M plan across six channels in two countries — and the builder of an AI-assisted QA system a media team used on live budgets.</p>
+    <div class="actions"><a class="btn" href="pov/">Read the point of view</a><a class="btn quiet" href="buildcheck/">Try the Buildcheck demo</a></div>
+    <div class="facts">
+      <div><b>$20.5M</b>annual plan, six channels, two countries</div>
+      <div><b>15%</b>of the U.S. population reached by one campaign</div>
+      <div><b>−72%</b>cost per interaction, creator vs brand creative</div>
+      <div><b>20 min</b>what a four-day, four-person QA became</div>
+    </div>
+  </div>
+  <div class="card loop" aria-label="What I bring">
+    <div class="top"><b>The whole loop</b><small>what an in-house seat gets</small></div>
+    <ol>
+      <li><b>A point of view</b> on what to make — and the test that proves it.</li>
+      <li><b>The media planning</b> to put money behind it, across every channel.</li>
+      <li><b>The measurement</b> to know whether it worked — lift, not likes.</li>
+      <li><b>The operations</b> to make sure what launches is what was planned.</li>
+    </ol>
+    <div class="foot">Strategy first, then proof I can ship — the two pieces of work below.</div>
+  </div>
 </div></section>
-<section><div class="wrap cards">
-  <a href="pov/"><h2>What I'd change about most brands' social</h2><p>Six changes I would make in an in-house seat, each with the test that convinced me — creator vs brand creative, intent vs interests, placements with jobs, signals that move consideration, lift over likes.</p><span class="go">Read the point of view</span></a>
-  <a href="buildcheck/"><h2>Buildcheck</h2><p>A planning workbook plus an AI QA engine that check a campaign build against the plan before it spends. Interactive: plant errors, run the QA, fix, re-run. Synthetic data, no client information.</p><span class="go">Try the live demo</span></a>
+
+<section class="section" id="work"><div class="wrap">
+  <h2>Two pieces of work</h2>
+  <p class="lede" style="margin-top:14px">The strategy half and the operations half of the same job. Both are public, both are mine, and neither uses client data.</p>
+  <div class="work">
+    <a class="work-card" href="pov/">
+      <div class="kind"><span class="chip info">Point of view</span> 5-minute read · numbers from campaigns I planned and ran</div>
+      <h3>What I'd change about most brands' social</h3>
+      <p>Six changes I would make in an in-house seat, each with the test that convinced me, and how I'd run the first 90 days.</p>
+      <ol class="mini">
+        <li>Let the test decide who makes the creative</li>
+        <li>Buy intent, not interests</li>
+        <li>Give every placement a job</li>
+        <li>Optimize to the signal that moves consideration</li>
+        <li>Measure lift, not likes</li>
+        <li>Run organic and paid as one system</li>
+      </ol>
+      <span class="go">Read the point of view →</span>
+    </a>
+    <a class="work-card" href="buildcheck/">
+      <div class="kind"><span class="chip info">Interactive demo</span> synthetic data · no client information</div>
+      <h3>Buildcheck</h3>
+      <p>A planning workbook plus an AI QA engine that check a paid-social campaign build against the plan before it spends. Plant errors, run the QA, fix, re-run. It turned a four-day, four-person review of 2,000 ads into a 20-minute run.</p>
+      <div class="preview" aria-label="Example finding">
+        <div class="cap"><span>One finding, as the engine reports it</span><span>ad · plan_row 5</span></div>
+        <div class="diff">
+          <span class="k">field</span><span class="v">cta</span>
+          <span class="k">plan</span><span class="v good">SHOP_NOW</span>
+          <span class="k">export</span><span class="v bad">LEARN_MORE</span>
+          <span class="k">result</span><span><span class="chip fail">FAIL</span> <span class="muted" style="font-size:12px">Wrong CTA</span></span>
+        </div>
+        <div class="rule">Every finding cites the plan value, the export value and the rule that decided it.</div>
+      </div>
+      <span class="go">Try the live demo →</span>
+    </a>
+  </div>
 </div></section>
-<section><div class="wrap contact"><a href="https://www.linkedin.com/in/nicoleglassman">Message me on LinkedIn</a> · nicolebglassman@gmail.com</div></section>
+
+<section class="section" id="about"><div class="wrap about">
+  <div>
+    <h2>About</h2>
+    <p class="lede" style="margin-bottom:16px">I plan, run and measure paid social for national brands, and I build the tools that make the work hold up.</p>
+    <p>Four years at two agencies, promoted twice in two years, most recently running a $20.5M annual plan across six channels in two countries. The work ran from matched-spend creative tests and brand lift studies to premium TikTok placements and a Pinterest launch — and, when a four-day, four-person review of 2,000 ads was the bottleneck, to Buildcheck: an AI-assisted QA system I designed, specified and rolled out across the agency's Meta and TikTok teams.</p>
+    <p>What I want next is an in-house seat, where organic and paid sit together, the comments feed the brief, and one calendar holds both. The <a href="pov/">point of view</a> says what I'd change and why; the <a href="buildcheck/">demo</a> shows how I make the build boring.</p>
+    <div class="links">
+      <a class="btn quiet" href="https://www.linkedin.com/in/nicoleglassman" rel="me">LinkedIn profile</a>
+      <!-- Résumé: when resume.pdf is in the repo root, replace this comment with:
+      <a class="btn quiet" href="resume.pdf">Résumé (PDF)</a>
+      -->
+    </div>
+  </div>
+  <div class="aside">
+    <h3>What I work in</h3>
+    <div class="skills">
+      <span>Paid social strategy</span><span>Media planning</span><span>Creative testing</span><span>Brand lift &amp; measurement</span><span>Meta &amp; TikTok Ads Manager</span><span>Pinterest &amp; Reddit</span><span>Creator &amp; partnership content</span><span>Campaign operations &amp; QA</span><span>AI product design with guardrails</span><span>Prompt &amp; skill authoring (Claude)</span><span>Spreadsheet engineering</span><span>Google Apps Script</span><span>Python tooling &amp; tests (AI-paired)</span>
+    </div>
+    <div class="cert"><b>Meta Blueprint certified</b>AI and performance marketing.</div>
+  </div>
+</div></section>
+
+<section class="section" id="contact"><div class="wrap">
+  <div class="cta">
+    <div>
+      <h2>Hiring for in-house social?</h2>
+      <p>I'm glad to walk through any number on these pages, the campaigns behind them, or the Buildcheck rulebook in conversation.</p>
+    </div>
+    <div class="actions">
+      <a class="btn" href="https://www.linkedin.com/in/nicoleglassman">Message me on LinkedIn</a>
+      <a class="btn quiet" href="mailto:nicolebglassman@gmail.com">nicolebglassman@gmail.com</a>
+    </div>
+  </div>
+</div></section>
 </main>
+<footer><div class="wrap"><span>© 2026 Nicole Glassman · Content and design shown for portfolio purposes and not licensed for reuse.</span><span><button class="theme-btn" id="theme-btn" type="button">Switch theme</button></span></div></footer>
+<script>
+(function(){ const root=document.documentElement, btn=document.getElementById('theme-btn'); let saved=null; try{saved=localStorage.getItem('bc-theme')}catch(e){}
+  if(saved==='dark'||saved==='light') root.setAttribute('data-theme',saved);
+  btn.addEventListener('click',()=>{ const dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches); const next=dark?'light':'dark'; root.setAttribute('data-theme',next); try{localStorage.setItem('bc-theme',next)}catch(e){} }); })();
+</script>
 </body>
 </html>
