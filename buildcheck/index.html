@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Buildcheck — AI-assisted QA for paid-social campaign builds (demo)</title>
-<meta name="description" content="A planning workbook and an AI QA engine that reconcile a Meta or TikTok campaign build against the plan before it spends. Interactive demo with synthetic data.">
+<meta name="description" content="A planning workbook and an AI QA engine that reconcile a Meta campaign build against the plan before it spends. Interactive demo with synthetic data.">
 <link rel="canonical" href="https://nicoleglassman.github.io/buildcheck/">
 <meta name="author" content="Nicole Glassman">
 <meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
@@ -17,7 +17,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://nicoleglassman.github.io/buildcheck/">
 <meta property="og:title" content="Buildcheck — AI-assisted QA for paid-social campaign builds">
-<meta property="og:description" content="A planning workbook and an AI QA engine that reconcile a Meta or TikTok campaign build against the plan before it spends. Interactive demo with synthetic data.">
+<meta property="og:description" content="A planning workbook and an AI QA engine that reconcile a Meta campaign build against the plan before it spends. Interactive demo with synthetic data.">
 <meta property="og:image" content="https://nicoleglassman.github.io/og/buildcheck.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
@@ -25,7 +25,7 @@
 <meta property="og:image:alt" content="Buildcheck — every ad checked against the plan, with evidence, before it spends. Interactive demo by Nicole Glassman, synthetic data.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Buildcheck — AI-assisted QA for paid-social campaign builds">
-<meta name="twitter:description" content="A planning workbook and an AI QA engine that reconcile a Meta or TikTok campaign build against the plan before it spends. Interactive demo with synthetic data.">
+<meta name="twitter:description" content="A planning workbook and an AI QA engine that reconcile a Meta campaign build against the plan before it spends. Interactive demo with synthetic data.">
 <meta name="twitter:image" content="https://nicoleglassman.github.io/og/buildcheck.png">
 <meta name="twitter:image:alt" content="Buildcheck — every ad checked against the plan, with evidence, before it spends. Interactive demo by Nicole Glassman, synthetic data.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -340,10 +340,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <style>
 .book .scroller{max-height:440px;overflow:auto}
 .tabs{align-items:flex-end}
-.platform{margin-left:auto;display:flex;gap:4px;padding:0 0 8px 12px;flex:none}
-.platform button{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:500 12.5px var(--sans);padding:5px 10px;border-radius:6px;cursor:pointer}
-.platform button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
-.plat{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+.plat{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 .plat > div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px 24px}
 .plat h3{margin-bottom:4px}
 .plat .state{font-size:12.5px;color:var(--ink-3);margin-bottom:12px}
@@ -374,9 +371,9 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
 </head>
 <body>
 <div class="nav"><div class="wrap">
-  <a class="brand" href="../">Nicole Glassman<span>Buildcheck · campaign build QA demo</span></a>
+  <a class="brand" href="../">Nicole Glassman<span>Buildcheck demo</span></a>
   <nav aria-label="Sections">
-    <a href="../">Home</a><a href="#how">Process</a><a href="#workbook">Workbook</a><a href="#run">Live run</a><a href="#platforms">Platforms</a><a href="#ai">AI</a><a href="#guardrails">Guardrails</a><a href="#engineering">Engineering</a><a href="#impact">Impact</a><a href="#about">About</a><a href="../pov/">Strategy POV</a>
+    <a href="#how">Process</a><a href="#workbook">Workbook</a><a href="#run">Live run</a><a href="#platforms">Platforms</a><a href="#ai">AI</a><a href="#guardrails">Guardrails</a><a href="#engineering">Engineering</a><a href="#impact">Impact</a><a href="#about">About</a><a href="../pov/">Strategy POV</a>
   </nav>
 </div></div>
 
@@ -385,13 +382,13 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
   <div>
     <div class="notice"><i></i>Interactive demo · synthetic data for a fictional brand · no client information</div>
     <h1>Every ad checked against the plan, with evidence, before it spends.</h1>
-    <p class="lede">Before a campaign spends, Buildcheck checks every ad in the account against the media plan and flags what doesn't match — a wrong budget, a wrong link, a missing headline — with the evidence for each finding. Rolled out across the agency's Meta and TikTok teams, it turned a four-day, four-person review into one 20-minute run and caught errors before launch that used to be found after the money was spent.</p>
+    <p class="lede">Before a campaign spends, Buildcheck checks every ad in the account against the media plan and flags what doesn't match — a wrong budget, a wrong link, a missing headline — with the evidence for each finding. In production on Meta and used by a media team on live batches, it turned a four-day, four-person review into one 20-minute run and caught errors before launch that used to be found after the money was spent.</p>
     <div class="actions"><button class="btn" id="btn-hero-run" type="button">Run the QA now</button><a class="btn quiet" href="#how">How it works</a></div>
     <div class="byline"><b>Built by Nicole Glassman</b> — social media marketer and strategist with the operational depth to run paid social end to end. Open to in-house social roles · <a href="https://www.linkedin.com/in/nicoleglassman">message me on LinkedIn</a> · <a href="../pov/">read my point of view on brand social</a>.</div>
     <div class="facts">
       <div><b>4 days → 20 min</b>a four-person review of 2,000 ads, now one run</div>
       <div><b>Caught before launch</b>French copy mismatches, unintended Advantage+ settings, missing Stories headlines</div>
-      <div><b>Meta &amp; TikTok</b>rolled out across the agency's teams and used on live budgets</div>
+      <div><b>310,000+</b>formulas, 0 errors after full recalculation</div>
     </div>
   </div>
   <div class="card finding-preview" aria-label="Example finding">
@@ -438,7 +435,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
 
 <section class="section" id="workbook"><div class="wrap">
   <h2>Inside the workbook</h2>
-  <p class="lede" style="margin:14px 0 26px">A synthetic account, filled the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header; row 3 is the machine name — the contract every formula, feed and finding refers to, so columns can move without anything breaking. Switch to TikTok to see the same design on a different platform. The grids scroll both ways.</p>
+  <p class="lede" style="margin:14px 0 26px">A synthetic account, filled the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header; row 3 is the machine name — the contract every formula, feed and finding refers to, so columns can move without anything breaking. The grids scroll both ways.</p>
   <div class="book" id="book">
     <div class="tabs" role="tablist" id="book-tabs"></div>
     <div id="book-body"></div>
@@ -481,7 +478,6 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
   <p class="lede" style="margin:14px 0 26px">One media plan holds every platform's lines; each line is checked in the workbook for its platform. The tabs, the feeds and the engine are the same — a platform brings its own export contract, vocabulary and naming profile.</p>
   <div class="plat">
     <div><h3>Meta</h3><div class="state">In production — Facebook &amp; Instagram</div><ul><li>Uploaded creative, boosted posts and creator partnership ads, each with its own check set and identity model.</li><li>Placement buckets (feed, story, reels, explore) so one 9:16 file across three placements is expected, not flagged.</li><li>Budget type verified by which export column is filled; delivery intent mapped to status; instants compared in account time.</li></ul></div>
-    <div><h3>TikTok</h3><div class="state">In production — same architecture, TikTok vocabulary</div><ul><li>Campaign → ad group → ad, with Business Center identities and Spark Ads (creator and brand posts) as the existing-post case.</li><li>TikTok's own shapes handled in the feed: toggles that export blank when off, dates as <span class="mono">yyyy/m/d HH:mm</span>, amounts with cents, pixel labels resolved to website-event codes.</li><li>Reservation buys never appear in an export, so their rows cascade to N/A instead of MISSING. 306,000+ formulas, 0 errors.</li></ul></div>
     <div><h3>Next</h3><div class="state">Designed for — not built yet</div><p>Pinterest, Google and Snap need three things the design already separates out: an export contract (which columns come back and how they render), a vocabulary map from planner labels to platform values, and a name-part profile.</p><p>Everything else — the plan tabs, the plan-check gate, the feeds, the report, the register — stays as it is.</p></div>
   </div>
 </div></section>
@@ -493,7 +489,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
     <div><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to "check the campaign". I wrote the rulebook first — what counts as proven, what a blank means, what it must never invent, which ad type gets which checks — and gave the AI those rules as versioned reference files, not chat instructions.</p></div>
     <div><h4>Make it show its evidence</h4><p>Every finding cites the plan value, the export value and the rule that decided it. Anything unverified is a review, not a failure. Anything new is a proposal a human accepts. A report you can't audit is an opinion.</p></div>
     <div><h4>Pair on the build, own the outcome</h4><p>Claude wrote the build and test scripts to my spec; I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the fixtures, not into memory.</p></div>
-    <div><h4>Ship it to real people</h4><p>The skill was rolled out across the agency's Meta and TikTok teams and used on live batches. Eleven releases in twelve days came from that feedback loop — a manager's "this doesn't read as auto-fill" became the grey-cell design two versions later.</p></div>
+    <div><h4>Ship it to real people</h4><p>The skill was shared org-wide and used by a media team on live batches. Eleven releases in twelve days came from that feedback loop — a manager's "this doesn't read as auto-fill" became the grey-cell design two versions later.</p></div>
   </div>
 </div></section>
 
@@ -518,11 +514,11 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
     <div><h4>Build and test tooling</h4><p>Python build scripts regenerate every version from a registry, so nothing is hand-edited twice. A fixture suite of executable rule cases plus structural checks (row alignment, stale references, changelog conformance) runs before a release ships.</p></div>
     <div><h4>Auto-fill layer</h4><p>A Google Apps Script menu expands a media-grid line into the build, fills derived values in grey and applies the account profile. Re-running is safe: a second click adds nothing.</p></div>
     <div><h4>Change control</h4><p>A changelog with before, after, reason, downstream impact, regression test and the run that validated it — 180+ entries — and a conformance check that must read YES. Rule changes ship as versioned files, never as edits in chat.</p></div>
-    <div><h4>The AI layer</h4><p>A Claude skill: a skill page, reference files for the run rules, the report spec and known failure modes, an HTML report template and a standing run message. Deployed as a shared skill across the agency's Meta and TikTok teams; runs with the workbook uploaded directly.</p></div>
+    <div><h4>The AI layer</h4><p>A Claude skill: a skill page, reference files for the run rules, the report spec and known failure modes, an HTML report template and a standing run message. First deployed as a shared org-wide skill; now runs with the workbook uploaded directly.</p></div>
     <div><h4>Real exports, not assumptions</h4><p>Every mapping was proven against live Ads Manager exports — up to 500+ columns wide — and the largest end-to-end test reconciled a plan against a 974-row live account export.</p></div>
   </div>
   <div class="timeline">
-    <div><b>v9 · locked</b>Three workbook variants (filled, blank, account template), the five-moment run process, and the TikTok sibling on the same architecture.</div>
+    <div><b>v9 · locked</b>Three workbook variants (filled, blank, account template), and the five-moment run process.</div>
     <div><b>v10 · team trial</b>Used live by the media team on its first batch: multi-select placements, proven mappings, a clean report on the first run.</div>
     <div><b>v11 · media-plan layer</b>Media plan inside the workbook, the plan-check gate, plan feed, run register and build-zone guards.</div>
     <div><b>v11.3–11.5 · builder</b>Derived values, build recipes, the build grid and the one-click expander; typed wins, grey inherits, amber differs.</div>
@@ -964,9 +960,8 @@ const pc=i=>CAMPS[SETS[i].c].line+' · Meta · US · $'+(+CAMPS[SETS[i].c].budge
 const META_TABS=[
  {name:'MEDIA_PLAN',html(){ const cols=C([['Line','line_id'],['Agency','agency'],['Market','market'],['Channel','channel'],['Partner','partner'],['Buy type','buy_type'],['KPI','kpi'],['Placement tactics','placement_tactics'],['Start','start_date'],['End','end_date'],['Working media','working_media'],['Audience','audience_name'],['Suppression','suppression'],['Objective','campaign_objective'],['Bid type','bid_type'],['Optimization','optimization'],['Funnel stage','funnel_stage'],['Phase','campaign_phase'],['Recipe','recipe'],['Creative wave','creative_wave'],['Campaigns linked','campaigns_linked'],['Ad sets linked','ad_sets_linked'],['Planned ad sets','planned_ad_sets'],['Line status','line_status']]);
    const rows=[[F('L001'),'Demo Agency','US','Paid social','Meta','Auction','ThruPlay','Advantage+ placements','11/01/2026','12/24/2026','120,000','Coffee enthusiasts 25-54; LAL purchasers; Site visitors 90d','Yes','Engagement','Lowest cost','Views','Consideration','Holiday',K('STANDARD'),K('W1'),F('1'),F('3'),T('3'),OK('OK')],
-     [F('L002'),'Demo Agency','US','Paid social','Meta','Auction','Purchases','Advantage+ placements','11/01/2026','12/24/2026','180,000','Broad 21-65; Cart abandoners 30d; Purchasers 180d','Yes','Sales','Lowest cost','Conversions','Action','Holiday',K('STANDARD'),K('W1'),F('1'),F('3'),T('3'),OK('OK')],
-     [F('L003'),'Demo Agency','US','Paid social','TikTok','Auction','Video views','In-feed','11/15/2026','12/24/2026','60,000','Interests 18-34; Site visitors 90d','No','Video views','Lowest cost','15-second views','Consideration','Holiday',K('STANDARD'),K('W1'),F('0'),F('0'),T('2'),F('other workbook')]];
-   return note('The media grid pastes in verbatim from column B; the line id assembles itself. The build picks (recipe, creative wave) and the linked counts on the right belong to the workbook; everything else is the buyer\u2019s. Line 3 is a TikTok buy: it lives on the same plan, but it is built and checked in the TikTok workbook.')+'<div class="scroller">'+gridHTML(cols,rows)+'</div>'; }},
+     [F('L002'),'Demo Agency','US','Paid social','Meta','Auction','Purchases','Advantage+ placements','11/01/2026','12/24/2026','180,000','Broad 21-65; Cart abandoners 30d; Purchasers 180d','Yes','Sales','Lowest cost','Conversions','Action','Holiday',K('STANDARD'),K('W1'),F('1'),F('3'),T('3'),OK('OK')]];
+   return note('The media grid pastes in verbatim from column B; the line id assembles itself. The build picks (recipe, creative wave) and the linked counts on the right belong to the workbook; everything else is the buyer\u2019s. ')+'<div class="scroller">'+gridHTML(cols,rows)+'</div>'; }},
  {name:'BUILD_ADSETS',html(){ const cols=C([['Line','line'],['Label (s02)','label'],['Audience','audience'],['Goal','goal'],['Placements','placements'],['Platforms','platforms'],['Ad set budget','ad_set_budget'],['Wave','wave'],['Concepts (; = one ad each)','concepts'],['URL','website_url'],['Pixel','pixel'],['CTA','cta'],['In plan','in_plan']]);
    const rows=SETS.map((s,i)=>[K(CAMPS[s.c].line),T(s.label),K(s.audience),D(s.c?'Conversions':'Views'),D('Advantage+ placements'),D('Facebook; Instagram'),'',K('W1'),T(CONCEPTS.map(c=>c[0]+'_'+c[1]).join('; ')),T(LINK),D('Halcyon Web Pixel'),D('Shop now'),OK('OK')]);
    return note('One row per ad set to build. Its row count per line is the planned ad-set count that <b>MEDIA_PLAN</b> checks against. The expander reads this grid first: the label becomes the ad-set name part, and a semicolon-separated concept list becomes one ad per concept — eight concepts here, so 48 ads from six rows.')+LEGEND+'<div class="scroller">'+gridHTML(cols,rows)+'</div>'; }},
@@ -981,35 +976,19 @@ const META_TABS=[
    return note('Fifty rows, generated from six build-grid rows and eight concepts. <code>ad_source</code> decides which checks apply and which identity model: on the partnership ad (row 52) the creator is the first identity, and the brand goes in <code>second_identity</code>, which the export never carries — a human check with a ✓ cell, never a failure. Row 53 is marked Not Launching: it will be N/A in the run, not MISSING.')+LEGEND+'<div class="scroller">'+gridHTML(cols,rows)+'</div>'; }},
  {name:'PLAN_CHECK',html(){ const cols=C([['Line','line_id'],['Partner','partner'],['Plan working media','plan_working_media'],['Workbook budget','arch_budget'],['Market','chk_market'],['Buy type','chk_buy_type'],['Flight start','chk_flight_start'],['Flight end','chk_flight_end'],['Budget','chk_budget'],['Objective','chk_objective'],['Optimization','chk_optimization'],['Funnel','chk_funnel'],['Suppression','chk_suppression'],['Result','result'],['Detail','detail']]);
    const ok9=()=>Array(9).fill(0).map(()=>OK('OK'));
-   const rows=[[F('L001'),F('Meta'),F('120,000'),F('120,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L002'),F('Meta'),F('180,000'),F('180,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L003'),F('TikTok'),F('60,000'),F('—'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')]];
-   return note('The gate. Nine checks per line prove the workbook matches what was bought — with the same proof discipline as the run: an unproven mapping reviews, it never fails. <b>READY TO BUILD</b> must read YES before anyone opens Ads Manager.')+'<div class="two"><div><h4>Summary</h4>'+kvHTML([['Lines on MEDIA_PLAN','3'],['Linked to this workbook','2'],['OK / FAIL / NEEDS REVIEW','2 / 0 / 0'],['NOT LINKED · other workbook','0 · 1'],['Campaign rows with no line','0'],['Ad sets off the plan','0']])+'</div><div><h4>Money and gate</h4>'+kvHTML([['Plan working media (this workbook)','$300,000'],['Workbook planned budget','$300,000'],['Difference','$0 (tolerance 1.0 %)'],['Daily-budget lines','0'],['READY TO BUILD','YES']])+'</div></div><div class="scroller" style="border-top:1px solid var(--grid)">'+gridHTML(cols,rows,17)+'</div>'; }},
+   const rows=[[F('L001'),F('Meta'),F('120,000'),F('120,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L002'),F('Meta'),F('180,000'),F('180,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')]];
+   return note('The gate. Nine checks per line prove the workbook matches what was bought — with the same proof discipline as the run: an unproven mapping reviews, it never fails. <b>READY TO BUILD</b> must read YES before anyone opens Ads Manager.')+'<div class="two"><div><h4>Summary</h4>'+kvHTML([['Lines on MEDIA_PLAN','2'],['Linked to this workbook','2'],['OK / FAIL / NEEDS REVIEW','2 / 0 / 0'],['NOT LINKED · other workbook','0 · 0'],['Campaign rows with no line','0'],['Ad sets off the plan','0']])+'</div><div><h4>Money and gate</h4>'+kvHTML([['Plan working media (this workbook)','$300,000'],['Workbook planned budget','$300,000'],['Difference','$0 (tolerance 1.0 %)'],['Daily-budget lines','0'],['READY TO BUILD','YES']])+'</div></div><div class="scroller" style="border-top:1px solid var(--grid)">'+gridHTML(cols,rows,17)+'</div>'; }},
  {name:'QA_EXPORT',html(){ const cols=C(['plan_row','campaign_name','ad_set_name','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent'].map(x=>[x,x]));
    const rows=state.plan.ad.map(a=>[a.plan_row,a.campaign_name,a.ad_set_name,a.ad_name,a.ad_id,a.ad_source,a.facebook_page,a.instagram_account,a.story_id,a.primary_text_feed,a.headline_feed,a.website_url,a.cta,a.url_parameters,a.conversion_tracking_pixels,a.qa_status,a.delivery_intent]);
    return note('This is what leaves the workbook for the run: names assembled, page and Instagram handles turned into digits, <code>Shop now</code> translated to <code>SHOP_NOW</code>, blank URL-parameter cells filled from the account default. Only fields the export can return are here — the feed is the plan with inheritance resolved.')+'<div class="scroller">'+gridHTML(cols,rows,2)+'</div>'; }}
 ];
-const TT_CAMP='HAL_US_Q4-26_HolidayGifting_CONS_VV', TT_G1=TT_CAMP+'_Prospecting_Interests_18-34', TT_G2=TT_CAMP+'_Retargeting_SiteVisitors90d';
-const TIKTOK_TABS=[
- {name:'TikTok Campaign Level',html(){ const cols=C([['Campaign name','campaign_name'],['Brand','c01'],['Market','c02'],['Quarter','c03'],['Initiative','c04'],['Funnel','c05'],['Format','c06'],['Delivery intent','campaign_delivery_intent'],['Buy type','buy_type'],['Advertising objective','advertising_objective'],['Campaign budget optimization','campaign_budget_optimization'],['Budget type','campaign_budget_type'],['Budget amount','campaign_budget_amount'],['Special ad categories','special_ad_categories'],['QA status','qa_status'],['Campaign ID','campaign_id'],['Plan line','plan_line'],['Plan check','plan_check']]);
-   const rows=[[F(TT_CAMP),T('HAL'),D('US'),T('Q4-26'),T('HolidayGifting'),D('CONS'),T('VV'),T('Off'),D('Auction'),D('Video views'),D('On'),D('Lifetime'),D('60000.00'),T('None'),T(READY),T('1700000000000000001'),K('L003'),F('L003 · TikTok · US · $60,000 · OK')]];
-   return note('Same design, TikTok vocabulary. The objective, budget and buy type derive from plan line L003; the TikTok workbook owns that line, so its PLAN_CHECK reads OK where the Meta workbook read “other workbook”. Reservation buys (TopView, Pulse, Reach &amp; Frequency) never appear in a TikTok export, so their rows cascade to N/A in the run instead of MISSING.')+LEGEND+'<div class="scroller">'+gridHTML(cols,rows)+'</div>'; }},
- {name:'TikTok Ad Group Level',html(){ const cols=C([['Ad group name','ad_group_name'],['Campaign','campaign_name'],['Tactic','s01'],['Audience label','s02'],['Delivery intent','ad_group_delivery_intent'],['Optimization goal','optimization_goal'],['Pixel event','pixel_event'],['Billing method','billing_method'],['Bid strategy','bid_strategy'],['Placement types','placement_types'],['Placements','placements'],['Audience','audience'],['Locations','locations'],['Age','age'],['Languages','languages'],['Include audience IDs','include_audience_ids'],['Exclude audience IDs','exclude_audience_ids'],['Start','start_datetime'],['End','end_datetime'],['Dayparting','dayparting'],['QA status','qa_status'],['Ad group ID','ad_group_id'],['Plan line (effective)','plan_line_effective']]);
-   const rows=[[F(TT_G1),K(TT_CAMP),T('Prospecting'),T('Interests_18-34'),T('Off'),D('15-second views (Focused view)'),'',D('CPV'),D('Lowest cost'),D('Select placement'),D('TikTok'),K('US Interests 18-34'),'','','','','',D('11/15/2026 09:00'),D('12/24/2026 22:59'),D('All Day'),T(READY),T('1700000000000000101'),D('L003')],
-     [F(TT_G2),K(TT_CAMP),T('Retargeting'),T('SiteVisitors90d'),T('Off'),D('15-second views (Focused view)'),'',D('CPV'),D('Lowest cost'),D('Select placement'),D('TikTok'),K('Site visitors 90d'),'','','','','',D('11/15/2026 09:00'),D('12/24/2026 22:59'),D('All Day'),T(READY),T('1700000000000000102'),D('L003')]];
-   return note('The ad group is TikTok\u2019s ad set. Targeting cells inherit the AUDIENCES row and render in the feed as TikTok exports them — location codes, age buckets, language codes, audience ID lists. Dates sit on the ad group only, as <code>yyyy/m/d HH:mm</code>; toggles that TikTok exports blank when off compare as OK against a planned Off.')+LEGEND+'<div class="scroller">'+gridHTML(cols,rows)+'</div>'; }},
- {name:'TikTok Ad Level',html(){ const cols=C([['Ad name','ad_name'],['Campaign','campaign_name'],['Ad group','ad_group_name'],['Concept','a01'],['Length','a02'],['Ad source','ad_source'],['Post ID','post_id'],['Identity','identity'],['Identity type','identity_type'],['Identity ID','identity_id'],['Ad format','ad_format'],['Video file','video_file'],['Only show as ad','only_show_as_ad'],['Music sharing','music_sharing'],['Text','text'],['CTA','cta'],['Web URL','web_url'],['Website events pixel','website_events_pixel'],['QA status','qa_status'],['Ad ID','ad_id'],['✓ identity','hc_identity']]);
-   const up=(g,c,l,txt,id)=>[F(g+'_'+c+'_'+l+'_Video'),K(TT_CAMP),K(g),T(c),T(l),T('Uploaded creative'),'',K('Halcyon Coffee (brand)'),F('TTBC Authorized Post'),F('bc:10000000000000001'),F('Single video'),D('HAL_'+c+'_'+l+'_9x16.mp4'),D('On'),'',T(txt),D('Learn more'),D(LINK),D('Halcyon TikTok Events'),T(READY),T(id),''];
-   const rows=[up(TT_G1,'GiftGuide','15s',CONCEPTS[0][2],'1700000000000001001'),up(TT_G1,'Barista','6s',CONCEPTS[2][2],'1700000000000001002'),
-     [F(TT_G2+'_MayaBrews_SparkAd'),K(TT_CAMP),K(TT_G2),T('MayaBrews'),T('—'),T('Spark Ad — creator post'),T('7300000000000000001'),K('@mayabrews'),F('TikTok Account'),F('id:7100000000000000002'),F('TikTok post'),'','',D('Off'),'',D('Learn more'),D(LINK),D('Halcyon TikTok Events'),T(READY),T('1700000000000001003'),T('open')],
-     up(TT_G2,'Subscription','15s',CONCEPTS[4][2],'1700000000000001004')];
-   return note('Three ad sources here: an uploaded video (identity = the brand\u2019s Business Center authorisation), a Spark Ad from a creator (identity = the creator\u2019s TikTok account, post ID required) and a Spark Ad from the brand\u2019s own post. Identity type, ID and ad format are formulas resolved from the pick — the same pattern as Meta\u2019s partnership ads, with TikTok\u2019s shapes.')+LEGEND+'<div class="scroller">'+gridHTML(cols,rows)+'</div>'; }}
-];
-const book={platform:'meta',tab:0};
+const book={tab:0};
 function mountBook(){
   const tabs=$('#book-tabs'), body=$('#book-body');
-  const render=()=>{ const set=book.platform==='meta'?META_TABS:TIKTOK_TABS; if(book.tab>=set.length) book.tab=0;
-    tabs.innerHTML=set.map((t,i)=>'<button class="tab" role="tab" aria-selected="'+(i===book.tab)+'" data-i="'+i+'">'+esc(t.name)+'</button>').join('')+'<div class="platform" role="group" aria-label="Platform"><button aria-selected="'+(book.platform==='meta')+'" data-p="meta">Meta</button><button aria-selected="'+(book.platform==='tiktok')+'" data-p="tiktok">TikTok</button></div>';
+  const render=()=>{ const set=META_TABS; if(book.tab>=set.length) book.tab=0;
+    tabs.innerHTML=set.map((t,i)=>'<button class="tab" role="tab" aria-selected="'+(i===book.tab)+'" data-i="'+i+'">'+esc(t.name)+'</button>').join('');
     body.innerHTML=set[book.tab].html(); };
-  tabs.addEventListener('click',e=>{ const b=e.target.closest('.tab'); if(b){book.tab=+b.dataset.i; render(); return;} const p=e.target.closest('[data-p]'); if(p){book.platform=p.dataset.p; book.tab=0; render();} });
+  tabs.addEventListener('click',e=>{ const b=e.target.closest('.tab'); if(b){book.tab=+b.dataset.i; render();} });
   render();
 }
 mountBook();
