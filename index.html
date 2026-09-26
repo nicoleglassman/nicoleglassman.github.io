@@ -31,7 +31,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Nicole Glassman","url":"https://nicoleglassman.github.io/","jobTitle":"Social media marketer and strategist","email":"mailto:nicolebglassman@gmail.com","sameAs":["https://www.linkedin.com/in/nicoleglassman"],"knowsAbout":["Paid social","Media planning","Creative testing","Brand lift measurement","Campaign QA","AI tooling"]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Nicole Glassman","url":"https://nicoleglassman.github.io/","image":"https://nicoleglassman.github.io/img/headshot.jpg","jobTitle":"Social media marketer and strategist","email":"mailto:nicolebglassman@gmail.com","sameAs":["https://www.linkedin.com/in/nicoleglassman"],"knowsAbout":["Paid social","Media planning","Creative testing","Brand lift measurement","Campaign QA","AI tooling"]}</script>
 <style>
 :root{
   --paper:#f4f5f2; --surface:#ffffff; --surface-2:#eef0ec;
@@ -371,7 +371,23 @@ ol.mini li::before{counter-increment:m;content:counter(m);position:absolute;left
 .work-card .preview .cap{font-size:12px;color:var(--ink-3);margin-bottom:10px;display:flex;justify-content:space-between;gap:10px}
 .work-card .preview .rule{font-size:13px;color:var(--ink-2);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 
+.results{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:30px}
+.rcard{display:flex;flex-direction:column;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px 28px;min-width:0}
+.rcard .kind{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-3);flex-wrap:wrap}
+.rcard h3{font-size:22px;line-height:1.18;letter-spacing:-.012em}
+.rcard .k{display:block;font-weight:600;font-size:13px;color:var(--ink-3);margin-bottom:4px}
+.rcard p{font-size:14.5px;color:var(--ink-2);margin:0}
+.rcard ul{list-style:none;margin:0;padding:0}
+.rcard li{position:relative;padding:0 0 0 16px;font-size:14.5px;color:var(--ink-2);line-height:1.45}
+.rcard li + li{margin-top:6px}
+.rcard li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.rcard .rnums{margin-top:auto;display:flex;gap:16px 22px;flex-wrap:wrap;padding-top:16px;border-top:1px solid var(--line)}
+.rcard .rnums div{font-size:13.5px;color:var(--ink-2);flex:1 1 110px;min-width:0}
+.rcard .rnums b{display:block;font-family:var(--serif);font-weight:500;font-size:24px;color:var(--ink);letter-spacing:-0.01em;line-height:1.1;margin-bottom:4px}
+.results-note{margin-top:22px;font-size:14.5px;color:var(--ink-3)}
+
 .about h2{margin-bottom:16px}
+.about .aside .headshot{display:block;width:160px;height:160px;border-radius:50%;object-fit:cover;border:1px solid var(--line);margin-bottom:24px;background:var(--surface)}
 .about p{font-size:15.5px;color:var(--ink-2);max-width:62ch}
 .about .aside h3{font-family:var(--sans);font-weight:600;font-size:16px}
 .about .aside .skills{margin-top:14px}
@@ -388,6 +404,9 @@ ol.mini li::before{counter-increment:m;content:counter(m);position:absolute;left
 @media (max-width:900px){
   .home-hero{padding:52px 0 44px}
   .work{grid-template-columns:1fr}
+  .results{grid-template-columns:1fr}
+  .rcard{padding:22px 20px}
+  .about .aside .headshot{width:120px;height:120px;margin-bottom:20px}
   .cta{grid-template-columns:1fr;padding:24px}
   .work-card{padding:22px 20px}
 }
@@ -397,7 +416,7 @@ ol.mini li::before{counter-increment:m;content:counter(m);position:absolute;left
 <body>
 <div class="nav"><div class="wrap">
   <a class="brand" href="#top">Nicole Glassman<span>social media marketer and strategist</span></a>
-  <nav aria-label="Sections"><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a><a href="https://www.linkedin.com/in/nicoleglassman" rel="me">LinkedIn</a></nav>
+  <nav aria-label="Sections"><a href="#work">Work</a><a href="#results">Results</a><a href="#about">About</a><a href="#contact">Contact</a><a href="https://www.linkedin.com/in/nicoleglassman" rel="me">LinkedIn</a></nav>
 </div></div>
 
 <main id="top">
@@ -463,6 +482,47 @@ ol.mini li::before{counter-increment:m;content:counter(m);position:absolute;left
   </div>
 </div></section>
 
+<section class="section" id="results"><div class="wrap">
+  <h2>Three campaigns, read by the numbers</h2>
+  <p class="lede" style="margin-top:14px">What the problem was, what I did about it, and what the numbers said afterward. Clients aren't named; the campaigns were mine to plan and run.</p>
+  <div class="results">
+    <article class="rcard">
+      <div class="kind"><span class="chip info">Meta</span> matched-spend creative test · 2026</div>
+      <h3>Who should make the creative?</h3>
+      <div><span class="k">Challenge</span><p>Creator or brand creative is usually decided by belief, and the head-to-head never gets run.</p></div>
+      <div><span class="k">What I did</span><ul>
+        <li>Two equal-spend, three-day Meta reach-and-frequency flights in the same month, $580K each.</li>
+        <li>Identical targeting and placements; only the creative changed.</li>
+        <li>Read creator content against brand creative on three metrics.</li>
+      </ul></div>
+      <div class="rnums"><div><b>72% lower</b>cost per interaction</div><div><b>+70%</b>3-second view rate</div><div><b>+77%</b>link click-through rate</div></div>
+    </article>
+    <article class="rcard">
+      <div class="kind"><span class="chip info">TikTok</span> premium placements · 2026</div>
+      <h3>Give every placement a job</h3>
+      <div><span class="k">Challenge</span><p>Premium placements get compared on one CPM line, and the cheapest one is kept.</p></div>
+      <div><span class="k">What I did</span><ul>
+        <li>$1.36M across TopView, TopFeed and Pulse, with a job assigned to each before the buy.</li>
+        <li>Pulse bought attention next to content people chose to watch; TopView bought reach and clicks.</li>
+        <li>Read each placement on its own metric, not a shared one.</li>
+      </ul></div>
+      <div class="rnums"><div><b>13.1%</b>six-second view rate on Pulse — 2× TopView's</div><div><b>5.1s</b>average watch time on Pulse</div><div><b>$0.38</b>CPC on TopView — 1.57M destination clicks, 3.24% CTR</div></div>
+    </article>
+    <article class="rcard">
+      <div class="kind"><span class="chip info">TikTok</span> tune-in campaign · 2023–2025</div>
+      <h3>Measure lift, not likes</h3>
+      <div><span class="k">Challenge</span><p>An entertainment launch measured on tune-in, where views and engagement rate don't count as the answer.</p></div>
+      <div><span class="k">What I did</span><ul>
+        <li>One TikTok campaign that reached 15% of the U.S. population, read on tune-in lift rather than platform metrics.</li>
+        <li>A three-way creative test on tune-in: brand creative against creator-boosted posts and AI-generated creative.</li>
+        <li>Brand creative won by 24%; AI-generated creative finished last.</li>
+      </ul></div>
+      <div class="rnums"><div><b>15%</b>of the U.S. population reached</div><div><b>+115%</b>tune-in lift</div><div><b>+24%</b>tune-in, brand creative over creator-boosted posts</div></div>
+    </article>
+  </div>
+  <p class="results-note">The full argument, with the tests behind each change, is in the <a href="pov/">point of view</a>.</p>
+</div></section>
+
 <section class="section" id="about"><div class="wrap about">
   <div>
     <h2>About</h2>
@@ -477,6 +537,7 @@ ol.mini li::before{counter-increment:m;content:counter(m);position:absolute;left
     </div>
   </div>
   <div class="aside">
+    <img class="headshot" src="img/headshot.jpg" alt="Nicole Glassman" width="560" height="560" decoding="async">
     <h3>What I work in</h3>
     <div class="skills">
       <span>Paid social strategy</span><span>Media planning</span><span>Creative testing</span><span>Brand lift &amp; measurement</span><span>Meta &amp; TikTok Ads Manager</span><span>Pinterest &amp; Reddit</span><span>Creator &amp; partnership content</span><span>Campaign operations &amp; QA</span><span>AI product design with guardrails</span><span>Prompt &amp; skill authoring (Claude)</span><span>Spreadsheet engineering</span><span>Google Apps Script</span><span>Python tooling &amp; tests (AI-paired)</span>
