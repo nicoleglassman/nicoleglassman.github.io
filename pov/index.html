@@ -7,11 +7,11 @@
 <meta name="description" content="A point of view on brand social from four years of planning and running paid social — most recently a $20.5M plan — with the tests that changed my mind.">
 <link rel="canonical" href="https://nicoleglassman.github.io/pov/">
 <meta name="author" content="Nicole Glassman">
-<meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0f1216" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="/favicon.ico" sizes="32x32">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#E9E2F1">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Nicole Glassman">
 <meta property="og:locale" content="en_US">
@@ -30,511 +30,433 @@
 <meta name="twitter:image:alt" content="What I&#x27;d change about most brands&#x27; social — six changes Nicole Glassman would make in an in-house seat, each with the test that convinced her.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#f4f5f2; --surface:#ffffff; --surface-2:#eef0ec;
-  --ink:#1c2531; --ink-2:#4b5563; --ink-3:#5f6975;
-  --line:#d5dad6; --line-2:#e6e9e4; --grid:#dfe3dd;
-  --accent:#3b39d6; --accent-ink:#2c2ab0; --accent-soft:#e8e8fb;
-  --pass:#1e7a4c; --pass-soft:#dff2e6; --fail:#b3341f; --fail-soft:#fbe3df;
-  --review:#a66d12; --review-soft:#fbeed3; --na:#7c8590; --na-soft:#eceff0;
-  --derived:#8a929c; --amber-cell:#fff1cf; --red-cell:#fde2de; --green-cell:#e2f3e8;
-  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  --paper:#F6F2EA; --white:#FFFFFF; --ink:#1B1A17; --ink-2:#3F3B33; --muted:#5C584F; --rule:#E2DCCF;
+  --accent:#6A3FA0; --accent-hover:#4E2C7A; --band:#E9E2F1; --soft:#F2EEF6;
+  --fail:#9C3418; --fail-soft:#FBE5DE; --pass:#1E6B44;
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --sans:'Public Sans',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
-  --serif:'Fraunces',Georgia,'Times New Roman',serif;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-  color-scheme:light dark;
+  --gutter:96px; --nav-h:88px;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0f1216; --surface:#171b21; --surface-2:#1d2229;
-    --ink:#e7ebef; --ink-2:#b4bcc6; --ink-3:#8a93a0;
-    --line:#2b323b; --line-2:#222931; --grid:#1c2128;
-    --accent:#9695ff; --accent-ink:#b5b4ff; --accent-soft:#25264a;
-    --pass:#4fc98c; --pass-soft:#123222; --fail:#f2776a; --fail-soft:#3b1b17;
-    --review:#e2ab4f; --review-soft:#3a2a10; --na:#8a93a0; --na-soft:#20262e;
-    --derived:#7f8894; --amber-cell:#3a2f12; --red-cell:#3a1d19; --green-cell:#14301f;
-  }
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--nav-h) + 16px);scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--band);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+a:hover{color:var(--accent-hover)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;margin:0;font-optical-sizing:auto}
+p{margin:0}
+.wrap{max-width:calc(1248px + 2 * var(--gutter));margin:0 auto;padding:0 var(--gutter)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+.skip{position:absolute;left:16px;top:-100px;z-index:100;background:var(--ink);color:var(--white);padding:12px 16px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px;color:var(--white)}
+
+/* Header + nav */
+.site-nav{position:sticky;top:0;z-index:50;background:var(--band)}
+.site-nav .bar{height:var(--nav-h);display:flex;align-items:center;gap:32px;border-bottom:1px solid rgba(27,26,23,.22)}
+.brand{display:flex;align-items:baseline;gap:12px;min-width:0}
+.brand a{font-size:17px;font-weight:700;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.brand a:hover{color:var(--accent-hover)}
+.brand span{font-size:15px;color:var(--muted);white-space:nowrap}
+.nav-links{margin:0 0 0 auto;padding:0;list-style:none;display:flex;align-items:center;gap:32px;font-size:16px;font-weight:600}
+.nav-links a{color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px;white-space:nowrap}
+.nav-links a:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.menu-btn{display:none}
+.hero{padding:80px 0 96px}
+.hero-copy{grid-column:span 9;display:flex;flex-direction:column}
+.kicker{font-size:15px;font-weight:500;color:var(--muted)}
+.hero h1{margin-top:28px;font-size:clamp(46px,7vw,100px);line-height:.98;letter-spacing:-.03em;text-wrap:balance}
+.lede{margin-top:36px;max-width:760px;font-size:21px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.byline{margin-top:28px;display:flex;flex-wrap:wrap;gap:6px 20px;font-size:15px;font-weight:600}
+.byline span+span{font-weight:500;color:var(--muted)}
+
+/* Main */
+main{background:var(--paper)}
+.sec-head{grid-column:span 3;border-top:2px solid var(--ink);padding-top:18px}
+h2{font-size:32px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.short{padding-top:96px}
+.short ol{grid-column:span 9;margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;border-top:2px solid var(--ink)}
+.short li{padding:18px 0 22px;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:28px minmax(0,1fr);column-gap:12px}
+.short .n{font-size:18px;font-weight:700;color:var(--accent)}
+.short .t{display:flex;flex-direction:column;gap:6px}
+.short .t b{font-size:18px;line-height:1.3;font-weight:700}
+.short .t span{font-size:16px;line-height:1.55;color:var(--ink-2)}
+
+.changes{padding-top:112px}
+.changes .intro{grid-column:span 9;border-top:2px solid var(--ink);padding-top:20px;font-size:18px;line-height:1.55;color:var(--muted)}
+.change{padding:48px 0;border-top:1px solid var(--rule)}
+.change:first-of-type{margin-top:40px}
+.change:last-of-type{border-bottom:1px solid var(--rule)}
+.numeral{grid-column:span 3;font-family:var(--serif);font-size:128px;line-height:.8;letter-spacing:-.03em;color:var(--accent)}
+.change .body{grid-column:span 5;display:flex;flex-direction:column;gap:18px}
+.change h3{font-size:36px;line-height:1.1;letter-spacing:-.015em;text-wrap:balance}
+.change .body p{font-size:18px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.change .body p b{font-weight:700;color:var(--ink)}
+.evidence{grid-column:span 4;border-top:3px solid var(--accent);padding-top:18px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.headline{display:flex;flex-direction:column;gap:4px}
+.headline .big{font-family:var(--serif);font-size:52px;line-height:1;letter-spacing:-.02em}
+.headline .cap{font-size:15px;color:var(--muted)}
+.evidence dl{margin:0;display:flex;flex-direction:column;border-top:1px solid var(--rule)}
+.evidence dl div{display:grid;grid-template-columns:84px minmax(0,1fr);column-gap:12px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.evidence dt{font-size:16px;font-weight:700}
+.evidence dd{margin:0;font-size:15px;line-height:1.4;color:var(--ink-2)}
+.evidence p{font-size:15px;line-height:1.55;color:var(--ink-2)}
+.evidence .src{font-size:13px;line-height:1.4;color:var(--muted)}
+.evidence .quote{font-family:var(--serif);font-size:20px;line-height:1.5;font-style:italic;color:var(--ink-2)}
+
+.callout{margin-top:96px;padding:48px;background:var(--soft);align-items:center}
+.callout .txt{grid-column:span 8;display:flex;flex-direction:column;gap:12px}
+.callout h2{font-size:34px}
+.callout p{font-size:18px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.callout .act{grid-column:9 / span 4;display:flex;justify-content:flex-end}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;background:var(--accent);color:var(--white);font-size:16px;font-weight:700;text-decoration:none;border-radius:2px;text-align:center;white-space:nowrap}
+.btn:hover{background:var(--accent-hover);color:var(--white)}
+
+.plan{padding-top:112px}
+.plan .sec-head{display:flex;flex-direction:column;gap:12px}
+.plan .sec-head p{font-size:16px;line-height:1.55;color:var(--muted)}
+.phases{grid-column:span 9;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px}
+.phase{border-top:2px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:14px}
+.phase header{display:flex;flex-direction:column;gap:2px}
+.phase h3{font-size:26px;line-height:1.2;letter-spacing:-.01em}
+.phase header span{font-size:15px;font-weight:600;color:var(--accent)}
+.phase ul{margin:0;padding:0;list-style:none;border-top:1px solid var(--rule)}
+.phase li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:16px;line-height:1.5;color:var(--ink-2)}
+
+.hiring{padding:112px 0}
+.hiring .copy{grid-column:span 7;border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:20px}
+.hiring .copy>p:first-child{font-size:19px;line-height:1.6;color:var(--ink);text-wrap:pretty}
+.contact-links{display:flex;flex-wrap:wrap;align-items:center;gap:0 28px}
+.tlink{display:inline-flex;align-items:center;min-height:44px;font-size:17px;font-weight:700;color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px;overflow-wrap:anywhere}
+.hiring .note{margin-top:12px;font-size:15px;line-height:1.55;color:var(--muted)}
+
+footer{background:var(--band);padding:36px 0}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px 24px;font-size:14px;color:var(--muted)}
+footer a{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:600;color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+
+@media (max-width:1100px){
+  .nav-links{gap:24px}
 }
-:root[data-theme="dark"]{
-  --paper:#0f1216; --surface:#171b21; --surface-2:#1d2229;
-  --ink:#e7ebef; --ink-2:#b4bcc6; --ink-3:#8a93a0;
-  --line:#2b323b; --line-2:#222931; --grid:#1c2128;
-  --accent:#9695ff; --accent-ink:#b5b4ff; --accent-soft:#25264a;
-  --pass:#4fc98c; --pass-soft:#123222; --fail:#f2776a; --fail-soft:#3b1b17;
-  --review:#e2ab4f; --review-soft:#3a2a10; --na:#8a93a0; --na-soft:#20262e;
-  --derived:#7f8894; --amber-cell:#3a2f12; --red-cell:#3a1d19; --green-cell:#14301f;
-}
-html{scroll-padding-top:calc(64px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-img,svg{max-width:100%}
-a{color:var(--accent-ink)}
-:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
-h1,h2,h3,h4{font-family:var(--serif);font-weight:500;line-height:1.15;margin:0;letter-spacing:-0.01em;font-optical-sizing:auto}
-h1{font-size:clamp(34px,5vw,54px);letter-spacing:-0.02em}
-h2{font-size:clamp(26px,3.2vw,36px)}
-h3{font-size:20px}
-h4{font-size:17px;font-family:var(--sans);font-weight:600}
-p{margin:0 0 14px}
-.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
-.section{padding:76px 0}
-.section + .section{border-top:1px solid var(--line-2)}
-.lede{font-size:18px;color:var(--ink-2);max-width:62ch}
-.muted{color:var(--ink-3)}
-.mono{font-family:var(--mono)}
-code,.code{font-family:var(--mono);font-size:0.92em;background:var(--surface-2);padding:1px 5px;border-radius:4px}
-.btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;font:500 15px var(--sans);padding:10px 16px;border-radius:8px;cursor:pointer;text-decoration:none;line-height:1.2}
-.btn:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
-.btn.quiet{background:transparent;color:var(--accent-ink);border-color:var(--line)}
-.btn.quiet:hover{background:var(--accent-soft)}
-.btn.small{font-size:13px;padding:7px 11px;border-radius:6px}
-.btn:disabled{opacity:.45;cursor:not-allowed}
-.btn.text{background:none;border:none;color:var(--ink-2);padding:8px 6px}
-.btn.text:hover{color:var(--ink);background:none}
-:root[data-theme="dark"] .btn, .btn{color:#fff}
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .btn,:root:not([data-theme="light"]) .step::after,:root:not([data-theme="light"]) .pov h3::before{color:#0f1216} :root:not([data-theme="light"]) .btn.quiet{color:var(--accent-ink)} :root:not([data-theme="light"]) .btn.text{color:var(--ink-2)} }
-:root[data-theme="dark"] .btn,:root[data-theme="dark"] .step::after,:root[data-theme="dark"] .pov h3::before{color:#0f1216} :root[data-theme="dark"] .btn.quiet{color:var(--accent-ink)} :root[data-theme="dark"] .btn.text{color:var(--ink-2)}
-
-/* nav */
-.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 94%,transparent);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--line-2)}
-.nav .wrap{display:flex;align-items:center;gap:20px;height:56px;position:relative}
-.nav .wrap::after{content:"›";position:absolute;right:24px;top:0;bottom:0;width:48px;display:flex;align-items:center;justify-content:flex-end;padding-right:4px;color:var(--ink);font:600 22px/1 var(--sans);background:linear-gradient(90deg,transparent,var(--paper) 55%);pointer-events:none;opacity:0;transition:opacity .2s}
-.nav .wrap[data-more]::after{opacity:1}
-.brand{font-family:var(--serif);font-weight:600;font-size:18px;text-decoration:none;color:var(--ink);white-space:nowrap}
-.brand span{color:var(--ink-3);font-family:var(--sans);font-weight:400;font-size:13px;margin-left:8px}
-.nav nav{margin-left:auto;display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
-.nav nav::-webkit-scrollbar{display:none}
-.nav nav a{font-size:13.5px;color:var(--ink-2);text-decoration:none;padding:6px 8px;border-radius:6px;white-space:nowrap}
-.nav nav a:hover{background:var(--surface-2);color:var(--ink)}
-
-/* hero */
-.hero{position:relative;padding:84px 0 72px;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse 70% 80% at 60% 40%,#000 40%,transparent 100%);mask-image:radial-gradient(ellipse 70% 80% at 60% 40%,#000 40%,transparent 100%);opacity:.9;pointer-events:none}
-.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:56px;align-items:center}
-.notice{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-2);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:5px 12px 5px 8px;margin-bottom:22px}
-.notice i{width:8px;height:8px;border-radius:50%;background:var(--review);display:inline-block}
-.hero h1{margin-bottom:18px;max-width:14ch}
-.hero .lede{margin-bottom:26px}
-.hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:34px}
-.facts{display:flex;gap:28px;flex-wrap:wrap;padding-top:22px;border-top:1px solid var(--line)}
-.facts div{font-size:14px;color:var(--ink-2);flex:1 1 140px;max-width:230px}
-.facts b{display:block;font-family:var(--serif);font-weight:500;font-size:24px;color:var(--ink);letter-spacing:-0.01em;line-height:1.1;margin-bottom:4px}
-
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px}
-.finding-preview{padding:18px 18px 14px;box-shadow:0 20px 50px -30px rgba(20,30,60,.35)}
-.finding-preview .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}
-.finding-preview .top b{font-family:var(--sans);font-weight:600;font-size:14px}
-.finding-preview .top small{color:var(--ink-3);font-size:12px;white-space:nowrap}
-.diff{display:grid;grid-template-columns:70px 1fr;gap:6px 12px;font-family:var(--mono);font-size:13px;align-items:center}
-.diff .k{color:var(--ink-3);font-family:var(--sans);font-size:12px}
-.diff .v{background:var(--surface-2);padding:6px 9px;border-radius:6px;overflow-wrap:anywhere}
-.diff .v.bad{background:var(--fail-soft);color:var(--fail)}
-.diff .v.good{background:var(--pass-soft);color:var(--pass)}
-.finding-preview .rule{margin-top:12px;font-size:13px;color:var(--ink-2);border-top:1px dashed var(--line);padding-top:10px}
-.finding-preview .rule + .rule{border-top:none;padding-top:2px}
-.chip{display:inline-block;padding:2px 9px;border-radius:999px;font:500 12px/1.6 var(--sans);letter-spacing:.01em;white-space:nowrap;border:1px solid transparent}
-.chip.pass{background:var(--pass-soft);color:var(--pass)}
-.chip.fail{background:var(--fail-soft);color:var(--fail)}
-.chip.review{background:var(--review-soft);color:var(--review)}
-.chip.missing{background:transparent;color:var(--fail);border-color:var(--fail)}
-.chip.extra{background:transparent;color:var(--review);border-color:var(--review)}
-.chip.na{background:var(--na-soft);color:var(--na)}
-.chip.info{background:var(--accent-soft);color:var(--accent-ink)}
-
-/* before/after */
-.compare{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
-.compare > div{padding:26px 28px}
-.compare > div + div{border-left:1px solid var(--line);background:color-mix(in srgb,var(--accent-soft) 35%,var(--surface))}
-.compare h3{margin-bottom:14px}
-.compare ul{list-style:none;padding:0;margin:0}
-.compare li{padding:11px 0;border-top:1px solid var(--line-2);font-size:15px}
-.compare li b{display:block;font-weight:600;font-size:13px;color:var(--ink-3);margin-bottom:2px}
-
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;counter-reset:step}
-.step{position:relative;padding-top:18px}
-.step::before{content:"";position:absolute;left:0;right:-18px;top:6px;height:2px;background:var(--line)}
-.step:last-child::before{right:0}
-.step::after{counter-increment:step;content:counter(step);position:absolute;left:0;top:-6px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font:600 12px/24px var(--sans);text-align:center}
-.step h4{margin:6px 0 6px}
-.step p{font-size:14px;color:var(--ink-2);margin-bottom:8px}
-.tag{display:inline-block;font-family:var(--mono);font-size:11.5px;color:var(--ink-2);background:var(--surface-2);border:1px solid var(--line-2);padding:2px 6px;border-radius:4px;margin:2px 4px 2px 0}
-.primer{margin-top:40px;padding:18px 22px;background:var(--surface);border:1px solid var(--line);border-radius:12px;display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
-.tree{font-family:var(--mono);font-size:13px;line-height:1.7;white-space:pre;color:var(--ink-2)}
-.primer p{margin:0;font-size:14.5px;color:var(--ink-2)}
-
-/* sheet look */
-.book{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.tabs{display:flex;gap:3px;padding:10px 12px 0;background:var(--surface-2);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
-.tab{flex:none;border:1px solid var(--line);border-bottom:none;background:color-mix(in srgb,var(--surface-2) 60%,var(--surface));color:var(--ink-2);font:500 13px var(--sans);padding:8px 13px;border-radius:7px 7px 0 0;cursor:pointer;margin-bottom:-1px}
-.tab[aria-selected="true"]{background:var(--surface);color:var(--accent-ink);border-bottom:1px solid var(--surface);position:relative;z-index:1}
-.tab.map{font-family:var(--mono);font-size:12.5px}
-.sheet-note{padding:16px 18px 6px;font-size:14.5px;color:var(--ink-2);max-width:78ch}
-.sheet-note b{color:var(--ink);font-weight:600}
-.legend{display:flex;gap:14px;flex-wrap:wrap;padding:0 18px 12px;font-size:12.5px;color:var(--ink-3)}
-.legend span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px;border:1px solid var(--line)}
-.legend .l-derived::before{background:var(--surface);border-color:var(--derived)}
-.legend .l-typed::before{background:var(--ink)}
-.legend .l-amber::before{background:var(--amber-cell)}
-.legend .l-ok::before{background:var(--green-cell)}
-.legend .l-red::before{background:var(--red-cell)}
-.scroller{overflow-x:auto;overscroll-behavior-x:contain;max-width:100%}
-table.grid{border-collapse:separate;border-spacing:0;font-family:var(--mono);font-size:12.5px;min-width:100%}
-table.grid th,table.grid td{border-right:1px solid var(--grid);border-bottom:1px solid var(--grid);padding:5px 9px;text-align:left;vertical-align:top;white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis}
-table.grid th{background:var(--surface-2);color:var(--ink-3);font-weight:500;font-family:var(--sans);font-size:11.5px;text-align:center;position:sticky;top:0}
-table.grid td.rn{background:var(--surface-2);color:var(--ink-3);text-align:center;font-family:var(--sans);font-size:11.5px;position:sticky;left:0;z-index:1;min-width:34px}
-table.grid tr.h2 td{font-family:var(--sans);font-weight:600;font-size:12.5px;background:color-mix(in srgb,var(--accent-soft) 45%,var(--surface))}
-table.grid tr.h3 td{color:var(--accent-ink);font-size:11.5px;background:color-mix(in srgb,var(--accent-soft) 20%,var(--surface))}
-table.grid tr.h3 td.rn,table.grid tr.h2 td.rn{color:var(--ink-3)}
-td.c-derived{color:var(--derived)}
-td.c-typed{color:var(--ink);font-weight:500}
-td.c-amber{background:var(--amber-cell)}
-td.c-red{background:var(--red-cell)}
-td.c-ok{background:var(--green-cell)}
-td.c-formula{color:var(--ink-3);font-style:italic}
-td.c-key{color:var(--accent-ink)}
-td.c-blank{color:var(--ink-3)}
-.sheet-text{padding:18px 20px 22px;font-size:14.5px;max-width:80ch}
-.sheet-text ol{padding-left:20px;margin:8px 0 0}
-.sheet-text li{margin-bottom:6px}
-.kv{display:grid;grid-template-columns:max-content 1fr;font-family:var(--mono);font-size:12.5px}
-.kv > div{padding:5px 12px;border-bottom:1px solid var(--grid)}
-.kv > div:nth-child(odd){background:var(--surface-2);font-family:var(--sans);color:var(--ink-2);border-right:1px solid var(--grid)}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.two > div + div{border-left:1px solid var(--grid)}
-.two h4{font-size:13px;color:var(--ink-3);padding:12px 12px 6px;font-weight:600}
-
-/* live run */
-.run-layout{display:grid;gap:18px}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.panel-head{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
-.panel-head h3{font-family:var(--sans);font-weight:600;font-size:15px}
-.panel-head .sub{font-size:13px;color:var(--ink-3)}
-.subtabs{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
-.subtabs button{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:500 12.5px var(--sans);padding:5px 10px;border-radius:6px;cursor:pointer}
-.subtabs button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
-.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:16px 0 6px}
-.status-line{font-size:14px;color:var(--ink-2);margin-left:auto}
-.log{font-family:var(--mono);font-size:12.5px;line-height:1.7;background:var(--surface-2);border:1px solid var(--line-2);border-radius:10px;padding:12px 16px;min-height:44px;color:var(--ink-2)}
-.log div::before{content:"›";color:var(--accent);margin-right:8px}
-.log div.done{color:var(--ink)}
-.report{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.report header{padding:18px 22px;border-bottom:1px solid var(--line-2);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.report header h3{font-family:var(--serif);font-weight:500;font-size:22px}
-.report header .meta{font-size:13px;color:var(--ink-3)}
-.gate{padding:20px 22px;display:grid;grid-template-columns:auto 1fr;gap:12px 28px;align-items:center;border-bottom:1px solid var(--line-2)}
-.gate .verdict{font-family:var(--serif);font-size:30px;letter-spacing:-.01em;line-height:1.05}
-.gate .verdict.no{color:var(--fail)} .gate .verdict.yes{color:var(--pass)}
-.gate .why{font-size:14px;color:var(--ink-2)}
-.counts{display:flex;flex-wrap:wrap;gap:8px 18px;grid-column:1/-1;font-size:14px}
-.counts span b{font-family:var(--mono);font-weight:500;margin-left:5px}
-.absent{grid-column:1/-1;font-size:13px;color:var(--ink-2);background:var(--review-soft);border-radius:8px;padding:8px 12px}
-.rsec{padding:18px 22px;border-bottom:1px solid var(--line-2)}
-.rsec:last-child{border-bottom:none}
-.rsec h4{margin-bottom:10px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
-.rsec h4 > span{white-space:nowrap}
-.rsec h4 small{font-weight:400;color:var(--ink-3);font-size:13px}
-.empty{font-size:14px;color:var(--ink-3)}
-.fcard{border:1px solid var(--line);border-radius:10px;margin-bottom:12px;overflow:hidden}
-.fcard .fh{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--fail-soft);flex-wrap:wrap}
-.fcard .fh b{font-weight:600;color:var(--fail)}
-.fcard .fh .nm{font-family:var(--mono);font-size:12.5px;overflow-wrap:anywhere}
-.fcard .fh small{color:var(--ink-3);font-size:12px}
-table.ft{width:100%;border-collapse:collapse;font-size:13px}
-table.ft th{font-size:12px;color:var(--ink-3);font-weight:500;text-align:left;padding:8px 12px;border-bottom:1px solid var(--line-2)}
-table.ft td{padding:8px 12px;border-bottom:1px solid var(--line-2);vertical-align:top}
-table.ft td.mono{overflow-wrap:anywhere}
-table.ft.props td{white-space:nowrap}
-table.ft.props td:nth-child(7){white-space:normal;min-width:220px}
-table.ft tr:last-child td{border-bottom:none}
-.fix-row{padding:10px 14px;background:var(--surface-2);display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px;color:var(--ink-2)}
-.rev{padding:9px 0;border-top:1px solid var(--line-2);font-size:14px;display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:start}
-.rev:first-of-type{border-top:none}
-.rev .what{overflow-wrap:anywhere}
-.rev .what b{font-weight:600}
-.rev .prove{color:var(--ink-2);font-size:13px;grid-column:1}
-.ctx{margin-top:12px;font-size:13px;color:var(--ink-3)}
-table.items{width:100%;border-collapse:collapse;font-size:13px}
-table.items th{text-align:left;font-size:12px;color:var(--ink-3);font-weight:500;padding:8px 10px;border-bottom:1px solid var(--line)}
-table.items td{padding:8px 10px;border-bottom:1px solid var(--line-2);vertical-align:top}
-table.items td.mono{white-space:nowrap}
-table.items td.detail{min-width:360px}
-table.items tr.pass-row{display:none}
-table.items.show-pass tr.pass-row{display:table-row}
-.hc{display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:14px}
-.hc .fld{font-family:var(--mono);font-size:12.5px}
-pre.block{margin:0;font-family:var(--mono);font-size:12px;line-height:1.6;background:var(--surface-2);border:1px solid var(--line-2);border-radius:8px;padding:12px 14px;overflow-x:auto;white-space:pre;color:var(--ink-2)}
-.diffsec{background:color-mix(in srgb,var(--accent-soft) 40%,var(--surface))}
-.diffsec ul{margin:0;padding-left:18px;font-size:14px}
-.register{margin-top:18px}
-table.reg{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}
-table.reg th{font-family:var(--sans);font-weight:500;color:var(--ink-3);text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
-table.reg td{padding:7px 10px;border-bottom:1px solid var(--line-2);white-space:nowrap}
-.hint{font-size:13.5px;color:var(--ink-3)}
-
-/* guardrails */
-.rules{display:grid;grid-template-columns:1fr 1fr;gap:0 40px}
-.rule-item{padding:18px 0;border-top:1px solid var(--line)}
-.rule-item h4{margin-bottom:6px}
-.rule-item p{font-size:14.5px;color:var(--ink-2);margin:0}
-
-/* engineering */
-.eng{display:grid;grid-template-columns:1fr 1fr;gap:22px 40px}
-.eng h4{margin-bottom:6px}
-.eng p{font-size:14.5px;color:var(--ink-2);margin:0}
-.timeline{margin-top:44px;border-top:1px solid var(--line);padding-top:22px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
-.timeline div{font-size:13.5px;color:var(--ink-2)}
-.timeline b{display:block;font-family:var(--mono);font-weight:500;color:var(--ink);font-size:13px;margin-bottom:3px}
-
-/* impact */
-table.impact{width:100%;border-collapse:collapse;font-size:14.5px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-table.impact th{text-align:left;padding:12px 16px;font-weight:600;font-size:13.5px;color:var(--ink-3);border-bottom:1px solid var(--line)}
-table.impact td{padding:13px 16px;border-bottom:1px solid var(--line-2);vertical-align:top;color:var(--ink-2)}
-table.impact td:first-child{color:var(--ink);font-weight:500;width:22%}
-table.impact tr:last-child td{border-bottom:none}
-table.impact td:last-child{background:color-mix(in srgb,var(--accent-soft) 30%,var(--surface));color:var(--ink)}
-.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:26px}
-.nums div{padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:13.5px;color:var(--ink-2)}
-.nums b{display:block;font-family:var(--serif);font-weight:500;font-size:26px;color:var(--ink);margin-bottom:4px;letter-spacing:-.01em}
-
-/* about */
-.about{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:start}
-.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.skills span{font-size:13px;padding:5px 11px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink-2)}
-footer{padding:26px 0 40px;border-top:1px solid var(--line-2);font-size:13px;color:var(--ink-3)}
-footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-.theme-btn{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:500 12.5px var(--sans);padding:5px 10px;border-radius:6px;cursor:pointer}
-
-/* overflow safety */
-.wrap,.run-layout > *,.report,.gate,.counts,.rev > div,.hc > div,.two > div,.primer,.about > div,.eng > div,.compare > div{min-width:0}
-.kv > div,.hc > div,.diffsec li,.log,.rev > div,.gate .why,.report header h3{overflow-wrap:anywhere}
-.tree{overflow-x:auto;max-width:100%}
-.notice{max-width:100%;white-space:normal}
-.fix-row .btn,.rev .btn{white-space:normal;text-align:left}
-@media (max-width: 900px){
-  .section{padding:52px 0}
-  .hero{padding:52px 0 48px}
-  .hero .wrap{grid-template-columns:1fr;gap:34px}
-  .steps{grid-template-columns:1fr;gap:26px}
-  .step::before{display:none}
-  .step{padding-left:38px;padding-top:0}
-  .step::after{top:0}
-  .compare{grid-template-columns:1fr}
-  .compare > div + div{border-left:none;border-top:1px solid var(--line)}
-  .rules,.eng,.about,.two{grid-template-columns:1fr}
-  .two > div + div{border-left:none;border-top:1px solid var(--grid)}
-  .timeline{grid-template-columns:1fr 1fr}
-  .nums{grid-template-columns:1fr 1fr}
-  .primer{grid-template-columns:1fr}
-  .gate{grid-template-columns:1fr}
-  .rev{grid-template-columns:1fr}
+@media (max-width:900px){
+  :root{--gutter:40px;--nav-h:72px}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .site-nav .bar{gap:20px}
   .brand span{display:none}
+  .nav-links{gap:20px;font-size:15px}
+  .hero{padding:56px 0 72px}
+  .hero-copy,.sec-head,.short ol,.changes .intro,.change .body,.evidence,.numeral,.callout .txt,.callout .act,.phases,.hiring .copy{grid-column:1 / -1}
+  .changes .intro,.hiring .copy{border-top:0}
+  .short{padding-top:72px}
+  .short ol{margin-top:20px;border-top:1px solid var(--rule)}
+  .changes,.plan{padding-top:88px}
+  .changes .intro{padding-top:12px}
+  .change{row-gap:24px}
+  .numeral{font-size:96px}
+  .change .body{max-width:680px}
+  .evidence{max-width:680px;margin-top:12px}
+  .callout{margin-top:72px;padding:36px;row-gap:24px}
+  .callout .act{justify-content:flex-start}
+  .plan .sec-head{margin-bottom:28px}
+  .phases{grid-template-columns:1fr;row-gap:36px}
+  .hiring{padding:88px 0;row-gap:8px}
+  .hiring .copy{padding-top:12px}
 }
-@media (max-width: 520px){ .nums{grid-template-columns:1fr} .timeline{grid-template-columns:1fr} }
-@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
-@media print{ .nav,.controls,.btn{display:none!important} .section{padding:24px 0} }
-</style>
-<style>
-.pov-hero{padding:72px 0 40px}
-.pov-hero h1{max-width:16ch}
-.pov-hero .lede{margin:20px 0 18px;max-width:64ch}
-.meta-line{font-size:14px;color:var(--ink-3)}
-.pov-list{counter-reset:pov;margin-top:8px}
-.pov{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:26px 48px;padding:38px 0;border-top:1px solid var(--line);position:relative}
-.pov:last-child{border-bottom:1px solid var(--line)}
-.pov h3{font-size:24px;line-height:1.2;margin-bottom:12px;padding-left:44px;position:relative}
-.pov h3::before{counter-increment:pov;content:counter(pov);position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;background:var(--accent);color:#fff;font:600 14px/30px var(--sans);text-align:center}
-.pov p{font-size:15.5px;color:var(--ink-2);margin:0 0 10px}
-.pov .change{padding-left:44px}
-.pov .change b{color:var(--ink);font-weight:600}
-.evidence{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;align-self:start}
-.evidence .big{font-family:var(--serif);font-weight:500;font-size:40px;line-height:1;letter-spacing:-.02em;color:var(--ink);margin-bottom:6px}
-.evidence .big small{font-size:18px;color:var(--ink-3);font-family:var(--sans);font-weight:400;letter-spacing:0;margin-left:6px}
-.evidence .big small{display:inline-block;white-space:nowrap}
-.evidence .what{font-size:14px;color:var(--ink-2);margin-bottom:10px}
-.evidence .src{font-size:12.5px;color:var(--ink-3);border-top:1px dashed var(--line);padding-top:8px}
-.evidence .row{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14px;color:var(--ink-2);margin-bottom:10px}
-.evidence .row b{font-family:var(--mono);font-weight:500;color:var(--ink);white-space:nowrap}
-.plan{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-top:26px}
-.plan > div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
-.plan h3{font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:10px}
-.plan ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2)}
-.plan li{margin-bottom:6px}
-.callout{margin-top:44px;padding:22px 26px;border:1px solid var(--line);border-radius:12px;background:color-mix(in srgb,var(--accent-soft) 40%,var(--surface));display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
-.callout p{margin:0;font-size:15px;color:var(--ink-2)}
-.callout p b{color:var(--ink);font-weight:600}
-.src-note{font-size:13.5px;color:var(--ink-3);margin-top:34px;max-width:70ch}
-.tldr{margin-top:30px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 24px}
-.tldr h3{font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:10px}
-.tldr ol{margin:0;padding-left:22px;display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;font-size:14.5px;color:var(--ink-2)}
-.tldr li{padding-left:4px}
-.tldr li b{color:var(--ink);font-weight:600}
-.closing{margin-top:44px;padding:26px 28px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.closing h3{margin-bottom:10px}
-.closing p{font-size:15.5px;color:var(--ink-2);margin:0 0 10px;max-width:70ch}
-.closing p b{color:var(--ink);font-weight:600}
-@media (max-width: 900px){ .tldr ol{grid-template-columns:1fr} .pov{grid-template-columns:1fr} .plan{grid-template-columns:1fr} .callout{grid-template-columns:1fr} .pov h3{font-size:21px} .pov-hero{padding:44px 0 28px} }
+@media (max-width:600px){
+  :root{--gutter:20px;--nav-h:64px}
+  .brand a{font-size:16px}
+  .menu-btn{display:inline-flex;margin-left:auto;align-items:center;justify-content:center;gap:8px;min-width:44px;height:44px;padding:0 12px;background:transparent;border:1px solid rgba(27,26,23,.35);border-radius:2px;color:var(--ink);font:600 15px var(--sans);cursor:pointer}
+  .menu-btn svg{flex-shrink:0}
+  .nav-links{display:none;position:absolute;left:0;right:0;top:100%;margin:0;padding:8px var(--gutter) 16px;flex-direction:column;align-items:stretch;gap:0;background:var(--band);border-bottom:1px solid rgba(27,26,23,.22);box-shadow:0 12px 24px rgba(27,26,23,.08);font-size:17px}
+  .nav-links.open{display:flex}
+  .nav-links li{border-bottom:1px solid rgba(27,26,23,.12)}
+  .nav-links li:last-child{border-bottom:0}
+  .nav-links a{min-height:48px;width:100%}
+  .no-js .menu-btn{display:none}
+  .no-js .nav-links{display:flex;position:static;flex-direction:row;flex-wrap:wrap;padding:0;box-shadow:none;border:0;gap:0 16px;font-size:15px}
+  .no-js .nav-links li{border:0}
+  .no-js .site-nav{position:static}
+  .no-js .site-nav .bar{height:auto;flex-wrap:wrap;padding:8px 0}
+  .kicker{font-size:13px}
+  .hero{padding:44px 0 56px}
+  .hero h1{margin-top:20px;font-size:clamp(40px,12vw,52px);line-height:1}
+  .lede{margin-top:24px;font-size:18px;line-height:1.5}
+  .byline{margin-top:20px;font-size:14px}
+  h2{font-size:30px}
+  .sec-head{padding-top:16px}
+  .short{padding-top:56px}
+  .short ol{grid-template-columns:1fr}
+  .short li{padding:14px 0 16px;grid-template-columns:22px minmax(0,1fr)}
+  .short .t b{font-size:17px}
+  .short .t span{font-size:15px}
+  .changes,.plan{padding-top:56px}
+  .changes .intro{font-size:15px;line-height:1.5}
+  .change{padding:36px 0;row-gap:18px}
+  .change:first-of-type{margin-top:28px}
+  .numeral{font-size:72px}
+  .change .body{gap:14px}
+  .change h3{font-size:30px;line-height:1.1;letter-spacing:-.02em}
+  .change .body p{font-size:16px}
+  .headline .big{font-size:40px}
+  .evidence dl div{grid-template-columns:76px minmax(0,1fr)}
+  .evidence dt{font-size:15px}
+  .evidence dd{font-size:14px}
+  .evidence .quote{font-size:18px}
+  .callout{margin:56px calc(-1 * var(--gutter)) 0;padding:32px var(--gutter)}
+  .callout h2{font-size:30px}
+  .callout p{font-size:16px}
+  .callout .act,.callout .btn{width:100%}
+  .callout .btn{white-space:normal}
+  .phase h3{font-size:26px}
+  .phase li{font-size:15px}
+  .hiring{padding:56px 0}
+  .hiring .copy>p:first-child{font-size:17px}
+  .tlink{font-size:16px}
+  .hiring .note{font-size:14px}
+  footer{padding:24px 0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
 </style>
 </head>
-<body>
-<div class="nav"><div class="wrap">
-  <a class="brand" href="../">Nicole Glassman<span>social strategy · point of view</span></a>
-  <nav aria-label="Sections"><a href="#short">Short version</a><a href="#pov">The six changes</a><a href="#plan">First 90 days</a><a href="../buildcheck/">Buildcheck demo</a></nav>
-</div></div>
+<body class="no-js">
+<a class="skip" href="#main">Skip to content</a>
 
-<main id="top">
-<section class="pov-hero"><div class="wrap">
-  <div class="notice"><i></i>Point of view · numbers from campaigns I planned and ran · clients not named</div>
-  <h1>What I'd change about most brands' social.</h1>
-  <p class="lede">Four years of planning and running paid social for national brands taught me that brand social is usually run as a media plan with content bolted on. The evidence points the other way. Here are the changes I would make in an in-house seat, each with the test that convinced me.</p>
-  <div class="meta-line">Nicole Glassman · social media marketer and strategist · open to in-house social roles · <a href="https://www.linkedin.com/in/nicoleglassman">message me on LinkedIn</a> · <a href="mailto:nicolebglassman@gmail.com">nicolebglassman@gmail.com</a> · 5-minute read</div>
-  <div class="facts" style="margin-top:26px">
-    <div><b>$20.5M</b>annual plan, six channels, two countries</div>
-    <div><b>15%</b>of the U.S. population reached by one campaign — +115% tune-in lift</div>
-    <div><b>72% lower</b>cost per interaction, creator vs brand creative</div>
-    <div><b>20 min</b>what a four-day, four-person QA became</div>
-  </div>
-  <div class="tldr" id="short">
-    <h3>The short version</h3>
-    <ol>
-      <li><b>Let the test decide who makes the creative.</b> Creator content cut cost per interaction 72% for a product; the brand film won by 24% on tune-in; AI-generated creative came last.</li>
-      <li><b>Buy intent, not interests.</b> Search-keyword targeting beat interest targeting on Pinterest and cut CPA 40% on Reddit.</li>
-      <li><b>Give every placement a job.</b> Pulse held attention; TopView drove clicks. Judge each on its job.</li>
-      <li><b>Optimize to the signal that moves consideration.</b> Engaged visits out-lifted three other signals in a four-cell test.</li>
-      <li><b>Measure lift, not likes.</b> A lift study or holdout on every launch that matters.</li>
-      <li><b>Run organic and paid as one system.</b> One calendar for both — the reason I want an in-house seat.</li>
-    </ol>
-  </div>
-</div></section>
-
-<section class="section" id="pov" style="padding-top:20px"><div class="wrap">
-  <div class="pov-list">
-
-    <div class="pov">
-      <div>
-        <h3>Let the test decide who makes the creative</h3>
-        <div class="change">
-          <p><b>What I usually see:</b> decide by belief — either "creators are more authentic" or "the brand film is more premium" — and never run the head-to-head.</p>
-          <p><b>What I'd change:</b> run creator, brand and AI-generated creative head to head on matched spend for every launch that matters, because the answer flips with the objective. For a product measured on attention and efficiency, creator content won on all three metrics we read. For an entertainment launch measured on tune-in, the brand's own creative won by 24% — and AI-generated creative finished last. Build the creator engine anyway; it is the cheapest way to get variants. But let the numbers decide what leads.</p>
-        </div>
+<header>
+  <div class="site-nav">
+    <nav class="wrap" aria-label="Essay sections">
+      <div class="bar">
+        <div class="brand"><a href="../">Nicole Glassman</a><span>Point of view</span></div>
+        <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+          <span>Menu</span>
+        </button>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#short">Short version</a></li>
+          <li><a href="#changes">The six changes</a></li>
+          <li><a href="#plan">First 90 days</a></li>
+          <li><a href="../buildcheck/">Buildcheck demo</a></li>
+        </ul>
       </div>
-      <div class="evidence">
-        <div class="big">72% lower<small>cost per interaction</small></div>
-        <div class="row"><b>+70%</b><span>3-second view rate, creator vs brand creative</span><b>+77%</b><span>link click-through rate</span></div>
-        <div class="what">Two equal-spend, three-day Meta reach-and-frequency flights in the same month — $580K each, identical targeting and placements. Creator content beat brand creative on all three.</div>
-        <div class="row" style="margin-top:12px"><b>+24%</b><span>tune-in for brand creative over creator-boosted posts in a three-way test; AI-generated creative finished last</span></div>
-        <div class="src">Matched-spend creative test, 2026 · Three-way creative test on tune-in, 2025</div>
+    </nav>
+  </div>
+  <div class="wrap">
+    <div class="hero grid">
+      <div class="hero-copy">
+        <span class="kicker">An essay. Numbers from campaigns I planned and ran; clients not named.</span>
+        <h1>What I'd change about most brands' social.</h1>
+        <p class="lede">Four years of planning and running paid social for national brands taught me that brand social is usually run as a media plan with content bolted on. The evidence points the other way. Here are the changes I would make in an in-house seat, each with the test that convinced me.</p>
+        <div class="byline"><span>By Nicole Glassman</span><span>5-minute read</span></div>
       </div>
     </div>
+  </div>
+</header>
 
-    <div class="pov">
-      <div>
-        <h3>Buy intent, not interests</h3>
-        <div class="change">
+<main id="main" tabindex="-1">
+  <div class="wrap">
+
+    <section id="short" class="short grid" aria-labelledby="short-h">
+      <div class="sec-head"><h2 id="short-h">The short version</h2></div>
+      <ol>
+        <li><span class="n" aria-hidden="true">1</span><span class="t"><b>Let the test decide who makes the creative.</b><span>Creator content cut cost per interaction 72%; the brand film won by 24% on tune-in; AI-generated creative came last.</span></span></li>
+        <li><span class="n" aria-hidden="true">2</span><span class="t"><b>Buy intent, not interests.</b><span>Search-keyword targeting beat interest targeting on Pinterest and cut CPA 40% on Reddit.</span></span></li>
+        <li><span class="n" aria-hidden="true">3</span><span class="t"><b>Give every placement a job.</b><span>Pulse held attention; TopView drove clicks. Judge each on its job.</span></span></li>
+        <li><span class="n" aria-hidden="true">4</span><span class="t"><b>Optimize to the signal that moves consideration.</b><span>Engaged visits out-lifted three other signals in a four-cell test.</span></span></li>
+        <li><span class="n" aria-hidden="true">5</span><span class="t"><b>Measure lift, not likes.</b><span>A lift study or holdout on every launch that matters.</span></span></li>
+        <li><span class="n" aria-hidden="true">6</span><span class="t"><b>Run organic and paid as one system.</b><span>One calendar for both. It's the reason I want an in-house seat.</span></span></li>
+      </ol>
+    </section>
+
+    <section id="changes" class="changes" aria-labelledby="changes-h">
+      <div class="grid">
+        <div class="sec-head"><h2 id="changes-h">The six changes</h2></div>
+        <p class="intro">Each one: what I usually see, what I'd change, and the test that convinced me.</p>
+      </div>
+
+      <article class="change grid" aria-labelledby="c1">
+        <span class="numeral" aria-hidden="true">1</span>
+        <div class="body">
+          <h3 id="c1">Let the test decide who makes the creative</h3>
+          <p><b>What I usually see:</b> decide by belief, either "creators are more authentic" or "the brand film is more premium", and never run the head-to-head.</p>
+          <p><b>What I'd change:</b> run creator, brand and AI-generated creative head to head on matched spend for every launch that matters, because the answer flips with the objective. For a product measured on attention and efficiency, creator content won on all three metrics we read. For an entertainment launch measured on tune-in, the brand's own creative won by 24%, and AI-generated creative finished last. Build the creator engine anyway; it is the cheapest way to get variants. But let the numbers decide what leads.</p>
+        </div>
+        <aside class="evidence" aria-label="Evidence for change 1">
+          <div class="headline"><span class="big">72% lower</span><span class="cap">cost per interaction, creator vs brand creative</span></div>
+          <dl>
+            <div><dt>+70%</dt><dd>3-second view rate, creator vs brand creative</dd></div>
+            <div><dt>+77%</dt><dd>link click-through rate</dd></div>
+            <div><dt>+24%</dt><dd>tune-in for brand creative over creator-boosted posts in a three-way test; AI-generated creative finished last</dd></div>
+          </dl>
+          <p>Two equal-spend, three-day Meta reach-and-frequency flights in the same month, $580K each, with identical targeting and placements. Creator content beat brand creative on all three.</p>
+          <span class="src">Matched-spend creative test, 2026. Three-way creative test on tune-in, 2025.</span>
+        </aside>
+      </article>
+
+      <article class="change grid" aria-labelledby="c2">
+        <span class="numeral" aria-hidden="true">2</span>
+        <div class="body">
+          <h3 id="c2">Buy intent, not interests</h3>
           <p><b>What I usually see:</b> prospect on interest and lookalike audiences on every platform, because that is what the platforms default to.</p>
           <p><b>What I'd change:</b> treat social search as search. Build keyword sets from the brand's own search-console queries, comments and customer language; put them to work on Pinterest and Reddit first; move interest-only prospecting budget toward intent, and let lookalikes do retargeting's job, not discovery's.</p>
         </div>
-      </div>
-      <div class="evidence">
-        <div class="big">40% lower<small>CPA on Reddit</small></div>
-        <div class="what">Launched the brand on Pinterest with search-keyword targeting, which beat interest targeting on completion rate, view rate and engagement. The same approach on Reddit cut cost per acquisition 40% against the prior spring/summer campaign.</div>
-        <div class="src">Pinterest launch and Reddit · 2026</div>
-      </div>
-    </div>
+        <aside class="evidence" aria-label="Evidence for change 2">
+          <div class="headline"><span class="big">40% lower</span><span class="cap">CPA on Reddit</span></div>
+          <p>Launched the brand on Pinterest with search-keyword targeting, which beat interest targeting on completion rate, view rate and engagement. The same approach on Reddit cut cost per acquisition 40% against the prior spring and summer campaign.</p>
+          <span class="src">Pinterest launch and Reddit, 2026.</span>
+        </aside>
+      </article>
 
-    <div class="pov">
-      <div>
-        <h3>Give every placement a job — and judge it on that job</h3>
-        <div class="change">
+      <article class="change grid" aria-labelledby="c3">
+        <span class="numeral" aria-hidden="true">3</span>
+        <div class="body">
+          <h3 id="c3">Give every placement a job, and judge it on that job</h3>
           <p><b>What I usually see:</b> compare premium placements on one CPM line and keep the cheapest.</p>
           <p><b>What I'd change:</b> assign each placement a job before the buy. On TikTok, Pulse buys attention next to content people chose to watch; TopView buys reach and clicks. Read each on its own metric, and stop paying attention prices for traffic or traffic prices for attention.</p>
         </div>
-      </div>
-      <div class="evidence">
-        <div class="big">13.1%<small>six-second view rate, Pulse</small></div>
-        <div class="row"><b>2×</b><span>Pulse's six-second view rate vs TopView's</span><b>5.1s</b><span>average watch time on Pulse</span><b>$0.38</b><span>CPC on TopView — 1.57M destination clicks, 3.24% CTR</span></div>
-        <div class="what">$1.36M across TikTok TopView, TopFeed and Pulse, read by placement. Pulse held attention; TopView drove the traffic. Neither was "better" — they did different jobs.</div>
-        <div class="src">TikTok premium placements · 2026</div>
-      </div>
-    </div>
+        <aside class="evidence" aria-label="Evidence for change 3">
+          <div class="headline"><span class="big">13.1%</span><span class="cap">six-second view rate on Pulse</span></div>
+          <dl>
+            <div><dt>2×</dt><dd>Pulse's six-second view rate vs TopView's</dd></div>
+            <div><dt>5.1s</dt><dd>average watch time on Pulse</dd></div>
+            <div><dt>$0.38</dt><dd>CPC on TopView: 1.57M destination clicks at 3.24% CTR</dd></div>
+          </dl>
+          <p>$1.36M across TikTok TopView, TopFeed and Pulse, read by placement. Pulse held attention; TopView drove the traffic. Neither was "better". They did different jobs.</p>
+          <span class="src">TikTok premium placements, 2026.</span>
+        </aside>
+      </article>
 
-    <div class="pov">
-      <div>
-        <h3>Optimize to the signal that moves consideration, not the cheapest proxy</h3>
-        <div class="change">
+      <article class="change grid" aria-labelledby="c4">
+        <span class="numeral" aria-hidden="true">4</span>
+        <div class="body">
+          <h3 id="c4">Optimize to the signal that moves consideration, not the cheapest proxy</h3>
           <p><b>What I usually see:</b> optimize consideration campaigns to landing-page views or ad recall because they are cheap and easy to hit.</p>
-          <p><b>What I'd change:</b> define what an engaged visit means on the brand's own site first — time, depth, a meaningful action — and make that event the optimization goal. Then prove it with a lift study, not a dashboard.</p>
+          <p><b>What I'd change:</b> define what an engaged visit means on the brand's own site first (time, depth, a meaningful action) and make that event the optimization goal. Then prove it with a lift study, not a dashboard.</p>
         </div>
-      </div>
-      <div class="evidence">
-        <div class="big" style="font-size:30px">Engaged visits<small>won</small></div>
-        <div class="row"><b>4 cells</b><span>engaged page views · two custom conversion events · ad recall</span><b>1 study</b><span>one Meta brand lift study, one question: which signal moves consideration?</span></div>
-        <div class="what">Engaged page views produced the strongest lift. The cheapest signal to hit was not the one that changed minds.</div>
-        <div class="src">Signals test inside a brand lift study · 2026</div>
-      </div>
-    </div>
+        <aside class="evidence" aria-label="Evidence for change 4">
+          <div class="headline"><span class="big">Engaged visits</span><span class="cap">won</span></div>
+          <dl>
+            <div><dt>4 cells</dt><dd>engaged page views, two custom conversion events, ad recall</dd></div>
+            <div><dt>1 study</dt><dd>one Meta brand lift study, one question: which signal moves consideration?</dd></div>
+          </dl>
+          <p>Engaged page views produced the strongest lift. The cheapest signal to hit was not the one that changed minds.</p>
+          <span class="src">Signals test inside a brand lift study, 2026.</span>
+        </aside>
+      </article>
 
-    <div class="pov">
-      <div>
-        <h3>Measure lift, not likes — then report like a strategist</h3>
-        <div class="change">
-          <p><b>What I usually see:</b> report platform metrics — reach, views, engagement rate — and call the campaign a success when they go up.</p>
+      <article class="change grid" aria-labelledby="c5">
+        <span class="numeral" aria-hidden="true">5</span>
+        <div class="body">
+          <h3 id="c5">Measure lift, not likes, then report like a strategist</h3>
+          <p><b>What I usually see:</b> report platform metrics (reach, views, engagement rate) and call the campaign a success when they go up.</p>
           <p><b>What I'd change:</b> a lift study or a holdout on every launch that matters, and a one-page readout that says what the media changed in people's heads or behavior. Platform metrics diagnose; lift decides.</p>
         </div>
-      </div>
-      <div class="evidence">
-        <div class="big">+444%<small>minutes watched vs control</small></div>
-        <div class="row"><b>+115%</b><span>tune-in lift from one TikTok campaign that reached 15% of the U.S. population</span><b>+9.6 pts</b><span>unaided awareness on a launch campaign, brand lift study (+15.3 pts ad recall)</span><b>+312%</b><span>video completion vs benchmark on a premiere campaign I led from RFP to reporting</span></div>
-        <div class="src">Three campaigns · 2023–2025</div>
-      </div>
-    </div>
+        <aside class="evidence" aria-label="Evidence for change 5">
+          <div class="headline"><span class="big">+444%</span><span class="cap">minutes watched vs control</span></div>
+          <dl>
+            <div><dt>+115%</dt><dd>tune-in lift from one TikTok campaign that reached 15% of the U.S. population</dd></div>
+            <div><dt>+9.6 pts</dt><dd>unaided awareness on a launch campaign, brand lift study (+15.3 pts ad recall)</dd></div>
+            <div><dt>+312%</dt><dd>video completion vs benchmark on a premiere campaign I led from RFP to reporting</dd></div>
+          </dl>
+          <span class="src">Three campaigns, 2023 to 2025.</span>
+        </aside>
+      </article>
 
-    <div class="pov">
-      <div>
-        <h3>Run organic and paid as one content system</h3>
-        <div class="change">
+      <article class="change grid" aria-labelledby="c6">
+        <span class="numeral" aria-hidden="true">6</span>
+        <div class="body">
+          <h3 id="c6">Run organic and paid as one content system</h3>
           <p><b>What I usually see:</b> organic lives with the community team, paid lives with media, and the two share a logo.</p>
-          <p><b>What I'd change:</b> organic is the cheapest creative test a brand will ever run — every post is a read on what the audience wants more of. Paid should amplify what organic already proved, comments should feed the brief, and one calendar should hold both. This is the one change I can't prove from the paid side of the wall — and the reason I want an in-house seat rather than another agency desk.</p>
+          <p><b>What I'd change:</b> organic is the cheapest creative test a brand will ever run: every post is a read on what the audience wants more of. Paid should amplify what organic already proved, comments should feed the brief, and one calendar should hold both. This is the one change I can't prove from the paid side of the wall, and it is the reason I want an in-house seat rather than another agency desk.</p>
+        </div>
+        <aside class="evidence" aria-label="Note on change 6">
+          <p class="quote">The five tests above were run from the paid side of the wall. Each would have been faster and cheaper with organic and community in the same room: creator picks from the comments, keyword sets from real questions, and lift studies designed around what the calendar was already saying.</p>
+        </aside>
+      </article>
+    </section>
+
+    <section class="callout grid" aria-labelledby="build-h">
+      <div class="txt">
+        <h2 id="build-h">Then make the build boring.</h2>
+        <p>Strategy is only as good as the campaign that actually launches. When a four-day, four-person review of 2,000 ads was the bottleneck, I built an AI-assisted QA system that turned it into a 20-minute run. The demo is interactive and runs on synthetic data.</p>
+      </div>
+      <div class="act"><a class="btn" href="../buildcheck/">Try the Buildcheck demo</a></div>
+    </section>
+
+    <section id="plan" class="plan grid" aria-labelledby="plan-h">
+      <div class="sec-head">
+        <h2 id="plan-h">How I'd run this in-house</h2>
+        <p>The first 90 days. The point of an in-house seat is that strategy, creative and execution sit together. This is the order I'd do it in.</p>
+      </div>
+      <div class="phases">
+        <div class="phase">
+          <header><h3>Days 1 to 30</h3><span>Learn and audit</span></header>
+          <ul>
+            <li>Audit organic and paid together: what each channel is actually doing, and what it's being judged on.</li>
+            <li>Set content pillars and a posting cadence from what the audience already responds to organically.</li>
+            <li>Pull the brand's own intent data (search queries, comments, support tickets) into keyword sets.</li>
+            <li>Stand up a creator roster with clear briefs, rights and turnaround times.</li>
+            <li>Map the build process; find the four-day step.</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <header><h3>Days 31 to 60</h3><span>Test the big bets</span></header>
+          <ul>
+            <li>Matched-spend creative test: creator vs studio on identical media.</li>
+            <li>Intent vs interest prospecting on Pinterest and Reddit.</li>
+            <li>Define the engaged-visit event with analytics; design the signals test around it.</li>
+            <li>Make community and listening a routine: comments and DMs answered daily, recurring questions fed into the brief.</li>
+            <li>Put a Buildcheck-style QA loop in front of every launch.</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <header><h3>Days 61 to 90</h3><span>Decide and scale</span></header>
+          <ul>
+            <li>Lift study on the first big launch; holdouts on everything else.</li>
+            <li>Assign placements their jobs and rewrite the reporting to match.</li>
+            <li>Shift budget to what the tests said: creator-led creative, intent-led prospecting.</li>
+            <li>One calendar for organic and paid, with paid amplifying what organic already proved.</li>
+            <li>A one-page monthly readout leadership can act on.</li>
+          </ul>
         </div>
       </div>
-      <div class="evidence" style="background:transparent;border-style:dashed">
-        <div class="what" style="margin-bottom:0">The five tests above were run from the paid side of the wall. Each would have been faster and cheaper with organic and community in the same room: creator picks from the comments, keyword sets from real questions, and lift studies designed around what the calendar was already saying.</div>
+    </section>
+
+    <section class="hiring grid" aria-labelledby="hire-h">
+      <div class="sec-head"><h2 id="hire-h">If you're hiring for in-house social</h2></div>
+      <div class="copy">
+        <p>What I bring is the whole loop: a point of view on what to make, the media planning to put money behind it, the measurement to know whether it worked, and the operations to make sure what launches is what was planned. Four years on national brands, promoted twice in two years, Meta Blueprint certified in AI and performance marketing, and one shipped AI system a media team used on live budgets.</p>
+        <div class="contact-links">
+          <a class="tlink" href="mailto:nicolebglassman@gmail.com">nicolebglassman@gmail.com</a>
+          <a class="tlink" href="https://www.linkedin.com/in/nicoleglassman">LinkedIn</a>
+        </div>
+        <p class="note">Every number on this page comes from campaigns I planned and ran at two agencies between 2022 and 2026. Clients aren't named here; I'm glad to walk through the specifics in conversation. No confidential client data is used, and the Buildcheck demo runs on synthetic data.</p>
       </div>
-    </div>
+    </section>
 
   </div>
-
-  <div class="callout">
-    <p><b>Then make the build boring.</b> Strategy is only as good as the campaign that actually launches. When a four-day, four-person review of 2,000 ads was the bottleneck, I built an AI-assisted QA system that turned it into a 20-minute run and rolled it out across the agency's Meta and TikTok teams. It's interactive, with synthetic data.</p>
-    <a class="btn" href="../buildcheck/">Try the Buildcheck demo</a>
-  </div>
-</div></section>
-
-<section class="section" id="plan"><div class="wrap">
-  <h2>How I'd run this in-house: the first 90 days</h2>
-  <p class="lede" style="margin:14px 0 0">The point of an in-house seat is that strategy, creative and execution sit together. This is the order I'd do it in.</p>
-  <div class="plan">
-    <div><h3>Days 1–30 · Learn and audit</h3><ul><li>Audit organic and paid together: what each channel is actually doing, and what it's being judged on.</li><li>Set content pillars and a posting cadence from what the audience already responds to organically.</li><li>Pull the brand's own intent data — search queries, comments, support tickets — into keyword sets.</li><li>Stand up a creator roster with clear briefs, rights and turnaround times.</li><li>Map the build process; find the four-day step.</li></ul></div>
-    <div><h3>Days 31–60 · Test the big bets</h3><ul><li>Matched-spend creative test: creator vs studio on identical media.</li><li>Intent vs interest prospecting on Pinterest and Reddit.</li><li>Define the engaged-visit event with analytics; design the signals test around it.</li><li>Make community and listening a routine: comments and DMs answered daily, recurring questions fed into the brief.</li><li>Put a Buildcheck-style QA loop in front of every launch.</li></ul></div>
-    <div><h3>Days 61–90 · Decide and scale</h3><ul><li>Lift study on the first big launch; holdouts on everything else.</li><li>Assign placements their jobs and rewrite the reporting to match.</li><li>Shift budget to what the tests said — creator-led creative, intent-led prospecting.</li><li>One calendar for organic and paid, with paid amplifying what organic already proved.</li><li>A one-page monthly readout leadership can act on.</li></ul></div>
-  </div>
-  <div class="closing">
-    <h3>If you're hiring for in-house social</h3>
-    <p>What I bring is the whole loop: a point of view on what to make, the media planning to put money behind it, the measurement to know whether it worked, and the operations to make sure what launches is what was planned. Four years on national brands, promoted twice in two years, Meta Blueprint certified in AI and performance marketing, and one shipped AI system a media team used on live budgets.</p>
-    <p><b>Open to in-house social media marketing and strategy roles. <a href="https://www.linkedin.com/in/nicoleglassman">Message me on LinkedIn</a> or email <a href="mailto:nicolebglassman@gmail.com">nicolebglassman@gmail.com</a>.</b></p>
-  </div>
-  <p class="src-note">Every number on this page comes from campaigns I planned and ran at two agencies between 2022 and 2026. Clients aren't named here — I'm glad to walk through the specifics in conversation. No confidential client data is used; the Buildcheck demo runs on synthetic data.</p>
-</div></section>
 </main>
-<footer><div class="wrap"><span>© 2026 Nicole Glassman · Open to in-house social media marketing and strategy roles · <a href="https://www.linkedin.com/in/nicoleglassman">message me on LinkedIn</a> · <a href="mailto:nicolebglassman@gmail.com">nicolebglassman@gmail.com</a>.</span><span><button class="theme-btn" id="theme-btn" type="button">Switch theme</button></span></div></footer>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Nicole Glassman</span>
+    <a href="../">nicoleglassman.github.io</a>
+  </div>
+</footer>
+
 <script>
-(function(){ const sc=document.querySelector(".nav nav"), w=sc&&sc.parentElement; if(sc){ const upd=()=>{ if(sc.scrollLeft+sc.clientWidth<sc.scrollWidth-2) w.setAttribute("data-more",""); else w.removeAttribute("data-more"); }; sc.addEventListener("scroll",upd,{passive:true}); addEventListener("resize",upd); upd(); } })();
-(function(){ const root=document.documentElement, btn=document.getElementById('theme-btn'); let saved=null; try{saved=localStorage.getItem('bc-theme')}catch(e){}
-  if(saved==='dark'||saved==='light') root.setAttribute('data-theme',saved);
-  btn.addEventListener('click',()=>{ const dark=root.getAttribute('data-theme')==='dark'||(!root.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme: dark)').matches); const next=dark?'light':'dark'; root.setAttribute('data-theme',next); try{localStorage.setItem('bc-theme',next)}catch(e){} }); })();
+(function(){
+  document.body.classList.remove('no-js');
+  var btn=document.querySelector('.menu-btn'), list=document.getElementById('nav-links');
+  function set(open){ btn.setAttribute('aria-expanded', open?'true':'false'); list.classList.toggle('open', open); }
+  btn.addEventListener('click', function(){ set(btn.getAttribute('aria-expanded')!=='true'); });
+  list.addEventListener('click', function(e){ if(e.target.closest('a')) set(false); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && btn.getAttribute('aria-expanded')==='true'){ set(false); btn.focus(); } });
+})();
 </script>
 </body>
 </html>
