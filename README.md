@@ -1,13 +1,14 @@
 # nicoleglassman.github.io
 
-Portfolio site for Nicole Glassman — social media marketer and strategist. Live at [nicoleglassman.github.io](https://nicoleglassman.github.io).
+Portfolio site for Nicole Glassman, social media marketer and strategist. Live at [nicoleglassman.github.io](https://nicoleglassman.github.io).
 
 | Page | What it is |
 | --- | --- |
-| [`/`](https://nicoleglassman.github.io/) | Landing page — who I am, the two pieces of work below, contact |
-| [`/pov/`](https://nicoleglassman.github.io/pov/) | *What I'd change about most brands' social* — a point of view on brand social, with the tests behind each change |
-| [`/buildcheck/`](https://nicoleglassman.github.io/buildcheck/) | *Buildcheck* — an interactive demo of an AI-assisted QA system for paid-social campaign builds (synthetic data, no client information) |
+| [`/`](https://nicoleglassman.github.io/) | Landing page: who I am, the work, three campaigns, contact |
+| [`/pov/`](https://nicoleglassman.github.io/pov/) | *What I'd change about most brands' social*, a point of view with the test behind each change |
+| [`/buildcheck/`](https://nicoleglassman.github.io/buildcheck/) | *Buildcheck*, an interactive demo of an AI-assisted QA system for paid-social builds on Meta and TikTok (synthetic data, no client information) |
+| [`/portfolio-v1/`](https://nicoleglassman.github.io/portfolio-v1/) | The first version of this site, kept as it was |
 
-Three self-contained static pages (plus a `404.html` that points back to them): plain HTML, CSS and JavaScript, no build step. Fonts are loaded from Google Fonts; everything else is in this repo. Hosted on GitHub Pages.
+Static HTML, CSS and JavaScript with no build step; fonts from Google Fonts. Hosted on GitHub Pages. The earlier address, nicole-glassman.github.io, redirects here.
 
-© 2026 Nicole Glassman. The content, design and Buildcheck's rules and engine are original work, shown for portfolio purposes and not licensed for reuse.
+© 2026 Nicole Glassman. Content, design and Buildcheck's rules and engine are original work, shown for portfolio purposes and not licensed for reuse.
