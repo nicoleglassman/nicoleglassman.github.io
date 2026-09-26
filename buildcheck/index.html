@@ -338,16 +338,19 @@ details.eng[open]>summary::after{content:"−"}
 .shows li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.4}
 
 /* Contact */
-.contact{background:var(--band);padding:112px 0 48px}
-.contact-label{grid-column:span 3;border-top:2px solid var(--ink);padding-top:20px;font-size:16px;font-weight:700}
-.contact-body{grid-column:span 9;border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:28px}
-.contact h2{font-family:var(--serif);font-size:clamp(46px,5.84vw,84px);line-height:1;letter-spacing:-.025em;text-wrap:balance}
-.contact-body>p{max-width:720px;font-size:20px;line-height:1.5;color:var(--ink-2)}
-.contact-links{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
-.contact-links a{display:inline-flex;align-items:center;min-height:44px;font-family:var(--serif);font-size:clamp(24px,2.64vw,38px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px;overflow-wrap:anywhere}
-.contact-links a:hover{color:var(--accent-hover)}
-.contact .aside{font-size:17px;color:var(--ink-2)}
-.colophon{margin-top:96px;border-top:1px solid var(--band-rule);padding-top:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 24px;font-size:14px;color:var(--muted)}
+.contact{padding:0 0 48px}
+.contact-card{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:28px 56px;padding:44px 48px;background:var(--white);border:1px solid var(--rule);border-radius:2px}
+.contact-eyebrow{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.contact h2{margin-top:10px;font-family:var(--serif);font-size:40px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.contact-lede{margin-top:12px;max-width:60ch;font-size:18px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.contact .aside{margin-top:14px;font-size:15px;line-height:1.55;color:var(--muted)}
+.contact-actions{display:flex;flex-direction:column;align-items:stretch;gap:12px;min-width:260px}
+.contact-actions .btn{min-height:54px;font-size:17px}
+.contact-addr{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px;font-family:var(--mono);font-size:13px;color:var(--muted)}
+.copy-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 2px;background:none;border:0;font:600 14px var(--sans);color:var(--accent);cursor:pointer}
+.no-js .copy-btn{display:none}
+.copy-btn:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:4px}
+.colophon{margin-top:40px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 24px;font-size:14px;color:var(--muted)}
 .colophon a{color:var(--ink)}
 
 /* ≤1100: section heads above their content */
@@ -356,8 +359,8 @@ details.eng[open]>summary::after{content:"−"}
   .nav-links{gap:24px}
   .hero-text{grid-column:span 7}
   .hero-nums{grid-column:span 5}
-  .sec-head,.contact-label{grid-column:1 / -1;padding-bottom:4px}
-  .sec-body,.contact-body{grid-column:1 / -1;border-top:0;padding-top:12px}
+  .sec-head{grid-column:1 / -1;padding-bottom:4px}
+  .sec-body{grid-column:1 / -1;border-top:0;padding-top:12px}
   .about-main{grid-column:span 7;border-top:0}
   .about-side{grid-column:span 5;border-top:0}
   .numbered.three-col{grid-template-columns:minmax(0,1fr)}
@@ -395,7 +398,8 @@ details.eng[open]>summary::after{content:"−"}
   table.compare td:nth-child(3){margin-top:4px;color:var(--ink)}
   table.compare td:nth-child(3)::before{content:"With Buildcheck: ";font-weight:600}
   .about-side{padding-top:32px}
-  .contact{padding-top:80px}
+  .contact-card{grid-template-columns:minmax(0,1fr);padding:36px}
+  .contact-actions{min-width:0;max-width:420px}
 }
 
 /* ≤600: phone */
@@ -468,14 +472,12 @@ details.eng[open]>summary::after{content:"−"}
 
   .about-main p{font-size:16px}
   .about-main .first{font-size:19px}
-  .contact{padding:56px 0 32px}
-  .contact-label{padding-top:16px;font-size:15px}
-  .contact-body{padding-top:16px;gap:20px}
-  .contact h2{font-size:44px;line-height:1.02}
-  .contact-body>p{font-size:17px}
-  .contact-links{gap:4px}
-  .contact-links a{font-size:clamp(20px,6.2vw,24px);letter-spacing:0;text-underline-offset:6px}
-  .colophon{margin-top:48px;padding-top:16px;flex-direction:column;font-size:13px}
+  .contact{padding-bottom:32px}
+  .contact-card{padding:28px 20px;gap:24px}
+  .contact h2{font-size:32px}
+  .contact-lede{font-size:16px}
+  .contact-actions .btn{min-height:52px;font-size:16px}
+  .colophon{margin-top:32px;flex-direction:column;font-size:13px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{transition:none!important;animation:none!important}
@@ -783,16 +785,17 @@ details.eng[open]>summary::after{content:"−"}
 
 <footer id="contact" class="contact" aria-labelledby="contact-h">
   <div class="wrap">
-    <div class="g12">
-      <div class="contact-label">Contact</div>
-      <div class="contact-body">
+    <div class="contact-card">
+      <div>
+        <p class="contact-eyebrow">Contact</p>
         <h2 id="contact-h">Want the full walkthrough?</h2>
-        <p>The production rulebook, proof register, vocabulary maps, fixture suite and build scripts aren't published here. I'm glad to walk through them, and anything else on this page.</p>
-        <div class="contact-links">
-          <a href="mailto:nicolebglassman@gmail.com">nicolebglassman@gmail.com</a>
-          <a href="https://www.linkedin.com/in/nicoleglassman" rel="me">LinkedIn</a>
-        </div>
+        <p class="contact-lede">The production rulebook, proof register, vocabulary maps, fixture suite and build scripts aren't published here. I'm glad to walk through them, and anything else on this page.</p>
         <p class="aside">Open to in-house social roles. The strategy half of the story is in <a href="../pov/">what I'd change about most brands' social</a>.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="btn" href="mailto:nicolebglassman@gmail.com">Email me</a>
+        <a class="btn quiet" href="https://www.linkedin.com/in/nicoleglassman" rel="me">LinkedIn</a>
+        <div class="contact-addr"><span id="contact-email">nicolebglassman@gmail.com</span><button class="copy-btn" type="button" data-copy="contact-email" aria-live="polite">Copy</button></div>
       </div>
     </div>
     <div class="colophon">
@@ -1587,6 +1590,18 @@ tabKeys($('#exp-subtabs'),b=>{ state.expTab=+b.dataset.i; renderInputs(); });
 Object.keys(states).forEach(k=>materialize(states[k],PLATFORMS[k]));
 let deep=null; try{ deep=new URLSearchParams(location.search).get('platform') }catch(e){}
 setPlatform(deep==='tiktok'?'tiktok':'meta');
+})();
+</script>
+<script>
+(function(){
+  var b=document.querySelector('.copy-btn'); if(!b) return;
+  var el=document.getElementById(b.getAttribute('data-copy'));
+  function flash(t){ b.textContent=t; setTimeout(function(){ b.textContent='Copy'; },1600); }
+  function select(){ var r=document.createRange(); r.selectNodeContents(el); var sel=window.getSelection(); sel.removeAllRanges(); sel.addRange(r); flash('Selected'); }
+  b.addEventListener('click',function(){
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(el.textContent.trim()).then(function(){ flash('Copied'); },select); }
+    else select();
+  });
 })();
 </script>
 </body>
