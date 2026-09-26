@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Buildcheck: AI-assisted QA for paid social — Nicole Glassman</title>
+<meta name="description" content="Buildcheck checks every Meta and TikTok ad against the media plan, with evidence, before it spends. An interactive demo of the workbook and AI QA engine Nicole Glassman built, on synthetic data.">
+<link rel="canonical" href="https://nicoleglassman.github.io/buildcheck/">
+<meta name="author" content="Nicole Glassman">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#E9E2F1">
+<link rel="icon" href="../favicon.ico" sizes="32x32">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nicole Glassman">
+<meta property="og:locale" content="en_US">
+<meta property="og:url" content="https://nicoleglassman.github.io/buildcheck/">
+<meta property="og:title" content="Buildcheck: AI-assisted QA for paid social">
+<meta property="og:description" content="Every Meta and TikTok ad checked against the media plan, with evidence, before it spends. An interactive demo on synthetic data.">
+<meta property="og:image" content="https://nicoleglassman.github.io/og/buildcheck.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Buildcheck. Every ad checked against the plan, with evidence, before it spends. An interactive demo by Nicole Glassman, on synthetic data.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Buildcheck: AI-assisted QA for paid social">
+<meta name="twitter:description" content="Every Meta and TikTok ad checked against the media plan, with evidence, before it spends. An interactive demo on synthetic data.">
+<meta name="twitter:image" content="https://nicoleglassman.github.io/og/buildcheck.png">
+<meta name="twitter:image:alt" content="Buildcheck. Every ad checked against the plan, with evidence, before it spends. An interactive demo by Nicole Glassman, on synthetic data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Public+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Buildcheck","url":"https://nicoleglassman.github.io/buildcheck/","description":"An interactive demo of Buildcheck, a planning workbook and AI QA engine that checks every Meta and TikTok ad against the media plan before it spends.","author":{"@type":"Person","name":"Nicole Glassman","url":"https://nicoleglassman.github.io/"}}</script>
+<style>
+:root{
+  --paper:#F6F2EA; --white:#FFFFFF; --ink:#1B1A17; --ink-2:#3F3B33; --muted:#5C584F; --rule:#E2DCCF;
+  --accent:#6A3FA0; --accent-hover:#4E2C7A; --band:#E9E2F1; --soft:#F2EEF6;
+  --fail:#9C3418; --fail-soft:#FBE5DE; --pass:#1E6B44; --pass-soft:#E2F0E6;
+  --review:#7A4D00; --review-soft:#FBEFD5; --derived:#F1EDE5;
+  --band-rule:rgba(27,26,23,.22); --line:rgba(27,26,23,.35);
+  --serif:'Newsreader',Georgia,'Times New Roman',serif;
+  --sans:'Public Sans',system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --gutter:96px; --nav-h:88px;
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-padding-top:calc(var(--nav-h) + 16px);-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--accent)}
+a:hover{color:var(--accent-hover)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3,h4{margin:0;font-weight:400}
+p,ol,ul,dl,dd{margin:0}
+button{font:inherit;color:inherit}
+code,.mono{font-family:var(--mono)}
+code{font-size:.9em}
+.muted{color:var(--muted)}
+
+.skip{position:absolute;left:16px;top:-100px;z-index:100;background:var(--ink);color:var(--white);padding:12px 16px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px;color:var(--white)}
+.wrap{max-width:calc(1248px + 2 * var(--gutter));margin:0 auto;padding:0 var(--gutter)}
+.g12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:32px}
+
+/* Nav */
+.site-nav{position:sticky;top:0;z-index:50;background:var(--band)}
+.site-nav .bar{height:var(--nav-h);display:flex;align-items:center;gap:32px;border-bottom:1px solid var(--band-rule);position:relative}
+.brand{display:flex;align-items:baseline;gap:12px;min-width:0}
+.brand a{font-size:17px;font-weight:700;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px}
+.brand a:hover{color:var(--accent-hover)}
+.brand span{font-size:15px;color:var(--muted);white-space:nowrap}
+.nav-links{margin:0 0 0 auto;padding:0;list-style:none;display:flex;align-items:center;gap:32px;font-size:16px;font-weight:600}
+.nav-links a{color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;min-height:44px;white-space:nowrap}
+.nav-links a:hover{color:var(--accent-hover);text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1px}
+.menu-btn{display:none}
+
+/* Buttons and links */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:0 24px;background:var(--accent);color:var(--white);border:1px solid var(--accent);border-radius:2px;font-size:16px;font-weight:700;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--accent-hover);border-color:var(--accent-hover);color:var(--white)}
+.btn.quiet{background:var(--white);color:var(--ink);border-color:var(--line)}
+.btn.quiet:hover{background:var(--white);color:var(--ink);border-color:var(--ink)}
+.btn.text{min-height:44px;padding:0 4px;background:transparent;border-color:transparent;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
+.btn.text:hover{background:transparent;border-color:transparent;color:var(--accent-hover)}
+.btn.small{min-height:44px;padding:6px 14px;font-size:14px;font-weight:600}
+.btn:disabled,.btn:disabled:hover{background:var(--white);border-color:var(--rule);color:#8C877D;cursor:not-allowed}
+.btn.text:disabled{background:transparent;border-color:transparent}
+.ulink{display:inline-flex;align-items:center;min-height:44px;padding:0;background:none;border:0;color:var(--ink);font-size:17px;font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;cursor:pointer}
+.ulink:hover{color:var(--accent-hover)}
+.ulink:disabled{color:var(--muted);cursor:not-allowed}
+.sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* Hero */
+.hero{background:var(--band)}
+.hero-text{grid-column:span 8;display:flex;flex-direction:column;padding:72px 0 88px}
+.kicker{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:15px;font-weight:500;color:var(--muted)}
+.hero h1{margin-top:24px;font-family:var(--serif);font-size:clamp(64px,10vw,144px);line-height:.92;letter-spacing:-.035em}
+.claim{margin-top:28px;max-width:720px;font-family:var(--serif);font-size:clamp(28px,2.8vw,38px);line-height:1.15;letter-spacing:-.015em;text-wrap:balance}
+.lede{margin-top:28px;max-width:680px;font-size:20px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.actions{margin-top:36px;display:flex;align-items:center;flex-wrap:wrap;gap:16px 32px}
+.hero-nums{grid-column:span 4;align-self:end;margin-bottom:88px;border-top:2px solid var(--ink)}
+.hero-nums div{display:flex;flex-direction:column;gap:4px;padding:18px 0;border-bottom:1px solid var(--band-rule)}
+.hero-nums dt{font-family:var(--serif);font-size:44px;line-height:1;font-weight:500;letter-spacing:-.02em;color:var(--accent)}
+.hero-nums dd{font-size:15px;line-height:1.4;color:var(--ink-2)}
+
+/* Sections */
+main .sections{padding-bottom:128px}
+.sec{padding-top:112px}
+.sec-head{grid-column:span 3;border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:10px}
+.sec-head h2{font-family:var(--serif);font-size:34px;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.sec-head p{font-size:16px;line-height:1.55;color:var(--muted)}
+.sec-body{grid-column:span 9;border-top:2px solid var(--ink);padding-top:20px}
+.full{grid-column:1 / -1}
+.intro{font-size:19px;line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+h3.sub{font-size:16px;font-weight:700}
+
+/* Numbered lists */
+.numbered{margin:0;padding:0;list-style:none;counter-reset:n}
+.numbered>li{counter-increment:n;display:grid;grid-template-columns:32px minmax(0,1fr);column-gap:12px;padding:18px 0 20px;border-bottom:1px solid var(--rule)}
+.numbered>li::before{content:counter(n);font-size:18px;font-weight:700;line-height:1.35;color:var(--accent)}
+.numbered .t{display:flex;flex-direction:column;gap:6px;min-width:0}
+.numbered .t b{font-size:18px;line-height:1.35;font-weight:700}
+.numbered .t>span{font-size:16px;line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.numbered.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+.numbered.three-col{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px}
+.numbered.three-col>li{border-bottom:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.tags span{font-family:var(--mono);font-size:12px;line-height:1.4;padding:2px 8px;background:var(--soft);color:var(--accent-hover)}
+
+/* Try it */
+.try-note{margin-top:18px;font-size:15px;line-height:1.55;color:var(--muted);max-width:820px}
+.console{margin-top:48px;background:var(--white);border-top:2px solid var(--ink);box-shadow:0 0 0 1px var(--rule)}
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 24px;border-bottom:1px solid var(--rule)}
+.toolbar .btn{min-height:48px}
+.toolbar .spacer{flex:1 1 auto}
+.platform{display:inline-flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.platform .lbl{padding:0 12px;font-size:13px;font-weight:600;color:var(--muted)}
+.platform button{min-height:44px;padding:0 16px;background:var(--white);border:0;border-left:1px solid var(--line);font-size:15px;font-weight:600;cursor:pointer}
+.platform button[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+.platform button:disabled{cursor:not-allowed;opacity:.6}
+.platform button:focus-visible{outline-offset:-4px}
+.platform button[aria-pressed="true"]:focus-visible{outline-color:var(--white)}
+.status{padding:14px 24px;background:var(--soft);border-bottom:1px solid var(--rule);font-size:15px;font-weight:600;color:var(--ink);min-height:50px}
+.tour-cap{position:sticky;top:calc(var(--nav-h) + 8px);z-index:10;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;padding:14px 24px;background:var(--band);border-bottom:1px solid var(--rule);border-left:4px solid var(--accent);box-shadow:0 6px 16px rgba(27,26,23,.10);font-size:15px}
+#report-wrap{scroll-margin-top:calc(var(--nav-h) + 96px)}
+.tour-cap b{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--accent-hover);text-transform:uppercase;letter-spacing:.04em}
+.tour-cap[hidden]{display:none}
+.io{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+.panel{min-width:0;display:flex;flex-direction:column}
+.panel+.panel{border-left:1px solid var(--rule)}
+.panel-head{padding:18px 24px 0;display:flex;flex-direction:column;gap:2px}
+.panel-head h3{font-size:16px;font-weight:700}
+.panel-head p{font-size:14px;color:var(--muted)}
+.subtabs{display:flex;flex-wrap:wrap;gap:0 4px;padding:10px 24px 0;border-bottom:1px solid var(--rule)}
+.subtabs [role="tab"],.tablist [role="tab"]{flex-shrink:0;min-height:44px;padding:0 12px;background:transparent;border:0;border-bottom:3px solid transparent;font-size:14px;font-weight:600;color:var(--muted);white-space:nowrap;cursor:pointer}
+.subtabs [role="tab"][aria-selected="true"],.tablist [role="tab"][aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.subtabs [role="tab"]:hover,.tablist [role="tab"]:hover{color:var(--ink)}
+.scroller{overflow:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.io .scroller{max-height:340px;flex:1}
+.log{padding:16px 24px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--paper);font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--ink-2);min-height:56px}
+.log div{padding:1px 0}
+.log div::before{content:"›";display:inline-block;width:20px;color:var(--muted)}
+.log div.done::before{content:"✓";color:var(--pass)}
+.report-slot{padding:0 24px}
+.report-slot:empty{display:none}
+.register{padding:24px}
+.register header{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:12px}
+.register h3{font-size:16px;font-weight:700}
+.register p{font-size:14px;color:var(--muted)}
+noscript p{margin-top:24px;padding:16px 20px;background:var(--review-soft);font-weight:600}
+
+/* Data tables: plan feeds, export, workbook grids */
+table.grid{border-collapse:separate;border-spacing:0;font-family:var(--mono);font-size:12px;line-height:1.4;min-width:100%}
+table.grid th{position:sticky;top:0;z-index:1;background:var(--paper);color:var(--muted);font-weight:500;text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);white-space:nowrap}
+table.grid td{padding:6px 10px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);white-space:nowrap;max-width:300px;overflow:hidden;text-overflow:ellipsis;background:var(--white)}
+table.grid td.c-blank{background:#FBF9F5}
+table.grid td.c-red{background:var(--fail-soft);color:var(--fail);font-weight:500;box-shadow:inset 0 0 0 1px var(--fail)}
+table.grid td.c-amber{background:var(--review-soft);color:var(--review);font-weight:500}
+table.grid td.c-derived{background:var(--derived);color:var(--muted)}
+table.grid td.c-typed{color:var(--ink)}
+table.grid td.c-formula{color:var(--accent-hover)}
+table.grid td.c-key{color:var(--ink);font-weight:500}
+table.grid td.c-ok{background:var(--pass-soft);color:var(--pass);font-weight:500}
+table.grid tr.h2 td{font-family:var(--sans);font-size:12px;font-weight:700;color:var(--ink);background:var(--paper)}
+table.grid tr.h3 td{font-size:11px;color:var(--accent-hover);background:var(--soft)}
+table.grid td.rn{background:var(--paper);color:var(--muted);text-align:right;position:sticky;left:0}
+table.grid thead th:first-child:empty{position:sticky;left:0;z-index:2}
+
+/* Workbook */
+.book{margin-top:40px;background:var(--white);border-top:2px solid var(--ink);box-shadow:0 0 0 1px var(--rule)}
+.book-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;padding:12px 24px 0;border-bottom:1px solid var(--rule)}
+.tablist{display:flex;gap:4px;overflow-x:auto;min-width:0;flex:1 1 480px}
+.book-head .platform{margin-bottom:10px}
+.book-body .scroller{max-height:420px;border-top:1px solid var(--rule)}
+.sheet-note{padding:20px 24px 16px;max-width:900px;font-size:15px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.sheet-note b{color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;padding:0 24px 16px;font-size:13px;color:var(--muted)}
+.legend span::before{content:"";display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;border:1px solid var(--rule)}
+.legend .l-derived::before{background:var(--derived)}
+.legend .l-typed::before{background:var(--white);border-color:var(--ink)}
+.legend .l-amber::before{background:var(--review-soft);border-color:var(--review)}
+.legend .l-ok::before{background:var(--pass-soft);border-color:var(--pass)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 32px;padding:0 24px 20px}
+.two h3{font-size:14px;font-weight:700;margin-bottom:6px}
+.kv{display:grid;grid-template-columns:minmax(0,1fr) auto;border-top:1px solid var(--rule);font-size:14px}
+.kv div{padding:7px 0;border-bottom:1px solid var(--rule)}
+.kv div:nth-child(even){padding-left:16px;text-align:right;font-family:var(--mono);font-size:13px;font-weight:500}
+
+/* QA report (rendered by the engine) */
+.report{margin-top:24px;border:1px solid var(--rule);background:var(--white)}
+.report>header{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 20px;padding:18px 24px;border-bottom:1px solid var(--rule)}
+.report>header h3{font-size:16px;font-weight:700;line-height:1.35}
+.report>header .meta{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.gate{padding:24px}
+.verdict{font-family:var(--serif);font-size:clamp(30px,3.4vw,44px);line-height:1.05;letter-spacing:-.02em}
+.verdict.yes{color:var(--pass)}
+.verdict.no{color:var(--fail)}
+.why{margin-top:6px;font-size:15px;color:var(--ink-2)}
+.counts{margin-top:16px;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px;color:var(--muted)}
+.counts b{margin-left:6px;color:var(--ink);font-weight:700}
+.absent{margin-top:16px;padding:10px 14px;background:var(--review-soft);font-size:14px;color:var(--ink)}
+.rsec{padding:22px 24px;border-top:1px solid var(--rule)}
+.rsec h4{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-bottom:12px;font-size:17px;font-weight:700}
+.rsec h4 small{font-size:14px;font-weight:400;color:var(--muted)}
+.rsec.plain{background:var(--soft)}
+.rsec.plain ul{padding-left:20px;font-size:17px;line-height:1.55}
+.rsec.plain li+li{margin-top:4px}
+.diffsec ul{padding:0;list-style:none;font-size:15px}
+.diffsec li{display:flex;align-items:baseline;gap:10px;padding:3px 0;min-width:0;overflow-wrap:anywhere}
+.empty{font-size:15px;color:var(--muted)}
+.chip{display:inline-block;padding:1px 8px;border:1px solid currentColor;font-family:var(--mono);font-size:12px;font-weight:500;line-height:1.5;white-space:nowrap}
+.chip.pass{color:var(--pass);background:var(--pass-soft)}
+.chip.fail{color:var(--fail);background:var(--fail-soft)}
+.chip.review{color:var(--review);background:var(--review-soft)}
+.chip.missing{color:var(--fail);border-style:dashed}
+.chip.extra{color:var(--review);border-style:dashed}
+.chip.na{color:var(--muted);background:var(--paper)}
+.fcard{margin-top:14px;border:1px solid var(--rule)}
+.fh{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;padding:12px 16px;background:var(--fail-soft)}
+.fh b{color:var(--fail);font-size:15px}
+.fh .cnt{padding:0 7px;border:1px solid var(--fail);color:var(--fail);font-family:var(--mono);font-size:12px}
+.fh .nm{font-family:var(--mono);font-size:13px;overflow-wrap:anywhere}
+.fh small{font-size:13px;color:var(--muted)}
+table.ft{width:100%;border-collapse:collapse;font-size:14px}
+table.ft th{padding:10px 16px;border-bottom:1px solid var(--rule);text-align:left;font-size:13px;font-weight:500;color:var(--muted);white-space:nowrap}
+table.ft td{padding:10px 16px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.ft td.mono{font-size:13px;overflow-wrap:anywhere}
+details.rows summary{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 16px;font-size:14px;font-weight:600;color:var(--accent);cursor:pointer}
+details.rows ul{padding:0 16px 12px 36px;font-family:var(--mono);font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.fix-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:12px 16px;font-size:14px;color:var(--muted)}
+.rev{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:8px 24px;padding:14px 0;border-bottom:1px solid var(--rule)}
+.rev:last-child{border-bottom:0}
+.rev .what{font-size:15px;line-height:1.5;overflow-wrap:anywhere}
+.rev .what .mono{font-size:13px}
+.rev .prove{grid-column:1 / -1;font-size:14px;color:var(--muted)}
+.ctx{margin-top:12px;font-size:14px;color:var(--muted)}
+.hc{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px 24px;font-size:15px}
+.hc .fld{font-family:var(--mono);font-size:13px}
+table.items{width:100%;border-collapse:collapse;font-size:13px}
+table.items th{position:sticky;top:0;background:var(--white);padding:9px 12px;border-bottom:1px solid var(--rule);text-align:left;font-weight:500;color:var(--muted);white-space:nowrap}
+table.items td{padding:9px 12px;border-bottom:1px solid var(--rule);vertical-align:top;white-space:nowrap}
+table.items td.mono{font-size:12px;white-space:nowrap}
+table.items td.detail{min-width:340px;color:var(--ink-2);white-space:normal}
+table.items tr.pass-row{display:none}
+table.items.show-pass tr.pass-row{display:table-row}
+.rsec h4 #toggle-pass{margin-left:auto}
+pre.block{margin:0;padding:14px 16px;background:var(--paper);border:1px solid var(--rule);font-family:var(--mono);font-size:12px;line-height:1.55;tab-size:8;white-space:pre}
+.report-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 24px;background:var(--band);border-top:1px solid var(--rule)}
+.report-actions .grow{flex:1 1 280px;font-size:15px;color:var(--ink-2)}
+table.reg{border-collapse:collapse;font-family:var(--mono);font-size:12px;min-width:100%}
+table.reg th{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;font-weight:500;color:var(--muted);white-space:nowrap}
+table.reg td{padding:8px 10px;border-bottom:1px solid var(--rule);white-space:nowrap}
+.tour-hi{outline:3px solid var(--accent);outline-offset:4px}
+
+/* How it works */
+.primer{margin-top:40px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px 32px;padding:28px;background:var(--soft)}
+.primer h3{font-family:var(--serif);font-size:26px;line-height:1.15;letter-spacing:-.01em;margin-bottom:10px}
+.primer p{font-size:16px;line-height:1.6;color:var(--ink-2)}
+.tree{margin:0;align-self:center;font-family:var(--mono);font-size:14px;line-height:1.8;white-space:pre;overflow-x:auto;color:var(--ink)}
+
+/* Guardrails */
+.pairs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px}
+.pairs article{padding:20px 0 24px;border-bottom:1px solid var(--rule);display:flex;flex-direction:column;gap:8px}
+.pairs h4{font-family:var(--serif);font-size:24px;line-height:1.2;letter-spacing:-.01em}
+.pairs p{font-size:16px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.block-gap{margin-top:56px}
+.block-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding-bottom:14px;border-bottom:1px solid var(--ink)}
+.block-head p{font-size:15px;color:var(--muted)}
+
+/* Results */
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:32px;margin-top:36px}
+.nums div{display:flex;flex-direction:column;gap:6px;padding-top:16px;border-top:3px solid var(--accent)}
+.nums dt{font-family:var(--serif);font-size:40px;line-height:1;font-weight:500;letter-spacing:-.02em;color:var(--accent)}
+.nums dd{font-size:15px;line-height:1.45;color:var(--ink-2)}
+table.compare{width:100%;margin-top:48px;border-collapse:collapse;font-size:16px;line-height:1.5}
+table.compare th{padding:0 16px 12px 0;border-bottom:1px solid var(--ink);text-align:left;font-size:14px;font-weight:700}
+table.compare td{padding:14px 16px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+table.compare td:first-child{font-weight:700;color:var(--ink);width:18%}
+table.compare td:nth-child(2){width:34%;color:var(--muted)}
+
+/* Platforms */
+.plats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:32px}
+.plat{border-top:2px solid var(--ink);padding-top:18px;display:flex;flex-direction:column;gap:12px}
+.plat h3{font-family:var(--serif);font-size:30px;line-height:1.1;letter-spacing:-.015em}
+.plat .state{font-size:15px;font-weight:600;color:var(--accent)}
+.plat ul{padding:0;list-style:none;border-top:1px solid var(--rule)}
+.plat li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:16px;line-height:1.5;color:var(--ink-2)}
+.next{margin-top:56px;display:grid;grid-template-columns:minmax(0,3fr) minmax(0,9fr);column-gap:32px;padding:28px;background:var(--soft)}
+.next h3{font-family:var(--serif);font-size:26px;line-height:1.15}
+.next ul{padding:0;list-style:none}
+.next li{padding:10px 0;border-bottom:1px solid var(--band-rule);font-size:16px;line-height:1.55;color:var(--ink-2)}
+.next li:first-child{padding-top:0}
+.next li:last-child{border-bottom:0;padding-bottom:0}
+
+/* Under the hood */
+details.eng{border-bottom:1px solid var(--rule)}
+details.eng>summary{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:60px;padding:4px 0;font-size:17px;font-weight:700;cursor:pointer;list-style:none}
+details.eng>summary::-webkit-details-marker{display:none}
+details.eng>summary::after{content:"+";font-family:var(--serif);font-size:32px;font-weight:400;line-height:1;color:var(--accent)}
+details.eng[open]>summary::after{content:"−"}
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 32px;padding-bottom:12px}
+.notes article{padding:20px 0;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:8px}
+.notes h3{font-size:16px;font-weight:700}
+.notes p{font-size:15px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.releases{margin:24px 0 32px;padding:0;list-style:none;border-top:1px solid var(--ink)}
+.releases li{display:grid;grid-template-columns:200px minmax(0,1fr);column-gap:24px;padding:12px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.55;color:var(--ink-2)}
+.releases b{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink)}
+
+/* About */
+.about-main{grid-column:span 5;border-top:2px solid var(--ink);padding-top:22px;display:flex;flex-direction:column;gap:20px}
+.about-main p{font-size:18px;line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.about-main .first{font-size:21px;line-height:1.5;color:var(--ink)}
+.about-side{grid-column:span 4;border-top:2px solid var(--ink);padding-top:22px;display:flex;flex-direction:column;gap:32px}
+.about-side h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.about-side p{font-size:16px;line-height:1.6;color:var(--ink-2)}
+.shows{padding:0;list-style:none;border-top:1px solid var(--rule)}
+.shows li{padding:9px 0;border-bottom:1px solid var(--rule);font-size:15px;line-height:1.4}
+
+/* Contact */
+.contact{background:var(--band);padding:112px 0 48px}
+.contact-label{grid-column:span 3;border-top:2px solid var(--ink);padding-top:20px;font-size:16px;font-weight:700}
+.contact-body{grid-column:span 9;border-top:2px solid var(--ink);padding-top:20px;display:flex;flex-direction:column;gap:28px}
+.contact h2{font-family:var(--serif);font-size:clamp(46px,5.84vw,84px);line-height:1;letter-spacing:-.025em;text-wrap:balance}
+.contact-body>p{max-width:720px;font-size:20px;line-height:1.5;color:var(--ink-2)}
+.contact-links{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.contact-links a{display:inline-flex;align-items:center;min-height:44px;font-family:var(--serif);font-size:clamp(24px,2.64vw,38px);line-height:1.3;letter-spacing:-.01em;color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:8px;overflow-wrap:anywhere}
+.contact-links a:hover{color:var(--accent-hover)}
+.contact .aside{font-size:17px;color:var(--ink-2)}
+.colophon{margin-top:96px;border-top:1px solid var(--band-rule);padding-top:20px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 24px;font-size:14px;color:var(--muted)}
+.colophon a{color:var(--ink)}
+
+/* ≤1100: section heads above their content */
+@media (max-width:1100px){
+  :root{--gutter:48px}
+  .nav-links{gap:24px}
+  .hero-text{grid-column:span 7}
+  .hero-nums{grid-column:span 5}
+  .sec-head,.contact-label{grid-column:1 / -1;padding-bottom:4px}
+  .sec-body,.contact-body{grid-column:1 / -1;border-top:0;padding-top:12px}
+  .about-main{grid-column:span 7;border-top:0}
+  .about-side{grid-column:span 5;border-top:0}
+  .numbered.three-col{grid-template-columns:minmax(0,1fr)}
+  .numbered.three-col>li{border-bottom:1px solid var(--rule)}
+  .nums{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:28px}
+  .notes{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* ≤900: one column */
+@media (max-width:900px){
+  :root{--gutter:40px;--nav-h:72px}
+  .g12{grid-template-columns:minmax(0,1fr)}
+  .site-nav .bar{gap:20px}
+  .brand span{display:none}
+  .nav-links{gap:20px;font-size:15px}
+  .hero-text,.hero-nums,.about-main,.about-side{grid-column:1 / -1}
+  .hero-text{padding:56px 0 32px}
+  .hero-nums{margin-bottom:56px}
+  .sec{padding-top:80px}
+  .io{grid-template-columns:minmax(0,1fr)}
+  .panel+.panel{border-left:0;border-top:1px solid var(--rule)}
+  .numbered.two-col,.pairs,.plats{grid-template-columns:minmax(0,1fr)}
+  .plats{row-gap:40px}
+  .primer,.next{grid-template-columns:minmax(0,1fr)}
+  .next h3{margin-bottom:12px}
+  .notes{grid-template-columns:minmax(0,1fr)}
+  .releases li{grid-template-columns:minmax(0,1fr);row-gap:2px}
+  table.compare,table.compare thead,table.compare tbody,table.compare tr,table.compare td{display:block;width:auto}
+  table.compare thead{display:none}
+  table.compare tr{padding:14px 0;border-bottom:1px solid var(--rule)}
+  table.compare td{padding:0;border:0}
+  table.compare td:first-child{width:auto;margin-bottom:6px}
+  table.compare td:nth-child(2){width:auto}
+  table.compare td:nth-child(2)::before{content:"Before: ";font-weight:600}
+  table.compare td:nth-child(3){margin-top:4px;color:var(--ink)}
+  table.compare td:nth-child(3)::before{content:"With Buildcheck: ";font-weight:600}
+  .about-side{padding-top:32px}
+  .contact{padding-top:80px}
+}
+
+/* ≤600: phone */
+@media (max-width:600px){
+  :root{--gutter:20px;--nav-h:64px}
+  .brand a{font-size:16px}
+  .menu-btn{display:inline-flex;margin-left:auto;align-items:center;justify-content:center;gap:8px;min-width:44px;height:44px;padding:0 12px;background:transparent;border:1px solid var(--line);border-radius:2px;color:var(--ink);font:600 15px var(--sans);cursor:pointer}
+  .nav-links{display:none;position:absolute;left:calc(-1 * var(--gutter));right:calc(-1 * var(--gutter));top:100%;margin:0;padding:8px var(--gutter) 16px;flex-direction:column;align-items:stretch;gap:0;background:var(--band);border-bottom:1px solid var(--band-rule);box-shadow:0 12px 24px rgba(27,26,23,.08);font-size:17px}
+  .nav-links.open{display:flex}
+  .nav-links li{border-bottom:1px solid rgba(27,26,23,.12)}
+  .nav-links li:last-child{border-bottom:0}
+  .nav-links a{min-height:48px;width:100%}
+  .no-js .menu-btn{display:none}
+  .no-js .nav-links{display:flex;position:static;flex-direction:row;flex-wrap:wrap;padding:0;box-shadow:none;border:0;gap:0 16px;font-size:15px}
+  .no-js .nav-links li{border:0}
+  .no-js .site-nav{position:static}
+  .no-js .site-nav .bar{height:auto;flex-wrap:wrap;padding:8px 0}
+
+  .hero-text{padding-top:32px}
+  .kicker{font-size:13px;column-gap:12px}
+  .hero h1{margin-top:18px;font-size:64px;line-height:.95;letter-spacing:-.03em}
+  .claim{margin-top:20px;font-size:26px}
+  .lede{margin-top:20px;font-size:17px}
+  .actions{margin-top:24px;flex-direction:column;align-items:stretch;gap:8px}
+  .actions .ulink{align-self:flex-start;font-size:16px}
+  .hero-nums dt{font-size:36px}
+  .hero-nums div{padding:14px 0}
+
+  .sec{padding-top:56px}
+  main .sections{padding-bottom:56px}
+  .sec-head{padding-top:16px;gap:6px}
+  .sec-head h2{font-size:30px}
+  .sec-head p{font-size:15px}
+  .intro{font-size:17px}
+  .numbered>li{grid-template-columns:24px minmax(0,1fr);padding:14px 0 16px}
+  .numbered .t b{font-size:17px}
+  .numbered .t>span{font-size:15px}
+
+  .console,.book{margin-left:calc(-1 * var(--gutter));margin-right:calc(-1 * var(--gutter));box-shadow:none;border-bottom:1px solid var(--rule)}
+  .toolbar{padding:16px var(--gutter);gap:8px}
+  .toolbar .btn{flex:1 1 100%}
+  .toolbar .btn.text{flex:0 0 auto}
+  .toolbar .spacer{display:none}
+  .toolbar .platform{flex:1 1 100%}
+  .platform button{flex:1}
+  .status,.tour-cap,.log{padding-left:var(--gutter);padding-right:var(--gutter)}
+  .panel-head{padding:16px var(--gutter) 0}
+  .subtabs{padding:8px var(--gutter) 0}
+  .report-slot{padding:0 var(--gutter)}
+  .report>header,.gate,.rsec,.report-actions{padding-left:16px;padding-right:16px}
+  .report-actions .btn{flex:1 1 100%}
+  .report-actions .btn.text{flex:0 0 auto}
+  .rev,.hc{grid-template-columns:minmax(0,1fr)}
+  table.ft{min-width:600px}
+  table.ft td.mono{overflow-wrap:normal;word-break:break-all}
+  .register{padding:20px var(--gutter)}
+  .book-head{padding:8px var(--gutter) 0}
+  .sheet-note{padding:16px var(--gutter) 12px;font-size:14px}
+  .legend,.two{padding-left:var(--gutter);padding-right:var(--gutter)}
+  .two{grid-template-columns:minmax(0,1fr)}
+
+  .primer,.next{margin-left:calc(-1 * var(--gutter));margin-right:calc(-1 * var(--gutter));padding:24px var(--gutter)}
+  .pairs h4{font-size:22px}
+  .pairs p{font-size:15px}
+  .nums{grid-template-columns:minmax(0,1fr);row-gap:20px;margin-top:28px}
+  .nums dt{font-size:34px}
+  .plat h3{font-size:26px}
+  .plat li{font-size:15px}
+  .notes p{font-size:14px}
+
+  .about-main p{font-size:16px}
+  .about-main .first{font-size:19px}
+  .contact{padding:56px 0 32px}
+  .contact-label{padding-top:16px;font-size:15px}
+  .contact-body{padding-top:16px;gap:20px}
+  .contact h2{font-size:44px;line-height:1.02}
+  .contact-body>p{font-size:17px}
+  .contact-links{gap:4px}
+  .contact-links a{font-size:clamp(20px,6.2vw,24px);letter-spacing:0;text-underline-offset:6px}
+  .colophon{margin-top:48px;padding-top:16px;flex-direction:column;font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body class="no-js">
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-nav">
+  <nav class="wrap" aria-label="Page sections">
+    <div class="bar">
+      <div class="brand"><a href="../">Nicole Glassman</a><span>Buildcheck</span></div>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14"/></svg>
+        <span>Menu</span>
+      </button>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#try">Try it</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#guardrails">Guardrails</a></li>
+        <li><a href="#results">Results</a></li>
+        <li><a href="../pov/">Point of view</a></li>
+      </ul>
+    </div>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="hero" aria-labelledby="title">
+    <div class="wrap g12">
+      <div class="hero-text">
+        <p class="kicker"><span>Interactive demo</span><span>Meta and TikTok</span><span>Synthetic data for a fictional brand</span></p>
+        <h1 id="title">Buildcheck</h1>
+        <p class="claim">Every ad checked against the plan, with evidence, before it spends.</p>
+        <p class="lede">Buildcheck compares every ad in the account with the media plan and flags what doesn't match: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It's in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
+        <div class="actions">
+          <button class="btn" id="btn-hero-run" type="button">Run the QA</button>
+          <button class="ulink" id="btn-hero-tour" type="button">Watch a 20-second walkthrough</button>
+        </div>
+      </div>
+      <dl class="hero-nums">
+        <div><dt>20 min</dt><dd>what a four-day, four-person review of 2,000 ads became</dd></div>
+        <div><dt>974 rows</dt><dd>in the largest live account export reconciled end to end</dd></div>
+        <div><dt>0 errors</dt><dd>across 310,000+ formulas, recalculated on every release</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <div class="sections wrap">
+
+    <section id="try" class="sec g12" aria-labelledby="try-h">
+      <div class="sec-head">
+        <h2 id="try-h">Try it</h2>
+        <p>A working version of the engine's logic, running in your browser on a synthetic account.</p>
+      </div>
+      <div class="sec-body">
+        <ol class="numbered three-col">
+          <li><span class="t"><b>Run the QA.</b><span>The gate reads NO: <span data-qw="found">12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.</span></span></span></li>
+          <li><span class="t"><b>Fix everything, then run it again.</b><span>The gate turns to YES, and the report lists exactly what changed.</span></span></li>
+          <li><span class="t" data-qw="switch"><b>Switch to TikTok and run it again.</b><span>Same engine, TikTok's export and vocabulary. It catches a $180,000 lifetime budget entered as daily.</span></span></li>
+        </ol>
+        <p class="try-note">Eight problems are planted in the inputs: seven in the <span data-pw="manager">Ads Manager</span> export and one in a plan cell. One of them is repeated across every ad in an <span data-pw="adset">ad set</span>. Fixes change the inputs (the export or the plan cell, whichever was wrong), just as they would in a real loop. The demo runs a subset of the production rulebook. When you're done, read <a href="#guardrails">how I keep the AI honest</a>. That's the part worth asking me about.</p>
+      </div>
+
+      <div class="console full" id="console" role="region" aria-label="QA demo">
+        <div class="toolbar">
+          <div class="platform" role="group" aria-label="Platform" id="platform-run"><span class="lbl" aria-hidden="true">Platform</span><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div>
+          <span class="spacer"></span>
+          <button class="btn" id="btn-run" type="button">Run QA</button>
+          <button class="btn quiet" id="btn-fix-all" type="button" disabled>Fix everything the report found</button>
+          <button class="btn quiet" id="btn-break" type="button">Add a builder mistake</button>
+          <button class="btn quiet" id="btn-tour" type="button">Walkthrough</button>
+          <button class="btn text" id="btn-reset" type="button">Reset</button>
+        </div>
+        <p class="status" id="status-line" role="status" aria-live="polite"></p>
+        <div class="tour-cap" id="tour-cap" role="status" aria-live="polite" tabindex="-1" hidden></div>
+        <div class="io">
+          <div class="panel">
+            <div class="panel-head"><h3>Plan feeds</h3><p>From the workbook, with inheritance resolved and labels translated.</p></div>
+            <div class="subtabs" role="tablist" aria-label="Plan feeds" id="plan-subtabs"></div>
+            <div class="scroller" id="plan-table" role="tabpanel" aria-labelledby="plan-tab-2" tabindex="0"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3><span data-pw="manager">Ads Manager</span> export</h3><p>A synthetic bulk export, header row included.</p></div>
+            <div class="subtabs" role="tablist" aria-label="Export views" id="exp-subtabs"></div>
+            <div class="scroller" id="exp-table" role="tabpanel" aria-labelledby="exp-tab-2" tabindex="0"></div>
+          </div>
+        </div>
+        <div class="log" id="log" aria-live="polite" tabindex="-1">Waiting to run.</div>
+        <div class="report-slot" id="report-wrap"></div>
+        <div class="register">
+          <header><h3>Run register</h3><p>One row per run, the way the workbook's run register logs it.</p></header>
+          <div class="scroller" tabindex="0" role="region" aria-label="Run register"><table class="reg" id="register"><thead><tr><th>run_id</th><th>run_date</th><th>mode</th><th>platform</th><th>scope</th><th>planned</th><th>pass</th><th>fail</th><th>missing</th><th>needs_review</th><th>n_a</th><th>extra</th><th>ready</th><th>top_failing_check</th><th>proposals</th></tr></thead><tbody><tr><td colspan="15" class="muted">No runs yet.</td></tr></tbody></table></div>
+        </div>
+        <noscript><p>The demo and the workbook viewer need JavaScript. The rest of the page reads without it.</p></noscript>
+      </div>
+    </section>
+
+    <section id="how" class="sec g12" aria-labelledby="how-h">
+      <div class="sec-head">
+        <h2 id="how-h">How it works</h2>
+        <p>Five steps, from the media plan to the QA report. Each has fixed inputs and a fixed output, so a batch can be run again until it's clean.</p>
+      </div>
+      <div class="sec-body">
+        <p class="intro">A paid social build is a tree of settings: a few campaigns, a dozen ad sets, dozens of ads, each with 30 to 100 fields. Before Buildcheck, the plan was typed by hand and a senior person re-checked every row against Ads Manager. Errors that slipped through spent money.</p>
+        <ol class="numbered two-col" style="margin-top:20px">
+          <li><span class="t"><b>Paste the media plan</b><span>One row per buy, every platform: budget, flight, market, objective, optimization, funnel, suppression. This is the record of what was bought.</span><span class="tags"><span>MEDIA_PLAN</span></span></span></li>
+          <li><span class="t"><b>Expand it into the build</b><span>Name the ad sets on the build grid, and one menu click generates the campaign, ad sets and ads with derived values filled in. Running it again adds nothing twice.</span><span class="tags"><span>BUILD_ADSETS</span><span>one click</span></span></span></li>
+          <li><span class="t"><b>Clear the gate</b><span>Nine checks per line (market, buy type, flight start and end, budget within tolerance, objective, optimization, funnel, suppression) before anyone opens Ads Manager.</span><span class="tags"><span>PLAN_CHECK</span></span></span></li>
+          <li><span class="t"><b>Build and export</b><span>Build in Ads Manager, paste the campaign, ad set and ad IDs back, and pull the bulk export. The workbook's feeds resolve inheritance and translate labels into the platform's vocabulary.</span><span class="tags"><span>QA_EXPORT feeds</span><span>Ads Manager</span></span></span></li>
+          <li><span class="t"><b>Run the engine</b><span>The feeds and the export go to the AI engine. It returns a QA report with a gate, failures with evidence, reviews, human checks and proposed rule changes, plus a findings block to paste back into the workbook.</span><span class="tags"><span>QA report</span><span>RUN_REGISTER</span></span></span></li>
+        </ol>
+        <div class="primer">
+          <div>
+            <h3>New to paid social?</h3>
+            <p>A build is a tree. Each level has its own settings and its own export columns, so the engine runs a different set of checks at each level. At the ad level the checks also depend on the ad type: an uploaded video, a boosted post from the brand's own page, or a creator's partnership post.</p>
+          </div>
+          <pre class="tree">Campaign     objective · budget · flight
+ └ Ad set    audience · placements · goal
+    └ Ad     creative · copy · link · CTA · tracking</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="workbook" class="sec g12" aria-labelledby="workbook-h">
+      <div class="sec-head">
+        <h2 id="workbook-h">Inside the workbook</h2>
+        <p>Where the demo's plan feeds come from.</p>
+      </div>
+      <div class="sec-body">
+        <p class="intro">A synthetic account, filled in the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header. Row 3 is the machine name, the contract every formula, feed and finding refers to, so columns can move without anything breaking. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
+      </div>
+      <div class="book full" id="book">
+        <div class="book-head">
+          <div class="tablist" role="tablist" aria-label="Workbook tabs" id="book-tabs"></div>
+          <div class="platform" role="group" aria-label="Platform" id="platform-book"><span class="lbl" aria-hidden="true">Platform</span><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div>
+        </div>
+        <div class="book-body" id="book-body" role="tabpanel" aria-labelledby="book-tab-0"></div>
+      </div>
+    </section>
+
+    <section id="guardrails" class="sec g12" aria-labelledby="guardrails-h">
+      <div class="sec-head">
+        <h2 id="guardrails-h">Keeping the AI honest</h2>
+        <p>Being good with AI isn't prompting well. It's deciding what the AI is allowed to conclude, what it must show, and what a human keeps.</p>
+      </div>
+      <div class="sec-body">
+        <div class="block-head"><h3 class="sub">How I work with AI</h3></div>
+        <div class="pairs">
+          <article><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to “check the campaign”. I wrote the rulebook first: what counts as proven, what a blank means, what it must never invent, which ad type gets which checks. The AI gets those rules as versioned reference files, not chat instructions.</p></article>
+          <article><h4>Make it show its evidence</h4><p>Every finding cites the plan value, the export value and the rule that decided it. Anything unverified is a review, not a failure. Anything new is a proposal a human accepts. A report you can't audit is an opinion.</p></article>
+          <article><h4>Pair on the build, own the outcome</h4><p>Claude wrote the build and test scripts to my spec. I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the test fixtures, not into memory.</p></article>
+          <article><h4>Ship it to real people</h4><p>The skill was shared across the organization and used by a media team on live batches. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
+        </div>
+
+        <div class="block-head block-gap"><h3 class="sub">Six principles that box it in</h3><p>An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p></div>
+        <ol class="numbered two-col">
+          <li><span class="t"><b>Proven or unproven.</b><span>Every mapping from a planner's label to a platform value carries a proof status, earned from a real export. A mismatch on a proven rule is a FAIL. On an unproven rule it can only be NEEDS REVIEW, so the engine can't fail a build on a rule nobody has verified.</span></span></li>
+          <li><span class="t"><b>A blank is never compared.</b><span>Blank means inherit or not specified, never “should be empty”. The feed resolves inheritance before the run, so the engine compares values, not intentions.</span></span></li>
+          <li><span class="t"><b>Never invent.</b><span>If the export preset leaves out a column, the checks that need it read “column absent”, and the report says so once, at the top. No value is inferred from a neighboring column, and no ID, file name or handle is ever guessed.</span></span></li>
+          <li><span class="t"><b>Evidence by machine name.</b><span>Every finding names the plan field, the export column, the plan value and the export value, word for word. Never a column letter or a cell color, so a report stays true after columns move.</span></span></li>
+          <li><span class="t"><b>Proposals, never silent changes.</b><span>Anything new the run sees, like a vocabulary value or a mapping now proven, becomes a changelog proposal for a human to accept. The rules of record live in the workbook and the skill files, never in the model's memory.</span></span></li>
+          <li><span class="t"><b>One finding, not a thousand.</b><span>An error repeated across every ad in an ad set is one finding with a count, one card and one fix. The report stays readable and the fix stays obvious.</span></span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="results" class="sec g12" aria-labelledby="results-h">
+      <div class="sec-head">
+        <h2 id="results-h">What it changes for a media team</h2>
+        <p>The same work, before and with Buildcheck.</p>
+      </div>
+      <div class="sec-body">
+        <p class="intro">On live batches, it caught French copy mismatches, unintended Advantage+ settings and missing Stories headlines before launch. That's the kind of error a reviewer sees on ad 1,900 and misses on ad 1,901.</p>
+        <dl class="nums">
+          <div><dt>20 min</dt><dd>what a four-day, four-person review of 2,000 ads became</dd></div>
+          <div><dt>974 rows</dt><dd>in the largest live account export reconciled end to end, across 473 ad sets</dd></div>
+          <div><dt>500+</dt><dd>columns in the widest Ads Manager export, handled without a hand-typed column map</dd></div>
+          <div><dt>11 releases</dt><dd>in twelve days, each recalculated to 0 errors and regression-tested before it shipped</dd></div>
+        </dl>
+        <table class="compare">
+          <thead><tr><th scope="col">Step</th><th scope="col">Before</th><th scope="col">With Buildcheck</th></tr></thead>
+          <tbody>
+            <tr><td>Filling the plan</td><td>Days of rows typed by hand from the media plan and brief</td><td>Minutes. The grid expands into the build, with derived values filled in.</td></tr>
+            <tr><td>Batch QA</td><td>Four people, four days for a 2,000-ad batch</td><td>One 20-minute run, with every finding cited</td></tr>
+            <tr><td>Review before build</td><td>Every row checked by hand</td><td>A nine-check gate per line. Senior reviewers read the grid and the exceptions.</td></tr>
+            <tr><td>QA after build</td><td>Field-by-field comparison by eye, across an export of 100+ columns</td><td>Rules run in code, and every finding cites the plan value, export value and rule</td></tr>
+            <tr><td>Trust</td><td>Depends on who checked</td><td>A proof register: the list of mappings a person has verified against a real export. A FAIL can only rest on one of those.</td></tr>
+            <tr><td>Audit trail</td><td>Chat messages and memory</td><td>A register row per run, a changelog row per rule change, and findings pasted back into the workbook</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="platforms" class="sec g12" aria-labelledby="platforms-h">
+      <div class="sec-head">
+        <h2 id="platforms-h">Platforms</h2>
+        <p>One media plan holds every platform's lines, and each line is checked in the workbook for its platform. The tabs, feeds and engine stay the same. Each platform brings its own export contract, vocabulary and naming profile.</p>
+      </div>
+      <div class="sec-body" style="border-top:0;padding-top:0">
+        <div class="plats">
+          <div class="plat">
+            <h3>Meta</h3>
+            <p class="state">In production on Facebook and Instagram</p>
+            <ul>
+              <li>Uploaded creative, boosted posts and creator partnership ads, each with its own checks and identity model.</li>
+              <li>Placement buckets (feed, story, reels, explore), so one 9:16 file across three placements is expected, not flagged.</li>
+              <li>Budget type verified by which export column is filled. Delivery intent mapped to status. Times compared in the account's time zone.</li>
+            </ul>
+          </div>
+          <div class="plat">
+            <h3>TikTok</h3>
+            <p class="state">Built on the same architecture</p>
+            <ul>
+              <li>Campaign, ad group and ad, with Business Center identities and Spark Ads (creator and brand posts) as the existing-post case.</li>
+              <li>TikTok's own formats handled in the feed: toggles that export blank when off, dates as <code>yyyy/m/d HH:mm</code>, amounts with cents, pixel labels resolved to website-event codes.</li>
+              <li>Reservation buys never appear in an export, so their rows show as N/A instead of MISSING. 306,000+ formulas, 0 errors.</li>
+              <li><a href="#console" data-go="tiktok">Switch the demo to TikTok</a></li>
+            </ul>
+          </div>
+          <div class="plat">
+            <h3>Next</h3>
+            <p class="state">Designed for, not built yet</p>
+            <ul>
+              <li>Pinterest, Google and Snap each need three things the design already keeps separate: an export contract (which columns come back and how they're written), a vocabulary map from planner labels to platform values, and a name-part profile.</li>
+              <li>Everything else stays as it is: the plan tabs, the plan-check gate, the feeds, the report and the register.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="next">
+          <h3>What I'd build next</h3>
+          <ul>
+            <li>Pinterest and Snap profiles on the same architecture: an export contract, a vocabulary map and a name-part profile each, and nothing else new.</li>
+            <li>Catch more at plan time. Extend the nine-check gate to budget type, placements and tracking, so a mistake is stopped before the build instead of found after it.</li>
+            <li>A diff between two exports, so a second QA reads only the rows that changed instead of the whole account.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="engineering" class="sec g12" aria-labelledby="engineering-h">
+      <div class="sec-head">
+        <h2 id="engineering-h">Under the hood</h2>
+        <p>Built to be rebuilt. Every release is generated by script, recalculated to zero errors, regression-tested and logged.</p>
+      </div>
+      <div class="sec-body" style="padding-top:0">
+        <details class="eng" id="eng-details">
+          <summary>Read the engineering notes</summary>
+          <div class="notes">
+            <article><h3>The workbook</h3><p>Google Sheets first, with Excel and LibreOffice compatibility checked on every release: 310,000+ formulas recalculated headless to 0 errors. Built for 1,000 ads, 500 ad sets and 300 campaigns per account.</p></article>
+            <article><h3>Build and test tooling</h3><p>Python build scripts regenerate every version from a registry, so nothing is edited by hand twice. A fixture suite of executable rule cases, plus structural checks for row alignment, stale references and changelog conformance, runs before a release ships.</p></article>
+            <article><h3>Auto-fill layer</h3><p>A Google Apps Script menu expands a media-grid line into the build, fills derived values in gray and applies the account profile. Running it again is safe: a second click adds nothing.</p></article>
+            <article><h3>Change control</h3><p>A changelog with the before, after, reason, downstream impact, regression test and the run that validated each change: 180+ entries, and a conformance check that must read YES. Rule changes ship as versioned files, never as edits in chat.</p></article>
+            <article><h3>The AI layer</h3><p>A Claude skill: a skill page, reference files for the run rules, the report spec and known failure modes, an HTML report template and a standing run message. It was first deployed as a shared, org-wide skill and now runs with the workbook uploaded directly.</p></article>
+            <article><h3>Real exports, not assumptions</h3><p>Every mapping was proven against live Ads Manager exports up to 500+ columns wide. The largest end-to-end test reconciled a plan against a 974-row live account export.</p></article>
+          </div>
+          <h3 class="sub" style="margin-top:12px">Release history</h3>
+          <ol class="releases">
+            <li><b>v9 · locked</b><span>Three workbook variants (filled, blank, account template), the five-step run process, and the TikTok version on the same architecture.</span></li>
+            <li><b>v10 · team trial</b><span>Used live by the media team on its first batch: multi-select placements, proven mappings, a clean report on the first run.</span></li>
+            <li><b>v11 · media-plan layer</b><span>The media plan inside the workbook, the plan-check gate, the plan feed, the run register and build-zone guards.</span></li>
+            <li><b>v11.3 to v11.5 · builder</b><span>Derived values, build recipes, the build grid and the one-click expander. Typed wins, gray inherits, amber differs.</span></li>
+            <li><b>v11.6 · accounts</b><span>Multi-account setup, identity columns derived per row, thousands of feed formulas re-pointed, fixture suite green.</span></li>
+          </ol>
+        </details>
+      </div>
+    </section>
+
+    <section id="about" class="sec g12" aria-labelledby="about-h">
+      <div class="sec-head">
+        <h2 id="about-h">About this project</h2>
+      </div>
+      <div class="about-main">
+        <p class="first">I designed, specified and shipped Buildcheck end to end while working in media operations at a paid social agency.</p>
+        <p>I owned the architecture, the QA rules and their proof discipline, the test plan and the rollout to the team, and paired with Claude to write the build and test scripts to my spec. It started as a fix for a real problem: a senior team spending days on checks that were mostly mechanical. It became a system: a workbook that knows what it is, an engine that has to show its evidence, and a record of every decision.</p>
+        <p>Where it fits is in-house social media marketing and strategy. A brand's social team owns organic and paid together, and the paid side is only as good as its operations: how campaigns get planned, built, checked and launched. This project is that discipline, plus the AI and systems fluency to make a small team run like a large one.</p>
+        <p>Internally, the workbook is known as the Gem Arch Doc, after the agency's term for a campaign architecture document.</p>
+      </div>
+      <div class="about-side">
+        <div>
+          <h3>What it shows</h3>
+          <ul class="shows">
+            <li>Meta and TikTok Ads Manager</li>
+            <li>Paid social operations</li>
+            <li>QA system design</li>
+            <li>AI product design with guardrails</li>
+            <li>Prompt and skill writing for Claude</li>
+            <li>Spreadsheet engineering at scale</li>
+            <li>Google Apps Script</li>
+            <li>Python tooling and tests</li>
+            <li>Change control and documentation</li>
+            <li>Media-plan reconciliation</li>
+            <li>Rollout to a working team</li>
+          </ul>
+        </div>
+        <div>
+          <h3>About the data</h3>
+          <p>The demo and the workbook run on synthetic data. Halcyon Coffee Roasters, Maya Brews, and every ID and number in them are invented to show the mechanics. No client data was used.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer id="contact" class="contact" aria-labelledby="contact-h">
+  <div class="wrap">
+    <div class="g12">
+      <div class="contact-label">Contact</div>
+      <div class="contact-body">
+        <h2 id="contact-h">Want the full walkthrough?</h2>
+        <p>The production rulebook, proof register, vocabulary maps, fixture suite and build scripts aren't published here. I'm glad to walk through them, and anything else on this page.</p>
+        <div class="contact-links">
+          <a href="mailto:nicolebglassman@gmail.com">nicolebglassman@gmail.com</a>
+          <a href="https://www.linkedin.com/in/nicoleglassman" rel="me">LinkedIn</a>
+        </div>
+        <p class="aside">Open to in-house social roles. The strategy half of the story is in <a href="../pov/">what I'd change about most brands' social</a>.</p>
+      </div>
+    </div>
+    <div class="colophon">
+      <span>© 2026 Nicole Glassman. Buildcheck's rules, workbook design and engine are original work, shown for portfolio purposes and not licensed for reuse.</span>
+      <a href="../">nicoleglassman.github.io</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+'use strict';
+document.body.classList.remove('no-js');
+const $=(s,r=document)=>r.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const REDUCE=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- phone menu ---------- */
+(function(){ const btn=$('.menu-btn'), list=$('#nav-links'); if(!btn||!list) return;
+  const set=open=>{ btn.setAttribute('aria-expanded',String(open)); list.classList.toggle('open',open); };
+  btn.addEventListener('click',()=>set(btn.getAttribute('aria-expanded')!=='true'));
+  list.addEventListener('click',e=>{ if(e.target.closest('a')) set(false); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&btn.getAttribute('aria-expanded')==='true'){ set(false); btn.focus(); } });
+  document.addEventListener('click',e=>{ if(btn.getAttribute('aria-expanded')==='true'&&!e.target.closest('.site-nav')) set(false); });
+  list.addEventListener('focusout',e=>{ if(btn.getAttribute('aria-expanded')==='true'&&!(e.relatedTarget&&e.relatedTarget.closest('.site-nav'))) set(false); });
+  addEventListener('resize',()=>{ if(getComputedStyle(btn).display==='none') set(false); }); })();
+
+/* ---------- generic helpers: format-tolerant, platform-neutral ---------- */
+const norm=s=>String(s??'').replace(/\u00a0/g,' ').replace(/\r\n/g,'\n').trim().replace(/%7B%7B/gi,'{{').replace(/%7D%7D/gi,'}}').replace(/^N\/A$/i,'');
+const isBlank=s=>norm(s)==='';
+const stripPrefix=s=>norm(s).replace(/^(a|c|cg|s|tp|x|o|v|bc|id|px):/i,'');
+const digits=s=>stripPrefix(s).replace(/\D/g,'');
+const budget=s=>norm(s).replace(/[$,]/g,'').replace(/\.0+$/,'');
+const setKey=s=>norm(s).split(/[;,]/).map(t=>t.trim().toLowerCase()).filter(Boolean).sort().join(' | ');
+const urlKey=s=>norm(s).replace(/__[a-z_]+__/gi,m=>m.toUpperCase());
+/* Meta "M/D/YYYY h:mm[:ss] am/pm", the workbook's "MM/DD/YYYY HH:mm" and TikTok's "YYYY/M/D HH:mm"; an impossible month or day reads as null so a D/M/Y swap becomes a review */
+function instant(s){ const t=norm(s); let y,mo,d,h,mi,se,ap; let m=t.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?(?:\s*(am|pm))?$/i);
+  if(m){ mo=+m[1]; d=+m[2]; y=+m[3]; h=+m[4]; mi=+m[5]; se=+(m[6]||0); ap=m[7]; }
+  else { m=t.match(/^(\d{4})\/(\d{1,2})\/(\d{1,2})\s+(\d{1,2}):(\d{2})(?::(\d{2}))?$/); if(!m) return null; y=+m[1]; mo=+m[2]; d=+m[3]; h=+m[4]; mi=+m[5]; se=+(m[6]||0); }
+  if(ap){ h=h%12; if(ap.toLowerCase()==='pm') h+=12; }
+  if(mo<1||mo>12||d<1||d>31||h>23||mi>59) return null;
+  return Date.UTC(y,mo-1,d,h,mi,se); }
+function compare(kind,pv,ev){
+  switch(kind){
+    case 'digits': return {eq:digits(pv)===digits(ev)};
+    case 'story': return {eq:stripPrefix(pv)===stripPrefix(ev)};
+    case 'set': return {eq:setKey(pv)===setKey(ev)};
+    case 'url': return {eq:urlKey(pv)===urlKey(ev)};
+    case 'toggle': { const p=norm(pv).toLowerCase(), e=norm(ev).toLowerCase(); if(p==='off') return e===''?{eq:true,note:'matched after blank → Off normalisation'}:{eq:e==='off'}; return {eq:p===e}; }
+    case 'instant': { const a=instant(pv), b=instant(ev); if(a===null||b===null) return {eq:false,review:true,note:'a date could not be read as an instant — serial number or D/M/Y swap?'}; if(a===b) return {eq:true}; if(Math.abs(a-b)===60000) return {eq:false,review:true,note:'one minute apart — the platform writes end times as 11:59 pm on the last day; the plan says the next day 12:00 AM'}; return {eq:false}; }
+    default: { const eq=norm(pv)===norm(ev); return {eq,note:(eq&&/%7B%7B/i.test(String(ev)))?'matched after %7B%7B → {{ normalisation':undefined}; }
+  }
+}
+const R={key:'key, then name path',norm:'normalise, then compare',map:'proven label mapping',proof:'proof register (unproven)',cover:'creative coverage',src:'ad source rule',budget:'budget type by which column is filled',budget2:'budget type and amount from explicit columns',dates:'instants in account time',status:'delivery intent → status'};
+function mk(spec,outcome,pv,ev,proven,note){return {id:spec.id,type:spec.type,field:spec.field,col:spec.col,plan:String(pv??''),exp:String(ev??''),outcome,proven:!!proven,rule:spec.rule,note,prove:spec.prove,key:spec.key};}
+const READY='Post-Build_Ready for AI QA';
+const CONCEPTS=[['GiftGuide','15s','Gifts for the coffee-obsessed, roasted this week and shipped free over $40.','The Holiday Gift Guide'],['Roastery','15s','Meet the roastery behind your morning.','Roasted in small batches'],['Barista','6s','Six seconds of pour-over, perfected.','Pour-over, perfected'],['FreeShipping','6s','Free shipping on every gift, all season.','Free holiday shipping'],['Subscription','15s','Fresh roast every two weeks, no thinking required.','Coffee on subscription'],['Grinder','15s','The grinder that fixes bad coffee at the source.','Grind fresh, taste more'],['Espresso','6s','Espresso at home, minus the guesswork.','Espresso, simplified'],['GiftCard','6s','When you know they love coffee, but not which one.','The easy gift']];
+
+/* ---------- platform profile: META ---------- */
+const PAGE_ID='10000000000001', IG_ID='17841400000000001', CRE_PAGE_ID='10000000000002', CRE_IG_ID='17841400000000002';
+const PIXEL='tp:22000000000001:Halcyon Web Pixel';
+const URLP='utm_source=meta&utm_medium=paid_social&utm_campaign={{campaign.name}}&utm_content={{ad.name}}';
+const URLP_ENC='utm_source=meta&utm_medium=paid_social&utm_campaign=%7B%7Bcampaign.name%7D%7D&utm_content=%7B%7Bad.name%7D%7D';
+const LINK='https://halcyoncoffee.example/holiday';
+const CAMPS=[{name:'HAL_US_Q4-26_HolidayGifting_CONS_VID',id:'12000000000000001',objective:'Outcome Engagement',goal:'THRUPLAY',budget:'120000',line:'L001',parts:['HAL','US','Q4-26','HolidayGifting','CONS','VID']},
+             {name:'HAL_US_Q4-26_HolidayGifting_CONV_VID',id:'12000000000000002',objective:'Outcome Sales',goal:'OFFSITE_CONVERSIONS',budget:'180000',line:'L002',parts:['HAL','US','Q4-26','HolidayGifting','CONV','VID']}];
+const SETS=[{c:0,label:'Prospecting_CoffeeEnthusiasts',s01:'Prospecting',audience:'US Coffee Enthusiasts 25-54',age:['25','54'],custom:'',excluded:'',detailed:'Coffee'},
+            {c:0,label:'Prospecting_Lookalike_Purchasers',s01:'Prospecting',audience:'LAL 1% Purchasers',age:['25','54'],custom:'10000000000005:LAL 1% Purchasers',excluded:'10000000000004:Purchasers 180d',detailed:''},
+            {c:0,label:'Retargeting_SiteVisitors90d',s01:'Retargeting',audience:'Site visitors 90d',age:['25','54'],custom:'10000000000003:Site visitors 90d',excluded:'10000000000004:Purchasers 180d',detailed:''},
+            {c:1,label:'Prospecting_Broad_Advantage',s01:'Prospecting',audience:'US Broad 21-65',age:['21','65'],custom:'',excluded:'10000000000004:Purchasers 180d',detailed:''},
+            {c:1,label:'Retargeting_CartAbandoners30d',s01:'Retargeting',audience:'Cart abandoners 30d',age:['25','54'],custom:'10000000000006:Cart abandoners 30d',excluded:'10000000000004:Purchasers 180d',detailed:''},
+            {c:1,label:'Retargeting_Purchasers_CrossSell',s01:'Retargeting',audience:'Purchasers 180d',age:['25','54'],custom:'10000000000004:Purchasers 180d',excluded:'',detailed:''}];
+const setName=i=>CAMPS[SETS[i].c].name+'_'+SETS[i].label;
+const setId=i=>'1200000000000010'+(i+1);
+const adName=(i,j)=>setName(i)+'_'+CONCEPTS[j][0]+'_'+CONCEPTS[j][1]+'_Video';
+const adId=(i,j)=>'1200000000000'+(1001+i*8+j);
+const PARTNER_ROW=52, NA_ROW=53, RENAME_SET=2, RENAME_CONCEPT=3;
+const RENAME_NAME=adName(RENAME_SET,RENAME_CONCEPT);
+const A=(i,j)=>i*8+j; // export ad index
+const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee Roasters',
+  tiers:{campaign:'campaign',adset:'ad set',ad:'ad'},scope:'campaign · ad set · ad',regScope:'campaign · adset · ad',words:{manager:'Ads Manager',adset:'ad set'},
+  idCol:{campaign:'Campaign ID',adset:'Ad Set ID',ad:'Ad ID'},nameCol:{campaign:'Campaign Name',adset:'Ad Set Name',ad:'Ad Name'},
+  idField:{campaign:'campaign_id',adset:'ad_set_id',ad:'ad_id'},nameField:{campaign:'campaign_name',adset:'ad_set_name',ad:'ad_name'},
+  STATUS:{'Off':['PAUSED',true],'Paused':['PAUSED',true],'Live':['ACTIVE',false],'Set Live For BLS':['ACTIVE',false]},
+  NEEDED:{campaign:['Campaign ID','Campaign Name','Campaign Status','Buying Type','Campaign Objective','Campaign Lifetime Budget','Campaign Daily Budget','Campaign Start Time','Campaign Stop Time'],adset:['Ad Set ID','Ad Set Name','Ad Set Run Status','Optimization Goal','Ad Set Lifetime Budget','Ad Set Daily Budget','Countries','Age Min','Age Max','Custom Audiences','Excluded Custom Audiences','Flexible Inclusions','Conversion Tracking Pixels','Ad Set Time Start','Ad Set Time Stop'],ad:['Ad ID','Ad Name','Ad Set Name','Campaign Name','Ad Status','Link Object ID','Instagram Account ID','Story ID','Body','Title','Link Description','Link','Call to Action','URL Tags','Conversion Tracking Pixels','Creative Type','Video ID','Placements']},
+  CAMPAIGN_CHECKS:[
+    {id:'name',type:'Wrong name',field:'campaign_name',col:'Campaign Name',kind:'text',proven:true,rule:R.key},
+    {id:'status',type:'Wrong status',field:'delivery_intent',col:'Campaign Status',kind:'text',rule:R.status,prove:'a live export showing ACTIVE for a Live intent would prove the mapping'},
+    {id:'buying_type',type:'Wrong setting',field:'buying_type',col:'Buying Type',kind:'text',proven:true,rule:R.map},
+    {id:'objective',type:'Wrong setting',field:'campaign_objective',col:'Campaign Objective',kind:'text',proven:true,rule:R.map},
+    {id:'budget',special:'budget',type:'Wrong budget',prefix:'Campaign '},
+    {id:'start',type:'Wrong dates',field:'campaign_start_datetime',col:'Campaign Start Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended start in Ads Manager'},
+    {id:'end',type:'Wrong dates',field:'campaign_end_datetime',col:'Campaign Stop Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day — if the plan meant 12/24, correct the plan cell'}],
+  ADSET_CHECKS:[
+    {id:'name',type:'Wrong name',field:'ad_set_name',col:'Ad Set Name',kind:'text',proven:true,rule:R.key},
+    {id:'status',type:'Wrong status',field:'delivery_intent',col:'Ad Set Run Status',kind:'text',rule:R.status,prove:'a live export showing ACTIVE for a Live intent would prove the mapping'},
+    {id:'goal',type:'Wrong setting',field:'performance_goal',col:'Optimization Goal',kind:'text',proven:true,rule:R.map},
+    {id:'budget',special:'budget',type:'Wrong budget',prefix:'Ad Set '},
+    {id:'countries',type:'Wrong targeting',field:'countries',col:'Countries',kind:'set',proven:true,rule:R.norm},
+    {id:'age_min',type:'Wrong targeting',field:'age_min',col:'Age Min',kind:'text',proven:true,rule:R.norm},
+    {id:'age_max',type:'Wrong targeting',field:'age_max',col:'Age Max',kind:'text',proven:true,rule:R.norm},
+    {id:'custom_audiences',type:'Wrong targeting',field:'custom_audiences',col:'Custom Audiences',kind:'set',proven:true,rule:R.norm},
+    {id:'excluded',type:'Wrong targeting',field:'excluded_custom_audiences',col:'Excluded Custom Audiences',kind:'set',proven:true,rule:R.norm},
+    {id:'detailed_targeting_include',type:'Wrong targeting',field:'detailed_targeting_include',col:'Flexible Inclusions',kind:'set',proven:false,rule:R.proof,prove:'add Flexible Inclusions to the export preset and re-export, or confirm the interest in Ads Manager and initial the ✓ cell'},
+    {id:'pixel',type:'Wrong tracking',field:'conversion_tracking_pixels',col:'Conversion Tracking Pixels',kind:'text',proven:true,rule:R.norm},
+    {id:'start',type:'Wrong dates',field:'ad_set_start_datetime',col:'Ad Set Time Start',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended start in Ads Manager'},
+    {id:'end',type:'Wrong dates',field:'ad_set_end_datetime',col:'Ad Set Time Stop',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day — if the plan meant 12/24, correct the plan cell'}],
+  adChecks(ad){
+    const common=[{id:'name',type:'Wrong name',field:'ad_name',col:'Ad Name',kind:'text',proven:true,rule:R.key},{id:'status',type:'Wrong status',field:'delivery_intent',col:'Ad Status',kind:'text',rule:R.status,prove:'a live export showing ACTIVE for a Live intent would prove the mapping'}];
+    const identity=[{id:'facebook_page',type:'Wrong identity',field:'facebook_page',col:'Link Object ID',kind:'digits',proven:true,rule:R.src},{id:'instagram_account',type:'Wrong identity',field:'instagram_account',col:'Instagram Account ID',kind:'digits',proven:true,rule:R.src}];
+    const tail=[{id:'website_url',type:'Wrong link',field:'website_url',col:'Link',kind:'text',proven:true,rule:R.norm},{id:'cta',type:'Wrong CTA',field:'cta',col:'Call to Action',kind:'text',proven:true,rule:R.map},{id:'url_parameters',type:'Wrong tracking',field:'url_parameters',col:'URL Tags',kind:'text',proven:true,rule:R.norm},{id:'pixel',type:'Wrong tracking',field:'conversion_tracking_pixels',col:'Conversion Tracking Pixels',kind:'text',proven:true,rule:R.norm}];
+    if(ad.ad_source==='Uploaded creative') return [...common,...identity,
+      {id:'body',type:'Wrong copy',field:'primary_text_feed',col:'Body',kind:'text',proven:true,rule:R.norm},
+      {id:'title',type:'Wrong copy',field:'headline_feed',col:'Title',kind:'text',proven:true,rule:R.norm},
+      {id:'description',type:'Wrong copy',field:'description_feed',col:'Link Description',kind:'text',proven:true,rule:R.norm},
+      ...tail,{id:'creative',special:'creative',type:'Wrong creative'}];
+    return [...common,{id:'story_id',type:'Wrong post',field:'story_id',col:'Story ID',kind:'story',proven:true,required:true,rule:R.src},...identity,
+      {id:'body',type:'Wrong copy',field:'primary_text_feed',col:'Body',kind:'text',proven:true,rule:R.src},
+      {id:'title',type:'Wrong copy',field:'headline_feed',col:'Title',kind:'text',proven:true,rule:R.src},
+      {id:'description',special:'post_description',type:'Wrong copy'},
+      {id:'creative_type',special:'creative_type',type:'Wrong post'},...tail];
+  },
+  special(spec,planRow,expRow,present,tier){
+    if(spec.special==='budget'){
+      const lifeF=tier==='campaign'?'campaign_lifetime_budget':'ad_set_lifetime_budget', dayF=tier==='campaign'?'campaign_daily_budget':'ad_set_daily_budget';
+      const pl=planRow[lifeF], pd=planRow[dayF]; if(isBlank(pl)&&isBlank(pd)) return null;
+      const lifeC=spec.prefix+'Lifetime Budget', dayC=spec.prefix+'Daily Budget';
+      const n=isBlank(pl)?{f:dayF,c:dayC,v:pd,o:lifeC}:{f:lifeF,c:lifeC,v:pl,o:dayC};
+      const s=Object.assign({},spec,{field:n.f,col:n.c,rule:R.budget});
+      if(!present.has(n.c)) return mk(s,'REVIEW',n.v,'(column absent)',true,'column absent from the export preset');
+      const ev=expRow[n.c]??'', eo=expRow[n.o]??'';
+      if(!isBlank(ev)&&!isBlank(eo)) return mk(s,'REVIEW',n.v,ev+' / '+eo,true,'both budget columns are filled');
+      if(isBlank(ev)) return mk(s,'FAIL',n.v,'',true,'the planned budget column is blank in the export');
+      if(budget(ev)!==budget(n.v)) return mk(s,'FAIL',n.v,ev,true,'whole dollars compared after normalisation');
+      return mk(s,'PASS',n.v,ev,true,'budget type verified by which column is filled; '+n.o+' is blank');
+    }
+    if(spec.special==='creative'){
+      if(isBlank(planRow.creative_feed)) return null;
+      const s=Object.assign({},spec,{field:'creative_feed',col:'Video ID · Placements',rule:R.cover});
+      const has=!isBlank(expRow['Video ID']), feed=/\bdefault\b/i.test(expRow['Placements']||'');
+      if(has&&feed) return mk(s,'PASS','a 1x1 asset is planned','asset '+expRow['Video ID']+' · '+expRow['Placements'],true,'coverage only — file names are never compared to the export');
+      return mk(s,'FAIL','a 1x1 asset is planned',has?'no asset carries the Default placement':'no asset assigned',true);
+    }
+    if(spec.special==='post_description'){
+      if(isBlank(planRow.description_feed)) return null;
+      return mk(Object.assign({},spec,{field:'description_feed',col:'Link Description',rule:R.src}),'REVIEW',planRow.description_feed,expRow['Link Description']??'',true,'a post carries one copy — confirm in the preview');
+    }
+    if(spec.special==='creative_type'){
+      const expected='Video Page Post Ad'; const s=Object.assign({},spec,{field:'ad_source',col:'Creative Type',rule:R.proof,prove:'a partnership export showing Video Page Post Ad proves the mapping'});
+      if(!present.has('Creative Type')) return mk(s,'REVIEW',planRow.ad_source+' → '+expected,'(column absent)',false,'column absent from the export preset');
+      const ev=expRow['Creative Type']??'';
+      if(norm(ev)===expected) return mk(s,'PASS',planRow.ad_source+' → '+expected,ev,false,'unproven mapping observed equal — proposed in §7');
+      return mk(s,'REVIEW',planRow.ad_source+' → '+expected,ev,false,'unproven mapping — a mismatch can only ask for review');
+    }
+    return null;
+  },
+  basePlan(){
+    const plan={campaign:[],adset:[],ad:[]};
+    CAMPS.forEach((c,k)=>plan.campaign.push({plan_row:4+k,campaign_name:c.name,campaign_id:c.id,delivery_intent:'Paused',buying_type:'AUCTION',campaign_objective:c.objective,campaign_lifetime_budget:c.budget,campaign_daily_budget:'',campaign_start_datetime:'11/01/2026 12:00 AM',campaign_end_datetime:'12/24/2026 11:59 PM',qa_status:READY,plan_line:c.line}));
+    SETS.forEach((s,i)=>plan.adset.push({plan_row:4+i,campaign_name:CAMPS[s.c].name,ad_set_name:setName(i),ad_set_id:setId(i),delivery_intent:'Paused',performance_goal:CAMPS[s.c].goal,ad_set_lifetime_budget:'',ad_set_daily_budget:'',countries:'US',age_min:s.age[0],age_max:s.age[1],custom_audiences:s.custom,excluded_custom_audiences:s.excluded,detailed_targeting_include:s.detailed,conversion_tracking_pixels:PIXEL,ad_set_start_datetime:'11/01/2026 12:00 AM',ad_set_end_datetime:'12/24/2026 11:59 PM',qa_status:READY,plan_line:CAMPS[s.c].line}));
+    SETS.forEach((s,i)=>CONCEPTS.forEach((cc,j)=>plan.ad.push({plan_row:4+i*8+j,campaign_name:CAMPS[s.c].name,ad_set_name:setName(i),ad_name:adName(i,j),ad_id:(i===RENAME_SET&&j===RENAME_CONCEPT)?'':adId(i,j),ad_source:'Uploaded creative',facebook_page:PAGE_ID,instagram_account:IG_ID,second_identity:'',story_id:'',creative_name:cc[0]+'_'+cc[1],creative_feed:'HAL_'+cc[0]+'_'+cc[1]+'_1x1.mp4',creative_story:'HAL_'+cc[0]+'_'+cc[1]+'_9x16.mp4',primary_text_feed:cc[2],headline_feed:cc[3],description_feed:'Free shipping over $40',website_url:LINK,cta:'SHOP_NOW',url_parameters:URLP,conversion_tracking_pixels:PIXEL,qa_status:READY,delivery_intent:'Paused'})));
+    plan.ad.push({plan_row:PARTNER_ROW,campaign_name:CAMPS[0].name,ad_set_name:setName(2),ad_name:setName(2)+'_MayaBrews_CreatorPost',ad_id:'12000000000001049',ad_source:'Partnership ad',facebook_page:CRE_PAGE_ID,instagram_account:CRE_IG_ID,second_identity:'Halcyon Coffee Roasters',story_id:'10000000000002_5550001',creative_name:'MayaBrews_Post',creative_feed:'',creative_story:'',primary_text_feed:'',headline_feed:'',description_feed:'',website_url:'',cta:'',url_parameters:URLP,conversion_tracking_pixels:PIXEL,qa_status:READY,delivery_intent:'Paused'});
+    plan.ad.push({plan_row:NA_ROW,campaign_name:CAMPS[1].name,ad_set_name:setName(5),ad_name:setName(5)+'_Roastery_15s_Video_ALT',ad_id:'',ad_source:'Uploaded creative',facebook_page:PAGE_ID,instagram_account:IG_ID,second_identity:'',story_id:'',creative_name:'Roastery_15s',creative_feed:'HAL_Roastery_15s_1x1_ALT.mp4',creative_story:'',primary_text_feed:CONCEPTS[1][2],headline_feed:CONCEPTS[1][3],description_feed:'Free shipping over $40',website_url:LINK,cta:'SHOP_NOW',url_parameters:URLP,conversion_tracking_pixels:PIXEL,qa_status:'Not Launching',delivery_intent:'Off'});
+    return plan;
+  },
+  baseExport(){
+    const exp={campaigns:[],adsets:[],ads:[]};
+    CAMPS.forEach(c=>exp.campaigns.push({'Campaign ID':'c:'+c.id,'Campaign Name':c.name,'Campaign Status':'PAUSED','Buying Type':'AUCTION','Campaign Objective':c.objective,'Campaign Lifetime Budget':c.budget+'.00','Campaign Daily Budget':'','Campaign Start Time':'11/1/2026 12:00:00 am','Campaign Stop Time':'12/24/2026 11:59:00 pm'}));
+    SETS.forEach((s,i)=>exp.adsets.push({'Ad Set ID':'cg:'+setId(i),'Ad Set Name':setName(i),'Campaign Name':CAMPS[s.c].name,'Ad Set Run Status':'PAUSED','Optimization Goal':CAMPS[s.c].goal,'Ad Set Lifetime Budget':'','Ad Set Daily Budget':'','Countries':'US','Age Min':s.age[0],'Age Max':s.age[1],'Custom Audiences':s.custom,'Excluded Custom Audiences':s.excluded,'Flexible Inclusions':s.detailed,'Conversion Tracking Pixels':PIXEL,'Ad Set Time Start':'11/1/2026 12:00:00 am','Ad Set Time Stop':'12/24/2026 11:59:00 pm'}));
+    SETS.forEach((s,i)=>CONCEPTS.forEach((cc,j)=>exp.ads.push({'Ad ID':'a:'+adId(i,j),'Ad Name':adName(i,j),'Ad Set Name':setName(i),'Campaign Name':CAMPS[s.c].name,'Ad Status':'PAUSED','Link Object ID':'o:'+PAGE_ID,'Instagram Account ID':'x:'+IG_ID,'Story ID':'','Body':cc[2],'Title':cc[3],'Link Description':'Free shipping over $40','Link':LINK,'Call to Action':'SHOP_NOW','URL Tags':(i*8+j)%5===2?URLP_ENC:URLP,'Conversion Tracking Pixels':PIXEL,'Creative Type':'Video Ad','Video ID':'v:99'+adId(i,j).slice(-6),'Placements':'Default, Default'})));
+    exp.ads.push({'Ad ID':'a:12000000000001049','Ad Name':setName(2)+'_MayaBrews_CreatorPost','Ad Set Name':setName(2),'Campaign Name':CAMPS[0].name,'Ad Status':'PAUSED','Link Object ID':'o:'+CRE_PAGE_ID,'Instagram Account ID':'x:'+CRE_IG_ID,'Story ID':'s:10000000000002_5550001','Body':'Cozy season is coffee season — my go-to holiday roast from @halcyoncoffee','Title':'','Link Description':'','Link':LINK,'Call to Action':'LEARN_MORE','URL Tags':URLP,'Conversion Tracking Pixels':PIXEL,'Creative Type':'Video Page Post Ad','Video ID':'','Placements':'Default, Default'});
+    return exp;
+  },
+  split:x=>x, expRows:x=>x.campaigns.length+x.adsets.length+x.ads.length,
+  DISC:[
+    {id:'as-active',planted:true,tier:'adset',row:6,check:'status',fix:'Pause the ad set in Ads Manager',apply(x,on){x.adsets[2]['Ad Set Run Status']=on?'ACTIVE':'PAUSED'}},
+    {id:'as-flex',planted:true,tier:'adset',row:4,check:'detailed_targeting_include',fix:'Add “Flexible Inclusions” to the export preset and re-export',apply(x,on){x.adsets.forEach((r,i)=>{if(on) delete r['Flexible Inclusions']; else r['Flexible Inclusions']=SETS[i].detailed})}},
+    {id:'as-end',planted:true,plan:true,tier:'adset',row:6,check:'end',fix:'Correct the plan cell to 12/24/2026 11:59 PM',apply(p,on){p.adset[2].ad_set_end_datetime=on?'12/25/2026 12:00 AM':'12/24/2026 11:59 PM'}},
+    {id:'camp-budget',planted:true,tier:'campaign',row:5,check:'budget',fix:'Correct the campaign budget in Ads Manager (a zero was dropped)',apply(x,on){x.campaigns[1]['Campaign Lifetime Budget']=on?'18000.00':'180000.00'}},
+    {id:'ad-cta',planted:true,tier:'ad',row:5,check:'cta',fix:'Set the call to action to Shop now in Ads Manager',apply(x,on){x.ads[A(0,1)]['Call to Action']=on?'LEARN_MORE':'SHOP_NOW'}},
+    {id:'sys-utm',planted:true,tier:'ad',rows:[28,29,30,31,32,33,34,35],check:'url_parameters',fix:'Correct the URL parameters on all 8 ads in Ads Manager (one bulk edit)',apply(x,on){for(let j=0;j<8;j++){const r=x.ads[A(3,j)]; r['URL Tags']=on?URLP.replace('utm_source=meta','utm_source=facebook'):((A(3,j))%5===2?URLP_ENC:URLP)}}},
+    {id:'ad-rename',planted:true,tier:'ad',row:23,check:'missing',fix:'Rename the ad in Ads Manager to the planned name',apply(x,on){x.ads[A(RENAME_SET,RENAME_CONCEPT)]['Ad Name']=on?RENAME_NAME+'_v2':RENAME_NAME}},
+    {id:'ad-link',planted:true,tier:'ad',row:43,check:'website_url',fix:'Restore the planned landing page in Ads Manager',apply(x,on){x.ads[A(4,7)]['Link']=on?'https://halcyoncoffee.example/':LINK}},
+    {id:'ad-active',planted:false,tier:'ad',row:4,check:'status',fix:'Pause the ad in Ads Manager',apply(x,on){x.ads[0]['Ad Status']=on?'ACTIVE':'PAUSED'}},
+    {id:'ad-pixel',planted:false,tier:'ad',row:14,check:'pixel',fix:'Re-attach the pixel to the ad in Ads Manager',apply(x,on){x.ads[A(1,2)]['Conversion Tracking Pixels']=on?'':PIXEL}},
+    {id:'ad-story',planted:false,tier:'ad',row:PARTNER_ROW,check:'story_id',fix:'Re-select the creator’s post in Ads Manager',apply(x,on){x.ads[48]['Story ID']=on?'s:10000000000002_5550009':'s:10000000000002_5550001'}},
+    {id:'as-pixel',planted:false,tier:'adset',row:8,check:'pixel',fix:'Re-attach the pixel to the ad set in Ads Manager',apply(x,on){x.adsets[4]['Conversion Tracking Pixels']=on?'':PIXEL}},
+    {id:'ad-body',planted:false,tier:'ad',row:37,check:'body',fix:'Restore the planned primary text in Ads Manager',apply(x,on){x.ads[A(4,1)]['Body']=on?'Meet the roastery behind you morning.':CONCEPTS[1][2]}},
+    {id:'ad-title',planted:false,tier:'ad',row:9,check:'title',fix:'Restore the planned headline in Ads Manager',apply(x,on){x.ads[A(0,5)]['Title']=on?'Grind fresh taste more':CONCEPTS[5][3]}}
+  ],
+  humans(plan){ const h=[{tier:'campaign',plan_row:4,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'campaign',plan_row:5,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'adset',plan_row:4,field:'publisher_block_lists',value:'HAL_BlockList_2026',cell:'hc_brand_safety',status:'initialled JK'}];
+    plan.ad.forEach(a=>{ if(!isBlank(a.second_identity)) h.push({tier:'ad',plan_row:a.plan_row,field:'second_identity',value:a.second_identity,cell:'hc_identity',status:'open'}); }); return h; },
+  proposalKey:c=>c.id==='creative_type'?'creative_type|Partnership ad':(c.field+'|'+c.col),
+  contextNote:run=>run.context.length?'Context, no action — URL tags matched after %7B%7B → {{ normalisation on '+run.context.length+' ads ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
+  PLAN_VIEWS:[{name:'QA_EXPORT_CAMPAIGN',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buying_type','campaign_objective','campaign_lifetime_budget','campaign_daily_budget','campaign_start_datetime','campaign_end_datetime','qa_status','plan_line']},
+    {name:'QA_EXPORT_ADSET',key:'adset',cols:['plan_row','ad_set_name','ad_set_id','delivery_intent','performance_goal','countries','age_min','age_max','custom_audiences','excluded_custom_audiences','detailed_targeting_include','conversion_tracking_pixels','ad_set_start_datetime','ad_set_end_datetime','qa_status']},
+    {name:'QA_EXPORT (ads)',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','description_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent']}],
+  EXP_VIEWS:[{name:'Campaigns',key:'campaigns',tier:'campaign'},{name:'Ad sets',key:'adsets',tier:'adset'},{name:'Ads',key:'ads',tier:'ad'}],
+  logLines:(run,nPlan,nExp,presentN)=>['Parsing 3 plan feeds and 1 export as text — '+nPlan+' plan rows, '+nExp+' export rows',
+    'Inventory: '+presentN+' export columns present · '+run.absent.length+' absent'+(run.absent.length?' ('+run.absent.join(', ')+')':''),
+    'Matching: '+run.byId+' items by ID, '+run.byName+' by name path',
+    'Normalising: NBSP, %7B%7B → {{, budgets to whole dollars, dates to instants in America/Los_Angeles, multi-value fields to token sets',
+    'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
+    'Report ready — READY TO APPROVE: '+(run.ready?'YES':'NO')],
+  resetStatus:'8 problems are planted in the inputs — one of them across all 8 ads of an ad set. Run QA to find them.',
+  idleLog:'Waiting to run. The engine parses both files as text, inventories the export\u2019s columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
+};
+
+/* ---------- platform profile: TIKTOK ---------- */
+const TT_BC='bc:10000000000000001', TT_CRE='id:7100000000000000002', TT_BRAND_ACC='id:7100000000000000003', TT_POST='7300000000000000001', TT_BRAND_POST='7300000000000000002';
+const TT_PIXEL='CGE1A2B3C4D5E6F7G8', TT_PIXEL_LABEL='Halcyon TikTok Events', TT_LINK='https://halcyoncoffee.example/holiday';
+const TT_URL=TT_LINK+'?utm_source=tiktok&utm_medium=paid_social&utm_campaign=__CAMPAIGN_NAME__&utm_content=__AID_NAME__';
+const TT_AUD={site:'7100000000000000301',purch:'7100000000000000302',lal:'7100000000000000303',cart:'7100000000000000304'};
+const TT_CAMPS=[{name:'HAL_US_Q4-26_HolidayGifting_CONS_VV',id:'1700000000000000001',objective:'Video Views',objLabel:'Video views',goal:'Focused View',goalLabel:'15-second views (Focused view)',billing:'CPV',event:'',budget:'120000',line:'L003',start:'11/15/2026 09:00',end:'12/24/2026 22:59',parts:['HAL','US','Q4-26','HolidayGifting','CONS','VV']},
+                {name:'HAL_US_Q4-26_HolidayGifting_CONV_WC',id:'1700000000000000002',objective:'Sales',objLabel:'Sales',goal:'Conversion',goalLabel:'Conversions',billing:'oCPM',event:'Complete Payment',budget:'180000',line:'L004',start:'11/01/2026 09:00',end:'12/24/2026 22:59',parts:['HAL','US','Q4-26','HolidayGifting','CONV','WC']}];
+const TT_GROUPS=[{c:0,label:'Prospecting_Interests_18-34',s01:'Prospecting',audience:'US Interests 18-34',age:'18-24; 25-34',include:'',exclude:'',interest:'Food & Beverage',languages:''},
+                 {c:0,label:'Prospecting_Lookalike_Purchasers',s01:'Prospecting',audience:'LAL Purchasers',age:'25-34; 35-44; 45-54',include:TT_AUD.lal,exclude:TT_AUD.purch,interest:'',languages:'English'},
+                 {c:0,label:'Retargeting_SiteVisitors90d',s01:'Retargeting',audience:'Site visitors 90d',age:'18-24; 25-34; 35-44',include:TT_AUD.site,exclude:TT_AUD.purch,interest:'',languages:''},
+                 {c:1,label:'Prospecting_Broad_21-65',s01:'Prospecting',audience:'US Broad 21-65',age:'18-24; 25-34; 35-44; 45-54; 55+',include:'',exclude:TT_AUD.purch,interest:'',languages:''},
+                 {c:1,label:'Retargeting_CartAbandoners30d',s01:'Retargeting',audience:'Cart abandoners 30d',age:'18-24; 25-34; 35-44',include:TT_AUD.cart,exclude:TT_AUD.purch,interest:'',languages:''},
+                 {c:1,label:'Retargeting_Purchasers_CrossSell',s01:'Retargeting',audience:'Purchasers 180d',age:'18-24; 25-34; 35-44',include:TT_AUD.purch,exclude:'',interest:'',languages:''}];
+const ttCamp=i=>TT_CAMPS[TT_GROUPS[i].c], ttDate=s=>s.replace(/^(\d\d)\/(\d\d)\/(\d{4}) /,'$3/$1/$2 '); /* workbook MM/DD/YYYY HH:mm → export YYYY/MM/DD HH:mm */
+const ttGroupName=i=>ttCamp(i).name+'_'+TT_GROUPS[i].label, ttGroupId=i=>'170000000000000010'+(i+1);
+const ttAdName=(i,j)=>ttGroupName(i)+'_'+CONCEPTS[j][0]+'_'+CONCEPTS[j][1]+'_Video', ttAdId=(i,j)=>'170000000000000'+(1001+i*8+j);
+const TT_SPARK_ROW=52, TT_BRAND_ROW=53, TT_NA_ROW=54, TT_SPARK_ID='1700000000000001049', TT_BRAND_ID='1700000000000001050', TT_RENAME_G=2, TT_RENAME_C=3, TT_RENAME_NAME=ttAdName(TT_RENAME_G,TT_RENAME_C);
+const TT_COLS={campaign:['Campaign ID','Campaign Status','Campaign Name','Advertising Objective','Campaign Budget Type','Campaign Budget Amount','Campaign Budget Optimization','Special ads categories'],
+  adset:['Ad Group ID','Ad Group Status','Ad Group Name','Campaign Name','Placement Types','Placements','Include search results','TikTok Pixel ID','Pixel Event','Include audience ID','Exclude audience ID','Location','Gender','Age','Languages','Interest Category','Inventory filter','Ad Group Budget Type','Ad Group Budget Amount','Start Time','End Time','Dayparting','Optimization Goal','Billing Method','Bid Strategy','Delivery Type'],
+  ad:['Ad ID','Ad Status','Ad Name','Ad Group Name','Campaign Name','Use TikTok Account','Identity Type','Identity ID','Ad format','Video Name','Post ID','Only show as ad','Text','Call to action type','Call to Action','Web URL','Impression Tracking URL','Click Tracking URL','TikTok website events']};
+const ttRows=(x,i)=>x.sheet.filter(r=>r['Ad Group ID']===ttGroupId(i)), ttCampRows=(x,k)=>x.sheet.filter(r=>r['Campaign ID']===TT_CAMPS[k].id), ttAd=(x,i,j)=>x.sheet.find(r=>r['Ad ID']===ttAdId(i,j)), ttById=(x,id)=>x.sheet.find(r=>r['Ad ID']===id);
+const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Halcyon Coffee Roasters',
+  tiers:{campaign:'campaign',adset:'ad group',ad:'ad'},scope:'campaign · ad group · ad',regScope:'campaign · ad group · ad',words:{manager:'TikTok Ads Manager',adset:'ad group',other:'Meta'},
+  hero:{row:'campaign · plan_row 5',field:'campaign_budget_type',plan:'Lifetime',exp:'Daily',type:'Wrong budget',rule:{pre:'Explicit column ',code:'Campaign Budget Type',post:' · amount agrees (180000.00), the type does not'}},
+  quick:{found:'12 failures and a missing ad caught before a dollar is spent, including a $180,000 lifetime budget entered as daily',catches:'a $180,000 lifetime budget entered as daily'},
+  idCol:{campaign:'Campaign ID',adset:'Ad Group ID',ad:'Ad ID'},nameCol:{campaign:'Campaign Name',adset:'Ad Group Name',ad:'Ad Name'},
+  idField:{campaign:'campaign_id',adset:'ad_group_id',ad:'ad_id'},nameField:{campaign:'campaign_name',adset:'ad_group_name',ad:'ad_name'},
+  STATUS:{'Off':['Off',true],'Live':['On',false]},
+  NEEDED:TT_COLS,
+  CAMPAIGN_CHECKS:[
+    {id:'name',type:'Wrong name',field:'campaign_name',col:'Campaign Name',kind:'text',proven:true,rule:R.key},
+    {id:'status',type:'Wrong status',field:'delivery_intent',col:'Campaign Status',kind:'text',rule:R.status,prove:'a live export showing On for a Live intent would prove the mapping'},
+    {id:'objective',type:'Wrong setting',field:'advertising_objective',col:'Advertising Objective',kind:'text',proven:true,rule:R.map},
+    {id:'cbo',type:'Wrong setting',field:'campaign_budget_optimization',col:'Campaign Budget Optimization',kind:'toggle',proven:true,rule:R.norm},
+    {id:'budget',special:'budget',type:'Wrong budget',typeF:'campaign_budget_type',amtF:'campaign_budget_amount',typeC:'Campaign Budget Type',amtC:'Campaign Budget Amount'}],
+  ADSET_CHECKS:[
+    {id:'name',type:'Wrong name',field:'ad_group_name',col:'Ad Group Name',kind:'text',proven:true,rule:R.key},
+    {id:'status',type:'Wrong status',field:'delivery_intent',col:'Ad Group Status',kind:'text',rule:R.status,prove:'a live export showing On for a Live intent would prove the mapping'},
+    {id:'goal',type:'Wrong setting',field:'optimization_goal',col:'Optimization Goal',kind:'text',proven:false,rule:R.proof,prove:'a live export showing Focused View for a 15-second views (Focused view) plan proves the mapping — the plan label may mean the 15-second goal rather than Focused View, so confirm the goal in TikTok Ads Manager first'},
+    {id:'billing',type:'Wrong setting',field:'billing_method',col:'Billing Method',kind:'text',proven:true,rule:R.map},
+    {id:'bid',type:'Wrong setting',field:'bid_strategy',col:'Bid Strategy',kind:'text',proven:true,rule:R.map},
+    {id:'placement_types',type:'Wrong placement',field:'placement_types',col:'Placement Types',kind:'text',proven:true,rule:R.map},
+    {id:'placements',type:'Wrong placement',field:'placements',col:'Placements',kind:'set',proven:true,rule:R.norm},
+    {id:'search',type:'Wrong setting',field:'include_search_results',col:'Include search results',kind:'toggle',proven:true,rule:R.norm},
+    {id:'pixel',type:'Wrong tracking',field:'pixel_id',col:'TikTok Pixel ID',kind:'text',proven:true,rule:R.norm},
+    {id:'pixel_event',type:'Wrong tracking',field:'pixel_event',col:'Pixel Event',kind:'text',proven:true,rule:R.map},
+    {id:'include_audience',type:'Wrong targeting',field:'include_audience_id',col:'Include audience ID',kind:'set',proven:true,rule:R.norm},
+    {id:'exclude_audience',type:'Wrong targeting',field:'exclude_audience_id',col:'Exclude audience ID',kind:'set',proven:true,rule:R.norm},
+    {id:'location',type:'Wrong targeting',field:'location',col:'Location',kind:'set',proven:true,rule:R.norm},
+    {id:'gender',type:'Wrong targeting',field:'gender',col:'Gender',kind:'text',proven:true,rule:R.norm},
+    {id:'age',type:'Wrong targeting',field:'age',col:'Age',kind:'set',proven:true,rule:R.norm},
+    {id:'languages',type:'Wrong targeting',field:'languages',col:'Languages',kind:'set',proven:true,rule:R.norm,prove:'add Languages to the export preset and re-export, or confirm the language in TikTok Ads Manager and initial the ✓ cell'},
+    {id:'interest',type:'Wrong targeting',field:'interest_category',col:'Interest Category',kind:'set',proven:true,rule:R.norm},
+    {id:'inventory',type:'Wrong setting',field:'inventory_filter',col:'Inventory filter',kind:'text',proven:true,rule:R.map},
+    {id:'budget',special:'budget',type:'Wrong budget',typeF:'ad_group_budget_type',amtF:'ad_group_budget_amount',typeC:'Ad Group Budget Type',amtC:'Ad Group Budget Amount'},
+    {id:'start',type:'Wrong dates',field:'start_datetime',col:'Start Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended start in TikTok Ads Manager'},
+    {id:'end',type:'Wrong dates',field:'end_datetime',col:'End Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day — if the plan meant 12/24, correct the plan cell'},
+    {id:'dayparting',type:'Wrong setting',field:'dayparting',col:'Dayparting',kind:'text',proven:true,rule:R.norm},
+    {id:'delivery_type',type:'Wrong setting',field:'delivery_type',col:'Delivery Type',kind:'text',proven:true,rule:R.norm}],
+  adChecks(ad){
+    const common=[{id:'name',type:'Wrong name',field:'ad_name',col:'Ad Name',kind:'text',proven:true,rule:R.key},{id:'status',type:'Wrong status',field:'delivery_intent',col:'Ad Status',kind:'text',rule:R.status,prove:'a live export showing On for a Live intent would prove the mapping'}];
+    const identity=[{id:'identity_type',type:'Wrong identity',field:'identity_type',col:'Identity Type',kind:'text',proven:true,rule:R.src},{id:'identity_id',type:'Wrong identity',field:'identity_id',col:'Identity ID',kind:'digits',proven:true,rule:R.src}];
+    const tail=[{id:'cta_type',type:'Wrong CTA',field:'cta_type',col:'Call to action type',kind:'text',proven:true,rule:R.map},{id:'cta',type:'Wrong CTA',field:'cta',col:'Call to Action',kind:'text',proven:true,rule:R.map},{id:'web_url',type:'Wrong tracking',field:'web_url',col:'Web URL',kind:'url',proven:true,rule:R.norm},{id:'pixel',type:'Wrong tracking',field:'website_events',col:'TikTok website events',kind:'text',proven:true,rule:R.norm}];
+    if(ad.ad_source==='Uploaded creative') return [...common,...identity,
+      {id:'ad_format',type:'Wrong setting',field:'ad_format',col:'Ad format',kind:'text',proven:true,rule:R.map},
+      {id:'text',type:'Wrong copy',field:'text',col:'Text',kind:'text',proven:true,rule:R.norm},
+      {id:'only_show_as_ad',type:'Wrong setting',field:'only_show_as_ad',col:'Only show as ad',kind:'toggle',proven:true,rule:R.norm},
+      ...tail,{id:'creative',special:'creative',type:'Wrong creative'}];
+    /* Spark Ad (creator or brand post): the post is the creative — Post ID required, identity by digits, copy belongs to the post */
+    return [...common,{id:'post_id',type:'Wrong post',field:'post_id',col:'Post ID',kind:'digits',proven:true,required:true,rule:R.src},...identity,
+      {id:'text',special:'post_text',type:'Wrong copy'},
+      {id:'use_tiktok_account',special:'use_tiktok_account',type:'Wrong post'},...tail];
+  },
+  special(spec,planRow,expRow,present,tier){
+    if(spec.special==='budget'){
+      const pt=planRow[spec.typeF], pa=planRow[spec.amtF]; if(isBlank(pt)) return null;
+      const s=Object.assign({},spec,{field:spec.typeF,col:spec.typeC,rule:R.budget2});
+      if(!present.has(spec.typeC)||!present.has(spec.amtC)) return mk(s,'REVIEW',pt,'(column absent)',true,'column absent from the export preset');
+      const et=expRow[spec.typeC]??'', ea=expRow[spec.amtC]??'';
+      if(norm(et)!==norm(pt)) return mk(s,'FAIL',pt,et,true,budget(ea)===budget(pa)?'the amount agrees ('+ea+') — the budget type does not':undefined);
+      const a=Object.assign({},spec,{field:spec.amtF,col:spec.amtC,rule:R.budget2});
+      if(norm(pt).toLowerCase()==='no limit') return isBlank(ea)?mk(Object.assign({},a,{col:spec.typeC+' · '+spec.amtC}),'PASS',pt,et,true,'No Limit under campaign budget optimization — the amount stays blank'):mk(a,'FAIL','',ea,true,'an amount is set on an ad group planned as No Limit');
+      if(isBlank(ea)) return mk(a,'FAIL',pa,'',true,'the budget amount is blank in the export');
+      if(budget(ea)!==budget(pa)) return mk(a,'FAIL',pa,ea,true,'amount with cents compared as whole dollars');
+      return mk(Object.assign({},a,{col:spec.typeC+' · '+spec.amtC}),'PASS',pt+' '+pa,et+' '+ea,true,'budget type read from its own column; amount with cents compared as whole dollars');
+    }
+    if(spec.special==='creative'){
+      if(isBlank(planRow.video_file)) return null;
+      const s=Object.assign({},spec,{field:'video_file',col:'Video Name',rule:R.cover});
+      if(!present.has('Video Name')) return mk(s,'REVIEW','a video asset is planned','(column absent)',true,'column absent from the export preset');
+      const v=expRow['Video Name']??'';
+      if(!isBlank(v)) return mk(s,'PASS','a video asset is planned','asset '+v,true,'coverage only — file names are never compared to the export');
+      return mk(s,'FAIL','a video asset is planned','no asset assigned',true);
+    }
+    if(spec.special==='post_text'){
+      if(isBlank(planRow.text)) return null;
+      return mk(Object.assign({},spec,{field:'text',col:'Text',rule:R.src}),'REVIEW',planRow.text,expRow['Text']??'',true,'a post carries one copy — confirm in the preview');
+    }
+    if(spec.special==='use_tiktok_account'){
+      const expected='On'; const s=Object.assign({},spec,{field:'ad_source',col:'Use TikTok Account',rule:R.proof,key:'use_tiktok_account|'+planRow.ad_source,prove:'a Spark Ad export showing Use TikTok Account On proves the mapping'});
+      if(!present.has('Use TikTok Account')) return mk(s,'REVIEW',planRow.ad_source+' → '+expected,'(column absent)',false,'column absent from the export preset');
+      const ev=expRow['Use TikTok Account']??'';
+      if(norm(ev)===expected) return mk(s,'PASS',planRow.ad_source+' → '+expected,ev,false,'unproven mapping observed equal — proposed in §7');
+      return mk(s,'REVIEW',planRow.ad_source+' → '+expected,ev,false,'unproven mapping — a mismatch can only ask for review');
+    }
+    return null;
+  },
+  basePlan(){
+    const plan={campaign:[],adset:[],ad:[]};
+    TT_CAMPS.forEach((c,k)=>plan.campaign.push({plan_row:4+k,campaign_name:c.name,campaign_id:c.id,delivery_intent:'Off',buy_type:'Auction',advertising_objective:c.objective,campaign_budget_optimization:'On',campaign_budget_type:'Lifetime',campaign_budget_amount:c.budget+'.00',special_ads_categories:'None',qa_status:READY,plan_line:c.line}));
+    TT_GROUPS.forEach((g,i)=>{const c=ttCamp(i); plan.adset.push({plan_row:4+i,campaign_name:c.name,ad_group_name:ttGroupName(i),ad_group_id:ttGroupId(i),delivery_intent:'Off',optimization_goal:c.goal,billing_method:c.billing,bid_strategy:'Maximum Delivery',placement_types:'Select',placements:'TikTok',include_search_results:'Off',pixel_id:TT_PIXEL,pixel_event:c.event,include_audience_id:g.include,exclude_audience_id:g.exclude,location:'United States',gender:'All',age:g.age,languages:g.languages,interest_category:g.interest,inventory_filter:'Standard inventory',ad_group_budget_type:'No Limit',ad_group_budget_amount:'',start_datetime:c.start,end_datetime:c.end,dayparting:'All Day',delivery_type:'Standard',qa_status:READY,plan_line:c.line});});
+    const up=(i,j,o)=>Object.assign({plan_row:4+i*8+j,campaign_name:ttCamp(i).name,ad_group_name:ttGroupName(i),ad_name:ttAdName(i,j),ad_id:(i===TT_RENAME_G&&j===TT_RENAME_C)?'':ttAdId(i,j),ad_source:'Uploaded creative',identity:'Halcyon Coffee',identity_type:'TTBC Authorized Post',identity_id:TT_BC,post_id:'',ad_format:'Single video',video_file:'HAL_'+CONCEPTS[j][0]+'_'+CONCEPTS[j][1]+'_9x16.mp4',only_show_as_ad:'On',music_sharing:'Off',text:CONCEPTS[j][2],cta_type:'Standard',cta:'Learn more',web_url:TT_URL,website_events:TT_PIXEL,qa_status:READY,delivery_intent:'Off'},o||{});
+    TT_GROUPS.forEach((g,i)=>CONCEPTS.forEach((cc,j)=>plan.ad.push(up(i,j))));
+    const spark=(i,o)=>Object.assign({campaign_name:ttCamp(i).name,ad_group_name:ttGroupName(i),identity_type:'TikTok Account',ad_format:'TikTok post',video_file:'',only_show_as_ad:'',music_sharing:'Off',text:'',cta_type:'Standard',cta:'Learn more',web_url:TT_URL,website_events:TT_PIXEL,qa_status:READY,delivery_intent:'Off'},o);
+    plan.ad.push(spark(2,{plan_row:TT_SPARK_ROW,ad_name:ttGroupName(2)+'_MayaBrews_SparkAd',ad_id:TT_SPARK_ID,ad_source:'Spark Ad — creator post',identity:'@mayabrews',identity_id:TT_CRE,post_id:TT_POST}));
+    plan.ad.push(spark(5,{plan_row:TT_BRAND_ROW,ad_name:ttGroupName(5)+'_HalcyonPost_SparkAd',ad_id:TT_BRAND_ID,ad_source:'Spark Ad — brand post',identity:'@halcyoncoffee',identity_id:TT_BRAND_ACC,post_id:TT_BRAND_POST}));
+    plan.ad.push(up(5,1,{plan_row:TT_NA_ROW,ad_name:ttGroupName(5)+'_Roastery_15s_Video_ALT',ad_id:'',video_file:'HAL_Roastery_15s_9x16_ALT.mp4',qa_status:'Not Launching'}));
+    return plan;
+  },
+  baseExport(){ /* one flat wide sheet: every row carries campaign → ad group → ad columns */
+    const camp=k=>{const c=TT_CAMPS[k]; return {'Campaign ID':c.id,'Campaign Status':'Off','Campaign Name':c.name,'Advertising Objective':c.objective,'Campaign Budget Type':'Lifetime','Campaign Budget Amount':c.budget+'.00','Campaign Budget Optimization':'On','Special ads categories':''};};
+    const grp=i=>{const g=TT_GROUPS[i], c=ttCamp(i); return {'Ad Group ID':ttGroupId(i),'Ad Group Status':'Off','Ad Group Name':ttGroupName(i),'Placement Types':'Select','Placements':'TikTok','Include search results':'','TikTok Pixel ID':TT_PIXEL,'Pixel Event':c.event,'Include audience ID':g.include,'Exclude audience ID':g.exclude,'Location':'United States','Gender':'All','Age':g.age.replace(/;\s*/g,','),'Languages':g.languages,'Interest Category':g.interest,'Inventory filter':'Standard inventory','Ad Group Budget Type':'No Limit','Ad Group Budget Amount':'','Start Time':ttDate(c.start),'End Time':ttDate(c.end),'Dayparting':'All Day','Optimization Goal':c.goal,'Billing Method':c.billing,'Bid Strategy':'Maximum Delivery','Delivery Type':'Standard'};};
+    const ad=(i,j)=>({'Ad ID':ttAdId(i,j),'Ad Status':'Off','Ad Name':ttAdName(i,j),'Use TikTok Account':'On','Identity Type':'TTBC Authorized Post','Identity ID':digits(TT_BC),'Ad format':'Single video','Video Name':'HAL_'+CONCEPTS[j][0]+'_'+CONCEPTS[j][1]+'_9x16.mp4','Post ID':'','Only show as ad':'On','Text':CONCEPTS[j][2],'Call to action type':'Standard','Call to Action':'Learn more','Web URL':TT_URL,'Impression Tracking URL':'','Click Tracking URL':'','TikTok website events':TT_PIXEL});
+    const spark=(i,id,name,acct,post,text)=>Object.assign({},camp(TT_GROUPS[i].c),grp(i),{'Ad ID':id,'Ad Status':'Off','Ad Name':name,'Use TikTok Account':'On','Identity Type':'TikTok Account','Identity ID':digits(acct),'Ad format':'Single video','Video Name':'','Post ID':post,'Only show as ad':'','Text':text,'Call to action type':'Standard','Call to Action':'Learn more','Web URL':TT_URL,'Impression Tracking URL':'','Click Tracking URL':'','TikTok website events':TT_PIXEL});
+    const sheet=[]; TT_GROUPS.forEach((g,i)=>CONCEPTS.forEach((cc,j)=>sheet.push(Object.assign({},camp(g.c),grp(i),ad(i,j)))));
+    sheet.push(spark(2,TT_SPARK_ID,ttGroupName(2)+'_MayaBrews_SparkAd',TT_CRE,TT_POST,'Cozy season is coffee season — my go-to holiday roast from @halcyoncoffee'));
+    sheet.push(spark(5,TT_BRAND_ID,ttGroupName(5)+'_HalcyonPost_SparkAd',TT_BRAND_ACC,TT_BRAND_POST,'Our holiday roast is here — gifts for the coffee-obsessed, shipped free over $40'));
+    return {sheet};
+  },
+  split(x){ /* the engine splits the wide sheet into campaign, ad group and ad rows by ID; absent columns stay absent */
+    const pick=(r,cols)=>{const o={}; cols.forEach(c=>{ if(c in r) o[c]=r[c]; }); return o;};
+    const uniq=(idc,cols)=>{const seen=new Set(), out=[]; x.sheet.forEach(r=>{ if(seen.has(r[idc])) return; seen.add(r[idc]); out.push(pick(r,cols)); }); return out;};
+    return {campaigns:uniq('Campaign ID',TT_COLS.campaign),adsets:uniq('Ad Group ID',TT_COLS.adset),ads:x.sheet.map(r=>pick(r,TT_COLS.ad))};
+  },
+  expRows:x=>x.sheet.length,
+  DISC:[
+    {id:'tt-budget-type',planted:true,tier:'campaign',row:5,check:'budget',fix:'Set the campaign budget type to Lifetime in TikTok Ads Manager (a $180,000 daily budget was set)',apply(x,on){ttCampRows(x,1).forEach(r=>r['Campaign Budget Type']=on?'Daily':'Lifetime')}},
+    {id:'tt-g-on',planted:true,tier:'adset',row:6,check:'status',fix:'Switch the ad group off in TikTok Ads Manager',apply(x,on){ttRows(x,2).forEach(r=>r['Ad Group Status']=on?'On':'Off')}},
+    {id:'tt-pangle',planted:true,tier:'adset',row:8,check:'placements',fix:'Rebuild the ad group with TikTok only — placements can’t be changed after creation',apply(x,on){ttRows(x,4).forEach(r=>r['Placements']=on?'TikTok,Pangle':'TikTok')}},
+    {id:'tt-pixel-event',planted:true,tier:'adset',row:7,check:'pixel_event',fix:'Set the pixel event to Complete Payment in TikTok Ads Manager',apply(x,on){ttRows(x,3).forEach(r=>r['Pixel Event']=on?'Add to Cart':'Complete Payment')}},
+    {id:'tt-sys-utm',planted:true,tier:'ad',rows:[28,29,30,31,32,33,34,35],check:'web_url',fix:'Correct the web URL on all 8 ads in TikTok Ads Manager (one bulk edit)',apply(x,on){for(let j=0;j<8;j++) ttAd(x,3,j)['Web URL']=on?TT_URL.replace('utm_source=tiktok','utm_source=meta'):TT_URL}},
+    {id:'tt-rename',planted:true,tier:'ad',row:23,check:'missing',fix:'Rename the ad in TikTok Ads Manager to the planned name',apply(x,on){ttAd(x,TT_RENAME_G,TT_RENAME_C)['Ad Name']=on?TT_RENAME_NAME+'_v2':TT_RENAME_NAME}},
+    {id:'tt-g-end',planted:true,plan:true,tier:'adset',row:4,check:'end',fix:'Correct the plan cell to 12/24/2026 22:59',apply(p,on){p.adset[0].end_datetime=on?'24/12/2026 22:59':'12/24/2026 22:59'}},
+    {id:'tt-languages',planted:true,tier:'adset',row:5,check:'languages',fix:'Add “Languages” to the export preset and re-export',apply(x,on){x.sheet.forEach(r=>{ if(on) delete r['Languages']; else { const g=TT_GROUPS.find((g,i)=>ttGroupId(i)===r['Ad Group ID']); r['Languages']=g?g.languages:''; } })}},
+    {id:'tt-ad-on',planted:false,tier:'ad',row:5,check:'status',fix:'Switch the ad off in TikTok Ads Manager',apply(x,on){ttAd(x,0,1)['Ad Status']=on?'On':'Off'}},
+    {id:'tt-spark-post',planted:false,tier:'ad',row:TT_SPARK_ROW,check:'post_id',fix:'Re-select the creator’s post in TikTok Ads Manager',apply(x,on){ttById(x,TT_SPARK_ID)['Post ID']=on?'7300000000000000009':TT_POST}},
+    {id:'tt-only-show',planted:false,tier:'ad',row:8,check:'only_show_as_ad',fix:'Switch “Only show as ad” back on in TikTok Ads Manager',apply(x,on){ttAd(x,0,4)['Only show as ad']=on?'Off':'On'}},
+    {id:'tt-text',planted:false,tier:'ad',row:37,check:'text',fix:'Restore the planned text in TikTok Ads Manager',apply(x,on){ttAd(x,4,1)['Text']=on?'Meet the roastery behind you morning.':CONCEPTS[1][2]}},
+    {id:'tt-g-pixel',planted:false,tier:'adset',row:9,check:'pixel',fix:'Re-attach the pixel to the ad group in TikTok Ads Manager',apply(x,on){ttRows(x,5).forEach(r=>r['TikTok Pixel ID']=on?'':TT_PIXEL)}},
+    {id:'tt-brand-identity',planted:false,tier:'ad',row:TT_BRAND_ROW,check:'identity_id',fix:'Re-select the brand’s own TikTok account as the identity in TikTok Ads Manager',apply(x,on){ttById(x,TT_BRAND_ID)['Identity ID']=on?digits(TT_CRE):digits(TT_BRAND_ACC)}}
+  ],
+  humans(plan){ const h=[{tier:'campaign',plan_row:4,field:'special_ads_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'campaign',plan_row:5,field:'special_ads_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'adset',plan_row:4,field:'block_list_pangle',value:'n/a — TikTok placement only',cell:'hc_brand_safety',status:'initialled JK'}];
+    plan.ad.forEach(a=>{ if(a.ad_source==='Spark Ad — creator post') h.push({tier:'ad',plan_row:a.plan_row,field:'authorization_code',value:a.identity+' · 365-day authorisation',cell:'hc_identity',status:'open'}); else if(a.ad_source==='Spark Ad — brand post') h.push({tier:'ad',plan_row:a.plan_row,field:'linked_account',value:a.identity+' · linked in Business Center',cell:'hc_identity',status:'initialled AR'}); }); return h; },
+  proposalKey:c=>c.key||(c.field+'|'+c.col),
+  contextNote:run=>run.context.length?'Context, no action — toggles exported blank compared as Off on '+run.context.length+' item'+(run.context.length>1?'s':'')+' ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
+  PLAN_VIEWS:[{name:'QA_EXPORT_CAMPAIGN',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buy_type','advertising_objective','campaign_budget_optimization','campaign_budget_type','campaign_budget_amount','special_ads_categories','qa_status','plan_line']},
+    {name:'QA_EXPORT_ADGROUP',key:'adset',cols:['plan_row','ad_group_name','ad_group_id','delivery_intent','optimization_goal','billing_method','bid_strategy','placement_types','placements','include_search_results','pixel_id','pixel_event','include_audience_id','exclude_audience_id','location','gender','age','languages','interest_category','inventory_filter','ad_group_budget_type','ad_group_budget_amount','start_datetime','end_datetime','dayparting','delivery_type','qa_status']},
+    {name:'QA_EXPORT (ads)',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','identity_type','identity_id','post_id','ad_format','video_file','only_show_as_ad','text','cta_type','cta','web_url','website_events','qa_status','delivery_intent']}],
+  EXP_VIEWS:[{name:'Campaign columns',key:'campaigns',tier:'campaign'},{name:'Ad group columns',key:'adsets',tier:'adset'},{name:'Ad columns',key:'ads',tier:'ad'}],
+  logLines:(run,nPlan,nExp,presentN,ex)=>['Parsing 3 plan feeds and 1 export as text — '+nPlan+' plan rows, '+nExp+' export rows — one wide sheet, split into '+ex.campaigns.length+' campaign, '+ex.adsets.length+' ad group and '+ex.ads.length+' ad rows',
+    'Inventory: '+new Set([...run.present.campaign,...run.present.adset,...run.present.ad]).size+' export columns present · '+run.absent.length+' absent'+(run.absent.length?' ('+run.absent.join(', ')+')':''),
+    'Matching: '+run.byId+' items by ID, '+run.byName+' by name path',
+    'Normalising: dates yyyy/m/d HH:mm to instants in account time, amounts with cents to whole dollars, blank toggles to Off, age buckets to token sets',
+    'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
+    'Report ready — READY TO APPROVE: '+(run.ready?'YES':'NO')],
+  resetStatus:'8 problems are planted in the inputs — one of them across all 8 ads of an ad group. Run QA to find them.',
+  idleLog:'Waiting to run. The engine parses the plan feeds and the one wide export sheet as text, splits it into campaign, ad group and ad rows by ID, inventories its columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
+};
+const PLATFORMS={meta:META,tiktok:TIKTOK};
+/* the hero's example finding and the 60-second steps follow the platform; Meta's texts are the page's original markup, verbatim */
+Object.assign(META,{hero:{row:'ad · plan_row 5',field:'cta',plan:'SHOP_NOW',exp:'LEARN_MORE',type:'Wrong CTA',rule:{pre:'Proven mapping ',code:'cta | Shop now → SHOP_NOW',post:' · export column ',code2:'Call to Action'}},
+  quick:{found:'12 failures and a missing ad caught before a dollar is spent, including a campaign budget entered as $18,000 instead of $180,000',catches:'a campaign budget entered as $18,000 instead of $180,000'}});
+META.words.other='TikTok';
+/* ---------- page copy that follows the platform ---------- */
+META.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.',catches:'a campaign budget entered as $18,000 instead of $180,000'};
+TIKTOK.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a $180,000 lifetime budget entered as daily.',catches:'a $180,000 lifetime budget entered as daily'};
+META.resetStatus='Eight problems are planted in the inputs, one of them across all 8 ads of an ad set. Run the QA to find them.';
+META.idleLog='Waiting to run. The engine reads both files as text, lists the export\u2019s columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
+TIKTOK.idleLog='Waiting to run. The engine reads the plan feeds and the one wide export sheet as text, splits the sheet into campaign, ad group and ad rows by ID, lists its columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
+TIKTOK.resetStatus='Eight problems are planted in the inputs, one of them across all 8 ads of an ad group. Run the QA to find them.';
+/* plain-English summary: (tier|check id) → one business-language sentence; anything unmapped folds into a generic line */
+const money=v=>'$'+(+budget(v)||0).toLocaleString('en-US');
+const count1=(n,one,many)=>n===1?'One '+one:n+' '+many;
+const utmSrc=v=>{const m=String(v??'').match(/utm_source=([^&\s]+)/i); return m?m[1]:null;};
+const nice=v=>{const t=norm(v).replace(/_/g,' ').toLowerCase(); return t?t.charAt(0).toUpperCase()+t.slice(1):'(blank)';};
+const amountLine=(label,x)=>{ const p=+budget(x.plan), e=+budget(x.exp); if(isBlank(x.exp)) return label+' budget is blank in the export — nothing would spend.'; if(!isFinite(e)||e===p) return label+' budget does not match the plan.'; return label+' budget entered as '+money(e)+' instead of '+money(p)+' — would have '+(e<p?'underspent':'overspent')+' the flight by '+money(Math.abs(p-e))+'.'; };
+const liveLine=(one,many)=>(x,i,n)=>count1(n,one+' is',many+' are')+' live before launch.';
+const pixelLine=(one,many)=>(x,i,n)=>count1(n,one+' has',many+' have')+(isBlank(x.exp)?' no pixel attached — conversions would go unmeasured.':' the wrong pixel attached — conversions would be counted elsewhere.');
+const copyLine=(x,i,n)=>count1(n,'ad runs','ads run')+' copy that differs from the approved text ('+x.field.replace(/_feed$/,'').replace(/_/g,' ')+').';
+META.SUMMARY={
+  'campaign|budget':x=>amountLine('Campaign',x),'adset|budget':x=>amountLine('Ad set',x),
+  'campaign|status':liveLine('campaign','campaigns'),'adset|status':liveLine('ad set','ad sets'),'ad|status':liveLine('ad','ads'),
+  'ad|url_parameters':(x,i,n)=>{const u=utmSrc(x.exp); return count1(n,'ad sends','ads send')+' traffic tagged '+(u?'utm_source='+u:'with the wrong URL parameters')+' — attribution breaks for '+(n>=3?'the whole ad set':n===1?'that ad':'those ads')+'.';},
+  'ad|cta':(x,i,n)=>count1(n,'ad shows','ads show')+' a '+nice(x.exp)+' button instead of '+nice(x.plan)+'.',
+  'ad|website_url':(x,i,n)=>count1(n,'ad sends','ads send')+' people to '+norm(x.exp)+' instead of the planned landing page.',
+  'ad|pixel':pixelLine('ad','ads'),'adset|pixel':pixelLine('ad set','ad sets'),
+  'ad|body':copyLine,'ad|title':copyLine,'ad|description':copyLine,
+  'ad|story_id':()=>'The partnership ad is attached to the wrong creator post.',
+  'ad|creative':(x,i,n)=>count1(n,'ad has','ads have')+' no feed asset assigned.'};
+TIKTOK.SUMMARY={
+  'campaign|budget':(x,i)=>{ if(x.field!=='campaign_budget_type') return amountLine('Campaign',x); const amt=money(i.planRow.campaign_budget_amount); if(/lifetime/i.test(x.plan)&&/daily/i.test(x.exp)) return 'A '+amt+' lifetime budget was set as daily — would spend the flight in a day.'; if(/daily/i.test(x.plan)&&/lifetime/i.test(x.exp)) return 'A '+amt+' daily budget was set as lifetime — the flight would underspend.'; return 'The campaign budget type reads '+nice(x.exp)+' instead of '+nice(x.plan)+'.'; },
+  'adset|budget':(x,i)=>x.field==='ad_group_budget_type'?'One ad group budget type reads '+nice(x.exp)+' instead of '+nice(x.plan)+'.':amountLine('Ad group',x),
+  'campaign|status':liveLine('campaign','campaigns'),'adset|status':liveLine('ad group','ad groups'),'ad|status':liveLine('ad','ads'),
+  'adset|placements':x=>{const plan=setKey(x.plan).split(' | '); const extra=norm(x.exp).split(/[;,]/).map(t=>t.trim()).filter(t=>t&&!plan.includes(t.toLowerCase())); return (extra.length?extra.join(' and ')+' '+(extra.length>1?'were':'was')+' left on':'The placements differ from the plan')+' — the ad group must be rebuilt.';},
+  'adset|pixel_event':x=>'One ad group optimises to '+norm(x.exp)+' instead of '+norm(x.plan)+' — it would buy the wrong action.',
+  'ad|web_url':(x,i,n)=>{const u=utmSrc(x.exp); const tag=u?(/^(meta|facebook|instagram)$/i.test(u)?'as Meta':'utm_source='+u):'with the wrong URL'; return count1(n,'ad sends','ads send')+' traffic tagged '+tag+' — attribution breaks.';},
+  'ad|only_show_as_ad':(x,i,n)=>count1(n,'ad has','ads have')+' “Only show as ad” switched off — the video would also appear on the profile.',
+  'ad|text':(x,i,n)=>count1(n,'ad runs','ads run')+' text that differs from the approved copy.',
+  'adset|pixel':pixelLine('ad group','ad groups'),
+  'ad|post_id':()=>'The creator Spark Ad is attached to the wrong post.',
+  'ad|identity_id':(x,i,n)=>count1(n,'Spark Ad runs','Spark Ads run')+' under the wrong TikTok account.'};
+function summaryLines(run){
+  const S=P.SUMMARY||{}, order={campaign:0,adset:1,ad:2}, units=[], gm={};
+  run.items.filter(i=>i.result==='FAIL').forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL');
+    if(i.tier==='ad'&&fc.length===1){ const x=fc[0]; const k=[x.type,x.field,i.planRow[P.nameField.adset],x.plan,x.exp].join('|'); (gm[k]=gm[k]||{x,items:[]}).items.push(i); return; }
+    fc.forEach(x=>units.push({tier:i.tier,x,i,n:1})); });
+  Object.values(gm).forEach(g=>{ if(g.items.length>=3) units.push({tier:'ad',x:g.x,i:g.items[0],n:g.items.length}); else g.items.forEach(i=>units.push({tier:'ad',x:g.x,i,n:1})); });
+  const pri=u=>u.x.id==='budget'?0:u.n>=3?1:u.x.id==='placements'?2:u.x.id==='status'?3:4;
+  units.sort((a,b)=>pri(a)-pri(b)||order[a.tier]-order[b.tier]||a.i.plan_row-b.i.plan_row);
+  const lines=[], rest=[];
+  units.forEach(u=>{ const t=S[u.tier+'|'+u.x.id]; if(t&&lines.length<3) lines.push(t(u.x,u.i,u.n)); else rest.push(u); });
+  const tail=[]; const restN=rest.reduce((n,u)=>n+u.n,0);
+  const low=t=>t.replace(/^One /,'one '), kind=t=>{const k=t.replace(/^Wrong /,''); return /^[A-Z][a-z]/.test(k)?k.charAt(0).toLowerCase()+k.slice(1):k;};
+  if(restN){ const kinds=[...new Set(rest.map(u=>kind(u.x.type)))]; tail.push(restN+' other setting'+(restN>1?'s':'')+' differ'+(restN>1?'':'s')+' from the plan ('+kinds.join(', ')+')'); }
+  const miss=run.items.filter(i=>i.result==='MISSING'), renamed=miss.filter(i=>i.near).length, gone=miss.length-renamed;
+  if(renamed) tail.push(low(count1(renamed,'planned ad appears','planned ads appear'))+' under a different name in the export (likely renamed)');
+  if(gone) tail.push(low(count1(gone,'planned item is','planned items are'))+' not in the export at all');
+  const extra=run.extras.length-Math.min(renamed,run.extras.length); if(extra>0) tail.push(low(count1(extra,'ad in the export is','ads in the export are'))+' not in the plan');
+  if(tail.length){ const t=tail.length>1?tail.slice(0,-1).join(', ')+', and '+tail[tail.length-1]:tail[0]; lines.push(t.charAt(0).toUpperCase()+t.slice(1)+'.'); }
+  if(!lines.length) return [run.counts.review?'Nothing failed — '+count1(run.counts.review,'item needs','items need')+' a human answer before sign-off.':'Nothing to catch — every planned item agrees with the export.'];
+  if(lines.length===1) lines.push('The other '+run.counts.pass+' planned items agree with the plan.');
+  return lines;
+}
+
+/* ---------- state: one per platform, one shared register ---------- */
+let P=null, state=null, runs=[], runN=0;
+const newState=prof=>({active:new Set(prof.DISC.filter(d=>d.planted).map(d=>d.id)),plan:null,exp:null,last:null,marks:null,planTab:2,expTab:2,status:prof.resetStatus,reportHTML:'',logHTML:'',fixAllOff:true});
+const states={meta:newState(META),tiktok:newState(TIKTOK)};
+function materialize(st=state,prof=P){ st.plan=prof.basePlan(); st.exp=prof.baseExport(); prof.DISC.forEach(d=>{ if(st.active.has(d.id)) d.apply(d.plan?st.plan:st.exp,true) }); }
+const discFor=(tier,row,check)=>P.DISC.find(d=>d.tier===tier&&d.check===check&&state.active.has(d.id)&&(d.row===row||(d.rows&&d.rows.includes(row))));
+
+/* ---------- engine (generic; reads the active profile P) ---------- */
+function evalSpec(spec,planRow,expRow,present){
+  let pv=planRow[spec.field], proven=spec.proven;
+  if(spec.field==='delivery_intent'){const m=P.STATUS[norm(pv)]; if(!m) return null; pv=m[0]; proven=m[1]; if(!proven) spec=Object.assign({},spec,{rule:R.proof});}
+  if(isBlank(pv)){ if(spec.required) return mk(spec,'FAIL',pv,expRow[spec.col]??'',true,'blank plan cell — required for this ad source'); return null; }
+  if(!present.has(spec.col)) return mk(spec,'REVIEW',pv,'(column absent)',proven,'column absent from the export preset');
+  const ev=expRow[spec.col]??''; const r=compare(spec.kind,pv,ev);
+  if(r.eq) return mk(spec,'PASS',pv,ev,proven,r.note||(proven?undefined:'unproven mapping observed equal — proposed in §7'));
+  if(r.review) return mk(spec,'REVIEW',pv,ev,proven,r.note);
+  return mk(spec,proven?'FAIL':'REVIEW',pv,ev,proven,proven?undefined:'unproven mapping — a mismatch can only ask for review');
+}
+function finalize(it){
+  it.result=it.checks.some(c=>c.outcome==='FAIL')?'FAIL':it.checks.some(c=>c.outcome==='REVIEW')?'NEEDS REVIEW':'PASS';
+  const f=it.checks.find(c=>c.outcome==='FAIL')||it.checks.find(c=>c.outcome==='REVIEW');
+  it.first=f?f.field:'—';
+  it.detail=f?(f.field+': plan «'+f.plan+'» · export «'+f.exp+'»'+(f.note?' — '+f.note:'')):('all '+it.checks.length+' checks agree');
+  return it;
+}
+function evaluate(tier,planRow,name,expRow,specs,present){
+  const checks=[]; specs.forEach(s=>{const r=s.special?P.special(s,planRow,expRow,present,tier):evalSpec(s,planRow,expRow,present); if(r) checks.push(r);});
+  return finalize({tier,plan_row:planRow.plan_row,name,planRow,expRow,checks});
+}
+const NA_STATUS=['Pending','Not Launching','Off'];
+const keysOf=rows=>{const s=new Set(); rows.forEach(r=>Object.keys(r).forEach(k=>s.add(k))); return s;};
+const path=o=>['campaign','adset','ad'].map(t=>norm(o[P.nameField[t]]||o[P.nameCol[t]])).join(' | ');
+function runEngine(plan,exp){
+  const present={campaign:keysOf(exp.campaigns),adset:keysOf(exp.adsets),ad:keysOf(exp.ads)};
+  const absent=[]; Object.keys(P.NEEDED).forEach(t=>P.NEEDED[t].forEach(c=>{if(!present[t].has(c)&&!absent.includes(c)) absent.push(c)}));
+  const items=[]; let byId=0, byName=0; const ID=P.idCol, NM=P.nameCol, IF=P.idField, NF=P.nameField;
+  const naItem=(tier,p,name)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'N/A',first:'—',detail:'QA status '+p.qa_status+' — deliberately not built, never MISSING'});
+  const missItem=(tier,p,name,near)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'MISSING',first:'not in export',detail:near?('not found by name path — likely rename: export has «'+near+'»'):'planned, not found in the export',near});
+  plan.campaign.forEach(c=>{
+    if(NA_STATUS.includes(c.qa_status)) return items.push(naItem('campaign',c,c[NF.campaign]));
+    let e=!isBlank(c[IF.campaign])?exp.campaigns.find(x=>digits(x[ID.campaign])===digits(c[IF.campaign])):null; if(e) byId++;
+    if(!e){e=exp.campaigns.find(x=>norm(x[NM.campaign])===norm(c[NF.campaign])); if(e) byName++;}
+    if(!e) return items.push(missItem('campaign',c,c[NF.campaign]));
+    items.push(evaluate('campaign',c,c[NF.campaign],e,P.CAMPAIGN_CHECKS,present.campaign));
+  });
+  plan.adset.forEach(s=>{
+    if(NA_STATUS.includes(s.qa_status)) return items.push(naItem('adset',s,s[NF.adset]));
+    let e=!isBlank(s[IF.adset])?exp.adsets.find(x=>digits(x[ID.adset])===digits(s[IF.adset])):null; if(e) byId++;
+    if(!e){e=exp.adsets.find(x=>norm(x[NM.campaign])===norm(s[NF.campaign])&&norm(x[NM.adset])===norm(s[NF.adset])); if(e) byName++;}
+    if(!e) return items.push(missItem('adset',s,s[NF.adset]));
+    items.push(evaluate('adset',s,s[NF.adset],e,P.ADSET_CHECKS,present.adset));
+  });
+  const matched=new Set();
+  plan.ad.forEach(a=>{
+    if(NA_STATUS.includes(a.qa_status)) return items.push(naItem('ad',a,a[NF.ad]));
+    let e=null;
+    if(!isBlank(a[IF.ad])){e=exp.ads.find(x=>digits(x[ID.ad])===digits(a[IF.ad])); if(e) byId++;}
+    if(!e){const n=exp.ads.find(x=>!matched.has(x)&&path(x)===path(a));
+      if(n&&!isBlank(a[IF.ad])){matched.add(n); const it=evaluate('ad',a,a[NF.ad],n,P.adChecks(a),present.ad); it.checks.unshift(mk({id:'ad_id',type:'Wrong ID',field:IF.ad,col:ID.ad,rule:R.key},'FAIL',a[IF.ad],n[ID.ad],true,'name matched, ad_id did not')); return items.push(finalize(it));}
+      if(n){e=n; byName++;}}
+    if(!e){const cand=exp.ads.find(x=>!matched.has(x)&&norm(x[NM.adset])===norm(a[NF.adset])&&(norm(x[NM.ad]).startsWith(norm(a[NF.ad]))||norm(a[NF.ad]).startsWith(norm(x[NM.ad])))); return items.push(missItem('ad',a,a[NF.ad],cand?cand[NM.ad]:null));}
+    matched.add(e); items.push(evaluate('ad',a,a[NF.ad],e,P.adChecks(a),present.ad));
+  });
+  const plannedSets=new Set(plan.adset.map(s=>norm(s[NF.adset])));
+  const extras=exp.ads.filter(x=>!matched.has(x)&&plannedSets.has(norm(x[NM.adset]))).map(x=>({name:x[NM.ad],ad_id:x[ID.ad],adset:x[NM.adset]}));
+  const count=r=>items.filter(i=>i.result===r).length;
+  const counts={planned:items.length,pass:count('PASS'),fail:count('FAIL'),missing:count('MISSING'),review:count('NEEDS REVIEW'),na:count('N/A'),extra:extras.length,checks:items.reduce((n,i)=>n+i.checks.length,0)};
+  const ready=counts.fail===0&&counts.missing===0&&counts.extra===0;
+  const why=ready?(counts.review?'no failures; '+counts.review+' item'+(counts.review>1?'s':'')+' need'+(counts.review>1?'':'s')+' a human answer before sign-off':'every planned item agrees with the export'):[counts.fail?counts.fail+' FAIL':'',counts.missing?counts.missing+' MISSING':'',counts.extra?counts.extra+' EXTRA':''].filter(Boolean).join(', ');
+  const firsts={}; items.filter(i=>i.result==='FAIL').forEach(i=>firsts[i.first]=(firsts[i.first]||0)+1);
+  const top=Object.keys(firsts).sort((a,b)=>firsts[b]-firsts[a])[0]||'—';
+  const proposals=[]; const seen=new Set();
+  items.forEach(i=>i.checks.forEach(c=>{ if(!c.proven&&c.outcome==='PASS'){ const key=P.proposalKey(c); if(seen.has(key)) return; seen.add(key); proposals.push({tab:'vocabulary map',target_key:key,before:'unproven',after:'proven',reason:'observed equal on '+P.tiers[i.tier]+' plan_row '+i.plan_row+' in this run'}); } }));
+  const context=[]; items.forEach(i=>i.checks.forEach(c=>{ if(c.outcome==='PASS'&&c.note&&/normalisation/.test(c.note)) context.push(P.tiers[i.tier]+' plan_row '+i.plan_row+' · '+c.field); }));
+  return {items,extras,counts,ready,why,absent,top,proposals,context,humans:P.humans(plan),present,byId,byName};
+}
+
+/* ---------- live-run rendering ---------- */
+const chip=r=>{const m={PASS:'pass',FAIL:'fail','NEEDS REVIEW':'review',MISSING:'missing',EXTRA:'extra','N/A':'na'}; return '<span class="chip '+(m[r]||'na')+'">'+esc(r)+'</span>';};
+function marksFor(run){
+  const m={plan:{},exp:{}}; if(!run) return m;
+  run.items.forEach(i=>{ if(!i.expRow) return; i.checks.forEach(c=>{ if(c.outcome==='PASS') return; const cls=c.outcome==='FAIL'?'c-red':'c-amber';
+    (c.col||'').split(' · ').forEach(col=>{ m.exp[i.tier+'|'+i.expRow[P.idCol[i.tier]]+'|'+col]=cls; });
+    if(c.field) m.plan[i.tier+'|'+i.plan_row+'|'+c.field]=cls; }); });
+  run.extras.forEach(x=>{ m.exp['ad|'+x.ad_id+'|'+P.nameCol.ad]='c-amber'; });
+  return m;
+}
+function dataTable(cols,rows,cellClass){
+  let h='<table class="grid"><thead><tr>'+cols.map(c=>'<th style="text-align:left">'+esc(c)+'</th>').join('')+'</tr></thead><tbody>';
+  rows.forEach(r=>{ h+='<tr>'+cols.map(c=>{const v=r[c]??''; const cls=v===''?'c-blank':(cellClass?cellClass(r,c):''); return '<td class="'+cls+'" title="'+esc(v)+'">'+(v===''?'&nbsp;':esc(v))+'</td>';}).join('')+'</tr>'; });
+  return h+'</tbody></table>';
+}
+/* focus never lands on <body> after a re-render: remember where it was, restore the equivalent control or a sensible fallback */
+function focusKey(){ const a=document.activeElement; if(!a||a===document.body) return null; const tl=a.closest('[role="tablist"]'); if(tl&&tl.id&&a.getAttribute('role')==='tab') return '#'+tl.id+' [aria-selected="true"]'; if(a.id) return '#'+a.id; if(a.dataset&&a.dataset.fix) return 'button[data-fix="'+a.dataset.fix+'"]'; return null; }
+function refocus(key,fallback){ const a=document.activeElement; if(a&&a!==document.body&&!a.disabled&&document.contains(a)) return; let el=key?document.querySelector(key):null; if(!el||el.disabled) el=fallback; if(el&&!el.disabled) el.focus({preventScroll:true}); }
+const tabHTML=(prefix,panel,name,i,sel)=>'<button role="tab" type="button" id="'+prefix+'-tab-'+i+'" aria-controls="'+panel+'" aria-selected="'+sel+'" tabindex="'+(sel?0:-1)+'" data-i="'+i+'">'+name+'</button>';
+function tabKeys(container,onMove){ container.addEventListener('keydown',e=>{ const tabs=[...container.querySelectorAll('[role="tab"]')]; const i=tabs.indexOf(document.activeElement); if(i<0) return; let j=null; if(e.key==='ArrowRight') j=(i+1)%tabs.length; else if(e.key==='ArrowLeft') j=(i-1+tabs.length)%tabs.length; else if(e.key==='Home') j=0; else if(e.key==='End') j=tabs.length-1; if(j===null) return; e.preventDefault(); onMove(tabs[j]); }); }
+function renderInputs(){
+  const k=focusKey(); const m=state.marks||{plan:{},exp:{}};
+  const pv=P.PLAN_VIEWS[state.planTab]; const rows=state.plan[pv.key];
+  $('#plan-subtabs').innerHTML=P.PLAN_VIEWS.map((v,i)=>tabHTML('plan','plan-table',esc(v.name)+' · '+state.plan[v.key].length,i,i===state.planTab)).join('');
+  $('#plan-table').setAttribute('aria-labelledby','plan-tab-'+state.planTab);
+  $('#plan-table').innerHTML=dataTable(pv.cols,rows,(r,c)=>m.plan[pv.key+'|'+r.plan_row+'|'+c]||'');
+  const ex=P.split(state.exp); const ev=P.EXP_VIEWS[state.expTab]; const erows=ex[ev.key]; const idCol=P.idCol[ev.tier];
+  $('#exp-subtabs').innerHTML=P.EXP_VIEWS.map((v,i)=>tabHTML('exp','exp-table',esc(v.name)+' · '+ex[v.key].length,i,i===state.expTab)).join('');
+  $('#exp-table').setAttribute('aria-labelledby','exp-tab-'+state.expTab);
+  $('#exp-table').innerHTML=dataTable(Array.from(keysOf(erows)),erows,(r,c)=>m.exp[ev.tier+'|'+r[idCol]+'|'+c]||'');
+  refocus(k,null);
+}
+function fixButton(tier,row,check){ const d=discFor(tier,row,check); return d?'<button class="btn small quiet fix" data-fix="'+d.id+'">'+esc(d.fix)+'</button>':''; }
+function failTable(rows){ return '<div class="scroller"><table class="ft"><thead><tr><th>field (machine name)</th><th>plan value</th><th>export value</th><th>rule</th></tr></thead><tbody>'+rows.map(x=>'<tr><td class="mono">'+esc(x.field)+' <span class="muted">→ '+esc(x.col)+'</span></td><td class="mono">'+esc(x.plan||'(blank)')+'</td><td class="mono" style="color:var(--fail)">'+esc(x.exp||'(blank)')+'</td><td>'+esc(x.rule)+(x.note?'<br><span class="muted">'+esc(x.note)+'</span>':'')+'</td></tr>').join('')+'</tbody></table></div>'; }
+function renderReport(run,prev,runId){
+  const TIER=P.tiers, fallback='<span>correct the build in '+esc(P.manager)+', re-export, re-run</span>';
+  const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
+  let h='<div class="report"><header><h3>QA Report — '+esc(P.brand)+' — '+esc(P.label)+' — '+esc(P.scope)+' — '+esc(today)+'</h3><span class="meta">'+esc(runId)+' · checks evaluated: '+run.counts.checks+'</span></header>';
+  h+='<div class="gate"><div class="verdict '+(run.ready?'yes':'no')+'">READY TO APPROVE: '+(run.ready?'YES':'NO')+'</div><div class="why">'+esc(run.why)+'</div>';
+  const c=run.counts; h+='<div class="counts"><span>planned<b>'+c.planned+'</b></span><span>PASS<b>'+c.pass+'</b></span><span>FAIL<b>'+c.fail+'</b></span><span>MISSING<b>'+c.missing+'</b></span><span>NEEDS REVIEW<b>'+c.review+'</b></span><span>N/A<b>'+c.na+'</b></span><span>EXTRA<b>'+c.extra+'</b></span><span>out of scope<b>0</b></span></div>';
+  if(run.absent.length) h+='<div class="absent">Columns absent from the export: <span class="mono">'+run.absent.map(esc).join(', ')+'</span> — checks that need them read “column absent”.</div>';
+  h+='</div>';
+  h+='<div class="rsec plain"><h4><span>What this run caught</span> <small>in plain English — the sections below carry the evidence</small></h4><ul>'+summaryLines(run).map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div>';
+  if(prev){
+    const key=i=>i.tier+':'+i.plan_row; const pm={}; prev.items.forEach(i=>pm[key(i)]=i);
+    const bad=r=>r==='FAIL'||r==='NEEDS REVIEW'||r==='MISSING';
+    const resolved=[],fresh=[],same=[];
+    run.items.forEach(i=>{const p=pm[key(i)]; const line=TIER[i.tier]+' plan_row '+i.plan_row+' · '+(i.first!=='—'?i.first:(p&&p.first)||'');
+      if(p&&bad(p.result)&&!bad(i.result)) resolved.push(TIER[i.tier]+' plan_row '+i.plan_row+' · '+p.first);
+      else if(bad(i.result)&&(!p||!bad(p.result))) fresh.push(line+' — '+i.result);
+      else if(bad(i.result)&&p&&bad(p.result)) same.push(line+' — still '+i.result);});
+    const pe=new Set(prev.extras.map(x=>x.ad_id)); run.extras.forEach(x=>{ if(!pe.has(x.ad_id)) fresh.push('EXTRA '+x.name); }); prev.extras.forEach(x=>{ if(!run.extras.some(y=>y.ad_id===x.ad_id)) resolved.push('EXTRA '+x.name); });
+    const tierRe=new RegExp('^('+Object.values(TIER).join('|')+') plan_row (\\d+) · (.*)$');
+    const fold=(arr)=>{ const g={}, out=[]; arr.forEach(l=>{const m=l.match(tierRe); if(!m){out.push(l);return;} const k=m[1]+'|'+m[3]; (g[k]=g[k]||[]).push(l)}); Object.keys(g).forEach(k=>{ if(g[k].length>=3){const [tier,rest]=k.split('|'); out.push(tier+' · '+rest+' — '+g[k].length+' items');} else out.push(...g[k]); }); return out; };
+    h+='<div class="rsec diffsec"><h4><span>What changed since the previous run</span> <small>resolved · new · unchanged</small></h4>'+(resolved.length||fresh.length||same.length?'<ul>'+fold(resolved).map(x=>'<li><span class="chip pass">resolved</span> '+esc(x)+'</li>').join('')+fold(fresh).map(x=>'<li><span class="chip fail">new</span> '+esc(x)+'</li>').join('')+fold(same).map(x=>'<li><span class="chip review">unchanged</span> '+esc(x)+'</li>').join('')+'</ul>':'<p class="empty">Nothing changed.</p>')+'</div>';
+  }
+  /* §2 failures, systemic findings folded into one card */
+  const fails=run.items.filter(i=>i.result==='FAIL'); const groups=[]; const singles=[]; const gm={};
+  fails.forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL'); if(i.tier!=='ad'||fc.length!==1){singles.push(i);return;} const x=fc[0]; const set=i.planRow[P.nameField.adset]; const k=[x.type,x.field,set,x.plan,x.exp].join('|'); (gm[k]=gm[k]||{x,adset:set,items:[]}).items.push(i); });
+  Object.values(gm).forEach(g=>{ if(g.items.length>=3) groups.push(g); else singles.push(...g.items); });
+  const order={campaign:0,adset:1,ad:2}; singles.sort((a,b)=>order[a.tier]-order[b.tier]||a.plan_row-b.plan_row);
+  h+='<div class="rsec"><h4><span>§2 Failures</span> <small>one card per item; an identical finding across an '+esc(TIER.adset)+' is one card with a count</small></h4>';
+  if(!fails.length) h+='<p class="empty">None.</p>';
+  groups.forEach(g=>{ const rows=g.items.map(i=>i.plan_row); h+='<div class="fcard"><div class="fh"><b>'+esc(g.x.type)+'</b><span class="cnt">'+g.items.length+' ads</span><span class="nm">'+esc(g.adset)+'</span><small>'+esc(TIER.adset)+' · plan_rows '+rows[0]+'–'+rows[rows.length-1]+'</small></div>'+failTable([g.x])+'<details class="rows"><summary>The '+g.items.length+' ads</summary><ul>'+g.items.map(i=>'<li>'+i.plan_row+' · '+esc(i.name)+'</li>').join('')+'</ul></details><div class="fix-row">Fix: '+(fixButton('ad',rows[0],g.x.id)||fallback)+'</div></div>'; });
+  singles.forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL'); const types=[...new Set(fc.map(x=>x.type))].join(' · ');
+    h+='<div class="fcard"><div class="fh"><b>'+esc(types)+'</b><span class="nm">'+esc(i.name)+'</span><small>'+esc(TIER[i.tier])+' · plan_row '+i.plan_row+'</small></div>'+failTable(fc)+'<div class="fix-row">Fix: '+(fc.map(x=>fixButton(i.tier,i.plan_row,x.id)).filter(Boolean).join(' ')||fallback)+'</div></div>'; });
+  h+='</div>';
+  const revs=[]; run.items.forEach(i=>i.checks.forEach(x=>{ if(x.outcome==='REVIEW') revs.push({i,x}); }));
+  h+='<div class="rsec"><h4><span>§3 Needs review</span> <small>what could not be verified, and what would prove it</small></h4>';
+  if(!revs.length) h+='<p class="empty">None.</p>';
+  revs.forEach(({i,x})=>{ h+='<div class="rev"><div class="what"><b>'+esc(TIER[i.tier])+' plan_row '+i.plan_row+' · '+esc(x.field)+'</b> — plan «<span class="mono">'+esc(x.plan)+'</span>» · export «<span class="mono">'+esc(x.exp)+'</span>»'+(x.note?' — '+esc(x.note):'')+'</div><div>'+fixButton(i.tier,i.plan_row,x.id)+'</div><div class="prove">Would prove it: '+esc(x.prove||'confirm in '+P.manager+' and initial the ✓ cell')+'</div></div>'; });
+  const ctx=P.contextNote(run); if(ctx) h+='<div class="ctx">'+esc(ctx)+'</div>';
+  h+='</div>';
+  const miss=run.items.filter(i=>i.result==='MISSING');
+  h+='<div class="rsec"><h4><span>§4 Missing and extra</span></h4>';
+  if(!miss.length&&!run.extras.length) h+='<p class="empty">None.</p>';
+  miss.forEach(i=>{ h+='<div class="rev"><div class="what">'+chip('MISSING')+' <b>'+esc(TIER[i.tier])+' plan_row '+i.plan_row+'</b> · <span class="mono">'+esc(i.name)+'</span> — '+esc(i.detail)+'</div><div>'+fixButton(i.tier,i.plan_row,'missing')+'</div></div>'; });
+  run.extras.forEach(x=>{ h+='<div class="rev"><div class="what">'+chip('EXTRA')+' <span class="mono">'+esc(x.name)+'</span> · '+esc(x.ad_id)+' — in planned '+esc(TIER.adset)+' <span class="mono">'+esc(x.adset)+'</span>, not in the plan</div><div></div></div>'; });
+  h+='</div>';
+  h+='<div class="rsec"><h4><span>§5 Human checks</span> <small>the export cannot verify these — never a failure</small></h4><div class="hc">'+run.humans.map(x=>'<div><span class="fld">'+esc(x.field)+'</span> · '+esc(TIER[x.tier])+' plan_row '+x.plan_row+' · «'+esc(x.value)+'»</div><div>'+(x.status==='open'?'<span class="chip review">✓ '+esc(x.cell)+' open</span>':'<span class="chip pass">✓ '+esc(x.cell)+' '+esc(x.status)+'</span>')+'</div>').join('')+'</div></div>';
+  const items=[...run.items].sort((a,b)=>order[a.tier]-order[b.tier]||a.plan_row-b.plan_row); const passN=items.filter(i=>i.result==='PASS').length;
+  h+='<div class="rsec"><h4><span>§6 Per-item table</span> <small>PASS rows collapsed</small> <button class="btn small quiet" id="toggle-pass" type="button" aria-expanded="false" aria-controls="items-table" style="margin-left:auto">Show '+passN+' PASS rows</button></h4><div class="scroller" style="max-height:480px;overflow:auto"><table class="items" id="items-table"><thead><tr><th>tier</th><th>plan_row</th><th>name</th><th>QA status</th><th>result</th><th>first failing check</th><th>detail</th></tr></thead><tbody>';
+  items.forEach(i=>{ h+='<tr class="'+(i.result==='PASS'?'pass-row':'')+'"><td>'+esc(TIER[i.tier])+'</td><td>'+i.plan_row+'</td><td class="mono">'+esc(i.name)+'</td><td>'+esc(i.planRow.qa_status)+'</td><td>'+chip(i.result)+'</td><td class="mono">'+esc(i.first)+'</td><td class="detail">'+esc(i.detail)+'</td></tr>'; });
+  h+='</tbody></table></div></div>';
+  h+='<div class="rsec"><h4><span>§7 Proposed rule changes</span> <small>one changelog row each — never applied silently</small></h4>';
+  if(!run.proposals.length) h+='<p class="empty">Nothing new observed.</p>';
+  else h+='<div class="scroller"><table class="ft props"><thead><tr><th>where</th><th>target_key</th><th>before</th><th>after</th><th>reason</th></tr></thead><tbody>'+run.proposals.map(p=>'<tr><td>'+esc(p.tab)+'</td><td class="mono">'+esc(p.target_key)+'</td><td>'+esc(p.before)+'</td><td>'+esc(p.after)+'</td><td>'+esc(p.reason)+'</td></tr>').join('')+'</tbody></table></div>';
+  h+='</div>';
+  const ads=run.items.filter(i=>i.tier==='ad').sort((a,b)=>a.plan_row-b.plan_row);
+  const block=ads.map(i=>i.plan_row+'\t'+i.result+'\t'+i.first+'\t'+i.detail).join('\n');
+  h+='<div class="rsec"><h4><span>Findings block</span> <small>plain text · pastes straight back into the workbook, one line per planned ad</small></h4><pre class="block" style="max-height:260px;overflow:auto">plan_row\tresult\tfirst failing check\tdetail\n'+esc(block)+'</pre></div>';
+  const openN=P.DISC.filter(d=>state.active.has(d.id)).length;
+  h+='<div class="report-actions"><span class="grow">'+(run.ready?'Clean run. Reset the demo to start again, or add a builder mistake and catch it.':'Apply the fixes above, or fix everything, then re-run to see what changed.')+'</span><button class="btn quiet" id="btn-fix-all-2" type="button"'+(openN?'':' disabled')+'>Fix everything the report found</button><button class="btn" id="btn-rerun" type="button">Re-run QA</button><button class="btn text" id="btn-break-2" type="button">Add a builder mistake</button></div>';
+  return h+'</div>';
+}
+function registerRow(run,runId){ const d=new Date().toISOString().slice(0,10); const c=run.counts; return [runId,d,'QA run',P.label,P.regScope,c.planned,c.pass,c.fail,c.missing,c.review,c.na,c.extra,run.ready?'YES':'NO',run.top,run.proposals.length]; }
+function renderRegister(){ const tb=$('#register tbody'); if(!runs.length){tb.innerHTML='<tr><td colspan="15" class="muted">No runs yet.</td></tr>';return;} tb.innerHTML=runs.map(r=>'<tr>'+r.map((v,i)=>'<td'+(i===12?' style="color:var(--'+(v==='YES'?'pass':'fail')+')"':'')+'>'+esc(v)+'</td>').join('')+'</tr>').join(''); }
+function setStatus(t){ state.status=t; $('#status-line').textContent=t; }
+const openCount=()=>P.DISC.filter(d=>state.active.has(d.id)).length;
+const setRunning=on=>{ $('#btn-run').disabled=on; $('#btn-reset').disabled=on; $('#btn-break').disabled=on; document.querySelectorAll('.platform button[data-p]').forEach(b=>b.disabled=on); if(on){ document.querySelectorAll('#report-wrap button').forEach(b=>b.disabled=true); refocus(null,$('#log')); } };
+const wait=ms=>new Promise(r=>setTimeout(r,REDUCE?0:ms));
+async function doRun(){
+  const st=state; /* the run belongs to the platform that started it — if that changes under the awaits, abandon it */
+  setRunning(true); $('#btn-fix-all').disabled=true;
+  const ex=P.split(st.exp); const run=runEngine(st.plan,ex);
+  const nPlan=st.plan.campaign.length+st.plan.adset.length+st.plan.ad.length, nExp=P.expRows(st.exp);
+  const presentN=run.present.campaign.size+run.present.adset.size+run.present.ad.size;
+  const lines=P.logLines(run,nPlan,nExp,presentN,ex);
+  const log=$('#log'); log.innerHTML='';
+  for(const l of lines){ const d=document.createElement('div'); d.textContent=l+' …'; log.appendChild(d); await wait(420); if(state!==st){ setRunning(false); return; } d.textContent=l; d.classList.add('done'); }
+  const runId='R-'+String(++runN).padStart(3,'0');
+  const prev=st.last; st.last=run; st.marks=marksFor(run); runs.push(registerRow(run,runId));
+  const fk=focusKey(); $('#report-wrap').innerHTML=renderReport(run,prev,runId); renderRegister(); renderInputs();
+  const open=openCount();
+  $('#btn-fix-all').disabled=!open; setRunning(false); $('#btn-run').textContent='Re-run QA';
+  refocus(fk,$('#btn-run')); if(document.activeElement===$('#log')) $('#btn-run').focus({preventScroll:true});
+  setStatus(run.ready?'Clean. '+(run.counts.review?'Answer the reviews, initial the ✓ cells, and the reviewers sign off.':'Ready for the reviewers to sign off.'):open+' thing'+(open>1?'s':'')+' to fix. Use the buttons in the report, or fix everything.');
+  if(!REDUCE) $('#report-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Applied. Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'Inputs updated. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
+function reset(){ state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); }
+function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; }
+function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied. Run again to verify';}); syncFix(); setStatus('Everything is corrected in the inputs. Run the QA again to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
+function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} const d=pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run the QA to find it.'); return true; }
+
+/* ---------- platform switch: each platform keeps its own progress; the register is shared ---------- */
+function setPlatform(key){
+  const prof=PLATFORMS[key]||META; if(P===prof) return;
+  spot(null); if(!tour.on) cap.hidden=true;
+  if(P){ state.reportHTML=$('#report-wrap').innerHTML; state.logHTML=$('#log').innerHTML; state.fixAllOff=$('#btn-fix-all').disabled; }
+  P=prof; state=states[prof.key]; if(!state.plan) materialize();
+  document.querySelectorAll('.platform button[data-p]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p===prof.key)));
+  document.querySelectorAll('[data-pw]').forEach(s=>{ s.textContent=prof.words[s.dataset.pw]||s.textContent; });
+  const other=PLATFORMS[prof.key==='meta'?'tiktok':'meta'];
+  $('[data-qw="found"]').textContent=prof.quick.found;
+  $('[data-qw="switch"]').innerHTML='<b>Switch to '+esc(other.label)+' and run it again.</b><span>Same engine, '+esc(other.label)+'’s export and vocabulary. It catches '+esc(other.quick.catches)+'.</span>';
+  renderInputs(); renderRegister();
+  $('#report-wrap').innerHTML=state.last?state.reportHTML:''; const log=$('#log'); if(state.last&&state.logHTML) log.innerHTML=state.logHTML; else log.textContent=prof.idleLog;
+  $('#btn-run').textContent=state.last?'Re-run QA':'Run QA'; $('#btn-fix-all').disabled=state.fixAllOff; $('#status-line').textContent=state.status;
+  book.platform=prof.key; book.tab=0; renderBook();
+  try{ const u=new URL(location.href); if(prof.key==='meta') u.searchParams.delete('platform'); else u.searchParams.set('platform',prof.key); history.replaceState(null,'',u.pathname+u.search+u.hash); }catch(e){}
+}
+const toConsole=()=>$('#console').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'});
+document.addEventListener('click',e=>{
+  const f=e.target.closest('button[data-fix]'); if(f){ const all=[...document.querySelectorAll('#report-wrap button[data-fix]')], i=all.indexOf(f); applyFix(f.dataset.fix,f); const next=all.slice(i+1).concat(all.slice(0,i)).find(b=>!b.disabled); if(next) next.focus({preventScroll:true}); return; }
+  const t=e.target.closest('#toggle-pass'); if(t){const tbl=$('#items-table'); tbl.classList.toggle('show-pass'); const on=tbl.classList.contains('show-pass'); t.setAttribute('aria-expanded',String(on)); t.textContent=(on?'Hide':'Show')+' '+t.textContent.replace(/^(Show|Hide) /,''); return;}
+  const ps=e.target.closest('#plan-subtabs button'); if(ps){state.planTab=+ps.dataset.i; renderInputs(); return;}
+  const es=e.target.closest('#exp-subtabs button'); if(es){state.expTab=+es.dataset.i; renderInputs(); return;}
+  const pb=e.target.closest('.platform button[data-p]'); if(pb){ if(!pb.disabled) setPlatform(pb.dataset.p); return; }
+  const go=e.target.closest('a[data-go]'); if(go){ e.preventDefault(); if(!$('#btn-run').disabled) setPlatform(go.dataset.go); toConsole(); $('#btn-run').focus({preventScroll:true}); return; }
+  if(e.target.closest('#btn-rerun')){ if(!$('#btn-run').disabled) doRun(); return; }
+  if(e.target.closest('#btn-fix-all-2')){ fixAll('report'); return; }
+  if(e.target.closest('#btn-break-2')){ if(breakOne()) $('#status-line').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'center'}); return; }
+});
+$('#btn-run').addEventListener('click',doRun);
+$('#btn-fix-all').addEventListener('click',()=>fixAll('controls'));
+$('#btn-break').addEventListener('click',()=>{ breakOne(); if(!state.last) $('#btn-fix-all').disabled=true; });
+$('#btn-hero-run').addEventListener('click',()=>{ toConsole(); if(!$('#btn-run').disabled) doRun(); });
+$('#btn-reset').addEventListener('click',()=>{ reset(); if(!tour.on) cap.hidden=true; });
+
+/* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would ---------- */
+const tour={on:false,cancel:false}; const cap=$('#tour-cap'); const tourBtns=()=>[$('#btn-tour'),$('#btn-hero-tour')];
+const caption=(step,text)=>{ cap.hidden=false; cap.innerHTML='<b>'+esc(step)+'</b><span>'+esc(text)+'</span>'; };
+const pause=ms=>new Promise(r=>{ const end=performance.now()+(REDUCE?Math.min(ms,350):ms); const tick=()=>{ if(tour.cancel||performance.now()>=end) r(); else setTimeout(tick,50); }; tick(); });
+function spot(el){ document.querySelectorAll('.tour-hi').forEach(e=>e.classList.remove('tour-hi')); if(el){ el.classList.add('tour-hi'); el.scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'center'}); } }
+async function step(ms){ await pause(ms); if(tour.cancel) throw new Error('cancelled'); }
+function endTour(msg){ tour.on=false; spot(null); tourBtns().forEach(b=>b.disabled=false); if(msg) caption('stopped',msg); const a=document.activeElement; if(!a||a===document.body||a===cap||a.disabled) $('#btn-tour').focus({preventScroll:true}); }
+async function runTour(){
+  if(tour.on||$('#btn-run').disabled) return;
+  tour.on=true; tour.cancel=false; tourBtns().forEach(b=>b.disabled=true);
+  toConsole(); caption('start','Twenty seconds, eight steps. Click any demo control to take over.'); cap.focus({preventScroll:true});
+  try{
+    const planted=P.DISC.filter(d=>d.planted).map(d=>d.id); const fresh=!state.last&&state.active.size===planted.length&&planted.every(id=>state.active.has(id));
+    if(!fresh){ reset(); caption('reset','Starting from the planted export, so the walkthrough reads the same every time.'); await step(1000); }
+    caption('1 · run','Running the QA: read both files, list the export’s columns, match by ID, normalize, apply the rules.'); await doRun(); await step(500);
+    const sum=$('.report .plain'), cnt=$('.report .fcard .cnt');
+    caption('2 · read','The gate says NO. The summary puts the findings in plain English. The first card below it is one finding for all 8 ads, not eight cards.'); spot(sum); await step(2800); spot(cnt?cnt.closest('.fcard'):sum); await step(2400);
+    const sys=P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sb=sys?document.querySelector('button[data-fix="'+sys.id+'"]'):null;
+    caption('3 · fix one','One click fixes the repeated finding: all 8 ads, one bulk edit in '+P.manager+'. The export changes now. The report changes when the QA runs again.'); if(sb){ spot(sb); await step(1600); applyFix(sys.id,sb); } await step(1400);
+    caption('4 · run again','Running against the corrected inputs.'); spot(null); await doRun(); await step(500);
+    caption('5 · diff','“What changed” lists the 8 as resolved and the rest as unchanged. A second QA reads as a diff, not a fresh report.'); spot($('.report .diffsec')); await step(3000);
+    caption('6 · fix the rest','Applying every remaining fix, in the export and in the one wrong plan cell.'); spot($('#btn-fix-all-2')); await step(1400); fixAll('report'); await step(1200);
+    caption('7 · run again','Running once more.'); spot(null); await doRun(); await step(400);
+    spot($('.report .gate')); caption('8 · gate','READY TO APPROVE: YES. Every planned item agrees with the export, and the register below holds one row per run.'); await step(3000);
+    spot(null); caption('done','That’s the loop. Try it yourself: reset, or add a builder mistake and catch it.');
+  }catch(e){ if(!tour.cancel) throw e; }
+  finally{ endTour(tour.cancel?'Walkthrough stopped. You’re driving now.':''); }
+}
+$('#btn-tour').addEventListener('click',runTour);
+$('#btn-hero-tour').addEventListener('click',runTour);
+/* any click on a demo control while the walkthrough runs hands control back */
+document.addEventListener('click',e=>{ if(!tour.on) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run'); if(c&&!c.disabled) tour.cancel=true; },true);
+
+/* ---------- engineering notes: collapsed unless the URL points at them ---------- */
+(function(){ const d=$('#eng-details'); if(!d) return; const open=()=>{ if(location.hash==='#engineering') d.open=true; }; open(); addEventListener('hashchange',open); })();
+
+/* ---------- the workbook ---------- */
+const D=v=>({v,c:'derived'}), T=v=>({v,c:'typed'}), F=v=>({v,c:'formula'}), K=v=>({v,c:'key'}), OK=v=>({v,c:'ok'}), AM=v=>({v,c:'amber'});
+const colLetter=i=>{let s='';i++;while(i>0){const m=(i-1)%26;s=String.fromCharCode(65+m)+s;i=Math.floor((i-1)/26)}return s};
+const C=arr=>arr.map(c=>({h:c[0],m:c[1]}));
+function gridHTML(cols,rows,startRow=4){
+  let h='<table class="grid"><thead><tr><th><span class="sr">Row</span></th>'+cols.map((c,i)=>'<th>'+colLetter(i)+'</th>').join('')+'</tr></thead><tbody>';
+  h+='<tr class="h2"><td class="rn">2</td>'+cols.map(c=>'<td>'+esc(c.h)+'</td>').join('')+'</tr>';
+  h+='<tr class="h3"><td class="rn">3</td>'+cols.map(c=>'<td>'+esc(c.m)+'</td>').join('')+'</tr>';
+  rows.forEach((r,ri)=>{ h+='<tr><td class="rn">'+(startRow+ri)+'</td>'+cols.map((c,i)=>{const cell=r[i]; const o=(cell&&typeof cell==='object')?cell:{v:cell,c:''}; const v=(o.v===undefined||o.v===null)?'':String(o.v); const cls=v===''?'c-blank':(o.c?'c-'+o.c:''); return '<td class="'+cls+'" title="'+esc(v)+'">'+(v===''?'&nbsp;':esc(v))+'</td>';}).join('')+'</tr>'; });
+  return h+'</tbody></table>';
+}
+const kvHTML=pairs=>'<div class="kv">'+pairs.map(p=>'<div>'+esc(p[0])+'</div><div>'+esc(p[1])+'</div>').join('')+'</div>';
+const note=t=>'<p class="sheet-note">'+t+'</p>';
+const sheet=h=>'<div class="scroller" tabindex="0" role="region" aria-label="Sheet grid">'+h+'</div>';
+const LEGEND='<div class="legend"><span class="l-derived">Gray: derived from the plan line, the audience row or the account</span><span class="l-typed">Typed: a human value, which always wins</span><span class="l-amber">Amber: typed, and different from the derived value</span><span class="l-ok">Green: check OK</span></div>';
+const pc=i=>CAMPS[SETS[i].c].line+' · Meta · US · $'+(+CAMPS[SETS[i].c].budget).toLocaleString('en-US')+' · OK';
+/* one media plan, every platform's lines; the right-hand link columns depend on which workbook is open */
+function mediaPlan(owner){ const cols=C([['Line','line_id'],['Agency','agency'],['Market','market'],['Channel','channel'],['Partner','partner'],['Buy type','buy_type'],['KPI','kpi'],['Placement tactics','placement_tactics'],['Start','start_date'],['End','end_date'],['Working media','working_media'],['Audience','audience_name'],['Suppression','suppression'],['Objective','campaign_objective'],['Bid type','bid_type'],['Optimization','optimization'],['Funnel stage','funnel_stage'],['Phase','campaign_phase'],['Recipe','recipe'],['Creative wave','creative_wave'],['Campaigns linked','campaigns_linked'],['Ad sets linked','ad_sets_linked'],['Planned ad sets','planned_ad_sets'],['Line status','line_status']]);
+  const meta=owner==='meta', mine=n=>[F('1'),F(String(n)),T(String(n)),OK('OK')], other=n=>[F('0'),F('0'),T(String(n)),F('other workbook')];
+  const rows=[[F('L001'),'Demo Agency','US','Paid social','Meta','Auction','ThruPlay','Advantage+ placements','11/01/2026','12/24/2026','120,000','Coffee enthusiasts 25-54; LAL purchasers; Site visitors 90d','Yes','Engagement','Lowest cost','Views','Consideration','Holiday',K('STANDARD'),K('W1'),...(meta?mine(3):other(3))],
+    [F('L002'),'Demo Agency','US','Paid social','Meta','Auction','Purchases','Advantage+ placements','11/01/2026','12/24/2026','180,000','Broad 21-65; Cart abandoners 30d; Purchasers 180d','Yes','Sales','Lowest cost','Conversions','Action','Holiday',K('STANDARD'),K('W1'),...(meta?mine(3):other(3))],
+    [F('L003'),'Demo Agency','US','Paid social','TikTok','Auction','Video views','In-feed','11/15/2026','12/24/2026','120,000','Interests 18-34; LAL purchasers; Site visitors 90d','Yes','Video views','Lowest cost','15-second views','Consideration','Holiday',K('STANDARD'),K('W1'),...(meta?other(3):mine(3))],
+    [F('L004'),'Demo Agency','US','Paid social','TikTok','Auction','Purchases','In-feed','11/01/2026','12/24/2026','180,000','Broad 21-65; Cart abandoners 30d; Purchasers 180d','Yes','Sales','Lowest cost','Conversions','Action','Holiday',K('STANDARD'),K('W1'),...(meta?other(3):mine(3))]];
+  return note('The media grid pastes in as it is, from column B, and the line ID builds itself. The build picks (recipe, creative wave) and the linked counts on the right belong to the workbook. Everything else is the buyer’s. '+(meta?'Lines 3 and 4 are TikTok buys. They sit on the same plan, but they’re built and checked in the TikTok workbook.':'Lines 3 and 4 are the TikTok buys this workbook owns, so they’re built and checked here. Lines 1 and 2 are Meta buys on the same plan, built and checked in the Meta workbook.'))+sheet(gridHTML(cols,rows)); }
+const planCheck=(rows,manager)=>{ const cols=C([['Line','line_id'],['Partner','partner'],['Plan working media','plan_working_media'],['Workbook budget','arch_budget'],['Market','chk_market'],['Buy type','chk_buy_type'],['Flight start','chk_flight_start'],['Flight end','chk_flight_end'],['Budget','chk_budget'],['Objective','chk_objective'],['Optimization','chk_optimization'],['Funnel','chk_funnel'],['Suppression','chk_suppression'],['Result','result'],['Detail','detail']]);
+  const tier=manager==='Ads Manager'?'Ad sets':'Ad groups';
+  return note('The gate. Nine checks per line prove the workbook matches what was bought, with the same proof discipline as the run: an unproven mapping asks for review and never fails. <b>READY TO BUILD</b> must read YES before anyone opens '+manager+'.')+'<div class="two"><div><h3>Summary</h3>'+kvHTML([['Lines on MEDIA_PLAN','4'],['Linked to this workbook','2'],['OK / FAIL / NEEDS REVIEW','2 / 0 / 0'],['NOT LINKED · other workbook','0 · 2'],['Campaign rows with no line','0'],[tier+' off the plan','0']])+'</div><div><h3>Money and gate</h3>'+kvHTML([['Plan working media (this workbook)','$300,000'],['Workbook planned budget','$300,000'],['Difference','$0 (tolerance 1.0 %)'],['Daily-budget lines','0'],['READY TO BUILD','YES']])+'</div></div>'+sheet(gridHTML(cols,rows,17)); };
+const ok9=()=>Array(9).fill(0).map(()=>OK('OK'));
+const META_TABS=[
+ {name:'MEDIA_PLAN',html:()=>mediaPlan('meta')},
+ {name:'BUILD_ADSETS',html(){ const cols=C([['Line','line'],['Label (s02)','label'],['Audience','audience'],['Goal','goal'],['Placements','placements'],['Platforms','platforms'],['Ad set budget','ad_set_budget'],['Wave','wave'],['Concepts (; = one ad each)','concepts'],['URL','website_url'],['Pixel','pixel'],['CTA','cta'],['In plan','in_plan']]);
+   const rows=SETS.map((s,i)=>[K(CAMPS[s.c].line),T(s.label),K(s.audience),D(s.c?'Conversions':'Views'),D('Advantage+ placements'),D('Facebook; Instagram'),'',K('W1'),T(CONCEPTS.map(c=>c[0]+'_'+c[1]).join('; ')),T(LINK),D('Halcyon Web Pixel'),D('Shop now'),OK('OK')]);
+   return note('One row per ad set to build. The number of rows per line is the planned ad-set count that <b>MEDIA_PLAN</b> checks against. The expander reads this grid first: the label becomes the ad-set name part, and a semicolon-separated concept list becomes one ad per concept. Eight concepts here, so 48 ads from six rows.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'Meta Campaign Level',html(){ const cols=C([['Campaign name','campaign_name'],['Brand','c01'],['Market','c02'],['Quarter','c03'],['Initiative','c04'],['Funnel','c05'],['Format','c06'],['Delivery intent','campaign_delivery_intent'],['Buying type','buying_type'],['Objective','campaign_objective'],['Advantage+ campaign budget','advantage_campaign_budget'],['Lifetime budget','campaign_lifetime_budget'],['Daily budget','campaign_daily_budget'],['Start','campaign_start_datetime'],['End','campaign_end_datetime'],['Special ad categories','special_ad_categories'],['QA status','qa_status'],['Campaign ID','campaign_id'],['✓ compliance','hc_compliance'],['Plan line','plan_line'],['Plan check','plan_check'],['Account','account']]);
+   const rows=CAMPS.map(c=>[F(c.name),T(c.parts[0]),D(c.parts[1]),T(c.parts[2]),T(c.parts[3]),D(c.parts[4]),T(c.parts[5]),T('Paused'),D('AUCTION'),D(c.objective),D('On'),D(c.budget),'',D('11/01/2026 12:00 AM'),D('12/24/2026 11:59 PM'),T('None'),T(READY),T(c.id),T('✓ AR'),K(c.line),F(c.line+' · Meta · US · $'+(+c.budget).toLocaleString('en-US')+' · OK'),D('DEFAULT')]);
+   return note('Gray cells were filled from the plan line: buying type, objective, budget, flight, funnel. Black cells were typed. Typed always wins, and clearing a typed cell brings the gray value back. The name in column A is built by formula from the name parts and the account’s separator. Nobody types a campaign name, so nobody mistypes one.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'Meta Ad Set Level',html(){ const cols=C([['Ad set name','ad_set_name'],['Campaign','campaign_name'],['Tactic','s01'],['Audience label','s02'],['Delivery intent','ad_set_delivery_intent'],['Performance goal','performance_goal'],['Audience','audience'],['Countries','countries'],['Age min','age_min'],['Age max','age_max'],['Custom audiences','custom_audiences'],['Excluded custom audiences','excluded_custom_audiences'],['Detailed targeting (include)','detailed_targeting_include'],['Placements','placements'],['Pixel','conversion_tracking_pixels'],['Lifetime budget','ad_set_lifetime_budget'],['Start','ad_set_start_datetime'],['End','ad_set_end_datetime'],['QA status','qa_status'],['Ad set ID','ad_set_id'],['Plan line','plan_line'],['Plan line (effective)','plan_line_effective'],['Plan check','plan_check']]);
+   const rows=SETS.map((s,i)=>[F(setName(i)),K(CAMPS[s.c].name),T(s.s01),T(s.label.replace(s.s01+'_','')),T('Paused'),D(CAMPS[s.c].goal),K(s.audience),'','','','',s.excluded?T(s.excluded.split(':')[1]):'',s.detailed?T(s.detailed):'',D('Advantage+ placements'),D('Halcyon Web Pixel'),'',D('11/01/2026 12:00 AM'),i===2?AM('12/25/2026 12:00 AM'):D('12/24/2026 11:59 PM'),T(READY),T(setId(i)),'',D(CAMPS[s.c].line),F(pc(i))]);
+   return note('Blank targeting cells inherit the <b>AUDIENCES</b> row named in <code>audience</code>. The feed resolves them before the run, so the engine compares countries, ages and audience IDs, never the audience name. Row 6’s end time was typed one minute past the derived value. The cell turns amber, and the run will ask about it.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'Meta Ad Level',html(){ const cols=C([['Ad name','ad_name'],['Campaign','campaign_name'],['Ad set','ad_set_name'],['Concept','a01'],['Length','a02'],['Format','a03'],['Ad source','ad_source'],['Facebook page','facebook_page'],['Instagram','instagram_account'],['Second identity','second_identity'],['Story ID','story_id'],['Creative','creative_name'],['Feed file (1x1)','creative_feed'],['Story / Reels file (9x16)','creative_story'],['Primary text','primary_text_feed'],['Headline','headline_feed'],['Description','description_feed'],['URL','website_url'],['CTA','cta'],['URL parameters','url_parameters'],['Pixel','conversion_tracking_pixels'],['QA status','qa_status'],['Ad ID','ad_id'],['✓ identity','hc_identity']]);
+   const rows=states.meta.plan.ad.map(a=>{ const part=a.ad_source==='Partnership ad'; const cc=CONCEPTS.find(c=>a.creative_name===c[0]+'_'+c[1]); return [F(a.ad_name),K(a.campaign_name),K(a.ad_set_name),T(part?'MayaBrews':(cc?cc[0]:'Roastery')),T(part?'—':(cc?cc[1]:'15s')),T(part?'CreatorPost':'Video'),T(a.ad_source),D(part?'Maya Brews':'Halcyon Coffee Roasters'),D(part?'mayabrews':'halcyoncoffee'),a.second_identity?T(a.second_identity):'',a.story_id?T(a.story_id):'',K(a.creative_name),a.creative_feed?D(a.creative_feed):'',a.creative_story?D(a.creative_story):'',a.primary_text_feed?T(a.primary_text_feed):'',a.headline_feed?T(a.headline_feed):'',a.description_feed?T(a.description_feed):'',a.website_url?D(a.website_url):'',a.cta?D('Shop now'):'','',D('Halcyon Web Pixel'),T(a.qa_status),a.ad_id?T(a.ad_id):'',part?T('open'):'']; });
+   return note('Fifty rows, generated from six build-grid rows and eight concepts. <code>ad_source</code> decides which checks apply and which identity model. On the partnership ad (row 52) the creator is the first identity, and the brand goes in <code>second_identity</code>. The export never carries that field, so it’s a human check with a ✓ cell, never a failure. Row 53 is marked Not Launching, so the run shows it as N/A, not MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'PLAN_CHECK',html:()=>planCheck([[F('L001'),F('Meta'),F('120,000'),F('120,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L002'),F('Meta'),F('180,000'),F('180,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L003'),F('TikTok'),F('120,000'),F('—'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')],[F('L004'),F('TikTok'),F('180,000'),F('—'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')]],'Ads Manager')},
+ {name:'QA_EXPORT',html(){ const cols=C(['plan_row','campaign_name','ad_set_name','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent'].map(x=>[x,x]));
+   const rows=states.meta.plan.ad.map(a=>[a.plan_row,a.campaign_name,a.ad_set_name,a.ad_name,a.ad_id,a.ad_source,a.facebook_page,a.instagram_account,a.story_id,a.primary_text_feed,a.headline_feed,a.website_url,a.cta,a.url_parameters,a.conversion_tracking_pixels,a.qa_status,a.delivery_intent]);
+   return note('This is what leaves the workbook for the run. Names are assembled, page and Instagram handles become digits, <code>Shop now</code> becomes <code>SHOP_NOW</code>, and blank URL-parameter cells take the account default. Only fields the export can return are here: the feed is the plan with inheritance resolved.')+sheet(gridHTML(cols,rows,2)); }}
+];
+const TT_TABS=[
+ {name:'MEDIA_PLAN',html:()=>mediaPlan('tiktok')},
+ {name:'BUILD_ADGROUPS',html(){ const cols=C([['Line','line'],['Label (s02)','label'],['Audience','audience'],['Goal','goal'],['Placement types','placement_types'],['Placements','placements'],['Ad group budget','ad_group_budget'],['Wave','wave'],['Concepts (; = one ad each)','concepts'],['URL','web_url'],['Pixel','pixel'],['CTA','cta'],['In plan','in_plan']]);
+   const rows=TT_GROUPS.map((g,i)=>{const c=ttCamp(i); return [K(c.line),T(g.label),K(g.audience),D(c.goalLabel),D('Select placement'),D('TikTok'),'',K('W1'),T(CONCEPTS.map(c=>c[0]+'_'+c[1]).join('; ')),T(TT_LINK),D(TT_PIXEL_LABEL),D('Learn more'),OK('OK')];});
+   return note('One row per ad group to build. The ad group is TikTok’s ad set. The number of rows per line is the planned ad-group count that <b>MEDIA_PLAN</b> checks against. The expander reads this grid first: the label becomes the ad-group name part, and a semicolon-separated concept list becomes one ad per concept. Eight concepts here, so 48 ads from six rows. The two Spark Ads are typed by hand on the ad level.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'TikTok Campaign Level',html(){ const cols=C([['Campaign name','campaign_name'],['Brand','c01'],['Market','c02'],['Quarter','c03'],['Initiative','c04'],['Funnel','c05'],['Format','c06'],['Delivery intent','campaign_delivery_intent'],['Buy type','buy_type'],['Advertising objective','advertising_objective'],['Campaign budget optimization','campaign_budget_optimization'],['Budget type','campaign_budget_type'],['Budget amount','campaign_budget_amount'],['Special ads categories','special_ads_categories'],['QA status','qa_status'],['Campaign ID','campaign_id'],['✓ compliance','hc_compliance'],['Plan line','plan_line'],['Plan check','plan_check']]);
+   const rows=TT_CAMPS.map(c=>[F(c.name),T(c.parts[0]),D(c.parts[1]),T(c.parts[2]),T(c.parts[3]),D(c.parts[4]),T(c.parts[5]),T('Off'),D('Auction'),D(c.objLabel),D('On'),D('Lifetime'),D(c.budget+'.00'),T('None'),T(READY),T(c.id),T('✓ AR'),K(c.line),F(c.line+' · TikTok · US · $'+(+c.budget).toLocaleString('en-US')+' · OK')]);
+   return note('Same design, TikTok vocabulary. The objective, budget and buy type come from plan lines L003 and L004. The TikTok workbook owns those lines, so its PLAN_CHECK reads OK where the Meta workbook read “other workbook”. Reservation buys (TopView, Pulse, Reach &amp; Frequency) never appear in a TikTok export, so the run shows their rows as N/A instead of MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'TikTok Ad Group Level',html(){ const cols=C([['Ad group name','ad_group_name'],['Campaign','campaign_name'],['Tactic','s01'],['Audience label','s02'],['Delivery intent','ad_group_delivery_intent'],['Optimization goal','optimization_goal'],['Pixel','pixel_id'],['Pixel event','pixel_event'],['Billing method','billing_method'],['Bid strategy','bid_strategy'],['Placement types','placement_types'],['Placements','placements'],['Include search results','include_search_results'],['Audience','audience'],['Location','location'],['Age','age'],['Languages','languages'],['Interest category','interest_category'],['Include audience IDs','include_audience_id'],['Exclude audience IDs','exclude_audience_id'],['Inventory filter','inventory_filter'],['Start','start_datetime'],['End','end_datetime'],['Dayparting','dayparting'],['QA status','qa_status'],['Ad group ID','ad_group_id'],['✓ brand safety','hc_brand_safety'],['Plan line (effective)','plan_line_effective']]);
+   const rows=TT_GROUPS.map((g,i)=>{const c=ttCamp(i); return [F(ttGroupName(i)),K(c.name),T(g.s01),T(g.label.replace(g.s01+'_','')),T('Off'),D(c.goalLabel),D(TT_PIXEL_LABEL),c.event?D(c.event):'',D(c.billing),D('Lowest cost'),D('Select placement'),D('TikTok'),D('Off'),K(g.audience),'','',g.languages?T(g.languages):'',g.interest?T(g.interest):'',g.include?T(g.include):'',g.exclude?T(g.exclude):'',D('Standard inventory'),D(c.start),i===0?AM('24/12/2026 22:59'):D(c.end),D('All Day'),T(READY),T(ttGroupId(i)),i===0?T('✓ JK'):'',D(c.line)];});
+   return note('The ad group is TikTok’s ad set: six of them, three per campaign, like Meta’s six ad sets. Targeting cells inherit the AUDIENCES row and appear in the feed the way TikTok exports them: location names, age buckets, language names, audience ID lists. The conversion groups carry the pixel event (Complete Payment); the video-view groups leave it blank. Dates sit on the ad group only, exported as <code>yyyy/m/d HH:mm</code>. Toggles that TikTok exports blank when off count as a match for a planned Off. Row 4’s end date was typed day first. It’s the one amber cell in this workbook, and the run will ask about it rather than guess.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'TikTok Ad Level',html(){ const cols=C([['Ad name','ad_name'],['Campaign','campaign_name'],['Ad group','ad_group_name'],['Concept','a01'],['Length','a02'],['Ad source','ad_source'],['Post ID','post_id'],['Identity','identity'],['Identity type','identity_type'],['Identity ID','identity_id'],['Ad format','ad_format'],['Video file','video_file'],['Only show as ad','only_show_as_ad'],['Music sharing','music_sharing'],['Text','text'],['CTA','cta'],['Web URL','web_url'],['Website events pixel','website_events'],['QA status','qa_status'],['Ad ID','ad_id'],['✓ identity','hc_identity']]);
+   const rows=states.tiktok.plan.ad.map(a=>{ const creator=a.ad_source==='Spark Ad — creator post', brandPost=a.ad_source==='Spark Ad — brand post', spark=creator||brandPost; const cc=CONCEPTS.find(c=>a.video_file.indexOf('HAL_'+c[0]+'_'+c[1]+'_')===0); return [F(a.ad_name),K(a.campaign_name),K(a.ad_group_name),T(creator?'MayaBrews':brandPost?'HalcyonPost':(cc?cc[0]:'Roastery')),T(spark?'—':(cc?cc[1]:'15s')),T(a.ad_source),a.post_id?T(a.post_id):'',K(spark?a.identity:a.identity+' (brand)'),F(a.identity_type),F(a.identity_id),F(a.ad_format),a.video_file?D(a.video_file):'',a.only_show_as_ad?D(a.only_show_as_ad):'',D(a.music_sharing),a.text?T(a.text):'',D(a.cta),D(TT_LINK),D(TT_PIXEL_LABEL),T(a.qa_status),a.ad_id?T(a.ad_id):'',creator?T('open'):brandPost?T('✓ AR'):'']; });
+   return note('Fifty-one rows: 48 generated from six build-grid rows and eight concepts, a creator Spark Ad typed by hand (row 52), a brand-owned Spark Ad (row 53) and a Not Launching alternate (row 54). There are three ad sources. An uploaded video uses the brand’s Business Center authorization as its identity. A creator Spark Ad uses the creator’s TikTok account, needs a post ID, and carries the authorization code as a ✓ human check. A brand Spark Ad has the same shape but uses the brand’s own linked account, with no creator authorization to chase. Identity type, ID and ad format are formulas resolved from the pick: the same pattern as Meta’s partnership ads, in TikTok’s formats. Nothing on this level is amber. The one amber cell is the day-first end date on the ad-group level. Row 54 will be N/A in the run, not MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+ {name:'PLAN_CHECK',html(){ const other=(l,b)=>[F(l),F('Meta'),F(b),F('—'),'','','','','','','','','',F('other workbook'),F('built in the Meta workbook')], mine=c=>{const b=(+c.budget).toLocaleString('en-US'); return [F(c.line),F('TikTok'),F(b),F(b),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad groups')];};
+   return planCheck([other('L001','120,000'),other('L002','180,000'),mine(TT_CAMPS[0]),mine(TT_CAMPS[1])],'TikTok Ads Manager'); }},
+ {name:'QA_EXPORT',html(){ const cols=C(['plan_row','campaign_name','ad_group_name','ad_name','ad_id','ad_source','identity_type','identity_id','post_id','ad_format','video_file','only_show_as_ad','text','cta','web_url','website_events','qa_status','delivery_intent'].map(x=>[x,x]));
+   const rows=states.tiktok.plan.ad.map(a=>[a.plan_row,a.campaign_name,a.ad_group_name,a.ad_name,a.ad_id,a.ad_source,a.identity_type,a.identity_id,a.post_id,a.ad_format,a.video_file,a.only_show_as_ad,a.text,a.cta,a.web_url,a.website_events,a.qa_status,a.delivery_intent]);
+   return note('This is what leaves the workbook for the run. Names are assembled, identity labels become Business Center and account IDs, the pixel label becomes its website-events code, and the landing page is joined to the account’s UTM template with TikTok’s <code>__CAMPAIGN_NAME__</code> and <code>__AID_NAME__</code> macros. Only fields the export can return are here: the feed is the plan with inheritance resolved.')+sheet(gridHTML(cols,rows,2)); }}
+];
+META.tabs=META_TABS; TIKTOK.tabs=TT_TABS;
+const book={platform:'meta',tab:0};
+function renderBook(){ const tabs=$('#book-tabs'), body=$('#book-body'); const set=P.tabs; if(book.tab>=set.length) book.tab=0; const k=focusKey();
+  tabs.innerHTML=set.map((t,i)=>'<button class="tab" role="tab" type="button" id="book-tab-'+i+'" aria-controls="book-body" aria-selected="'+(i===book.tab)+'" tabindex="'+(i===book.tab?0:-1)+'" data-i="'+i+'">'+esc(t.name)+'</button>').join('');
+  body.setAttribute('aria-labelledby','book-tab-'+book.tab); body.innerHTML=set[book.tab].html(); refocus(k,null); }
+$('#book-tabs').addEventListener('click',e=>{ const b=e.target.closest('.tab'); if(b){book.tab=+b.dataset.i; renderBook();} });
+tabKeys($('#book-tabs'),b=>{ book.tab=+b.dataset.i; renderBook(); });
+tabKeys($('#plan-subtabs'),b=>{ state.planTab=+b.dataset.i; renderInputs(); });
+tabKeys($('#exp-subtabs'),b=>{ state.expTab=+b.dataset.i; renderInputs(); });
+Object.keys(states).forEach(k=>materialize(states[k],PLATFORMS[k]));
+let deep=null; try{ deep=new URLSearchParams(location.search).get('platform') }catch(e){}
+setPlatform(deep==='tiktok'?'tiktok':'meta');
+})();
+</script>
+</body>
+</html>
