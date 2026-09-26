@@ -84,6 +84,7 @@ code{font-size:.9em}
 .btn.text{min-height:44px;padding:0 4px;background:transparent;border-color:transparent;color:var(--ink);font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:5px}
 .btn.text:hover{background:transparent;border-color:transparent;color:var(--accent-hover)}
 .btn.small{min-height:44px;padding:6px 14px;font-size:14px;font-weight:600}
+[hidden]{display:none!important}
 .btn:disabled,.btn:disabled:hover{background:var(--white);border-color:var(--rule);color:#8C877D;cursor:not-allowed}
 .btn.text:disabled{background:transparent;border-color:transparent}
 .ulink{display:inline-flex;align-items:center;min-height:44px;padding:0;background:none;border:0;color:var(--ink);font-size:17px;font-weight:600;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:6px;cursor:pointer}
@@ -157,7 +158,9 @@ h3.sub{font-size:16px;font-weight:700}
 .subtabs [role="tab"][aria-selected="true"],.tablist [role="tab"][aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
 .subtabs [role="tab"]:hover,.tablist [role="tab"]:hover{color:var(--ink)}
 .scroller{overflow:auto;-webkit-overflow-scrolling:touch;max-width:100%}
-.io .scroller{max-height:340px;flex:1}
+.io .scroller{max-height:200px;flex:1}
+.io.show-all .scroller{max-height:none}
+.io-more{display:flex;justify-content:center;padding:6px 24px;border-top:1px solid var(--rule);background:var(--white)}
 .log{padding:16px 24px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--paper);font-family:var(--mono);font-size:13px;line-height:1.6;color:var(--ink-2);min-height:56px}
 .log div{padding:1px 0}
 .log div::before{content:"›";display:inline-block;width:20px;color:var(--muted)}
@@ -266,6 +269,15 @@ table.items tr.pass-row{display:none}
 table.items.show-pass tr.pass-row{display:table-row}
 .rsec h4 #toggle-pass{margin-left:auto}
 pre.block{margin:0;padding:14px 16px;background:var(--paper);border:1px solid var(--rule);font-family:var(--mono);font-size:12px;line-height:1.55;tab-size:8;white-space:pre}
+details.full-report{border-top:1px solid var(--rule)}
+details.full-report>summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px;min-height:56px;padding:16px 24px;list-style:none;cursor:pointer;font-size:16px;font-weight:700;color:var(--accent)}
+details.full-report>summary::-webkit-details-marker{display:none}
+details.full-report>summary::before{content:"+";width:14px;font-family:var(--serif);font-size:24px;font-weight:400;line-height:1}
+details.full-report[open]>summary::before{content:"\2212"}
+details.full-report>summary:hover{background:var(--soft)}
+details.full-report>summary small{font-size:14px;font-weight:400;color:var(--muted)}
+details.full-report .when-open,details.full-report[open] .when-closed{display:none}
+details.full-report[open] .when-open{display:inline}
 .report-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 24px;background:var(--band);border-top:1px solid var(--rule)}
 .report-actions .grow{flex:1 1 280px;font-size:15px;color:var(--ink-2)}
 table.reg{border-collapse:collapse;font-family:var(--mono);font-size:12px;min-width:100%}
@@ -548,25 +560,26 @@ details.eng[open]>summary::after{content:"−"}
           <div class="platform" role="group" aria-label="Platform" id="platform-run"><span class="lbl" aria-hidden="true">Platform</span><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div>
           <span class="spacer"></span>
           <button class="btn" id="btn-run" type="button">Run QA</button>
-          <button class="btn quiet" id="btn-fix-all" type="button" disabled>Fix everything the report found</button>
-          <button class="btn quiet" id="btn-break" type="button">Add a builder mistake</button>
-          <button class="btn quiet" id="btn-tour" type="button">Walkthrough</button>
-          <button class="btn text" id="btn-reset" type="button">Reset</button>
+          <button class="btn quiet" id="btn-tour" type="button">Watch the walkthrough</button>
+          <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything the report found</button>
+          <button class="btn quiet" id="btn-break" type="button" hidden>Add a builder mistake</button>
+          <button class="btn text" id="btn-reset" type="button" hidden>Reset</button>
         </div>
         <p class="status" id="status-line" role="status" aria-live="polite"></p>
         <div class="tour-cap" id="tour-cap" role="status" aria-live="polite" tabindex="-1" hidden></div>
         <div class="io">
           <div class="panel">
-            <div class="panel-head"><h3>Plan feeds</h3><p>From the workbook, with inheritance resolved and labels translated.</p></div>
+            <div class="panel-head"><h3>What was planned</h3><p>The plan feeds from the workbook: every campaign, <span data-pw="adset">ad set</span> and ad as it should be built.</p></div>
             <div class="subtabs" role="tablist" aria-label="Plan feeds" id="plan-subtabs"></div>
             <div class="scroller" id="plan-table" role="tabpanel" aria-labelledby="plan-tab-2" tabindex="0"></div>
           </div>
           <div class="panel">
-            <div class="panel-head"><h3><span data-pw="manager">Ads Manager</span> export</h3><p>A synthetic bulk export, header row included.</p></div>
+            <div class="panel-head"><h3>What was built in <span data-pw="manager">Ads Manager</span></h3><p>A synthetic bulk export: every campaign, <span data-pw="adset">ad set</span> and ad as it was built.</p></div>
             <div class="subtabs" role="tablist" aria-label="Export views" id="exp-subtabs"></div>
             <div class="scroller" id="exp-table" role="tabpanel" aria-labelledby="exp-tab-2" tabindex="0"></div>
           </div>
         </div>
+        <div class="io-more"><button class="btn text" id="io-toggle" type="button" aria-expanded="false" aria-controls="plan-table exp-table">Show all rows</button></div>
         <div class="log" id="log" aria-live="polite" tabindex="-1">Waiting to run.</div>
         <div class="report-slot" id="report-wrap"></div>
         <div class="register">
@@ -1349,6 +1362,7 @@ function renderInputs(){
 }
 function fixButton(tier,row,check){ const d=discFor(tier,row,check); return d?'<button class="btn small quiet fix" data-fix="'+d.id+'">'+esc(d.fix)+'</button>':''; }
 function failTable(rows){ return '<div class="scroller"><table class="ft"><thead><tr><th>field (machine name)</th><th>plan value</th><th>export value</th><th>rule</th></tr></thead><tbody>'+rows.map(x=>'<tr><td class="mono">'+esc(x.field)+' <span class="muted">→ '+esc(x.col)+'</span></td><td class="mono">'+esc(x.plan||'(blank)')+'</td><td class="mono" style="color:var(--fail)">'+esc(x.exp||'(blank)')+'</td><td>'+esc(x.rule)+(x.note?'<br><span class="muted">'+esc(x.note)+'</span>':'')+'</td></tr>').join('')+'</tbody></table></div>'; }
+let fullOpen=false;
 function renderReport(run,prev,runId){
   const TIER=P.tiers, fallback='<span>correct the build in '+esc(P.manager)+', re-export, re-run</span>';
   const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
@@ -1383,6 +1397,8 @@ function renderReport(run,prev,runId){
     h+='<div class="fcard"><div class="fh"><b>'+esc(types)+'</b><span class="nm">'+esc(i.name)+'</span><small>'+esc(TIER[i.tier])+' · plan_row '+i.plan_row+'</small></div>'+failTable(fc)+'<div class="fix-row">Fix: '+(fc.map(x=>fixButton(i.tier,i.plan_row,x.id)).filter(Boolean).join(' ')||fallback)+'</div></div>'; });
   h+='</div>';
   const revs=[]; run.items.forEach(i=>i.checks.forEach(x=>{ if(x.outcome==='REVIEW') revs.push({i,x}); }));
+  const inside=[c.review?c.review+' to review':'',(c.missing||c.extra)?c.missing+' missing, '+c.extra+' extra':'',run.humans.length+' human checks','all '+c.planned+' items',run.proposals.length?run.proposals.length+' rule proposal'+(run.proposals.length>1?'s':''):'','the findings block'].filter(Boolean).join(' · ');
+  h+='<details class="full-report"'+(fullOpen?' open':'')+'><summary><span class="when-closed">Show the full report</span><span class="when-open">Hide the full report</span><small>'+esc(inside)+'</small></summary>';
   h+='<div class="rsec"><h4><span>§3 Needs review</span> <small>what could not be verified, and what would prove it</small></h4>';
   if(!revs.length) h+='<p class="empty">None.</p>';
   revs.forEach(({i,x})=>{ h+='<div class="rev"><div class="what"><b>'+esc(TIER[i.tier])+' plan_row '+i.plan_row+' · '+esc(x.field)+'</b> — plan «<span class="mono">'+esc(x.plan)+'</span>» · export «<span class="mono">'+esc(x.exp)+'</span>»'+(x.note?' — '+esc(x.note):'')+'</div><div>'+fixButton(i.tier,i.plan_row,x.id)+'</div><div class="prove">Would prove it: '+esc(x.prove||'confirm in '+P.manager+' and initial the ✓ cell')+'</div></div>'; });
@@ -1406,6 +1422,7 @@ function renderReport(run,prev,runId){
   const ads=run.items.filter(i=>i.tier==='ad').sort((a,b)=>a.plan_row-b.plan_row);
   const block=ads.map(i=>i.plan_row+'\t'+i.result+'\t'+i.first+'\t'+i.detail).join('\n');
   h+='<div class="rsec"><h4><span>Findings block</span> <small>plain text · pastes straight back into the workbook, one line per planned ad</small></h4><pre class="block" style="max-height:260px;overflow:auto">plan_row\tresult\tfirst failing check\tdetail\n'+esc(block)+'</pre></div>';
+  h+='</details>';
   const openN=P.DISC.filter(d=>state.active.has(d.id)).length;
   h+='<div class="report-actions"><span class="grow">'+(run.ready?'Clean run. Reset the demo to start again, or add a builder mistake and catch it.':'Apply the fixes above, or fix everything, then re-run to see what changed.')+'</span><button class="btn quiet" id="btn-fix-all-2" type="button"'+(openN?'':' disabled')+'>Fix everything the report found</button><button class="btn" id="btn-rerun" type="button">Re-run QA</button><button class="btn text" id="btn-break-2" type="button">Add a builder mistake</button></div>';
   return h+'</div>';
@@ -1432,10 +1449,11 @@ async function doRun(){
   $('#btn-fix-all').disabled=!open; setRunning(false); $('#btn-run').textContent='Re-run QA';
   refocus(fk,$('#btn-run')); if(document.activeElement===$('#log')) $('#btn-run').focus({preventScroll:true});
   setStatus(run.ready?'Clean. '+(run.counts.review?'Answer the reviews, initial the ✓ cells, and the reviewers sign off.':'Ready for the reviewers to sign off.'):open+' thing'+(open>1?'s':'')+' to fix. Use the buttons in the report, or fix everything.');
-  if(!REDUCE) $('#report-wrap').scrollIntoView({behavior:'smooth',block:'start'});
+  syncToolbar();
+  $('#report-wrap').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'});
 }
 function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Applied. Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'Inputs updated. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
-function reset(){ state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); }
+function reset(){ state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
 function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; }
 function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied. Run again to verify';}); syncFix(); setStatus('Everything is corrected in the inputs. Run the QA again to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
 function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} const d=pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run the QA to find it.'); return true; }
@@ -1453,7 +1471,7 @@ function setPlatform(key){
   $('[data-qw="switch"]').innerHTML='<b>Switch to '+esc(other.label)+' and run it again.</b><span>Same engine, '+esc(other.label)+'’s export and vocabulary. It catches '+esc(other.quick.catches)+'.</span>';
   renderInputs(); renderRegister();
   $('#report-wrap').innerHTML=state.last?state.reportHTML:''; const log=$('#log'); if(state.last&&state.logHTML) log.innerHTML=state.logHTML; else log.textContent=prof.idleLog;
-  $('#btn-run').textContent=state.last?'Re-run QA':'Run QA'; $('#btn-fix-all').disabled=state.fixAllOff; $('#status-line').textContent=state.status;
+  $('#btn-run').textContent=state.last?'Re-run QA':'Run QA'; $('#btn-fix-all').disabled=state.fixAllOff; $('#status-line').textContent=state.status; syncToolbar();
   book.platform=prof.key; book.tab=0; renderBook();
   try{ const u=new URL(location.href); if(prof.key==='meta') u.searchParams.delete('platform'); else u.searchParams.set('platform',prof.key); history.replaceState(null,'',u.pathname+u.search+u.hash); }catch(e){}
 }
@@ -1473,7 +1491,13 @@ $('#btn-run').addEventListener('click',doRun);
 $('#btn-fix-all').addEventListener('click',()=>fixAll('controls'));
 $('#btn-break').addEventListener('click',()=>{ breakOne(); if(!state.last) $('#btn-fix-all').disabled=true; });
 $('#btn-hero-run').addEventListener('click',()=>{ toConsole(); if(!$('#btn-run').disabled) doRun(); });
-$('#btn-reset').addEventListener('click',()=>{ reset(); if(!tour.on) cap.hidden=true; });
+$('#btn-reset').addEventListener('click',()=>{ reset(); if(!tour.on) cap.hidden=true; $('#btn-run').focus({preventScroll:true}); });
+/* the fix, mistake and reset buttons only mean something once there is a report */
+function syncToolbar(){ const ran=!!(state&&state.last); ['#btn-fix-all','#btn-break','#btn-reset'].forEach(sel=>{ $(sel).hidden=!ran; }); }
+/* the two input tables start folded to a few rows */
+$('#io-toggle').addEventListener('click',e=>{ const io=$('.io'), on=!io.classList.contains('show-all'); io.classList.toggle('show-all',on); e.currentTarget.setAttribute('aria-expanded',String(on)); e.currentTarget.textContent=on?'Show fewer rows':'Show all rows'; });
+/* remember whether the full report was opened, so a re-run keeps it that way */
+document.addEventListener('toggle',e=>{ if(e.target.classList&&e.target.classList.contains('full-report')) fullOpen=e.target.open; },true);
 
 /* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would ---------- */
 const tour={on:false,cancel:false}; const cap=$('#tour-cap'); const tourBtns=()=>[$('#btn-tour'),$('#btn-hero-tour')];
