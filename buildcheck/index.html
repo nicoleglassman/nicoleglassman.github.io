@@ -340,9 +340,10 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 <style>
 .book .scroller{max-height:440px;overflow:auto}
 .tabs{align-items:flex-end}
+.tablist{display:flex;gap:3px;flex:1 1 auto;min-width:0;overflow-x:auto;scrollbar-width:thin;align-items:flex-end}
 .platform{margin-left:auto;display:flex;gap:4px;padding:0 0 8px 12px;flex:none}
 .platform button{border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font:500 12.5px var(--sans);padding:5px 10px;border-radius:6px;cursor:pointer}
-.platform button[aria-selected="true"]{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
+.platform button[aria-pressed="true"]{background:var(--accent-soft);color:var(--accent-ink);border-color:transparent}
 .controls .platform{margin-left:0;padding:0 0 0 10px;border-left:1px solid var(--line)}
 .platform button:disabled{opacity:.55;cursor:not-allowed}
 .platform-word{font-family:var(--sans);font-weight:400;font-size:15px;color:var(--ink-3);letter-spacing:0;margin-left:6px;white-space:nowrap}
@@ -372,6 +373,28 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
 .report-actions .grow{flex:1 1 auto}
 .fit{margin-top:18px;padding:16px 18px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:14.5px;color:var(--ink-2)}
 .fit b{display:block;color:var(--ink);font-weight:600;margin-bottom:4px}
+/* plain-English summary */
+.plain ul{margin:0;padding-left:20px;font-size:15px;color:var(--ink);max-width:80ch}
+.plain li{margin-bottom:5px}
+.plain li:last-child{margin-bottom:0}
+/* walkthrough */
+.tour-cap{position:sticky;top:calc(64px + env(safe-area-inset-top,0px));z-index:10;margin:4px 0 12px;padding:10px 14px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--accent-ink);border-radius:8px;font-size:14px;display:flex;gap:12px;align-items:baseline;line-height:1.45;box-shadow:0 8px 24px -14px rgba(20,30,60,.45)}
+.tour-cap[hidden]{display:none}
+.tour-cap b{font-family:var(--mono);font-weight:500;font-size:12px;color:var(--ink-3);white-space:nowrap;flex:none}
+.tour-hi{outline:2px solid var(--accent);outline-offset:3px;border-radius:10px}
+/* engineering notes, collapsed by default */
+details.eng-details{margin-top:14px}
+details.eng-details > summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:8px;font:500 15px var(--sans);color:var(--accent-ink);padding:8px 0}
+details.eng-details > summary::-webkit-details-marker{display:none}
+details.eng-details > summary::before{content:"\203A";display:inline-block;font-size:18px;line-height:1;transition:transform .2s}
+details.eng-details[open] > summary::before{transform:rotate(90deg)}
+details.eng-details[open] > summary{margin-bottom:6px}
+/* what I'd build next */
+.next{margin-top:26px;padding:20px 24px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.next h3{margin-bottom:8px}
+.next ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--ink-2)}
+.next li{margin-bottom:6px}
+.next li:last-child{margin-bottom:0}
 @media (max-width: 900px){ .quick .wrap > div{grid-template-columns:1fr} .quick ol{grid-template-columns:1fr} .quick h3{white-space:normal} }
 </style>
 </head>
@@ -389,7 +412,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
     <div class="notice"><i></i>Interactive demo · synthetic data for a fictional brand · no client information</div>
     <h1>Every ad checked against the plan, with evidence, before it spends.</h1>
     <p class="lede">Before a campaign spends, Buildcheck checks every ad in the account against the media plan and flags what doesn't match — a wrong budget, a wrong link, a missing headline — with the evidence for each finding. In production on Meta and used by a media team on live batches, it turned a four-day, four-person review into one 20-minute run and caught errors before launch that used to be found after the money was spent.</p>
-    <div class="actions"><button class="btn" id="btn-hero-run" type="button">Run the QA now</button><a class="btn quiet" href="#how">How it works</a></div>
+    <div class="actions"><button class="btn" id="btn-hero-run" type="button">Run the QA now</button><button class="btn quiet" id="btn-hero-tour" type="button">Show me in 20 seconds</button><a class="btn quiet" href="#how">How it works</a></div>
     <div class="byline"><b>Built by Nicole Glassman</b> — social media marketer and strategist with the operational depth to run paid social end to end. Open to in-house social roles · <a href="https://www.linkedin.com/in/nicoleglassman">message me on LinkedIn</a> · <a href="../pov/">read my point of view on brand social</a>.</div>
     <div class="facts">
       <div><b>4 days → 20 min</b>a four-person review of 2,000 ads, now one run</div>
@@ -444,8 +467,8 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
   <h2>Inside the workbook</h2>
   <p class="lede" style="margin:14px 0 26px">A synthetic account, filled the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header; row 3 is the machine name — the contract every formula, feed and finding refers to, so columns can move without anything breaking. Switch to TikTok to see the same design on a different platform. The grids scroll both ways.</p>
   <div class="book" id="book">
-    <div class="tabs" role="tablist" id="book-tabs"><div class="platform" role="group" aria-label="Platform" id="platform-book"><button type="button" aria-selected="true" data-p="meta">Meta</button><button type="button" aria-selected="false" data-p="tiktok">TikTok</button></div></div>
-    <div id="book-body"></div>
+    <div class="tabs"><div class="tablist" role="tablist" aria-label="Workbook tabs" id="book-tabs"></div><div class="platform" role="group" aria-label="Platform" id="platform-book"><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div></div>
+    <div id="book-body" role="tabpanel" aria-labelledby="book-tab-0" tabindex="0"></div>
   </div>
 </div></section>
 
@@ -455,24 +478,26 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
   <p class="hint">Fixes change the inputs — the export or the plan cell, whichever was wrong — exactly as they would in a real loop. The register at the bottom logs every run. This demo implements a subset of the production rulebook.</p>
   <div class="controls">
     <button class="btn" id="btn-run">Run QA</button>
+    <button class="btn quiet" id="btn-tour" type="button">Show me in 20 seconds</button>
     <button class="btn quiet" id="btn-fix-all" disabled>Fix everything the report found</button>
     <button class="btn quiet" id="btn-break">Simulate a builder mistake</button>
     <button class="btn text" id="btn-reset">Reset the demo</button>
-    <div class="platform" role="group" aria-label="Platform" id="platform-run"><button type="button" aria-selected="true" data-p="meta">Meta</button><button type="button" aria-selected="false" data-p="tiktok">TikTok</button></div>
-    <span class="status-line" id="status-line"></span>
+    <div class="platform" role="group" aria-label="Platform" id="platform-run"><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div>
+    <span class="status-line" id="status-line" role="status" aria-live="polite"></span>
   </div>
+  <div class="tour-cap" id="tour-cap" role="status" aria-live="polite" tabindex="-1" hidden></div>
   <div class="run-layout">
     <div class="panel">
       <div class="panel-head"><h3>Plan feeds</h3><span class="sub">from the workbook · inheritance resolved · labels translated</span>
-        <div class="subtabs" id="plan-subtabs"></div></div>
-      <div class="scroller" id="plan-table" style="max-height:360px;overflow:auto"></div>
+        <div class="subtabs" role="tablist" aria-label="Plan feeds" id="plan-subtabs"></div></div>
+      <div class="scroller" id="plan-table" role="tabpanel" aria-labelledby="plan-tab-2" tabindex="0" style="max-height:360px;overflow:auto"></div>
     </div>
     <div class="panel">
       <div class="panel-head"><h3><span data-pw="manager">Ads Manager</span> export</h3><span class="sub">synthetic bulk export · header row included</span>
-        <div class="subtabs" id="exp-subtabs"></div></div>
-      <div class="scroller" id="exp-table" style="max-height:360px;overflow:auto"></div>
+        <div class="subtabs" role="tablist" aria-label="Export views" id="exp-subtabs"></div></div>
+      <div class="scroller" id="exp-table" role="tabpanel" aria-labelledby="exp-tab-2" tabindex="0" style="max-height:360px;overflow:auto"></div>
     </div>
-    <div class="log" id="log" aria-live="polite">Waiting to run. The engine parses both files as text, inventories the export's columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.</div>
+    <div class="log" id="log" aria-live="polite" tabindex="-1">Waiting to run. The engine parses both files as text, inventories the export's columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.</div>
     <div id="report-wrap"></div>
     <div class="register">
       <h3 style="font-family:var(--sans);font-weight:600;font-size:15px;margin-bottom:8px">RUN_REGISTER</h3>
@@ -488,6 +513,14 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
     <div><h3>Meta</h3><div class="state">In production — Facebook &amp; Instagram</div><ul><li>Uploaded creative, boosted posts and creator partnership ads, each with its own check set and identity model.</li><li>Placement buckets (feed, story, reels, explore) so one 9:16 file across three placements is expected, not flagged.</li><li>Budget type verified by which export column is filled; delivery intent mapped to status; instants compared in account time.</li></ul></div>
     <div><h3>TikTok</h3><div class="state">Built — same architecture, TikTok vocabulary</div><ul><li>Campaign → ad group → ad, with Business Center identities and Spark Ads (creator and brand posts) as the existing-post case.</li><li>TikTok's own shapes handled in the feed: toggles that export blank when off, dates as <span class="mono">yyyy/m/d HH:mm</span>, amounts with cents, pixel labels resolved to website-event codes.</li><li>Reservation buys never appear in an export, so their rows cascade to N/A instead of MISSING. 306,000+ formulas, 0 errors.</li><li>Try it: <a href="#run" data-go="tiktok">switch the live run to TikTok</a>.</li></ul></div>
     <div><h3>Next</h3><div class="state">Designed for — not built yet</div><p>Pinterest, Google and Snap need three things the design already separates out: an export contract (which columns come back and how they render), a vocabulary map from planner labels to platform values, and a name-part profile.</p><p>Everything else — the plan tabs, the plan-check gate, the feeds, the report, the register — stays as it is.</p></div>
+  </div>
+  <div class="next" id="next">
+    <h3>What I’d build next</h3>
+    <ul>
+      <li>Pinterest and Snap profiles on the same architecture — an export contract, a vocabulary map and a name-part profile each, nothing else new.</li>
+      <li>Catch more at plan time: extend the nine-check gate to budget type, placements and tracking, so a mistake is stopped before the build rather than found after it.</li>
+      <li>A diff between two exports, so a re-QA reads only the rows that changed instead of the whole account.</li>
+    </ul>
   </div>
 </div></section>
 
@@ -517,6 +550,8 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
 
 <section class="section" id="engineering"><div class="wrap">
   <h2>Under the hood</h2>
+  <details class="eng-details" id="eng-details">
+  <summary>Under the hood — open the engineering notes</summary>
   <p class="lede" style="margin:14px 0 30px">Built to be rebuilt. Every release is generated by script, recalculated to zero errors, regression-tested and logged.</p>
   <div class="eng">
     <div><h4>The workbook</h4><p>Google Sheets first, with Excel and LibreOffice compatibility verified on every release: 310,000+ formulas recalculated headless to 0 errors. Built for 1,000 ads, 500 ad sets and 300 campaigns per account.</p></div>
@@ -533,6 +568,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
     <div><b>v11.3–11.5 · builder</b>Derived values, build recipes, the build grid and the one-click expander; typed wins, grey inherits, amber differs.</div>
     <div><b>v11.6 · accounts</b>Multi-account setup, identity columns derived per row, thousands of feed formulas re-pointed, fixture suite green.</div>
   </div>
+  </details>
 </div></section>
 
 <section class="section" id="impact"><div class="wrap">
@@ -546,7 +582,7 @@ details.rows ul{margin:6px 0 0;padding-left:18px;font-family:var(--mono);font-si
       <tr><td>Batch QA</td><td>Four people, four days for a 2,000-ad batch</td><td>One 20-minute run, with every finding cited</td></tr>
       <tr><td>Review before build</td><td>Every row checked by hand</td><td>A nine-check gate per line; seniors review the grid and the exceptions</td></tr>
       <tr><td>QA after build</td><td>Field-by-field comparison by eye across a 100+ column export</td><td>Rules run in code; every finding cites plan value, export value and rule</td></tr>
-      <tr><td>Trust</td><td>Depends on who checked</td><td>A proof register — a FAIL can only rest on a verified rule</td></tr>
+      <tr><td>Trust</td><td>Depends on who checked</td><td>A proof register — a FAIL can only rest on a verified rule. The proof register is the list of mappings a human has verified against a real export; the engine can only fail a build on one of those.</td></tr>
       <tr><td>Audit trail</td><td>Chat messages and memory</td><td>A register row per run, a changelog row per rule change, findings pasted back into the workbook</td></tr>
     </tbody>
   </table>
@@ -946,6 +982,59 @@ const PLATFORMS={meta:META,tiktok:TIKTOK};
 Object.assign(META,{hero:{row:'ad · plan_row 5',field:'cta',plan:'SHOP_NOW',exp:'LEARN_MORE',type:'Wrong CTA',rule:{pre:'Proven mapping ',code:'cta | Shop now → SHOP_NOW',post:' · export column ',code2:'Call to Action'}},
   quick:{found:'12 failures and a missing ad caught before a dollar is spent, including a campaign budget entered as $18,000 instead of $180,000',catches:'a campaign budget entered as $18,000 instead of $180,000'}});
 META.words.other='TikTok';
+/* plain-English summary: (tier|check id) → one business-language sentence; anything unmapped folds into a generic line */
+const money=v=>'$'+(+budget(v)||0).toLocaleString('en-US');
+const count1=(n,one,many)=>n===1?'One '+one:n+' '+many;
+const utmSrc=v=>{const m=String(v??'').match(/utm_source=([^&\s]+)/i); return m?m[1]:null;};
+const nice=v=>{const t=norm(v).replace(/_/g,' ').toLowerCase(); return t?t.charAt(0).toUpperCase()+t.slice(1):'(blank)';};
+const amountLine=(label,x)=>{ const p=+budget(x.plan), e=+budget(x.exp); if(isBlank(x.exp)) return label+' budget is blank in the export — nothing would spend.'; if(!isFinite(e)||e===p) return label+' budget does not match the plan.'; return label+' budget entered as '+money(e)+' instead of '+money(p)+' — would have '+(e<p?'underspent':'overspent')+' the flight by '+money(Math.abs(p-e))+'.'; };
+const liveLine=(one,many)=>(x,i,n)=>count1(n,one+' is',many+' are')+' live before launch.';
+const pixelLine=(one,many)=>(x,i,n)=>count1(n,one+' has',many+' have')+(isBlank(x.exp)?' no pixel attached — conversions would go unmeasured.':' the wrong pixel attached — conversions would be counted elsewhere.');
+const copyLine=(x,i,n)=>count1(n,'ad runs','ads run')+' copy that differs from the approved text ('+x.field.replace(/_feed$/,'').replace(/_/g,' ')+').';
+META.SUMMARY={
+  'campaign|budget':x=>amountLine('Campaign',x),'adset|budget':x=>amountLine('Ad set',x),
+  'campaign|status':liveLine('campaign','campaigns'),'adset|status':liveLine('ad set','ad sets'),'ad|status':liveLine('ad','ads'),
+  'ad|url_parameters':(x,i,n)=>{const u=utmSrc(x.exp); return count1(n,'ad sends','ads send')+' traffic tagged '+(u?'utm_source='+u:'with the wrong URL parameters')+' — attribution breaks for '+(n>=3?'the whole ad set':n===1?'that ad':'those ads')+'.';},
+  'ad|cta':(x,i,n)=>count1(n,'ad shows','ads show')+' a '+nice(x.exp)+' button instead of '+nice(x.plan)+'.',
+  'ad|website_url':(x,i,n)=>count1(n,'ad sends','ads send')+' people to '+norm(x.exp)+' instead of the planned landing page.',
+  'ad|pixel':pixelLine('ad','ads'),'adset|pixel':pixelLine('ad set','ad sets'),
+  'ad|body':copyLine,'ad|title':copyLine,'ad|description':copyLine,
+  'ad|story_id':()=>'The partnership ad is attached to the wrong creator post.',
+  'ad|creative':(x,i,n)=>count1(n,'ad has','ads have')+' no feed asset assigned.'};
+TIKTOK.SUMMARY={
+  'campaign|budget':(x,i)=>{ if(x.field!=='campaign_budget_type') return amountLine('Campaign',x); const amt=money(i.planRow.campaign_budget_amount); if(/lifetime/i.test(x.plan)&&/daily/i.test(x.exp)) return 'A '+amt+' lifetime budget was set as daily — would spend the flight in a day.'; if(/daily/i.test(x.plan)&&/lifetime/i.test(x.exp)) return 'A '+amt+' daily budget was set as lifetime — the flight would underspend.'; return 'The campaign budget type reads '+nice(x.exp)+' instead of '+nice(x.plan)+'.'; },
+  'adset|budget':(x,i)=>x.field==='ad_group_budget_type'?'One ad group budget type reads '+nice(x.exp)+' instead of '+nice(x.plan)+'.':amountLine('Ad group',x),
+  'campaign|status':liveLine('campaign','campaigns'),'adset|status':liveLine('ad group','ad groups'),'ad|status':liveLine('ad','ads'),
+  'adset|placements':x=>{const plan=setKey(x.plan).split(' | '); const extra=norm(x.exp).split(/[;,]/).map(t=>t.trim()).filter(t=>t&&!plan.includes(t.toLowerCase())); return (extra.length?extra.join(' and ')+' '+(extra.length>1?'were':'was')+' left on':'The placements differ from the plan')+' — the ad group must be rebuilt.';},
+  'adset|pixel_event':x=>'One ad group optimises to '+norm(x.exp)+' instead of '+norm(x.plan)+' — it would buy the wrong action.',
+  'ad|web_url':(x,i,n)=>{const u=utmSrc(x.exp); const tag=u?(/^(meta|facebook|instagram)$/i.test(u)?'as Meta':'utm_source='+u):'with the wrong URL'; return count1(n,'ad sends','ads send')+' traffic tagged '+tag+' — attribution breaks.';},
+  'ad|only_show_as_ad':(x,i,n)=>count1(n,'ad has','ads have')+' “Only show as ad” switched off — the video would also appear on the profile.',
+  'ad|text':(x,i,n)=>count1(n,'ad runs','ads run')+' text that differs from the approved copy.',
+  'adset|pixel':pixelLine('ad group','ad groups'),
+  'ad|post_id':()=>'The creator Spark Ad is attached to the wrong post.',
+  'ad|identity_id':(x,i,n)=>count1(n,'Spark Ad runs','Spark Ads run')+' under the wrong TikTok account.'};
+function summaryLines(run){
+  const S=P.SUMMARY||{}, order={campaign:0,adset:1,ad:2}, units=[], gm={};
+  run.items.filter(i=>i.result==='FAIL').forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL');
+    if(i.tier==='ad'&&fc.length===1){ const x=fc[0]; const k=[x.type,x.field,i.planRow[P.nameField.adset],x.plan,x.exp].join('|'); (gm[k]=gm[k]||{x,items:[]}).items.push(i); return; }
+    fc.forEach(x=>units.push({tier:i.tier,x,i,n:1})); });
+  Object.values(gm).forEach(g=>{ if(g.items.length>=3) units.push({tier:'ad',x:g.x,i:g.items[0],n:g.items.length}); else g.items.forEach(i=>units.push({tier:'ad',x:g.x,i,n:1})); });
+  const pri=u=>u.x.id==='budget'?0:u.n>=3?1:u.x.id==='placements'?2:u.x.id==='status'?3:4;
+  units.sort((a,b)=>pri(a)-pri(b)||order[a.tier]-order[b.tier]||a.i.plan_row-b.i.plan_row);
+  const lines=[], rest=[];
+  units.forEach(u=>{ const t=S[u.tier+'|'+u.x.id]; if(t&&lines.length<3) lines.push(t(u.x,u.i,u.n)); else rest.push(u); });
+  const tail=[]; const restN=rest.reduce((n,u)=>n+u.n,0);
+  const low=t=>t.replace(/^One /,'one '), kind=t=>{const k=t.replace(/^Wrong /,''); return /^[A-Z][a-z]/.test(k)?k.charAt(0).toLowerCase()+k.slice(1):k;};
+  if(restN){ const kinds=[...new Set(rest.map(u=>kind(u.x.type)))]; tail.push(restN+' other setting'+(restN>1?'s':'')+' differ'+(restN>1?'':'s')+' from the plan ('+kinds.join(', ')+')'); }
+  const miss=run.items.filter(i=>i.result==='MISSING'), renamed=miss.filter(i=>i.near).length, gone=miss.length-renamed;
+  if(renamed) tail.push(low(count1(renamed,'planned ad appears','planned ads appear'))+' under a different name in the export (likely renamed)');
+  if(gone) tail.push(low(count1(gone,'planned item is','planned items are'))+' not in the export at all');
+  const extra=run.extras.length-Math.min(renamed,run.extras.length); if(extra>0) tail.push(low(count1(extra,'ad in the export is','ads in the export are'))+' not in the plan');
+  if(tail.length){ const t=tail.length>1?tail.slice(0,-1).join(', ')+', and '+tail[tail.length-1]:tail[0]; lines.push(t.charAt(0).toUpperCase()+t.slice(1)+'.'); }
+  if(!lines.length) return [run.counts.review?'Nothing failed — '+count1(run.counts.review,'item needs','items need')+' a human answer before sign-off.':'Nothing to catch — every planned item agrees with the export.'];
+  if(lines.length===1) lines.push('The other '+run.counts.pass+' planned items agree with the plan.');
+  return lines;
+}
 
 /* ---------- state: one per platform, one shared register ---------- */
 let P=null, state=null, runs=[], runN=0;
@@ -1039,14 +1128,22 @@ function dataTable(cols,rows,cellClass){
   rows.forEach(r=>{ h+='<tr>'+cols.map(c=>{const v=r[c]??''; const cls=v===''?'c-blank':(cellClass?cellClass(r,c):''); return '<td class="'+cls+'" title="'+esc(v)+'">'+(v===''?'&nbsp;':esc(v))+'</td>';}).join('')+'</tr>'; });
   return h+'</tbody></table>';
 }
+/* focus never lands on <body> after a re-render: remember where it was, restore the equivalent control or a sensible fallback */
+function focusKey(){ const a=document.activeElement; if(!a||a===document.body) return null; const tl=a.closest('[role="tablist"]'); if(tl&&tl.id&&a.getAttribute('role')==='tab') return '#'+tl.id+' [aria-selected="true"]'; if(a.id) return '#'+a.id; if(a.dataset&&a.dataset.fix) return 'button[data-fix="'+a.dataset.fix+'"]'; return null; }
+function refocus(key,fallback){ const a=document.activeElement; if(a&&a!==document.body&&!a.disabled&&document.contains(a)) return; let el=key?document.querySelector(key):null; if(!el||el.disabled) el=fallback; if(el&&!el.disabled) el.focus({preventScroll:true}); }
+const tabHTML=(prefix,panel,name,i,sel)=>'<button role="tab" type="button" id="'+prefix+'-tab-'+i+'" aria-controls="'+panel+'" aria-selected="'+sel+'" tabindex="'+(sel?0:-1)+'" data-i="'+i+'">'+name+'</button>';
+function tabKeys(container,onMove){ container.addEventListener('keydown',e=>{ const tabs=[...container.querySelectorAll('[role="tab"]')]; const i=tabs.indexOf(document.activeElement); if(i<0) return; let j=null; if(e.key==='ArrowRight') j=(i+1)%tabs.length; else if(e.key==='ArrowLeft') j=(i-1+tabs.length)%tabs.length; else if(e.key==='Home') j=0; else if(e.key==='End') j=tabs.length-1; if(j===null) return; e.preventDefault(); onMove(tabs[j]); }); }
 function renderInputs(){
-  const m=state.marks||{plan:{},exp:{}};
+  const k=focusKey(); const m=state.marks||{plan:{},exp:{}};
   const pv=P.PLAN_VIEWS[state.planTab]; const rows=state.plan[pv.key];
-  $('#plan-subtabs').innerHTML=P.PLAN_VIEWS.map((v,i)=>'<button aria-selected="'+(i===state.planTab)+'" data-i="'+i+'">'+esc(v.name)+' · '+state.plan[v.key].length+'</button>').join('');
+  $('#plan-subtabs').innerHTML=P.PLAN_VIEWS.map((v,i)=>tabHTML('plan','plan-table',esc(v.name)+' · '+state.plan[v.key].length,i,i===state.planTab)).join('');
+  $('#plan-table').setAttribute('aria-labelledby','plan-tab-'+state.planTab);
   $('#plan-table').innerHTML=dataTable(pv.cols,rows,(r,c)=>m.plan[pv.key+'|'+r.plan_row+'|'+c]||'');
   const ex=P.split(state.exp); const ev=P.EXP_VIEWS[state.expTab]; const erows=ex[ev.key]; const idCol=P.idCol[ev.tier];
-  $('#exp-subtabs').innerHTML=P.EXP_VIEWS.map((v,i)=>'<button aria-selected="'+(i===state.expTab)+'" data-i="'+i+'">'+esc(v.name)+' · '+ex[v.key].length+'</button>').join('');
+  $('#exp-subtabs').innerHTML=P.EXP_VIEWS.map((v,i)=>tabHTML('exp','exp-table',esc(v.name)+' · '+ex[v.key].length,i,i===state.expTab)).join('');
+  $('#exp-table').setAttribute('aria-labelledby','exp-tab-'+state.expTab);
   $('#exp-table').innerHTML=dataTable(Array.from(keysOf(erows)),erows,(r,c)=>m.exp[ev.tier+'|'+r[idCol]+'|'+c]||'');
+  refocus(k,null);
 }
 function fixButton(tier,row,check){ const d=discFor(tier,row,check); return d?'<button class="btn small quiet fix" data-fix="'+d.id+'">'+esc(d.fix)+'</button>':''; }
 function failTable(rows){ return '<div class="scroller"><table class="ft"><thead><tr><th>field (machine name)</th><th>plan value</th><th>export value</th><th>rule</th></tr></thead><tbody>'+rows.map(x=>'<tr><td class="mono">'+esc(x.field)+' <span class="muted">→ '+esc(x.col)+'</span></td><td class="mono">'+esc(x.plan||'(blank)')+'</td><td class="mono" style="color:var(--fail)">'+esc(x.exp||'(blank)')+'</td><td>'+esc(x.rule)+(x.note?'<br><span class="muted">'+esc(x.note)+'</span>':'')+'</td></tr>').join('')+'</tbody></table></div>'; }
@@ -1058,6 +1155,7 @@ function renderReport(run,prev,runId){
   const c=run.counts; h+='<div class="counts"><span>planned<b>'+c.planned+'</b></span><span>PASS<b>'+c.pass+'</b></span><span>FAIL<b>'+c.fail+'</b></span><span>MISSING<b>'+c.missing+'</b></span><span>NEEDS REVIEW<b>'+c.review+'</b></span><span>N/A<b>'+c.na+'</b></span><span>EXTRA<b>'+c.extra+'</b></span><span>out of scope<b>0</b></span></div>';
   if(run.absent.length) h+='<div class="absent">Columns absent from the export: <span class="mono">'+run.absent.map(esc).join(', ')+'</span> — checks that need them read “column absent”.</div>';
   h+='</div>';
+  h+='<div class="rsec plain"><h4><span>What this run caught</span> <small>in plain English — the sections below carry the evidence</small></h4><ul>'+summaryLines(run).map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div>';
   if(prev){
     const key=i=>i.tier+':'+i.plan_row; const pm={}; prev.items.forEach(i=>pm[key(i)]=i);
     const bad=r=>r==='FAIL'||r==='NEEDS REVIEW'||r==='MISSING';
@@ -1096,7 +1194,7 @@ function renderReport(run,prev,runId){
   h+='</div>';
   h+='<div class="rsec"><h4><span>§5 Human checks</span> <small>the export cannot verify these — never a failure</small></h4><div class="hc">'+run.humans.map(x=>'<div><span class="fld">'+esc(x.field)+'</span> · '+esc(TIER[x.tier])+' plan_row '+x.plan_row+' · «'+esc(x.value)+'»</div><div>'+(x.status==='open'?'<span class="chip review">✓ '+esc(x.cell)+' open</span>':'<span class="chip pass">✓ '+esc(x.cell)+' '+esc(x.status)+'</span>')+'</div>').join('')+'</div></div>';
   const items=[...run.items].sort((a,b)=>order[a.tier]-order[b.tier]||a.plan_row-b.plan_row); const passN=items.filter(i=>i.result==='PASS').length;
-  h+='<div class="rsec"><h4><span>§6 Per-item table</span> <small>PASS rows collapsed</small> <button class="btn small quiet" id="toggle-pass" type="button" style="margin-left:auto">Show '+passN+' PASS rows</button></h4><div class="scroller" style="max-height:480px;overflow:auto"><table class="items" id="items-table"><thead><tr><th>tier</th><th>plan_row</th><th>name</th><th>QA status</th><th>result</th><th>first failing check</th><th>detail</th></tr></thead><tbody>';
+  h+='<div class="rsec"><h4><span>§6 Per-item table</span> <small>PASS rows collapsed</small> <button class="btn small quiet" id="toggle-pass" type="button" aria-expanded="false" aria-controls="items-table" style="margin-left:auto">Show '+passN+' PASS rows</button></h4><div class="scroller" style="max-height:480px;overflow:auto"><table class="items" id="items-table"><thead><tr><th>tier</th><th>plan_row</th><th>name</th><th>QA status</th><th>result</th><th>first failing check</th><th>detail</th></tr></thead><tbody>';
   items.forEach(i=>{ h+='<tr class="'+(i.result==='PASS'?'pass-row':'')+'"><td>'+esc(TIER[i.tier])+'</td><td>'+i.plan_row+'</td><td class="mono">'+esc(i.name)+'</td><td>'+esc(i.planRow.qa_status)+'</td><td>'+chip(i.result)+'</td><td class="mono">'+esc(i.first)+'</td><td class="detail">'+esc(i.detail)+'</td></tr>'; });
   h+='</tbody></table></div></div>';
   h+='<div class="rsec"><h4><span>§7 Proposed rule changes</span> <small>one changelog row each — never applied silently</small></h4>';
@@ -1114,7 +1212,7 @@ function registerRow(run,runId){ const d=new Date().toISOString().slice(0,10); c
 function renderRegister(){ const tb=$('#register tbody'); if(!runs.length){tb.innerHTML='<tr><td colspan="15" class="muted">No runs yet.</td></tr>';return;} tb.innerHTML=runs.map(r=>'<tr>'+r.map((v,i)=>'<td'+(i===12?' style="color:var(--'+(v==='YES'?'pass':'fail')+')"':'')+'>'+esc(v)+'</td>').join('')+'</tr>').join(''); }
 function setStatus(t){ state.status=t; $('#status-line').textContent=t; }
 const openCount=()=>P.DISC.filter(d=>state.active.has(d.id)).length;
-const setRunning=on=>{ $('#btn-run').disabled=on; document.querySelectorAll('.platform button[data-p]').forEach(b=>b.disabled=on); };
+const setRunning=on=>{ $('#btn-run').disabled=on; document.querySelectorAll('.platform button[data-p]').forEach(b=>b.disabled=on); if(on) refocus(null,$('#log')); };
 const wait=ms=>new Promise(r=>setTimeout(r,REDUCE?0:ms));
 async function doRun(){
   const st=state; /* the run belongs to the platform that started it — if that changes under the awaits, abandon it */
@@ -1127,16 +1225,17 @@ async function doRun(){
   for(const l of lines){ const d=document.createElement('div'); d.textContent=l+' …'; log.appendChild(d); await wait(420); if(state!==st){ setRunning(false); return; } d.textContent=l; d.classList.add('done'); }
   const runId='R-'+String(++runN).padStart(3,'0');
   const prev=st.last; st.last=run; st.marks=marksFor(run); runs.push(registerRow(run,runId));
-  $('#report-wrap').innerHTML=renderReport(run,prev,runId); renderRegister(); renderInputs();
+  const fk=focusKey(); $('#report-wrap').innerHTML=renderReport(run,prev,runId); renderRegister(); renderInputs();
   const open=openCount();
   $('#btn-fix-all').disabled=!open; setRunning(false); $('#btn-run').textContent='Re-run QA';
+  refocus(fk,$('#btn-run')); if(document.activeElement===$('#log')) $('#btn-run').focus({preventScroll:true});
   setStatus(run.ready?'Clean. '+(run.counts.review?'Answer the reviews, initial the ✓ cells, and the reviewers sign off.':'Ready for the reviewers to sign off.'):open+' thing'+(open>1?'s':'')+' to fix — use the buttons in the report, or fix everything.');
   if(!REDUCE) $('#report-wrap').scrollIntoView({behavior:'smooth',block:'start'});
 }
-function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Applied — re-run to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'inputs updated — re-run QA to see what changed.'); syncFix(); }
+function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Applied — re-run to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'inputs updated — re-run QA to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
 function reset(){ state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); }
 function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; }
-function fixAll(){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied — re-run to verify';}); syncFix(); setStatus('Everything corrected in the inputs — re-run QA to see the diff and the gate flip.'); }
+function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied — re-run to verify';}); syncFix(); setStatus('Everything corrected in the inputs — re-run QA to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
 function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play — run QA or reset.');return false;} const d=pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run QA to find it.'); return true; }
 
 /* ---------- platform switch: each platform keeps its own progress; the register is shared ---------- */
@@ -1144,7 +1243,7 @@ function setPlatform(key){
   const prof=PLATFORMS[key]||META; if(P===prof) return;
   if(P){ state.reportHTML=$('#report-wrap').innerHTML; state.logHTML=$('#log').innerHTML; state.fixAllOff=$('#btn-fix-all').disabled; }
   P=prof; state=states[prof.key]; if(!state.plan) materialize();
-  document.querySelectorAll('.platform button[data-p]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.p===prof.key)));
+  document.querySelectorAll('.platform button[data-p]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p===prof.key)));
   document.querySelectorAll('[data-pw]').forEach(s=>{ s.textContent=prof.words[s.dataset.pw]||s.textContent; });
   $('#platform-word').textContent='— '+prof.label;
   const hw=prof.hero, other=PLATFORMS[prof.key==='meta'?'tiktok':'meta'];
@@ -1158,22 +1257,58 @@ function setPlatform(key){
 }
 document.addEventListener('click',e=>{
   const f=e.target.closest('button[data-fix]'); if(f){applyFix(f.dataset.fix,f); return;}
-  const t=e.target.closest('#toggle-pass'); if(t){const tbl=$('#items-table'); tbl.classList.toggle('show-pass'); t.textContent=(tbl.classList.contains('show-pass')?'Hide':'Show')+' '+t.textContent.replace(/^(Show|Hide) /,''); return;}
+  const t=e.target.closest('#toggle-pass'); if(t){const tbl=$('#items-table'); tbl.classList.toggle('show-pass'); const on=tbl.classList.contains('show-pass'); t.setAttribute('aria-expanded',String(on)); t.textContent=(on?'Hide':'Show')+' '+t.textContent.replace(/^(Show|Hide) /,''); return;}
   const ps=e.target.closest('#plan-subtabs button'); if(ps){state.planTab=+ps.dataset.i; renderInputs(); return;}
   const es=e.target.closest('#exp-subtabs button'); if(es){state.expTab=+es.dataset.i; renderInputs(); return;}
   const pb=e.target.closest('.platform button[data-p]'); if(pb){ if(!pb.disabled) setPlatform(pb.dataset.p); return; }
-  const go=e.target.closest('a[data-go]'); if(go){ if(!$('#btn-run').disabled) setPlatform(go.dataset.go); return; }
+  const go=e.target.closest('a[data-go]'); if(go){ e.preventDefault(); if(!$('#btn-run').disabled) setPlatform(go.dataset.go); $('#run').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'}); $('#btn-run').focus({preventScroll:true}); return; }
   if(e.target.closest('#btn-rerun')){ if(!$('#btn-run').disabled) doRun(); return; }
-  if(e.target.closest('#btn-fix-all-2')){ fixAll(); return; }
+  if(e.target.closest('#btn-fix-all-2')){ fixAll('report'); return; }
   if(e.target.closest('#btn-break-2')){ if(breakOne()) $('#status-line').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'center'}); return; }
 });
 $('#btn-run').addEventListener('click',doRun);
-$('#btn-fix-all').addEventListener('click',fixAll);
+$('#btn-fix-all').addEventListener('click',()=>fixAll('controls'));
 $('#btn-break').addEventListener('click',breakOne);
 const goRun=()=>{ $('#run').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'}); if(!$('#btn-run').disabled) doRun(); };
 $('#btn-hero-run').addEventListener('click',goRun);
 $('#btn-quick-run').addEventListener('click',goRun);
 $('#btn-reset').addEventListener('click',reset);
+
+/* ---------- "show me" walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would ---------- */
+const tour={on:false,cancel:false}; const cap=$('#tour-cap'); const tourBtns=()=>[$('#btn-tour'),$('#btn-hero-tour')];
+const caption=(step,text)=>{ cap.hidden=false; cap.innerHTML='<b>'+esc(step)+'</b><span>'+esc(text)+'</span>'; };
+const pause=ms=>new Promise(r=>setTimeout(r,REDUCE?Math.min(ms,350):ms));
+function spot(el){ document.querySelectorAll('.tour-hi').forEach(e=>e.classList.remove('tour-hi')); if(el){ el.classList.add('tour-hi'); el.scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'center'}); } }
+async function step(ms){ await pause(ms); if(tour.cancel) throw new Error('cancelled'); }
+function endTour(msg){ tour.on=false; spot(null); tourBtns().forEach(b=>b.disabled=false); if(msg) caption('stopped',msg); const a=document.activeElement; if(!a||a===document.body||a===cap||a.disabled) $('#btn-tour').focus({preventScroll:true}); }
+async function runTour(){
+  if(tour.on||$('#btn-run').disabled) return;
+  tour.on=true; tour.cancel=false; tourBtns().forEach(b=>b.disabled=true);
+  $('#run').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'}); caption('start','Twenty seconds, eight steps. Click any control to take over.'); cap.focus({preventScroll:true});
+  try{
+    const planted=P.DISC.filter(d=>d.planted).map(d=>d.id); const fresh=!state.last&&state.active.size===planted.length&&planted.every(id=>state.active.has(id));
+    if(!fresh){ caption('reset','Starting from the planted export, so the loop reads the same every time.'); reset(); await step(1000); }
+    caption('1 · run','Running the QA: parse both files, inventory the columns, match by ID, normalise, evaluate.'); await doRun(); await step(500);
+    const sum=$('.report .plain'), cnt=$('.report .fcard .cnt');
+    caption('2 · read','The gate says NO. The summary puts the findings in plain English; the first card below it is one finding for all 8 ads, not eight cards.'); spot(sum); await step(2800); spot(cnt?cnt.closest('.fcard'):sum); await step(2400);
+    const sys=P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sb=sys?document.querySelector('button[data-fix="'+sys.id+'"]'):null;
+    caption('3 · fix one','One click corrects the systemic finding — all 8 ads, one bulk edit in '+P.manager+'. The export cells change; the report does not, until we re-run.'); if(sb){ spot(sb); await step(1600); applyFix(sys.id,sb); } await step(1400);
+    caption('4 · re-run','Re-running against the corrected inputs.'); spot(null); await doRun(); await step(500);
+    caption('5 · diff','“What changed” lists the 8 as resolved and the rest as unchanged — a re-QA reads as a diff, not a fresh report.'); spot($('.report .diffsec')); await step(3000);
+    caption('6 · fix the rest','Applying every remaining fix — in the export, and the one wrong plan cell.'); spot($('#btn-fix-all-2')); await step(1400); fixAll('report'); await step(1200);
+    caption('7 · re-run','Re-running once more.'); spot(null); await doRun(); await step(400);
+    spot($('.report .gate')); caption('8 · gate','READY TO APPROVE: YES — every planned item agrees with the export, and the register below holds one row per run.'); await step(3000);
+    spot(null); caption('done','That\u2019s the loop. Try it yourself: reset, or spring a builder mistake.');
+  }catch(e){ if(!tour.cancel) throw e; }
+  finally{ endTour(tour.cancel?'Walkthrough stopped — you\u2019re driving now.':''); }
+}
+$('#btn-tour').addEventListener('click',runTour);
+$('#btn-hero-tour').addEventListener('click',runTour);
+/* any click on a demo control while the walkthrough runs hands control back */
+document.addEventListener('click',e=>{ if(!tour.on) return; const c=e.target.closest('#run button, .platform button, a[data-go], #btn-hero-run, #btn-quick-run'); if(c&&!c.disabled) tour.cancel=true; },true);
+
+/* ---------- engineering notes: collapsed unless the URL points at them ---------- */
+(function(){ const d=$('#eng-details'); if(!d) return; const open=()=>{ if(location.hash==='#engineering') d.open=true; }; open(); addEventListener('hashchange',open); document.querySelectorAll('a[href="#engineering"]').forEach(a=>a.addEventListener('click',()=>{ d.open=true; })); })();
 
 /* ---------- workbook tour ---------- */
 const D=v=>({v,c:'derived'}), T=v=>({v,c:'typed'}), F=v=>({v,c:'formula'}), K=v=>({v,c:'key'}), OK=v=>({v,c:'ok'}), AM=v=>({v,c:'amber'});
@@ -1244,11 +1379,13 @@ const TT_TABS=[
 ];
 META.tabs=META_TABS; TIKTOK.tabs=TT_TABS;
 const book={platform:'meta',tab:0};
-function renderBook(){ const tabs=$('#book-tabs'), body=$('#book-body'); const set=P.tabs; if(book.tab>=set.length) book.tab=0;
-  tabs.querySelectorAll('.tab').forEach(b=>b.remove());
-  tabs.insertAdjacentHTML('afterbegin',set.map((t,i)=>'<button class="tab" role="tab" type="button" aria-selected="'+(i===book.tab)+'" data-i="'+i+'">'+esc(t.name)+'</button>').join(''));
-  body.innerHTML=set[book.tab].html(); }
+function renderBook(){ const tabs=$('#book-tabs'), body=$('#book-body'); const set=P.tabs; if(book.tab>=set.length) book.tab=0; const k=focusKey();
+  tabs.innerHTML=set.map((t,i)=>'<button class="tab" role="tab" type="button" id="book-tab-'+i+'" aria-controls="book-body" aria-selected="'+(i===book.tab)+'" tabindex="'+(i===book.tab?0:-1)+'" data-i="'+i+'">'+esc(t.name)+'</button>').join('');
+  body.setAttribute('aria-labelledby','book-tab-'+book.tab); body.innerHTML=set[book.tab].html(); refocus(k,null); }
 $('#book-tabs').addEventListener('click',e=>{ const b=e.target.closest('.tab'); if(b){book.tab=+b.dataset.i; renderBook();} });
+tabKeys($('#book-tabs'),b=>{ book.tab=+b.dataset.i; renderBook(); });
+tabKeys($('#plan-subtabs'),b=>{ state.planTab=+b.dataset.i; renderInputs(); });
+tabKeys($('#exp-subtabs'),b=>{ state.expTab=+b.dataset.i; renderInputs(); });
 Object.keys(states).forEach(k=>materialize(states[k],PLATFORMS[k]));
 let deep=null; try{ deep=new URLSearchParams(location.search).get('platform') }catch(e){}
 setPlatform(deep==='tiktok'?'tiktok':'meta');
