@@ -8,6 +8,6 @@ Portfolio site for Nicole Glassman, social media marketer and strategist. Live a
 | [`/pov/`](https://nicoleglassman.github.io/pov/) | *What I'd change about most brands' social*, a point of view with the test behind each change |
 | [`/buildcheck/`](https://nicoleglassman.github.io/buildcheck/) | *Buildcheck*, an interactive demo of an AI-assisted QA system for paid-social builds on Meta and TikTok (synthetic data, no client information) |
 
-Static HTML, CSS and JavaScript with no build step; fonts from Google Fonts. Hosted on GitHub Pages. The earlier address, nicole-glassman.github.io, redirects here.
+Static HTML, CSS and JavaScript with no build step. Newsreader and Public Sans are self-hosted in [`fonts/`](fonts/) under the SIL Open Font License (license files alongside); IBM Plex Mono loads from Google Fonts. Hosted on GitHub Pages. The earlier address, nicole-glassman.github.io, redirects here.
 
 © 2026 Nicole Glassman. Content, design and Buildcheck's rules and engine are original work, shown for portfolio purposes and not licensed for reuse.
