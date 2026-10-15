@@ -10,4 +10,6 @@ Portfolio site for Nicole Glassman, social media marketer and strategist. Live a
 
 Static HTML, CSS and JavaScript with no build step. Newsreader and Public Sans are self-hosted in [`fonts/`](fonts/) under the SIL Open Font License (license files alongside); IBM Plex Mono loads from Google Fonts. Hosted on GitHub Pages. The earlier address, nicole-glassman.github.io, redirects here.
 
+I wrote the pages by hand and used Claude Code for layout, build scripts and the Buildcheck engine; the copy, numbers and QA rules are mine.
+
 © 2026 Nicole Glassman. Content, design and Buildcheck's rules and engine are original work, shown for portfolio purposes and not licensed for reuse.

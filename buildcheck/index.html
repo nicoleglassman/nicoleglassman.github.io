@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Buildcheck: AI-assisted QA for paid social — Nicole Glassman</title>
+<title>Buildcheck: AI-assisted QA for paid social | Nicole Glassman</title>
 <meta name="description" content="Buildcheck checks every Meta and TikTok ad against the media plan, with evidence, before it spends. An interactive demo of the workbook and AI QA engine Nicole Glassman built, on synthetic data.">
 <link rel="canonical" href="https://nicoleglassman.github.io/buildcheck/">
 <meta name="author" content="Nicole Glassman">
@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Nicole Glassman">
 <meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://nicoleglassman.github.io/buildcheck/">
-<meta property="og:title" content="Buildcheck: AI-assisted QA for paid social">
+<meta property="og:title" content="Buildcheck: AI-assisted QA for paid social | Nicole Glassman">
 <meta property="og:description" content="Every Meta and TikTok ad checked against the media plan, with evidence, before it spends. An interactive demo on synthetic data.">
 <meta property="og:image" content="https://nicoleglassman.github.io/og/buildcheck.png">
 <meta property="og:image:type" content="image/png">
@@ -24,7 +24,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Buildcheck. Every ad checked against the plan, with evidence, before it spends. An interactive demo by Nicole Glassman, on synthetic data.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Buildcheck: AI-assisted QA for paid social">
+<meta name="twitter:title" content="Buildcheck: AI-assisted QA for paid social | Nicole Glassman">
 <meta name="twitter:description" content="Every Meta and TikTok ad checked against the media plan, with evidence, before it spends. An interactive demo on synthetic data.">
 <meta name="twitter:image" content="https://nicoleglassman.github.io/og/buildcheck.png">
 <meta name="twitter:image:alt" content="Buildcheck. Every ad checked against the plan, with evidence, before it spends. An interactive demo by Nicole Glassman, on synthetic data.">
@@ -105,7 +105,7 @@ code{font-size:var(--t-data)}
 }
 /* ≤720: the name and a labelled Menu button; the page links (and this page's sections) open below */
 @media (max-width:720px){
-  :root{--nav-h:calc(var(--bar-h) + 6px)}
+  :root{--nav-h:calc(var(--bar-h) + 6px + 44px)} /* purple strip + bar + the scrolling "On this page" row */
   .js .menu-btn{display:inline-flex;align-items:center;gap:8px;margin-left:auto;height:44px;padding:0 12px;background:transparent;border:1px solid var(--line);border-radius:2px;color:var(--ink);font:500 var(--t-body)/1 var(--sans);cursor:pointer}
   .menu-btn svg{flex-shrink:0}
   .menu-btn .ic-close,.menu-btn[aria-expanded="true"] .ic-menu{display:none}
@@ -117,9 +117,9 @@ code{font-size:var(--t-data)}
   .js .nav-links a{width:100%;min-height:48px}
   .js .nav-links a[aria-current="page"]{color:var(--accent);text-decoration:none}
   .js .nav-links .nav-contact{padding:0;border:0}
-  .js .nav-links .menu-sect-label{display:block;padding:18px 0 6px;font-size:var(--t-label);color:var(--muted)}
-  .js .nav-links .menu-sect{display:block}
-  .js .subnav{display:none}
+  .js .subnav{flex-wrap:nowrap;overflow-x:auto;column-gap:20px;scrollbar-width:none}
+  .js .subnav::-webkit-scrollbar{display:none}
+  .js .subnav a,.js .subnav .lbl{white-space:nowrap}
   /* without JavaScript: links stay visible and wrap */
   html:not(.js) .site-nav{position:static}
   html:not(.js) .site-nav .bar{height:auto;min-height:var(--bar-h);flex-wrap:wrap;padding:8px 0}
@@ -480,7 +480,7 @@ html:not(.js) .copy-btn{display:none}
     --t-display:54px; --t-title:44px; --t-section:30px; --t-card:26px; --t-stat:30px;
     --t-lede:18px; --t-body:16px; --t-label:13px; --t-data:13px;
     --t-proof:28px;
-    --gutter:20px; --bar-h:64px; --nav-h:70px; /* the "On this page" links move into the menu */
+    --gutter:20px; --bar-h:64px; --nav-h:114px; /* purple strip 6 + bar 64 + "On this page" row 44 */
   }
 
   .hero-text{padding-top:32px}
@@ -554,7 +554,7 @@ html:not(.js) .copy-btn{display:none}
         <li><a href="/pov/">Point of view</a></li>
         <li><a href="/buildcheck/" aria-current="page">Buildcheck</a></li>
         <li><a href="/#about">About</a></li>
-        <li><a class="nav-contact" href="/#contact">Contact</a></li>
+        <li><a class="nav-contact" href="#contact">Contact</a></li>
         <li class="menu-sect-label">On this page</li>
         <li class="menu-sect"><a href="#try">Try it</a></li>
         <li class="menu-sect"><a href="#how">How it works</a></li>
@@ -694,18 +694,18 @@ html:not(.js) .copy-btn{display:none}
     <section id="guardrails" class="sec g12" aria-labelledby="guardrails-h">
       <div class="sec-head">
         <h2 id="guardrails-h">Keeping the AI honest</h2>
-        <p>Being good with AI isn't prompting well. It's deciding what the AI is allowed to conclude, what it must show, and what a human keeps.</p>
+        <p>The prompt was the easy part. The hard part was deciding what the model may call a failure, what it has to show for it, and what a person still signs off on.</p>
       </div>
       <div class="sec-body">
         <div class="block-head"><h3 class="sub">How I work with AI</h3></div>
         <div class="pairs">
           <article><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to “check the campaign”. I wrote the rulebook first: what counts as proven, what a blank means, what it must never invent, which ad type gets which checks. The AI gets those rules as versioned reference files, not chat instructions.</p></article>
-          <article><h4>Make it show its evidence</h4><p>Every finding cites the plan value, the export value and the rule that decided it. Anything unverified is a review, not a failure. Anything new is a proposal a human accepts. A report you can't audit is an opinion.</p></article>
-          <article><h4>Pair on the build, own the outcome</h4><p>Claude wrote the build and test scripts to my spec. I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the test fixtures, not into memory.</p></article>
+          <article><h4>Make it show its evidence</h4><p>Every finding cites the plan value, the export value and the rule that decided it. Anything unverified is a review, not a failure. Anything new is a proposal a human accepts. If a finding doesn't cite the plan row and the export cell, it doesn't go in the report.</p></article>
+          <article><h4>Who did what</h4><p>Claude wrote the build and test scripts to my spec. I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the test fixtures, not into memory.</p></article>
           <article><h4>Ship it to real people</h4><p>The skill was shared across the organization and used by a media team on live batches. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
         </div>
 
-        <div class="block-head block-gap"><h3 class="sub">Six principles that box it in</h3><p>An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p></div>
+        <div class="block-head block-gap"><h3 class="sub">Six rules, each added after a run got something wrong</h3><p>An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p></div>
         <ol class="numbered two-col">
           <li><span class="t"><b>Proven or unproven.</b><span>Every mapping from a planner's label to a platform value carries a proof status, earned from a real export. A mismatch on a proven rule is a FAIL. On an unproven rule it can only be NEEDS REVIEW, so the engine can't fail a build on a rule nobody has verified.</span></span></li>
           <li><span class="t"><b>A blank is never compared.</b><span>Blank means inherit or not specified, never “should be empty”. The feed resolves inheritance before the run, so the engine compares values, not intentions.</span></span></li>
@@ -793,7 +793,7 @@ html:not(.js) .copy-btn{display:none}
     <section id="engineering" class="sec g12" aria-labelledby="engineering-h">
       <div class="sec-head">
         <h2 id="engineering-h">Under the hood</h2>
-        <p>Built to be rebuilt. Every release is generated by script, recalculated to zero errors, regression-tested and logged.</p>
+        <p>Every release is generated by script, recalculated to zero errors, regression-tested and logged.</p>
       </div>
       <div class="sec-body" style="padding-top:0">
         <details class="eng" id="eng-details">
@@ -962,7 +962,7 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     {id:'objective',type:'Wrong setting',field:'campaign_objective',col:'Campaign Objective',kind:'text',proven:true,rule:R.map},
     {id:'budget',special:'budget',type:'Wrong budget',prefix:'Campaign '},
     {id:'start',type:'Wrong dates',field:'campaign_start_datetime',col:'Campaign Start Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended start in Ads Manager'},
-    {id:'end',type:'Wrong dates',field:'campaign_end_datetime',col:'Campaign Stop Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day — if the plan meant 12/24, correct the plan cell'}],
+    {id:'end',type:'Wrong dates',field:'campaign_end_datetime',col:'Campaign Stop Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day; if the plan meant 12/24, correct the plan cell'}],
   ADSET_CHECKS:[
     {id:'name',type:'Wrong name',field:'ad_set_name',col:'Ad Set Name',kind:'text',proven:true,rule:R.key},
     {id:'status',type:'Wrong status',field:'delivery_intent',col:'Ad Set Run Status',kind:'text',rule:R.status,prove:'a live export showing ACTIVE for a Live intent would prove the mapping'},
@@ -976,7 +976,7 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     {id:'detailed_targeting_include',type:'Wrong targeting',field:'detailed_targeting_include',col:'Flexible Inclusions',kind:'set',proven:false,rule:R.proof,prove:'add Flexible Inclusions to the export preset and re-export, or confirm the interest in Ads Manager and initial the ✓ cell'},
     {id:'pixel',type:'Wrong tracking',field:'conversion_tracking_pixels',col:'Conversion Tracking Pixels',kind:'text',proven:true,rule:R.norm},
     {id:'start',type:'Wrong dates',field:'ad_set_start_datetime',col:'Ad Set Time Start',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended start in Ads Manager'},
-    {id:'end',type:'Wrong dates',field:'ad_set_end_datetime',col:'Ad Set Time Stop',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day — if the plan meant 12/24, correct the plan cell'}],
+    {id:'end',type:'Wrong dates',field:'ad_set_end_datetime',col:'Ad Set Time Stop',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day; if the plan meant 12/24, correct the plan cell'}],
   adChecks(ad){
     const common=[{id:'name',type:'Wrong name',field:'ad_name',col:'Ad Name',kind:'text',proven:true,rule:R.key},{id:'status',type:'Wrong status',field:'delivery_intent',col:'Ad Status',kind:'text',rule:R.status,prove:'a live export showing ACTIVE for a Live intent would prove the mapping'}];
     const identity=[{id:'facebook_page',type:'Wrong identity',field:'facebook_page',col:'Link Object ID',kind:'digits',proven:true,rule:R.src},{id:'instagram_account',type:'Wrong identity',field:'instagram_account',col:'Instagram Account ID',kind:'digits',proven:true,rule:R.src}];
@@ -1073,7 +1073,7 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     'Matching: '+run.byId+' items by ID, '+run.byName+' by name path',
     'Normalising: NBSP, %7B%7B → {{, budgets to whole dollars, dates to instants in America/Los_Angeles, multi-value fields to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
-    'Report ready — READY TO APPROVE: '+(run.ready?'YES':'NO')],
+    'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
   resetStatus:'8 problems are planted in the inputs — one of them across all 8 ads of an ad set. Run QA to find them.',
   idleLog:'Waiting to run. The engine parses both files as text, inventories the export\u2019s columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
@@ -1134,7 +1134,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     {id:'inventory',type:'Wrong setting',field:'inventory_filter',col:'Inventory filter',kind:'text',proven:true,rule:R.map},
     {id:'budget',special:'budget',type:'Wrong budget',typeF:'ad_group_budget_type',amtF:'ad_group_budget_amount',typeC:'Ad Group Budget Type',amtC:'Ad Group Budget Amount'},
     {id:'start',type:'Wrong dates',field:'start_datetime',col:'Start Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended start in TikTok Ads Manager'},
-    {id:'end',type:'Wrong dates',field:'end_datetime',col:'End Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day — if the plan meant 12/24, correct the plan cell'},
+    {id:'end',type:'Wrong dates',field:'end_datetime',col:'End Time',kind:'instant',proven:true,rule:R.dates,prove:'confirm the intended last day; if the plan meant 12/24, correct the plan cell'},
     {id:'dayparting',type:'Wrong setting',field:'dayparting',col:'Dayparting',kind:'text',proven:true,rule:R.norm},
     {id:'delivery_type',type:'Wrong setting',field:'delivery_type',col:'Delivery Type',kind:'text',proven:true,rule:R.norm}],
   adChecks(ad){
@@ -1242,7 +1242,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     'Matching: '+run.byId+' items by ID, '+run.byName+' by name path',
     'Normalising: dates yyyy/m/d HH:mm to instants in account time, amounts with cents to whole dollars, blank toggles to Off, age buckets to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
-    'Report ready — READY TO APPROVE: '+(run.ready?'YES':'NO')],
+    'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
   resetStatus:'8 problems are planted in the inputs — one of them across all 8 ads of an ad group. Run QA to find them.',
   idleLog:'Waiting to run. The engine parses the plan feeds and the one wide export sheet as text, splits it into campaign, ad group and ad rows by ID, inventories its columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
