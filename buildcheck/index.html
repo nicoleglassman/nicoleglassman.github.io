@@ -210,6 +210,13 @@ h3.sub{font-size:var(--t-body);line-height:1.4;font-weight:700}
 #report-wrap{scroll-margin-top:calc(var(--nav-h) + 96px)}
 .tour-cap b{font-family:var(--mono);font-size:var(--t-data);font-weight:500;color:var(--accent-hover);text-transform:uppercase;letter-spacing:.04em}
 .tour-cap[hidden]{display:none}
+.tour-cap .cap-text{flex:1 1 420px;min-width:0}
+.tour-cap .cap-nav{display:flex;align-items:center;gap:8px;margin-left:auto}
+.tour-cap .cap-nav button{min-height:40px;padding:0 16px;border-radius:2px;font:600 var(--t-label)/1 var(--sans);cursor:pointer}
+.tour-cap .cap-next{background:var(--accent);color:var(--white);border:1px solid var(--accent)}
+.tour-cap .cap-next:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.tour-cap .cap-stop{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.tour-cap .cap-stop:hover{border-color:var(--ink)}
 .io{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .panel{min-width:0;display:flex;flex-direction:column}
 .panel+.panel{border-left:1px solid var(--rule)}
@@ -576,7 +583,7 @@ html:not(.js) .copy-btn{display:none}
         <p class="lede">Buildcheck expands the media plan into the full build, then checks the platform's own export against it and flags what doesn't match: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It ran in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
         <div class="actions">
           <button class="btn" id="btn-hero-run" type="button">Run the QA</button>
-          <button class="ulink" id="btn-hero-tour" type="button">Watch a 20-second walkthrough</button>
+          <button class="ulink" id="btn-hero-tour" type="button">Walk through the demo, step by step</button>
         </div>
       </div>
       <dl class="hero-nums">
@@ -617,7 +624,7 @@ html:not(.js) .copy-btn{display:none}
           <div class="platform" role="group" aria-label="Platform" id="platform-run"><span class="lbl" aria-hidden="true">Platform</span><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div>
           <span class="spacer"></span>
           <button class="btn" id="btn-run" type="button">Run QA</button>
-          <button class="btn quiet" id="btn-tour" type="button">Watch the walkthrough</button>
+          <button class="btn quiet" id="btn-tour" type="button">Walk through it step by step</button>
           <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything the report found</button>
           <button class="btn quiet" id="btn-break" type="button" hidden>Add a builder mistake</button>
           <button class="btn text" id="btn-reset" type="button" hidden>Reset</button>
@@ -700,7 +707,7 @@ html:not(.js) .copy-btn{display:none}
         <div class="block-head"><h3 class="sub">How I work with AI</h3></div>
         <div class="pairs">
           <article><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to “check the campaign”. I wrote the rulebook first: what counts as proven, what a blank means, what it must never invent, which ad type gets which checks. The AI gets those rules as versioned reference files, not chat instructions.</p></article>
-          <article><h4>Make it show its evidence</h4><p>Every finding cites the plan value, the export value and the rule that decided it. Anything unverified is a review, not a failure. Anything new is a proposal a human accepts. If a finding doesn't cite the plan row and the export cell, it doesn't go in the report.</p></article>
+          <article><h4>Make it show its evidence</h4><p>Each finding has to cite the plan value, the export value and the rule that decided it, down to the plan row and the export cell, or it doesn't go in the report. Anything the engine can't verify is filed as a review rather than a failure, and anything new it comes across goes in as a proposal for a person to accept.</p></article>
           <article><h4>Who did what</h4><p>Claude wrote the build and test scripts to my spec. I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the test fixtures, not into memory.</p></article>
           <article><h4>Ship it to real people</h4><p>The skill was shared across the organization and used by a media team on live batches. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
         </div>
@@ -772,7 +779,7 @@ html:not(.js) .copy-btn{display:none}
           </div>
           <div class="plat">
             <h3>Next</h3>
-            <p class="state">Designed for, not built yet</p>
+            <p class="state">Three more platforms, on paper</p>
             <ul>
               <li>Pinterest, Google and Snap each need three things the design already keeps separate: an export contract (which columns come back and how they're written), a vocabulary map from planner labels to platform values, and a name-part profile.</li>
               <li>Everything else stays as it is: the plan tabs, the plan-check gate, the feeds, the report and the register.</li>
@@ -804,7 +811,7 @@ html:not(.js) .copy-btn{display:none}
             <article><h3>Auto-fill layer</h3><p>A Google Apps Script menu expands a media-grid line into the build, fills derived values in gray and applies the account profile. Running it again is safe: a second click adds nothing.</p></article>
             <article><h3>Change control</h3><p>A changelog with the before, after, reason, downstream impact, regression test and the run that validated each change: 180+ entries, and a conformance check that must read YES. Rule changes ship as versioned files, never as edits in chat.</p></article>
             <article><h3>The AI layer</h3><p>A Claude skill: a skill page, reference files for the run rules, the report spec and known failure modes, an HTML report template and a standing run message. It was first deployed as a shared, org-wide skill and now runs with the workbook uploaded directly.</p></article>
-            <article><h3>Real exports, not assumptions</h3><p>Every mapping was proven against live Ads Manager exports up to 500+ columns wide. The largest end-to-end test reconciled a plan against a 974-row live account export.</p></article>
+            <article><h3>Proven against live exports</h3><p>Every mapping was proven against live Ads Manager exports up to 500+ columns wide. The largest end-to-end test reconciled a plan against a 974-row live account export.</p></article>
           </div>
           <h3 class="sub" style="margin-top:12px">Release history</h3>
           <ol class="releases">
@@ -824,7 +831,7 @@ html:not(.js) .copy-btn{display:none}
       </div>
       <div class="about-main">
         <p class="first">I designed, specified and shipped Buildcheck end to end while working in media operations at a paid social agency.</p>
-        <p>I owned the architecture, the QA rules and their proof discipline, the test plan and the rollout to the team, and paired with Claude to write the build and test scripts to my spec. It started as a fix for a real problem: a senior team spending days on checks that were mostly mechanical. It became a system: a workbook that knows what it is, an engine that has to show its evidence, and a record of every decision.</p>
+        <p>It started as a fix for a real problem, a senior team spending days on checks that were mostly mechanical. The fix grew into a workbook that describes itself, an engine that has to show its evidence, and a record of every decision.</p>
         <p>Where it fits is in-house social media marketing and strategy. A brand's social team owns organic and paid together, and the paid side is only as good as its operations: how campaigns get planned, built, checked and launched. This project is that discipline, plus the AI and systems fluency to make a small team run like a large one.</p>
         <p>Internally, the workbook is known as the Gem Arch Doc, after the agency's term for a campaign architecture document.</p>
       </div>
@@ -1430,6 +1437,7 @@ function renderReport(run,prev,runId){
   let h='<div class="report"><header><h3>QA Report — '+esc(P.brand)+' — '+esc(P.label)+' — '+esc(P.scope)+' — '+esc(today)+'</h3><span class="meta">'+esc(runId)+' · checks evaluated: '+run.counts.checks+'</span></header>';
   h+='<div class="gate"><div class="verdict '+(run.ready?'yes':'no')+'">READY TO APPROVE: '+(run.ready?'YES':'NO')+'</div><div class="why">'+esc(run.why)+'</div>';
   const c=run.counts; h+='<div class="counts"><span>planned<b>'+c.planned+'</b></span><span>PASS<b>'+c.pass+'</b></span><span>FAIL<b>'+c.fail+'</b></span><span>MISSING<b>'+c.missing+'</b></span><span>NEEDS REVIEW<b>'+c.review+'</b></span><span>N/A<b>'+c.na+'</b></span><span>EXTRA<b>'+c.extra+'</b></span><span>out of scope<b>0</b></span></div>';
+  if(c.na) h+='<div class="absent">'+(c.na===1?'The N/A row is a planned ad':c.na+' N/A rows are planned ads')+' the plan marks Not Launching: held back on purpose, so not expected in the export and not counted as missing.</div>';
   if(run.absent.length) h+='<div class="absent">Columns absent from the export: <span class="mono">'+run.absent.map(esc).join(', ')+'</span> — checks that need them read “column absent”.</div>';
   h+='</div>';
   h+='<div class="rsec plain"><h4><span>What this run caught</span> <small>in plain English — the sections below carry the evidence</small></h4><ul>'+summaryLines(run).map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div>';
@@ -1560,38 +1568,50 @@ $('#io-toggle').addEventListener('click',e=>{ const io=$('.io'), on=!io.classLis
 /* remember whether the full report was opened, so a re-run keeps it that way */
 document.addEventListener('toggle',e=>{ if(e.target.classList&&e.target.classList.contains('full-report')) fullOpen=e.target.open; },true);
 
-/* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would ---------- */
+/* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would. It moves one step per click of Next, so a reader can take each screen in. ---------- */
 const tour={on:false,cancel:false}; const cap=$('#tour-cap'); const tourBtns=()=>[$('#btn-tour'),$('#btn-hero-tour')];
-const caption=(step,text)=>{ cap.hidden=false; cap.innerHTML='<b>'+esc(step)+'</b><span>'+esc(text)+'</span>'; };
+const caption=(step,text,nav)=>{ cap.hidden=false; cap.innerHTML='<b>'+esc(step)+'</b><span class="cap-text">'+esc(text)+'</span>'+(nav?'<span class="cap-nav"><button type="button" class="cap-next">Next</button><button type="button" class="cap-stop">Stop</button></span>':''); };
+let advance=null; const release=()=>{ if(advance){ const r=advance; advance=null; r(); } };
+const waitNext=()=>new Promise(r=>{ advance=r; const b=cap.querySelector('.cap-next'); if(b) b.focus({preventScroll:true}); });
+cap.addEventListener('click',e=>{ if(e.target.closest('.cap-next')) release(); else if(e.target.closest('.cap-stop')){ tour.cancel=true; release(); } });
+document.addEventListener('keydown',e=>{ if(!tour.on) return; if(e.key==='Escape'){ tour.cancel=true; release(); return; } if(e.key==='ArrowRight'&&!e.target.closest('input,textarea,select')){ e.preventDefault(); release(); } });
 const pause=ms=>new Promise(r=>{ const end=performance.now()+(REDUCE?Math.min(ms,350):ms); const tick=()=>{ if(tour.cancel||performance.now()>=end) r(); else setTimeout(tick,50); }; tick(); });
 function spot(el){ document.querySelectorAll('.tour-hi').forEach(e=>e.classList.remove('tour-hi')); if(el){ el.classList.add('tour-hi'); el.scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'center'}); } }
 async function step(ms){ await pause(ms); if(tour.cancel) throw new Error('cancelled'); }
-function endTour(msg){ tour.on=false; spot(null); tourBtns().forEach(b=>b.disabled=false); if(msg) caption('stopped',msg); const a=document.activeElement; if(!a||a===document.body||a===cap||a.disabled) $('#btn-tour').focus({preventScroll:true}); }
+async function hold(stepName,text){ caption(stepName,text,true); await waitNext(); if(tour.cancel) throw new Error('cancelled'); }
+function endTour(msg){ tour.on=false; advance=null; spot(null); tourBtns().forEach(b=>b.disabled=false); if(msg) caption('stopped',msg); const a=document.activeElement; if(!a||a===document.body||a===cap||a.disabled) $('#btn-tour').focus({preventScroll:true}); }
 async function runTour(){
   if(tour.on||$('#btn-run').disabled) return;
   tour.on=true; tour.cancel=false; tourBtns().forEach(b=>b.disabled=true);
-  toConsole(); caption('start','Twenty seconds, eight steps. Click any demo control to take over.'); cap.focus({preventScroll:true});
+  toConsole(); cap.focus({preventScroll:true});
   try{
     const planted=P.DISC.filter(d=>d.planted).map(d=>d.id); const fresh=!state.last&&state.active.size===planted.length&&planted.every(id=>state.active.has(id));
-    if(!fresh){ reset(); caption('reset','Starting from the planted export, so the walkthrough reads the same every time.'); await step(1000); }
-    caption('1 · run','Running the QA: read both files, list the export’s columns, match by ID, normalize, apply the rules.'); await doRun(); await step(500);
+    if(!fresh){ reset(); caption('reset','Starting from the planted export, so the walkthrough reads the same every time.'); await step(800); }
+    await hold('start','Nine steps, one per click. Press Next to move on, Stop to leave, or click any demo control to take over.');
+    spot($('.io')); await hold('1 of 9 · the inputs','Two inputs. On the left, the media plan: what was supposed to be built. On the right, the export from '+P.manager+': what was actually built. Eight mistakes are hidden in them.');
+    spot(null); caption('2 of 9 · run','Running the check.'); await doRun(); await step(400);
+    await hold('2 of 9 · run','The check has run. Buildcheck read both files, matched each planned item to the export by its ID, and applied the rules to every field.');
     const sum=$('.report .plain'), cnt=$('.report .fcard .cnt');
-    caption('2 · read','The gate says NO. The summary puts the findings in plain English. The first card below it is one finding for all 8 ads, not eight cards.'); spot(sum); await step(2800); spot(cnt?cnt.closest('.fcard'):sum); await step(2400);
+    spot(sum); await hold('3 of 9 · the verdict','The top line is the verdict: READY TO APPROVE: NO. Under it, the findings in plain English, before any detail.');
+    spot(cnt?cnt.closest('.fcard'):sum); await hold('4 of 9 · one finding, not eight','The first card is one finding for all 8 ads, because the same mistake was repeated in every ad. One card and one fix, instead of eight.');
     const sys=P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sb=sys?document.querySelector('button[data-fix="'+sys.id+'"]'):null;
-    caption('3 · fix one','One click fixes the repeated finding: all 8 ads, one bulk edit in '+P.manager+'. The export changes now. The report changes when the QA runs again.'); if(sb){ spot(sb); await step(1600); applyFix(sys.id,sb); } await step(1400);
-    caption('4 · run again','Running against the corrected inputs.'); spot(null); await doRun(); await step(500);
-    caption('5 · diff','“What changed” lists the 8 as resolved and the rest as unchanged. A second QA reads as a diff, not a fresh report.'); spot($('.report .diffsec')); await step(3000);
-    caption('6 · fix the rest','Applying every remaining fix, in the export and in the one wrong plan cell.'); spot($('#btn-fix-all-2')); await step(1400); fixAll('report'); await step(1200);
-    caption('7 · run again','Running once more.'); spot(null); await doRun(); await step(400);
-    spot($('.report .gate')); caption('8 · gate','READY TO APPROVE: YES. Every planned item agrees with the export, and the register below holds one row per run.'); await step(3000);
-    spot(null); caption('done','That’s the loop. Try it yourself: reset, or add a builder mistake and catch it.');
+    spot(sb||sum); await hold('5 of 9 · fix one','Next fixes that one. In real life it is one bulk edit in '+P.manager+'. The export changes now; the report only changes when the check runs again.');
+    if(sb) applyFix(sys.id,sb); await step(600);
+    spot(null); caption('6 of 9 · run again','Running the check on the corrected build.'); await doRun(); await step(400);
+    spot($('.report .diffsec')); await hold('6 of 9 · what changed','The second report starts with what changed since the first: the 8 ads are resolved, the other problems are unchanged. A second check reads as a list of differences, not a fresh report.');
+    spot($('#btn-fix-all-2')); await hold('7 of 9 · fix the rest','Next fixes everything that is left: the remaining export mistakes and the one wrong cell in the plan.');
+    fixAll('report'); await step(600);
+    spot(null); caption('8 of 9 · last run','Running the check once more.'); await doRun(); await step(400);
+    spot($('.report .gate')); await hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built. The one N/A is an ad the plan marks Not Launching, held back on purpose, so it was never expected in the export.');
+    spot($('#register')); await hold('9 of 9 · the record','The run register keeps one row per run, so there is a record of each check and what it found.');
+    spot(null); caption('done','That’s the whole loop. Try it yourself: reset, or add a builder mistake and watch it get caught.');
   }catch(e){ if(!tour.cancel) throw e; }
   finally{ endTour(tour.cancel?'Walkthrough stopped. You’re driving now.':''); }
 }
 $('#btn-tour').addEventListener('click',runTour);
 $('#btn-hero-tour').addEventListener('click',runTour);
-/* any click on a demo control while the walkthrough runs hands control back */
-document.addEventListener('click',e=>{ if(!tour.on) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run'); if(c&&!c.disabled) tour.cancel=true; },true);
+/* any click on a demo control while the walkthrough runs hands control back; the caption bar's own buttons don't count */
+document.addEventListener('click',e=>{ if(!tour.on) return; if(e.target.closest('.tour-cap')) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run'); if(c&&!c.disabled){ tour.cancel=true; release(); } },true);
 
 /* ---------- engineering notes: collapsed unless the URL points at them ---------- */
 (function(){ const d=$('#eng-details'); if(!d) return; const open=()=>{ if(location.hash==='#engineering') d.open=true; }; open(); addEventListener('hashchange',open); })();
