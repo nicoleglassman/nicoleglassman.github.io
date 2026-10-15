@@ -1437,6 +1437,7 @@ function renderReport(run,prev,runId){
   let h='<div class="report"><header><h3>QA Report — '+esc(P.brand)+' — '+esc(P.label)+' — '+esc(P.scope)+' — '+esc(today)+'</h3><span class="meta">'+esc(runId)+' · checks evaluated: '+run.counts.checks+'</span></header>';
   h+='<div class="gate"><div class="verdict '+(run.ready?'yes':'no')+'">READY TO APPROVE: '+(run.ready?'YES':'NO')+'</div><div class="why">'+esc(run.why)+'</div>';
   const c=run.counts; h+='<div class="counts"><span>planned<b>'+c.planned+'</b></span><span>PASS<b>'+c.pass+'</b></span><span>FAIL<b>'+c.fail+'</b></span><span>MISSING<b>'+c.missing+'</b></span><span>NEEDS REVIEW<b>'+c.review+'</b></span><span>N/A<b>'+c.na+'</b></span><span>EXTRA<b>'+c.extra+'</b></span><span>out of scope<b>0</b></span></div>';
+  if(c.na) h+='<div class="absent">'+(c.na===1?'The N/A row is a planned ad':c.na+' N/A rows are planned ads')+' the plan marks Not Launching: held back on purpose, so not expected in the export and not counted as missing.</div>';
   if(run.absent.length) h+='<div class="absent">Columns absent from the export: <span class="mono">'+run.absent.map(esc).join(', ')+'</span> — checks that need them read “column absent”.</div>';
   h+='</div>';
   h+='<div class="rsec plain"><h4><span>What this run caught</span> <small>in plain English — the sections below carry the evidence</small></h4><ul>'+summaryLines(run).map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div>';
@@ -1601,7 +1602,7 @@ async function runTour(){
     spot($('#btn-fix-all-2')); await hold('7 of 9 · fix the rest','Next fixes everything that is left: the remaining export mistakes and the one wrong cell in the plan.');
     fixAll('report'); await step(600);
     spot(null); caption('8 of 9 · last run','Running the check once more.'); await doRun(); await step(400);
-    spot($('.report .gate')); await hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built.');
+    spot($('.report .gate')); await hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built. The one N/A is an ad the plan marks Not Launching, held back on purpose, so it was never expected in the export.');
     spot($('#register')); await hold('9 of 9 · the record','The run register keeps one row per run, so there is a record of each check and what it found.');
     spot(null); caption('done','That’s the whole loop. Try it yourself: reset, or add a builder mistake and watch it get caught.');
   }catch(e){ if(!tour.cancel) throw e; }
