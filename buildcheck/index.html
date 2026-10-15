@@ -1522,7 +1522,8 @@ async function doRun(){
   $('#report-wrap').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'});
 }
 function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Applied. Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'Inputs updated. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
-function reset(){ state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
+var resetSerial=0;
+function reset(){ resetSerial++; state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
 function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; }
 function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied. Run again to verify';}); syncFix(); setStatus('Everything is corrected in the inputs. Run the QA again to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
 function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} const d=pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run the QA to find it.'); return true; }
@@ -1560,7 +1561,7 @@ $('#btn-run').addEventListener('click',doRun);
 $('#btn-fix-all').addEventListener('click',()=>fixAll('controls'));
 $('#btn-break').addEventListener('click',()=>{ breakOne(); if(!state.last) $('#btn-fix-all').disabled=true; });
 $('#btn-hero-run').addEventListener('click',()=>{ toConsole(); if(!$('#btn-run').disabled) doRun(); });
-$('#btn-reset').addEventListener('click',()=>{ reset(); if(!tour.on) cap.hidden=true; $('#btn-run').focus({preventScroll:true}); });
+$('#btn-reset').addEventListener('click',()=>{ reset(); if(!tour.on){ cap.hidden=true; tour.paused=null; $('#btn-tour').textContent=TOUR_LABEL; } $('#btn-run').focus({preventScroll:true}); });
 /* the fix, mistake and reset buttons only mean something once there is a report */
 function syncToolbar(){ const ran=!!(state&&state.last); ['#btn-fix-all','#btn-break','#btn-reset'].forEach(sel=>{ $(sel).hidden=!ran; }); }
 /* the two input tables start folded to a few rows */
@@ -1568,50 +1569,62 @@ $('#io-toggle').addEventListener('click',e=>{ const io=$('.io'), on=!io.classLis
 /* remember whether the full report was opened, so a re-run keeps it that way */
 document.addEventListener('toggle',e=>{ if(e.target.classList&&e.target.classList.contains('full-report')) fullOpen=e.target.open; },true);
 
-/* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would. It moves one step per click of Next, so a reader can take each screen in. ---------- */
-const tour={on:false,cancel:false}; const cap=$('#tour-cap'); const tourBtns=()=>[$('#btn-tour'),$('#btn-hero-tour')];
-const caption=(step,text,nav)=>{ cap.hidden=false; cap.innerHTML='<b>'+esc(step)+'</b><span class="cap-text">'+esc(text)+'</span>'+(nav?'<span class="cap-nav"><button type="button" class="cap-next">Next</button><button type="button" class="cap-stop">Stop</button></span>':''); };
+/* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would. It moves one step per click of Next. Stop pauses it; it resumes from the same step until the demo is reset. ---------- */
+const tour={on:false,cancel:false,paused:null,serial:0,tookOver:false}; const cap=$('#tour-cap'); const tourBtns=()=>[$('#btn-tour'),$('#btn-hero-tour')]; const TOUR_LABEL=$('#btn-tour').textContent;
+const NAV={next:'<span class="cap-nav"><button type="button" class="cap-next">Next</button><button type="button" class="cap-stop">Stop</button></span>',resume:'<span class="cap-nav"><button type="button" class="cap-resume">Resume</button><button type="button" class="cap-restart">Start over</button></span>'};
+const caption=(step,text,nav)=>{ cap.hidden=false; cap.innerHTML='<b>'+esc(step)+'</b><span class="cap-text">'+esc(text)+'</span>'+(nav?NAV[nav]:''); };
 let advance=null; const release=()=>{ if(advance){ const r=advance; advance=null; r(); } };
 const waitNext=()=>new Promise(r=>{ advance=r; const b=cap.querySelector('.cap-next'); if(b) b.focus({preventScroll:true}); });
-cap.addEventListener('click',e=>{ if(e.target.closest('.cap-next')) release(); else if(e.target.closest('.cap-stop')){ tour.cancel=true; release(); } });
+cap.addEventListener('click',e=>{ if(e.target.closest('.cap-next')) release(); else if(e.target.closest('.cap-stop')){ tour.cancel=true; release(); } else if(e.target.closest('.cap-resume')) resumeTour(); else if(e.target.closest('.cap-restart')) runTour(0,false); });
 document.addEventListener('keydown',e=>{ if(!tour.on) return; if(e.key==='Escape'){ tour.cancel=true; release(); return; } if(e.key==='ArrowRight'&&!e.target.closest('input,textarea,select')){ e.preventDefault(); release(); } });
 const pause=ms=>new Promise(r=>{ const end=performance.now()+(REDUCE?Math.min(ms,350):ms); const tick=()=>{ if(tour.cancel||performance.now()>=end) r(); else setTimeout(tick,50); }; tick(); });
 function spot(el){ document.querySelectorAll('.tour-hi').forEach(e=>e.classList.remove('tour-hi')); if(el){ el.classList.add('tour-hi'); el.scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'center'}); } }
 async function step(ms){ await pause(ms); if(tour.cancel) throw new Error('cancelled'); }
-async function hold(stepName,text){ caption(stepName,text,true); await waitNext(); if(tour.cancel) throw new Error('cancelled'); }
-function endTour(msg){ tour.on=false; advance=null; spot(null); tourBtns().forEach(b=>b.disabled=false); if(msg) caption('stopped',msg); const a=document.activeElement; if(!a||a===document.body||a===cap||a.disabled) $('#btn-tour').focus({preventScroll:true}); }
-async function runTour(){
-  if(tour.on||$('#btn-run').disabled) return;
-  tour.on=true; tour.cancel=false; tourBtns().forEach(b=>b.disabled=true);
-  toConsole(); cap.focus({preventScroll:true});
-  try{
-    const planted=P.DISC.filter(d=>d.planted).map(d=>d.id); const fresh=!state.last&&state.active.size===planted.length&&planted.every(id=>state.active.has(id));
-    if(!fresh){ reset(); caption('reset','Starting from the planted export, so the walkthrough reads the same every time.'); await step(800); }
-    await hold('start','Nine steps, one per click. Press Next to move on, Stop to leave, or click any demo control to take over.');
-    spot($('.io')); await hold('1 of 9 · the inputs','Two inputs. On the left, the media plan: what was supposed to be built. On the right, the export from '+P.manager+': what was actually built. Eight mistakes are hidden in them.');
-    spot(null); caption('2 of 9 · run','Running the check.'); await doRun(); await step(400);
-    await hold('2 of 9 · run','The check has run. Buildcheck read both files, matched each planned item to the export by its ID, and applied the rules to every field.');
-    const sum=$('.report .plain'), cnt=$('.report .fcard .cnt');
-    spot(sum); await hold('3 of 9 · the verdict','The top line is the verdict: READY TO APPROVE: NO. Under it, the findings in plain English, before any detail.');
-    spot(cnt?cnt.closest('.fcard'):sum); await hold('4 of 9 · one finding, not eight','The first card is one finding for all 8 ads, because the same mistake was repeated in every ad. One card and one fix, instead of eight.');
-    const sys=P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sb=sys?document.querySelector('button[data-fix="'+sys.id+'"]'):null;
-    spot(sb||sum); await hold('5 of 9 · fix one','Next fixes that one. In real life it is one bulk edit in '+P.manager+'. The export changes now; the report only changes when the check runs again.');
-    if(sb) applyFix(sys.id,sb); await step(600);
-    spot(null); caption('6 of 9 · run again','Running the check on the corrected build.'); await doRun(); await step(400);
-    spot($('.report .diffsec')); await hold('6 of 9 · what changed','The second report starts with what changed since the first: the 8 ads are resolved, the other problems are unchanged. A second check reads as a list of differences, not a fresh report.');
-    spot($('#btn-fix-all-2')); await hold('7 of 9 · fix the rest','Next fixes everything that is left: the remaining export mistakes and the one wrong cell in the plan.');
-    fixAll('report'); await step(600);
-    spot(null); caption('8 of 9 · last run','Running the check once more.'); await doRun(); await step(400);
-    spot($('.report .gate')); await hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built. The one N/A is an ad the plan marks Not Launching, held back on purpose, so it was never expected in the export.');
-    spot($('#register')); await hold('9 of 9 · the record','The run register keeps one row per run, so there is a record of each check and what it found.');
-    spot(null); caption('done','That’s the whole loop. Try it yourself: reset, or add a builder mistake and watch it get caught.');
-  }catch(e){ if(!tour.cancel) throw e; }
-  finally{ endTour(tour.cancel?'Walkthrough stopped. You’re driving now.':''); }
+async function hold(stepName,text){ caption(stepName,text,'next'); await waitNext(); if(tour.cancel) throw new Error('cancelled'); }
+const sysFinding=()=>P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sysBtn=()=>{ const f=sysFinding(); return f?document.querySelector('button[data-fix="'+f.id+'"]'):null; };
+/* each step: an action that changes the demo (optional), the screen to hold on, and anything applied after Next (optional) */
+const STEPS=[
+  {n:0, show:()=>hold('start','Nine steps, one per click. Press Next to move on, Stop to pause, or click any demo control to take over.')},
+  {n:1, show:()=>{ spot($('.io')); return hold('1 of 9 · the inputs','Two inputs. On the left, the media plan: what was supposed to be built. On the right, the export from '+P.manager+': what was actually built. Eight mistakes are hidden in them.'); }},
+  {n:2, act:async()=>{ spot(null); caption('2 of 9 · run','Running the check.'); await doRun(); await step(400); }, show:()=>hold('2 of 9 · run','The check has run. Buildcheck read both files, matched each planned item to the export by its ID, and applied the rules to every field.')},
+  {n:3, show:()=>{ spot($('.report .plain')); return hold('3 of 9 · the verdict','The top line is the verdict: READY TO APPROVE: NO. Under it, the findings in plain English, before any detail.'); }},
+  {n:4, show:()=>{ const sum=$('.report .plain'), cnt=$('.report .fcard .cnt'); spot(cnt?cnt.closest('.fcard'):sum); return hold('4 of 9 · one finding, not eight','The first card is one finding for all 8 ads, because the same mistake was repeated in every ad. One card and one fix, instead of eight.'); }},
+  {n:5, show:()=>{ spot(sysBtn()||$('.report .plain')); return hold('5 of 9 · fix one','Next fixes that one. In real life it is one bulk edit in '+P.manager+'. The export changes now; the report only changes when the check runs again.'); }, after:async()=>{ const f=sysFinding(), b=sysBtn(); if(f&&b) applyFix(f.id,b); await step(600); }},
+  {n:6, act:async()=>{ spot(null); caption('6 of 9 · run again','Running the check on the corrected build.'); await doRun(); await step(400); }, show:()=>{ spot($('.report .diffsec')); return hold('6 of 9 · what changed','The second report starts with what changed since the first: the 8 ads are resolved, the other problems are unchanged. A second check reads as a list of differences, not a fresh report.'); }},
+  {n:7, show:()=>{ spot($('#btn-fix-all-2')); return hold('7 of 9 · fix the rest','Next fixes everything that is left: the remaining export mistakes and the one wrong cell in the plan.'); }, after:async()=>{ fixAll('report'); await step(600); }},
+  {n:8, act:async()=>{ spot(null); caption('8 of 9 · last run','Running the check once more.'); await doRun(); await step(400); }, show:()=>{ spot($('.report .gate')); return hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built. The one N/A is an ad the plan marks Not Launching, held back on purpose, so it was never expected in the export.'); }},
+  {n:9, show:()=>{ spot($('#register')); return hold('9 of 9 · the record','The run register keeps one row per run, so there is a record of each check and what it found.'); }},
+];
+const canResume=()=>!!tour.paused&&tour.serial===resetSerial&&tour.paused.i<STEPS.length;
+function endTour(paused){
+  tour.on=false; advance=null; spot(null); tourBtns().forEach(b=>b.disabled=false);
+  if(paused){ tour.paused=paused; tour.serial=resetSerial; const n=STEPS[paused.i].n; const where=n?' from step '+n+' of 9':'';
+    caption(tour.tookOver?'you’re driving':'paused',(tour.tookOver?'You took over, and the demo is yours. Resume the walkthrough'+where+', or start over.':'Paused. Resume'+where+', or start over. The demo stays as it is either way.'),'resume');
+    $('#btn-tour').textContent='Resume the walkthrough'; const b=cap.querySelector('.cap-resume'); if(b) b.focus({preventScroll:true}); }
+  else { tour.paused=null; $('#btn-tour').textContent=TOUR_LABEL; const a=document.activeElement; if(!a||a===document.body||a===cap||a.disabled) $('#btn-tour').focus({preventScroll:true}); }
+  tour.tookOver=false;
 }
-$('#btn-tour').addEventListener('click',runTour);
-$('#btn-hero-tour').addEventListener('click',runTour);
+async function runTour(from,resuming){
+  if(tour.on||$('#btn-run').disabled) return;
+  tour.on=true; tour.cancel=false; tour.tookOver=false; tourBtns().forEach(b=>b.disabled=true); $('#btn-tour').textContent=TOUR_LABEL;
+  toConsole(); cap.focus({preventScroll:true});
+  let i=from||0, phase='', paused=null;
+  try{
+    if(!resuming){ const planted=P.DISC.filter(d=>d.planted).map(d=>d.id); const fresh=!state.last&&state.active.size===planted.length&&planted.every(id=>state.active.has(id));
+      if(!fresh){ reset(); caption('reset','Starting from the planted export, so the walkthrough reads the same every time.'); await step(800); } }
+    for(; i<STEPS.length; i++){ const s=STEPS[i];
+      if(s.act&&!(resuming&&i===from)){ phase='act'; await s.act(); }
+      phase='show'; await s.show();
+      if(s.after){ phase='after'; await s.after(); } }
+    spot(null); caption('done','That’s the whole loop. Try it yourself: reset, or add a builder mistake and watch it get caught.');
+  }catch(e){ if(!tour.cancel) throw e; paused=(phase==='after')?{i:i+1,skipAct:false}:{i,skipAct:true}; if(paused.i>=STEPS.length) paused=null; }
+  finally{ endTour(paused); }
+}
+function resumeTour(){ if(canResume()) runTour(tour.paused.i,tour.paused.skipAct); else runTour(0,false); }
+$('#btn-tour').addEventListener('click',resumeTour);
+$('#btn-hero-tour').addEventListener('click',resumeTour);
 /* any click on a demo control while the walkthrough runs hands control back; the caption bar's own buttons don't count */
-document.addEventListener('click',e=>{ if(!tour.on) return; if(e.target.closest('.tour-cap')) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run'); if(c&&!c.disabled){ tour.cancel=true; release(); } },true);
+document.addEventListener('click',e=>{ if(!tour.on) return; if(e.target.closest('.tour-cap')) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run'); if(c&&!c.disabled){ tour.cancel=true; tour.tookOver=true; release(); } },true);
 
 /* ---------- engineering notes: collapsed unless the URL points at them ---------- */
 (function(){ const d=$('#eng-details'); if(!d) return; const open=()=>{ if(location.hash==='#engineering') d.open=true; }; open(); addEventListener('hashchange',open); })();
