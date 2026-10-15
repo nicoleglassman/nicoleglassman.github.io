@@ -700,7 +700,7 @@ html:not(.js) .copy-btn{display:none}
         <div class="block-head"><h3 class="sub">How I work with AI</h3></div>
         <div class="pairs">
           <article><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to “check the campaign”. I wrote the rulebook first: what counts as proven, what a blank means, what it must never invent, which ad type gets which checks. The AI gets those rules as versioned reference files, not chat instructions.</p></article>
-          <article><h4>Make it show its evidence</h4><p>Every finding cites the plan value, the export value and the rule that decided it. Anything unverified is a review, not a failure. Anything new is a proposal a human accepts. If a finding doesn't cite the plan row and the export cell, it doesn't go in the report.</p></article>
+          <article><h4>Make it show its evidence</h4><p>Each finding has to cite the plan value, the export value and the rule that decided it, down to the plan row and the export cell, or it doesn't go in the report. Anything the engine can't verify is filed as a review rather than a failure, and anything new it comes across goes in as a proposal for a person to accept.</p></article>
           <article><h4>Who did what</h4><p>Claude wrote the build and test scripts to my spec. I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the test fixtures, not into memory.</p></article>
           <article><h4>Ship it to real people</h4><p>The skill was shared across the organization and used by a media team on live batches. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
         </div>
@@ -772,7 +772,7 @@ html:not(.js) .copy-btn{display:none}
           </div>
           <div class="plat">
             <h3>Next</h3>
-            <p class="state">Designed for, not built yet</p>
+            <p class="state">Three more platforms, on paper</p>
             <ul>
               <li>Pinterest, Google and Snap each need three things the design already keeps separate: an export contract (which columns come back and how they're written), a vocabulary map from planner labels to platform values, and a name-part profile.</li>
               <li>Everything else stays as it is: the plan tabs, the plan-check gate, the feeds, the report and the register.</li>
@@ -804,7 +804,7 @@ html:not(.js) .copy-btn{display:none}
             <article><h3>Auto-fill layer</h3><p>A Google Apps Script menu expands a media-grid line into the build, fills derived values in gray and applies the account profile. Running it again is safe: a second click adds nothing.</p></article>
             <article><h3>Change control</h3><p>A changelog with the before, after, reason, downstream impact, regression test and the run that validated each change: 180+ entries, and a conformance check that must read YES. Rule changes ship as versioned files, never as edits in chat.</p></article>
             <article><h3>The AI layer</h3><p>A Claude skill: a skill page, reference files for the run rules, the report spec and known failure modes, an HTML report template and a standing run message. It was first deployed as a shared, org-wide skill and now runs with the workbook uploaded directly.</p></article>
-            <article><h3>Real exports, not assumptions</h3><p>Every mapping was proven against live Ads Manager exports up to 500+ columns wide. The largest end-to-end test reconciled a plan against a 974-row live account export.</p></article>
+            <article><h3>Proven against live exports</h3><p>Every mapping was proven against live Ads Manager exports up to 500+ columns wide. The largest end-to-end test reconciled a plan against a 974-row live account export.</p></article>
           </div>
           <h3 class="sub" style="margin-top:12px">Release history</h3>
           <ol class="releases">
@@ -824,7 +824,7 @@ html:not(.js) .copy-btn{display:none}
       </div>
       <div class="about-main">
         <p class="first">I designed, specified and shipped Buildcheck end to end while working in media operations at a paid social agency.</p>
-        <p>I owned the architecture, the QA rules and their proof discipline, the test plan and the rollout to the team, and paired with Claude to write the build and test scripts to my spec. It started as a fix for a real problem: a senior team spending days on checks that were mostly mechanical. It became a system: a workbook that knows what it is, an engine that has to show its evidence, and a record of every decision.</p>
+        <p>It started as a fix for a real problem, a senior team spending days on checks that were mostly mechanical. The fix grew into a workbook that describes itself, an engine that has to show its evidence, and a record of every decision.</p>
         <p>Where it fits is in-house social media marketing and strategy. A brand's social team owns organic and paid together, and the paid side is only as good as its operations: how campaigns get planned, built, checked and launched. This project is that discipline, plus the AI and systems fluency to make a small team run like a large one.</p>
         <p>Internally, the workbook is known as the Gem Arch Doc, after the agency's term for a campaign architecture document.</p>
       </div>
