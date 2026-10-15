@@ -926,7 +926,7 @@ function compare(kind,pv,ev){
     case 'set': return {eq:setKey(pv)===setKey(ev)};
     case 'url': return {eq:urlKey(pv)===urlKey(ev)};
     case 'toggle': { const p=norm(pv).toLowerCase(), e=norm(ev).toLowerCase(); if(p==='off') return e===''?{eq:true,note:'matched after blank → Off normalisation'}:{eq:e==='off'}; return {eq:p===e}; }
-    case 'instant': { const a=instant(pv), b=instant(ev); if(a===null||b===null) return {eq:false,review:true,note:'a date could not be read as an instant — serial number or D/M/Y swap?'}; if(a===b) return {eq:true}; if(Math.abs(a-b)===60000) return {eq:false,review:true,note:'one minute apart — the platform writes end times as 11:59 pm on the last day; the plan says the next day 12:00 AM'}; return {eq:false}; }
+    case 'instant': { const a=instant(pv), b=instant(ev); if(a===null||b===null) return {eq:false,review:true,note:'a date could not be read as an instant: serial number or D/M/Y swap?'}; if(a===b) return {eq:true}; if(Math.abs(a-b)===60000) return {eq:false,review:true,note:'one minute apart: the platform writes end times as 11:59 pm on the last day; the plan says the next day 12:00 AM'}; return {eq:false}; }
     default: { const eq=norm(pv)===norm(ev); return {eq,note:(eq&&/%7B%7B/i.test(String(ev)))?'matched after %7B%7B → {{ normalisation':undefined}; }
   }
 }
@@ -1017,19 +1017,19 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
       if(isBlank(planRow.creative_feed)) return null;
       const s=Object.assign({},spec,{field:'creative_feed',col:'Video ID · Placements',rule:R.cover});
       const has=!isBlank(expRow['Video ID']), feed=/\bdefault\b/i.test(expRow['Placements']||'');
-      if(has&&feed) return mk(s,'PASS','a 1x1 asset is planned','asset '+expRow['Video ID']+' · '+expRow['Placements'],true,'coverage only — file names are never compared to the export');
+      if(has&&feed) return mk(s,'PASS','a 1x1 asset is planned','asset '+expRow['Video ID']+' · '+expRow['Placements'],true,'coverage only: file names are never compared to the export');
       return mk(s,'FAIL','a 1x1 asset is planned',has?'no asset carries the Default placement':'no asset assigned',true);
     }
     if(spec.special==='post_description'){
       if(isBlank(planRow.description_feed)) return null;
-      return mk(Object.assign({},spec,{field:'description_feed',col:'Link Description',rule:R.src}),'REVIEW',planRow.description_feed,expRow['Link Description']??'',true,'a post carries one copy — confirm in the preview');
+      return mk(Object.assign({},spec,{field:'description_feed',col:'Link Description',rule:R.src}),'REVIEW',planRow.description_feed,expRow['Link Description']??'',true,'a post carries one copy: confirm in the preview');
     }
     if(spec.special==='creative_type'){
       const expected='Video Page Post Ad'; const s=Object.assign({},spec,{field:'ad_source',col:'Creative Type',rule:R.proof,prove:'a partnership export showing Video Page Post Ad proves the mapping'});
       if(!present.has('Creative Type')) return mk(s,'REVIEW',planRow.ad_source+' → '+expected,'(column absent)',false,'column absent from the export preset');
       const ev=expRow['Creative Type']??'';
-      if(norm(ev)===expected) return mk(s,'PASS',planRow.ad_source+' → '+expected,ev,false,'unproven mapping observed equal — proposed in §7');
-      return mk(s,'REVIEW',planRow.ad_source+' → '+expected,ev,false,'unproven mapping — a mismatch can only ask for review');
+      if(norm(ev)===expected) return mk(s,'PASS',planRow.ad_source+' → '+expected,ev,false,'unproven mapping observed equal: proposed in §7');
+      return mk(s,'REVIEW',planRow.ad_source+' → '+expected,ev,false,'unproven mapping: a mismatch can only ask for review');
     }
     return null;
   },
@@ -1047,7 +1047,7 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     CAMPS.forEach(c=>exp.campaigns.push({'Campaign ID':'c:'+c.id,'Campaign Name':c.name,'Campaign Status':'PAUSED','Buying Type':'AUCTION','Campaign Objective':c.objective,'Campaign Lifetime Budget':c.budget+'.00','Campaign Daily Budget':'','Campaign Start Time':'11/1/2026 12:00:00 am','Campaign Stop Time':'12/24/2026 11:59:00 pm'}));
     SETS.forEach((s,i)=>exp.adsets.push({'Ad Set ID':'cg:'+setId(i),'Ad Set Name':setName(i),'Campaign Name':CAMPS[s.c].name,'Ad Set Run Status':'PAUSED','Optimization Goal':CAMPS[s.c].goal,'Ad Set Lifetime Budget':'','Ad Set Daily Budget':'','Countries':'US','Age Min':s.age[0],'Age Max':s.age[1],'Custom Audiences':s.custom,'Excluded Custom Audiences':s.excluded,'Flexible Inclusions':s.detailed,'Conversion Tracking Pixels':PIXEL,'Ad Set Time Start':'11/1/2026 12:00:00 am','Ad Set Time Stop':'12/24/2026 11:59:00 pm'}));
     SETS.forEach((s,i)=>CONCEPTS.forEach((cc,j)=>exp.ads.push({'Ad ID':'a:'+adId(i,j),'Ad Name':adName(i,j),'Ad Set Name':setName(i),'Campaign Name':CAMPS[s.c].name,'Ad Status':'PAUSED','Link Object ID':'o:'+PAGE_ID,'Instagram Account ID':'x:'+IG_ID,'Story ID':'','Body':cc[2],'Title':cc[3],'Link Description':'Free shipping over $40','Link':LINK,'Call to Action':'SHOP_NOW','URL Tags':(i*8+j)%5===2?URLP_ENC:URLP,'Conversion Tracking Pixels':PIXEL,'Creative Type':'Video Ad','Video ID':'v:99'+adId(i,j).slice(-6),'Placements':'Default, Default'})));
-    exp.ads.push({'Ad ID':'a:12000000000001049','Ad Name':setName(2)+'_MayaBrews_CreatorPost','Ad Set Name':setName(2),'Campaign Name':CAMPS[0].name,'Ad Status':'PAUSED','Link Object ID':'o:'+CRE_PAGE_ID,'Instagram Account ID':'x:'+CRE_IG_ID,'Story ID':'s:10000000000002_5550001','Body':'Cozy season is coffee season — my go-to holiday roast from @halcyoncoffee','Title':'','Link Description':'','Link':LINK,'Call to Action':'LEARN_MORE','URL Tags':URLP,'Conversion Tracking Pixels':PIXEL,'Creative Type':'Video Page Post Ad','Video ID':'','Placements':'Default, Default'});
+    exp.ads.push({'Ad ID':'a:12000000000001049','Ad Name':setName(2)+'_MayaBrews_CreatorPost','Ad Set Name':setName(2),'Campaign Name':CAMPS[0].name,'Ad Status':'PAUSED','Link Object ID':'o:'+CRE_PAGE_ID,'Instagram Account ID':'x:'+CRE_IG_ID,'Story ID':'s:10000000000002_5550001','Body':'Cozy season is coffee season. My go-to holiday roast from @halcyoncoffee','Title':'','Link Description':'','Link':LINK,'Call to Action':'LEARN_MORE','URL Tags':URLP,'Conversion Tracking Pixels':PIXEL,'Creative Type':'Video Page Post Ad','Video ID':'','Placements':'Default, Default'});
     return exp;
   },
   split:x=>x, expRows:x=>x.campaigns.length+x.adsets.length+x.ads.length,
@@ -1070,18 +1070,18 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
   humans(plan){ const h=[{tier:'campaign',plan_row:4,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'campaign',plan_row:5,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'adset',plan_row:4,field:'publisher_block_lists',value:'HAL_BlockList_2026',cell:'hc_brand_safety',status:'initialled JK'}];
     plan.ad.forEach(a=>{ if(!isBlank(a.second_identity)) h.push({tier:'ad',plan_row:a.plan_row,field:'second_identity',value:a.second_identity,cell:'hc_identity',status:'open'}); }); return h; },
   proposalKey:c=>c.id==='creative_type'?'creative_type|Partnership ad':(c.field+'|'+c.col),
-  contextNote:run=>run.context.length?'Context, no action — URL tags matched after %7B%7B → {{ normalisation on '+run.context.length+' ads ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
+  contextNote:run=>run.context.length?'Context, no action: URL tags matched after %7B%7B → {{ normalisation on '+run.context.length+' ads ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
   PLAN_VIEWS:[{name:'QA_EXPORT_CAMPAIGN',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buying_type','campaign_objective','campaign_lifetime_budget','campaign_daily_budget','campaign_start_datetime','campaign_end_datetime','qa_status','plan_line']},
     {name:'QA_EXPORT_ADSET',key:'adset',cols:['plan_row','ad_set_name','ad_set_id','delivery_intent','performance_goal','countries','age_min','age_max','custom_audiences','excluded_custom_audiences','detailed_targeting_include','conversion_tracking_pixels','ad_set_start_datetime','ad_set_end_datetime','qa_status']},
     {name:'QA_EXPORT (ads)',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','description_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent']}],
   EXP_VIEWS:[{name:'Campaigns',key:'campaigns',tier:'campaign'},{name:'Ad sets',key:'adsets',tier:'adset'},{name:'Ads',key:'ads',tier:'ad'}],
-  logLines:(run,nPlan,nExp,presentN)=>['Parsing 3 plan feeds and 1 export as text — '+nPlan+' plan rows, '+nExp+' export rows',
+  logLines:(run,nPlan,nExp,presentN)=>['Parsing 3 plan feeds and 1 export as text: '+nPlan+' plan rows, '+nExp+' export rows',
     'Inventory: '+presentN+' export columns present · '+run.absent.length+' absent'+(run.absent.length?' ('+run.absent.join(', ')+')':''),
     'Matching: '+run.byId+' items by ID, '+run.byName+' by name path',
     'Normalising: NBSP, %7B%7B → {{, budgets to whole dollars, dates to instants in America/Los_Angeles, multi-value fields to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
     'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
-  resetStatus:'8 problems are planted in the inputs — one of them across all 8 ads of an ad set. Run QA to find them.',
+  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad set. Run QA to find them.',
   idleLog:'Waiting to run. The engine parses both files as text, inventories the export\u2019s columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
 
@@ -1123,7 +1123,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
   ADSET_CHECKS:[
     {id:'name',type:'Wrong name',field:'ad_group_name',col:'Ad Group Name',kind:'text',proven:true,rule:R.key},
     {id:'status',type:'Wrong status',field:'delivery_intent',col:'Ad Group Status',kind:'text',rule:R.status,prove:'a live export showing On for a Live intent would prove the mapping'},
-    {id:'goal',type:'Wrong setting',field:'optimization_goal',col:'Optimization Goal',kind:'text',proven:false,rule:R.proof,prove:'a live export showing Focused View for a 15-second views (Focused view) plan proves the mapping — the plan label may mean the 15-second goal rather than Focused View, so confirm the goal in TikTok Ads Manager first'},
+    {id:'goal',type:'Wrong setting',field:'optimization_goal',col:'Optimization Goal',kind:'text',proven:false,rule:R.proof,prove:'a live export showing Focused View for a 15-second views (Focused view) plan proves the mapping. The plan label may mean the 15-second goal rather than Focused View, so confirm the goal in TikTok Ads Manager first'},
     {id:'billing',type:'Wrong setting',field:'billing_method',col:'Billing Method',kind:'text',proven:true,rule:R.map},
     {id:'bid',type:'Wrong setting',field:'bid_strategy',col:'Bid Strategy',kind:'text',proven:true,rule:R.map},
     {id:'placement_types',type:'Wrong placement',field:'placement_types',col:'Placement Types',kind:'text',proven:true,rule:R.map},
@@ -1153,7 +1153,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
       {id:'text',type:'Wrong copy',field:'text',col:'Text',kind:'text',proven:true,rule:R.norm},
       {id:'only_show_as_ad',type:'Wrong setting',field:'only_show_as_ad',col:'Only show as ad',kind:'toggle',proven:true,rule:R.norm},
       ...tail,{id:'creative',special:'creative',type:'Wrong creative'}];
-    /* Spark Ad (creator or brand post): the post is the creative — Post ID required, identity by digits, copy belongs to the post */
+    /* Spark Ad (creator or brand post): the post is the creative: Post ID required, identity by digits, copy belongs to the post */
     return [...common,{id:'post_id',type:'Wrong post',field:'post_id',col:'Post ID',kind:'digits',proven:true,required:true,rule:R.src},...identity,
       {id:'text',special:'post_text',type:'Wrong copy'},
       {id:'use_tiktok_account',special:'use_tiktok_account',type:'Wrong post'},...tail];
@@ -1164,9 +1164,9 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
       const s=Object.assign({},spec,{field:spec.typeF,col:spec.typeC,rule:R.budget2});
       if(!present.has(spec.typeC)||!present.has(spec.amtC)) return mk(s,'REVIEW',pt,'(column absent)',true,'column absent from the export preset');
       const et=expRow[spec.typeC]??'', ea=expRow[spec.amtC]??'';
-      if(norm(et)!==norm(pt)) return mk(s,'FAIL',pt,et,true,budget(ea)===budget(pa)?'the amount agrees ('+ea+') — the budget type does not':undefined);
+      if(norm(et)!==norm(pt)) return mk(s,'FAIL',pt,et,true,budget(ea)===budget(pa)?'the amount agrees ('+ea+'), the budget type does not':undefined);
       const a=Object.assign({},spec,{field:spec.amtF,col:spec.amtC,rule:R.budget2});
-      if(norm(pt).toLowerCase()==='no limit') return isBlank(ea)?mk(Object.assign({},a,{col:spec.typeC+' · '+spec.amtC}),'PASS',pt,et,true,'No Limit under campaign budget optimization — the amount stays blank'):mk(a,'FAIL','',ea,true,'an amount is set on an ad group planned as No Limit');
+      if(norm(pt).toLowerCase()==='no limit') return isBlank(ea)?mk(Object.assign({},a,{col:spec.typeC+' · '+spec.amtC}),'PASS',pt,et,true,'No Limit under campaign budget optimization: the amount stays blank'):mk(a,'FAIL','',ea,true,'an amount is set on an ad group planned as No Limit');
       if(isBlank(ea)) return mk(a,'FAIL',pa,'',true,'the budget amount is blank in the export');
       if(budget(ea)!==budget(pa)) return mk(a,'FAIL',pa,ea,true,'amount with cents compared as whole dollars');
       return mk(Object.assign({},a,{col:spec.typeC+' · '+spec.amtC}),'PASS',pt+' '+pa,et+' '+ea,true,'budget type read from its own column; amount with cents compared as whole dollars');
@@ -1176,19 +1176,19 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
       const s=Object.assign({},spec,{field:'video_file',col:'Video Name',rule:R.cover});
       if(!present.has('Video Name')) return mk(s,'REVIEW','a video asset is planned','(column absent)',true,'column absent from the export preset');
       const v=expRow['Video Name']??'';
-      if(!isBlank(v)) return mk(s,'PASS','a video asset is planned','asset '+v,true,'coverage only — file names are never compared to the export');
+      if(!isBlank(v)) return mk(s,'PASS','a video asset is planned','asset '+v,true,'coverage only: file names are never compared to the export');
       return mk(s,'FAIL','a video asset is planned','no asset assigned',true);
     }
     if(spec.special==='post_text'){
       if(isBlank(planRow.text)) return null;
-      return mk(Object.assign({},spec,{field:'text',col:'Text',rule:R.src}),'REVIEW',planRow.text,expRow['Text']??'',true,'a post carries one copy — confirm in the preview');
+      return mk(Object.assign({},spec,{field:'text',col:'Text',rule:R.src}),'REVIEW',planRow.text,expRow['Text']??'',true,'a post carries one copy: confirm in the preview');
     }
     if(spec.special==='use_tiktok_account'){
       const expected='On'; const s=Object.assign({},spec,{field:'ad_source',col:'Use TikTok Account',rule:R.proof,key:'use_tiktok_account|'+planRow.ad_source,prove:'a Spark Ad export showing Use TikTok Account On proves the mapping'});
       if(!present.has('Use TikTok Account')) return mk(s,'REVIEW',planRow.ad_source+' → '+expected,'(column absent)',false,'column absent from the export preset');
       const ev=expRow['Use TikTok Account']??'';
-      if(norm(ev)===expected) return mk(s,'PASS',planRow.ad_source+' → '+expected,ev,false,'unproven mapping observed equal — proposed in §7');
-      return mk(s,'REVIEW',planRow.ad_source+' → '+expected,ev,false,'unproven mapping — a mismatch can only ask for review');
+      if(norm(ev)===expected) return mk(s,'PASS',planRow.ad_source+' → '+expected,ev,false,'unproven mapping observed equal: proposed in §7');
+      return mk(s,'REVIEW',planRow.ad_source+' → '+expected,ev,false,'unproven mapping: a mismatch can only ask for review');
     }
     return null;
   },
@@ -1199,8 +1199,8 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     const up=(i,j,o)=>Object.assign({plan_row:4+i*8+j,campaign_name:ttCamp(i).name,ad_group_name:ttGroupName(i),ad_name:ttAdName(i,j),ad_id:(i===TT_RENAME_G&&j===TT_RENAME_C)?'':ttAdId(i,j),ad_source:'Uploaded creative',identity:'Halcyon Coffee',identity_type:'TTBC Authorized Post',identity_id:TT_BC,post_id:'',ad_format:'Single video',video_file:'HAL_'+CONCEPTS[j][0]+'_'+CONCEPTS[j][1]+'_9x16.mp4',only_show_as_ad:'On',music_sharing:'Off',text:CONCEPTS[j][2],cta_type:'Standard',cta:'Learn more',web_url:TT_URL,website_events:TT_PIXEL,qa_status:READY,delivery_intent:'Off'},o||{});
     TT_GROUPS.forEach((g,i)=>CONCEPTS.forEach((cc,j)=>plan.ad.push(up(i,j))));
     const spark=(i,o)=>Object.assign({campaign_name:ttCamp(i).name,ad_group_name:ttGroupName(i),identity_type:'TikTok Account',ad_format:'TikTok post',video_file:'',only_show_as_ad:'',music_sharing:'Off',text:'',cta_type:'Standard',cta:'Learn more',web_url:TT_URL,website_events:TT_PIXEL,qa_status:READY,delivery_intent:'Off'},o);
-    plan.ad.push(spark(2,{plan_row:TT_SPARK_ROW,ad_name:ttGroupName(2)+'_MayaBrews_SparkAd',ad_id:TT_SPARK_ID,ad_source:'Spark Ad — creator post',identity:'@mayabrews',identity_id:TT_CRE,post_id:TT_POST}));
-    plan.ad.push(spark(5,{plan_row:TT_BRAND_ROW,ad_name:ttGroupName(5)+'_HalcyonPost_SparkAd',ad_id:TT_BRAND_ID,ad_source:'Spark Ad — brand post',identity:'@halcyoncoffee',identity_id:TT_BRAND_ACC,post_id:TT_BRAND_POST}));
+    plan.ad.push(spark(2,{plan_row:TT_SPARK_ROW,ad_name:ttGroupName(2)+'_MayaBrews_SparkAd',ad_id:TT_SPARK_ID,ad_source:'Spark Ad (creator post)',identity:'@mayabrews',identity_id:TT_CRE,post_id:TT_POST}));
+    plan.ad.push(spark(5,{plan_row:TT_BRAND_ROW,ad_name:ttGroupName(5)+'_HalcyonPost_SparkAd',ad_id:TT_BRAND_ID,ad_source:'Spark Ad (brand post)',identity:'@halcyoncoffee',identity_id:TT_BRAND_ACC,post_id:TT_BRAND_POST}));
     plan.ad.push(up(5,1,{plan_row:TT_NA_ROW,ad_name:ttGroupName(5)+'_Roastery_15s_Video_ALT',ad_id:'',video_file:'HAL_Roastery_15s_9x16_ALT.mp4',qa_status:'Not Launching'}));
     return plan;
   },
@@ -1210,8 +1210,8 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     const ad=(i,j)=>({'Ad ID':ttAdId(i,j),'Ad Status':'Off','Ad Name':ttAdName(i,j),'Use TikTok Account':'On','Identity Type':'TTBC Authorized Post','Identity ID':digits(TT_BC),'Ad format':'Single video','Video Name':'HAL_'+CONCEPTS[j][0]+'_'+CONCEPTS[j][1]+'_9x16.mp4','Post ID':'','Only show as ad':'On','Text':CONCEPTS[j][2],'Call to action type':'Standard','Call to Action':'Learn more','Web URL':TT_URL,'Impression Tracking URL':'','Click Tracking URL':'','TikTok website events':TT_PIXEL});
     const spark=(i,id,name,acct,post,text)=>Object.assign({},camp(TT_GROUPS[i].c),grp(i),{'Ad ID':id,'Ad Status':'Off','Ad Name':name,'Use TikTok Account':'On','Identity Type':'TikTok Account','Identity ID':digits(acct),'Ad format':'Single video','Video Name':'','Post ID':post,'Only show as ad':'','Text':text,'Call to action type':'Standard','Call to Action':'Learn more','Web URL':TT_URL,'Impression Tracking URL':'','Click Tracking URL':'','TikTok website events':TT_PIXEL});
     const sheet=[]; TT_GROUPS.forEach((g,i)=>CONCEPTS.forEach((cc,j)=>sheet.push(Object.assign({},camp(g.c),grp(i),ad(i,j)))));
-    sheet.push(spark(2,TT_SPARK_ID,ttGroupName(2)+'_MayaBrews_SparkAd',TT_CRE,TT_POST,'Cozy season is coffee season — my go-to holiday roast from @halcyoncoffee'));
-    sheet.push(spark(5,TT_BRAND_ID,ttGroupName(5)+'_HalcyonPost_SparkAd',TT_BRAND_ACC,TT_BRAND_POST,'Our holiday roast is here — gifts for the coffee-obsessed, shipped free over $40'));
+    sheet.push(spark(2,TT_SPARK_ID,ttGroupName(2)+'_MayaBrews_SparkAd',TT_CRE,TT_POST,'Cozy season is coffee season. My go-to holiday roast from @halcyoncoffee'));
+    sheet.push(spark(5,TT_BRAND_ID,ttGroupName(5)+'_HalcyonPost_SparkAd',TT_BRAND_ACC,TT_BRAND_POST,'Our holiday roast is here: gifts for the coffee-obsessed, shipped free over $40'));
     return {sheet};
   },
   split(x){ /* the engine splits the wide sheet into campaign, ad group and ad rows by ID; absent columns stay absent */
@@ -1223,7 +1223,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
   DISC:[
     {id:'tt-budget-type',planted:true,tier:'campaign',row:5,check:'budget',fix:'Set the campaign budget type to Lifetime in TikTok Ads Manager (a $180,000 daily budget was set)',apply(x,on){ttCampRows(x,1).forEach(r=>r['Campaign Budget Type']=on?'Daily':'Lifetime')}},
     {id:'tt-g-on',planted:true,tier:'adset',row:6,check:'status',fix:'Switch the ad group off in TikTok Ads Manager',apply(x,on){ttRows(x,2).forEach(r=>r['Ad Group Status']=on?'On':'Off')}},
-    {id:'tt-pangle',planted:true,tier:'adset',row:8,check:'placements',fix:'Rebuild the ad group with TikTok only — placements can’t be changed after creation',apply(x,on){ttRows(x,4).forEach(r=>r['Placements']=on?'TikTok,Pangle':'TikTok')}},
+    {id:'tt-pangle',planted:true,tier:'adset',row:8,check:'placements',fix:'Rebuild the ad group with TikTok only: placements can’t be changed after creation',apply(x,on){ttRows(x,4).forEach(r=>r['Placements']=on?'TikTok,Pangle':'TikTok')}},
     {id:'tt-pixel-event',planted:true,tier:'adset',row:7,check:'pixel_event',fix:'Set the pixel event to Complete Payment in TikTok Ads Manager',apply(x,on){ttRows(x,3).forEach(r=>r['Pixel Event']=on?'Add to Cart':'Complete Payment')}},
     {id:'tt-sys-utm',planted:true,tier:'ad',rows:[28,29,30,31,32,33,34,35],check:'web_url',fix:'Correct the web URL on all 8 ads in TikTok Ads Manager (one bulk edit)',apply(x,on){for(let j=0;j<8;j++) ttAd(x,3,j)['Web URL']=on?TT_URL.replace('utm_source=tiktok','utm_source=meta'):TT_URL}},
     {id:'tt-rename',planted:true,tier:'ad',row:23,check:'missing',fix:'Rename the ad in TikTok Ads Manager to the planned name',apply(x,on){ttAd(x,TT_RENAME_G,TT_RENAME_C)['Ad Name']=on?TT_RENAME_NAME+'_v2':TT_RENAME_NAME}},
@@ -1236,21 +1236,21 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     {id:'tt-g-pixel',planted:false,tier:'adset',row:9,check:'pixel',fix:'Re-attach the pixel to the ad group in TikTok Ads Manager',apply(x,on){ttRows(x,5).forEach(r=>r['TikTok Pixel ID']=on?'':TT_PIXEL)}},
     {id:'tt-brand-identity',planted:false,tier:'ad',row:TT_BRAND_ROW,check:'identity_id',fix:'Re-select the brand’s own TikTok account as the identity in TikTok Ads Manager',apply(x,on){ttById(x,TT_BRAND_ID)['Identity ID']=on?digits(TT_CRE):digits(TT_BRAND_ACC)}}
   ],
-  humans(plan){ const h=[{tier:'campaign',plan_row:4,field:'special_ads_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'campaign',plan_row:5,field:'special_ads_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'adset',plan_row:4,field:'block_list_pangle',value:'n/a — TikTok placement only',cell:'hc_brand_safety',status:'initialled JK'}];
-    plan.ad.forEach(a=>{ if(a.ad_source==='Spark Ad — creator post') h.push({tier:'ad',plan_row:a.plan_row,field:'authorization_code',value:a.identity+' · 365-day authorisation',cell:'hc_identity',status:'open'}); else if(a.ad_source==='Spark Ad — brand post') h.push({tier:'ad',plan_row:a.plan_row,field:'linked_account',value:a.identity+' · linked in Business Center',cell:'hc_identity',status:'initialled AR'}); }); return h; },
+  humans(plan){ const h=[{tier:'campaign',plan_row:4,field:'special_ads_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'campaign',plan_row:5,field:'special_ads_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'adset',plan_row:4,field:'block_list_pangle',value:'n/a (TikTok placement only)',cell:'hc_brand_safety',status:'initialled JK'}];
+    plan.ad.forEach(a=>{ if(a.ad_source==='Spark Ad (creator post)') h.push({tier:'ad',plan_row:a.plan_row,field:'authorization_code',value:a.identity+' · 365-day authorisation',cell:'hc_identity',status:'open'}); else if(a.ad_source==='Spark Ad (brand post)') h.push({tier:'ad',plan_row:a.plan_row,field:'linked_account',value:a.identity+' · linked in Business Center',cell:'hc_identity',status:'initialled AR'}); }); return h; },
   proposalKey:c=>c.key||(c.field+'|'+c.col),
-  contextNote:run=>run.context.length?'Context, no action — toggles exported blank compared as Off on '+run.context.length+' item'+(run.context.length>1?'s':'')+' ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
+  contextNote:run=>run.context.length?'Context, no action: toggles exported blank compared as Off on '+run.context.length+' item'+(run.context.length>1?'s':'')+' ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
   PLAN_VIEWS:[{name:'QA_EXPORT_CAMPAIGN',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buy_type','advertising_objective','campaign_budget_optimization','campaign_budget_type','campaign_budget_amount','special_ads_categories','qa_status','plan_line']},
     {name:'QA_EXPORT_ADGROUP',key:'adset',cols:['plan_row','ad_group_name','ad_group_id','delivery_intent','optimization_goal','billing_method','bid_strategy','placement_types','placements','include_search_results','pixel_id','pixel_event','include_audience_id','exclude_audience_id','location','gender','age','languages','interest_category','inventory_filter','ad_group_budget_type','ad_group_budget_amount','start_datetime','end_datetime','dayparting','delivery_type','qa_status']},
     {name:'QA_EXPORT (ads)',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','identity_type','identity_id','post_id','ad_format','video_file','only_show_as_ad','text','cta_type','cta','web_url','website_events','qa_status','delivery_intent']}],
   EXP_VIEWS:[{name:'Campaign columns',key:'campaigns',tier:'campaign'},{name:'Ad group columns',key:'adsets',tier:'adset'},{name:'Ad columns',key:'ads',tier:'ad'}],
-  logLines:(run,nPlan,nExp,presentN,ex)=>['Parsing 3 plan feeds and 1 export as text — '+nPlan+' plan rows, '+nExp+' export rows — one wide sheet, split into '+ex.campaigns.length+' campaign, '+ex.adsets.length+' ad group and '+ex.ads.length+' ad rows',
+  logLines:(run,nPlan,nExp,presentN,ex)=>['Parsing 3 plan feeds and 1 export as text: '+nPlan+' plan rows, '+nExp+' export rows, one wide sheet split into '+ex.campaigns.length+' campaign, '+ex.adsets.length+' ad group and '+ex.ads.length+' ad rows',
     'Inventory: '+new Set([...run.present.campaign,...run.present.adset,...run.present.ad]).size+' export columns present · '+run.absent.length+' absent'+(run.absent.length?' ('+run.absent.join(', ')+')':''),
     'Matching: '+run.byId+' items by ID, '+run.byName+' by name path',
     'Normalising: dates yyyy/m/d HH:mm to instants in account time, amounts with cents to whole dollars, blank toggles to Off, age buckets to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
     'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
-  resetStatus:'8 problems are planted in the inputs — one of them across all 8 ads of an ad group. Run QA to find them.',
+  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad group. Run QA to find them.',
   idleLog:'Waiting to run. The engine parses the plan feeds and the one wide export sheet as text, splits it into campaign, ad group and ad rows by ID, inventories its columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
 const PLATFORMS={meta:META,tiktok:TIKTOK};
@@ -1270,14 +1270,14 @@ const money=v=>'$'+(+budget(v)||0).toLocaleString('en-US');
 const count1=(n,one,many)=>n===1?'One '+one:n+' '+many;
 const utmSrc=v=>{const m=String(v??'').match(/utm_source=([^&\s]+)/i); return m?m[1]:null;};
 const nice=v=>{const t=norm(v).replace(/_/g,' ').toLowerCase(); return t?t.charAt(0).toUpperCase()+t.slice(1):'(blank)';};
-const amountLine=(label,x)=>{ const p=+budget(x.plan), e=+budget(x.exp); if(isBlank(x.exp)) return label+' budget is blank in the export — nothing would spend.'; if(!isFinite(e)||e===p) return label+' budget does not match the plan.'; return label+' budget entered as '+money(e)+' instead of '+money(p)+' — would have '+(e<p?'underspent':'overspent')+' the flight by '+money(Math.abs(p-e))+'.'; };
+const amountLine=(label,x)=>{ const p=+budget(x.plan), e=+budget(x.exp); if(isBlank(x.exp)) return label+' budget is blank in the export, so nothing would spend.'; if(!isFinite(e)||e===p) return label+' budget does not match the plan.'; return label+' budget entered as '+money(e)+' instead of '+money(p)+', which would have '+(e<p?'underspent':'overspent')+' the flight by '+money(Math.abs(p-e))+'.'; };
 const liveLine=(one,many)=>(x,i,n)=>count1(n,one+' is',many+' are')+' live before launch.';
-const pixelLine=(one,many)=>(x,i,n)=>count1(n,one+' has',many+' have')+(isBlank(x.exp)?' no pixel attached — conversions would go unmeasured.':' the wrong pixel attached — conversions would be counted elsewhere.');
+const pixelLine=(one,many)=>(x,i,n)=>count1(n,one+' has',many+' have')+(isBlank(x.exp)?' no pixel attached, so conversions would go unmeasured.':' the wrong pixel attached, so conversions would be counted elsewhere.');
 const copyLine=(x,i,n)=>count1(n,'ad runs','ads run')+' copy that differs from the approved text ('+x.field.replace(/_feed$/,'').replace(/_/g,' ')+').';
 META.SUMMARY={
   'campaign|budget':x=>amountLine('Campaign',x),'adset|budget':x=>amountLine('Ad set',x),
   'campaign|status':liveLine('campaign','campaigns'),'adset|status':liveLine('ad set','ad sets'),'ad|status':liveLine('ad','ads'),
-  'ad|url_parameters':(x,i,n)=>{const u=utmSrc(x.exp); return count1(n,'ad sends','ads send')+' traffic tagged '+(u?'utm_source='+u:'with the wrong URL parameters')+' — attribution breaks for '+(n>=3?'the whole ad set':n===1?'that ad':'those ads')+'.';},
+  'ad|url_parameters':(x,i,n)=>{const u=utmSrc(x.exp); return count1(n,'ad sends','ads send')+' traffic tagged '+(u?'utm_source='+u:'with the wrong URL parameters')+', so attribution breaks for '+(n>=3?'the whole ad set':n===1?'that ad':'those ads')+'.';},
   'ad|cta':(x,i,n)=>count1(n,'ad shows','ads show')+' a '+nice(x.exp)+' button instead of '+nice(x.plan)+'.',
   'ad|website_url':(x,i,n)=>count1(n,'ad sends','ads send')+' people to '+norm(x.exp)+' instead of the planned landing page.',
   'ad|pixel':pixelLine('ad','ads'),'adset|pixel':pixelLine('ad set','ad sets'),
@@ -1285,13 +1285,13 @@ META.SUMMARY={
   'ad|story_id':()=>'The partnership ad is attached to the wrong creator post.',
   'ad|creative':(x,i,n)=>count1(n,'ad has','ads have')+' no feed asset assigned.'};
 TIKTOK.SUMMARY={
-  'campaign|budget':(x,i)=>{ if(x.field!=='campaign_budget_type') return amountLine('Campaign',x); const amt=money(i.planRow.campaign_budget_amount); if(/lifetime/i.test(x.plan)&&/daily/i.test(x.exp)) return 'A '+amt+' lifetime budget was set as daily — would spend the flight in a day.'; if(/daily/i.test(x.plan)&&/lifetime/i.test(x.exp)) return 'A '+amt+' daily budget was set as lifetime — the flight would underspend.'; return 'The campaign budget type reads '+nice(x.exp)+' instead of '+nice(x.plan)+'.'; },
+  'campaign|budget':(x,i)=>{ if(x.field!=='campaign_budget_type') return amountLine('Campaign',x); const amt=money(i.planRow.campaign_budget_amount); if(/lifetime/i.test(x.plan)&&/daily/i.test(x.exp)) return 'A '+amt+' lifetime budget was set as daily, which would spend the flight in a day.'; if(/daily/i.test(x.plan)&&/lifetime/i.test(x.exp)) return 'A '+amt+' daily budget was set as lifetime, so the flight would underspend.'; return 'The campaign budget type reads '+nice(x.exp)+' instead of '+nice(x.plan)+'.'; },
   'adset|budget':(x,i)=>x.field==='ad_group_budget_type'?'One ad group budget type reads '+nice(x.exp)+' instead of '+nice(x.plan)+'.':amountLine('Ad group',x),
   'campaign|status':liveLine('campaign','campaigns'),'adset|status':liveLine('ad group','ad groups'),'ad|status':liveLine('ad','ads'),
-  'adset|placements':x=>{const plan=setKey(x.plan).split(' | '); const extra=norm(x.exp).split(/[;,]/).map(t=>t.trim()).filter(t=>t&&!plan.includes(t.toLowerCase())); return (extra.length?extra.join(' and ')+' '+(extra.length>1?'were':'was')+' left on':'The placements differ from the plan')+' — the ad group must be rebuilt.';},
-  'adset|pixel_event':x=>'One ad group optimises to '+norm(x.exp)+' instead of '+norm(x.plan)+' — it would buy the wrong action.',
-  'ad|web_url':(x,i,n)=>{const u=utmSrc(x.exp); const tag=u?(/^(meta|facebook|instagram)$/i.test(u)?'as Meta':'utm_source='+u):'with the wrong URL'; return count1(n,'ad sends','ads send')+' traffic tagged '+tag+' — attribution breaks.';},
-  'ad|only_show_as_ad':(x,i,n)=>count1(n,'ad has','ads have')+' “Only show as ad” switched off — the video would also appear on the profile.',
+  'adset|placements':x=>{const plan=setKey(x.plan).split(' | '); const extra=norm(x.exp).split(/[;,]/).map(t=>t.trim()).filter(t=>t&&!plan.includes(t.toLowerCase())); return (extra.length?extra.join(' and ')+' '+(extra.length>1?'were':'was')+' left on':'The placements differ from the plan')+', so the ad group must be rebuilt.';},
+  'adset|pixel_event':x=>'One ad group optimises to '+norm(x.exp)+' instead of '+norm(x.plan)+', so it would buy the wrong action.',
+  'ad|web_url':(x,i,n)=>{const u=utmSrc(x.exp); const tag=u?(/^(meta|facebook|instagram)$/i.test(u)?'as Meta':'utm_source='+u):'with the wrong URL'; return count1(n,'ad sends','ads send')+' traffic tagged '+tag+', so attribution breaks.';},
+  'ad|only_show_as_ad':(x,i,n)=>count1(n,'ad has','ads have')+' “Only show as ad” switched off, so the video would also appear on the profile.',
   'ad|text':(x,i,n)=>count1(n,'ad runs','ads run')+' text that differs from the approved copy.',
   'adset|pixel':pixelLine('ad group','ad groups'),
   'ad|post_id':()=>'The creator Spark Ad is attached to the wrong post.',
@@ -1314,7 +1314,7 @@ function summaryLines(run){
   if(gone) tail.push(low(count1(gone,'planned item is','planned items are'))+' not in the export at all');
   const extra=run.extras.length-Math.min(renamed,run.extras.length); if(extra>0) tail.push(low(count1(extra,'ad in the export is','ads in the export are'))+' not in the plan');
   if(tail.length){ const t=tail.length>1?tail.slice(0,-1).join(', ')+', and '+tail[tail.length-1]:tail[0]; lines.push(t.charAt(0).toUpperCase()+t.slice(1)+'.'); }
-  if(!lines.length) return [run.counts.review?'Nothing failed — '+count1(run.counts.review,'item needs','items need')+' a human answer before sign-off.':'Nothing to catch — every planned item agrees with the export.'];
+  if(!lines.length) return [run.counts.review?'Nothing failed. '+count1(run.counts.review,'item needs','items need')+' a human answer before sign-off.':'Nothing to catch. Every planned item agrees with the export.'];
   if(lines.length===1) lines.push('The other '+run.counts.pass+' planned items agree with the plan.');
   return lines;
 }
@@ -1330,18 +1330,18 @@ const discFor=(tier,row,check)=>P.DISC.find(d=>d.tier===tier&&d.check===check&&s
 function evalSpec(spec,planRow,expRow,present){
   let pv=planRow[spec.field], proven=spec.proven;
   if(spec.field==='delivery_intent'){const m=P.STATUS[norm(pv)]; if(!m) return null; pv=m[0]; proven=m[1]; if(!proven) spec=Object.assign({},spec,{rule:R.proof});}
-  if(isBlank(pv)){ if(spec.required) return mk(spec,'FAIL',pv,expRow[spec.col]??'',true,'blank plan cell — required for this ad source'); return null; }
+  if(isBlank(pv)){ if(spec.required) return mk(spec,'FAIL',pv,expRow[spec.col]??'',true,'blank plan cell: required for this ad source'); return null; }
   if(!present.has(spec.col)) return mk(spec,'REVIEW',pv,'(column absent)',proven,'column absent from the export preset');
   const ev=expRow[spec.col]??''; const r=compare(spec.kind,pv,ev);
-  if(r.eq) return mk(spec,'PASS',pv,ev,proven,r.note||(proven?undefined:'unproven mapping observed equal — proposed in §7'));
+  if(r.eq) return mk(spec,'PASS',pv,ev,proven,r.note||(proven?undefined:'unproven mapping observed equal: proposed in §7'));
   if(r.review) return mk(spec,'REVIEW',pv,ev,proven,r.note);
-  return mk(spec,proven?'FAIL':'REVIEW',pv,ev,proven,proven?undefined:'unproven mapping — a mismatch can only ask for review');
+  return mk(spec,proven?'FAIL':'REVIEW',pv,ev,proven,proven?undefined:'unproven mapping: a mismatch can only ask for review');
 }
 function finalize(it){
   it.result=it.checks.some(c=>c.outcome==='FAIL')?'FAIL':it.checks.some(c=>c.outcome==='REVIEW')?'NEEDS REVIEW':'PASS';
   const f=it.checks.find(c=>c.outcome==='FAIL')||it.checks.find(c=>c.outcome==='REVIEW');
-  it.first=f?f.field:'—';
-  it.detail=f?(f.field+': plan «'+f.plan+'» · export «'+f.exp+'»'+(f.note?' — '+f.note:'')):('all '+it.checks.length+' checks agree');
+  it.first=f?f.field:'–';
+  it.detail=f?(f.field+': plan «'+f.plan+'» · export «'+f.exp+'»'+(f.note?' · '+f.note:'')):('all '+it.checks.length+' checks agree');
   return it;
 }
 function evaluate(tier,planRow,name,expRow,specs,present){
@@ -1355,8 +1355,8 @@ function runEngine(plan,exp){
   const present={campaign:keysOf(exp.campaigns),adset:keysOf(exp.adsets),ad:keysOf(exp.ads)};
   const absent=[]; Object.keys(P.NEEDED).forEach(t=>P.NEEDED[t].forEach(c=>{if(!present[t].has(c)&&!absent.includes(c)) absent.push(c)}));
   const items=[]; let byId=0, byName=0; const ID=P.idCol, NM=P.nameCol, IF=P.idField, NF=P.nameField;
-  const naItem=(tier,p,name)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'N/A',first:'—',detail:'QA status '+p.qa_status+' — deliberately not built, never MISSING'});
-  const missItem=(tier,p,name,near)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'MISSING',first:'not in export',detail:near?('not found by name path — likely rename: export has «'+near+'»'):'planned, not found in the export',near});
+  const naItem=(tier,p,name)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'N/A',first:'–',detail:'QA status '+p.qa_status+': deliberately not built, never MISSING'});
+  const missItem=(tier,p,name,near)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'MISSING',first:'not in export',detail:near?('not found by name path. Likely a rename: export has «'+near+'»'):'planned, not found in the export',near});
   plan.campaign.forEach(c=>{
     if(NA_STATUS.includes(c.qa_status)) return items.push(naItem('campaign',c,c[NF.campaign]));
     let e=!isBlank(c[IF.campaign])?exp.campaigns.find(x=>digits(x[ID.campaign])===digits(c[IF.campaign])):null; if(e) byId++;
@@ -1389,7 +1389,7 @@ function runEngine(plan,exp){
   const ready=counts.fail===0&&counts.missing===0&&counts.extra===0;
   const why=ready?(counts.review?'no failures; '+counts.review+' item'+(counts.review>1?'s':'')+' need'+(counts.review>1?'':'s')+' a human answer before sign-off':'every planned item agrees with the export'):[counts.fail?counts.fail+' FAIL':'',counts.missing?counts.missing+' MISSING':'',counts.extra?counts.extra+' EXTRA':''].filter(Boolean).join(', ');
   const firsts={}; items.filter(i=>i.result==='FAIL').forEach(i=>firsts[i.first]=(firsts[i.first]||0)+1);
-  const top=Object.keys(firsts).sort((a,b)=>firsts[b]-firsts[a])[0]||'—';
+  const top=Object.keys(firsts).sort((a,b)=>firsts[b]-firsts[a])[0]||'–';
   const proposals=[]; const seen=new Set();
   items.forEach(i=>i.checks.forEach(c=>{ if(!c.proven&&c.outcome==='PASS'){ const key=P.proposalKey(c); if(seen.has(key)) return; seen.add(key); proposals.push({tab:'vocabulary map',target_key:key,before:'unproven',after:'proven',reason:'observed equal on '+P.tiers[i.tier]+' plan_row '+i.plan_row+' in this run'}); } }));
   const context=[]; items.forEach(i=>i.checks.forEach(c=>{ if(c.outcome==='PASS'&&c.note&&/normalisation/.test(c.note)) context.push(P.tiers[i.tier]+' plan_row '+i.plan_row+' · '+c.field); }));
@@ -1434,24 +1434,24 @@ let fullOpen=false;
 function renderReport(run,prev,runId){
   const TIER=P.tiers, fallback='<span>correct the build in '+esc(P.manager)+', re-export, re-run</span>';
   const today=new Date().toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'});
-  let h='<div class="report"><header><h3>QA Report — '+esc(P.brand)+' — '+esc(P.label)+' — '+esc(P.scope)+' — '+esc(today)+'</h3><span class="meta">'+esc(runId)+' · checks evaluated: '+run.counts.checks+'</span></header>';
+  let h='<div class="report"><header><h3>QA Report · '+esc(P.brand)+' · '+esc(P.label)+' · '+esc(P.scope)+' · '+esc(today)+'</h3><span class="meta">'+esc(runId)+' · checks evaluated: '+run.counts.checks+'</span></header>';
   h+='<div class="gate"><div class="verdict '+(run.ready?'yes':'no')+'">READY TO APPROVE: '+(run.ready?'YES':'NO')+'</div><div class="why">'+esc(run.why)+'</div>';
   const c=run.counts; h+='<div class="counts"><span>planned<b>'+c.planned+'</b></span><span>PASS<b>'+c.pass+'</b></span><span>FAIL<b>'+c.fail+'</b></span><span>MISSING<b>'+c.missing+'</b></span><span>NEEDS REVIEW<b>'+c.review+'</b></span><span>N/A<b>'+c.na+'</b></span><span>EXTRA<b>'+c.extra+'</b></span><span>out of scope<b>0</b></span></div>';
   if(c.na) h+='<div class="absent">'+(c.na===1?'The N/A row is a planned ad':c.na+' N/A rows are planned ads')+' the plan marks Not Launching: held back on purpose, so not expected in the export and not counted as missing.</div>';
-  if(run.absent.length) h+='<div class="absent">Columns absent from the export: <span class="mono">'+run.absent.map(esc).join(', ')+'</span> — checks that need them read “column absent”.</div>';
+  if(run.absent.length) h+='<div class="absent">Columns absent from the export: <span class="mono">'+run.absent.map(esc).join(', ')+'</span>. Checks that need them read “column absent”.</div>';
   h+='</div>';
-  h+='<div class="rsec plain"><h4><span>What this run caught</span> <small>in plain English — the sections below carry the evidence</small></h4><ul>'+summaryLines(run).map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div>';
+  h+='<div class="rsec plain"><h4><span>What this run caught</span> <small>in plain English. The sections below carry the evidence</small></h4><ul>'+summaryLines(run).map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div>';
   if(prev){
     const key=i=>i.tier+':'+i.plan_row; const pm={}; prev.items.forEach(i=>pm[key(i)]=i);
     const bad=r=>r==='FAIL'||r==='NEEDS REVIEW'||r==='MISSING';
     const resolved=[],fresh=[],same=[];
-    run.items.forEach(i=>{const p=pm[key(i)]; const line=TIER[i.tier]+' plan_row '+i.plan_row+' · '+(i.first!=='—'?i.first:(p&&p.first)||'');
+    run.items.forEach(i=>{const p=pm[key(i)]; const line=TIER[i.tier]+' plan_row '+i.plan_row+' · '+(i.first!=='–'?i.first:(p&&p.first)||'');
       if(p&&bad(p.result)&&!bad(i.result)) resolved.push(TIER[i.tier]+' plan_row '+i.plan_row+' · '+p.first);
-      else if(bad(i.result)&&(!p||!bad(p.result))) fresh.push(line+' — '+i.result);
-      else if(bad(i.result)&&p&&bad(p.result)) same.push(line+' — still '+i.result);});
+      else if(bad(i.result)&&(!p||!bad(p.result))) fresh.push(line+' · '+i.result);
+      else if(bad(i.result)&&p&&bad(p.result)) same.push(line+' · still '+i.result);});
     const pe=new Set(prev.extras.map(x=>x.ad_id)); run.extras.forEach(x=>{ if(!pe.has(x.ad_id)) fresh.push('EXTRA '+x.name); }); prev.extras.forEach(x=>{ if(!run.extras.some(y=>y.ad_id===x.ad_id)) resolved.push('EXTRA '+x.name); });
     const tierRe=new RegExp('^('+Object.values(TIER).join('|')+') plan_row (\\d+) · (.*)$');
-    const fold=(arr)=>{ const g={}, out=[]; arr.forEach(l=>{const m=l.match(tierRe); if(!m){out.push(l);return;} const k=m[1]+'|'+m[3]; (g[k]=g[k]||[]).push(l)}); Object.keys(g).forEach(k=>{ if(g[k].length>=3){const [tier,rest]=k.split('|'); out.push(tier+' · '+rest+' — '+g[k].length+' items');} else out.push(...g[k]); }); return out; };
+    const fold=(arr)=>{ const g={}, out=[]; arr.forEach(l=>{const m=l.match(tierRe); if(!m){out.push(l);return;} const k=m[1]+'|'+m[3]; (g[k]=g[k]||[]).push(l)}); Object.keys(g).forEach(k=>{ if(g[k].length>=3){const [tier,rest]=k.split('|'); out.push(tier+' · '+rest+' · '+g[k].length+' items');} else out.push(...g[k]); }); return out; };
     h+='<div class="rsec diffsec"><h4><span>What changed since the previous run</span> <small>resolved · new · unchanged</small></h4>'+(resolved.length||fresh.length||same.length?'<ul>'+fold(resolved).map(x=>'<li><span class="chip pass">resolved</span> '+esc(x)+'</li>').join('')+fold(fresh).map(x=>'<li><span class="chip fail">new</span> '+esc(x)+'</li>').join('')+fold(same).map(x=>'<li><span class="chip review">unchanged</span> '+esc(x)+'</li>').join('')+'</ul>':'<p class="empty">Nothing changed.</p>')+'</div>';
   }
   /* §2 failures, systemic findings folded into one card */
@@ -1470,21 +1470,21 @@ function renderReport(run,prev,runId){
   h+='<details class="full-report"'+(fullOpen?' open':'')+'><summary><span class="when-closed">Show the full report</span><span class="when-open">Hide the full report</span><small>'+esc(inside)+'</small></summary>';
   h+='<div class="rsec"><h4><span>§3 Needs review</span> <small>what could not be verified, and what would prove it</small></h4>';
   if(!revs.length) h+='<p class="empty">None.</p>';
-  revs.forEach(({i,x})=>{ h+='<div class="rev"><div class="what"><b>'+esc(TIER[i.tier])+' plan_row '+i.plan_row+' · '+esc(x.field)+'</b> — plan «<span class="mono">'+esc(x.plan)+'</span>» · export «<span class="mono">'+esc(x.exp)+'</span>»'+(x.note?' — '+esc(x.note):'')+'</div><div>'+fixButton(i.tier,i.plan_row,x.id)+'</div><div class="prove">Would prove it: '+esc(x.prove||'confirm in '+P.manager+' and initial the ✓ cell')+'</div></div>'; });
+  revs.forEach(({i,x})=>{ h+='<div class="rev"><div class="what"><b>'+esc(TIER[i.tier])+' plan_row '+i.plan_row+' · '+esc(x.field)+'</b> · plan «<span class="mono">'+esc(x.plan)+'</span>» · export «<span class="mono">'+esc(x.exp)+'</span>»'+(x.note?' · '+esc(x.note):'')+'</div><div>'+fixButton(i.tier,i.plan_row,x.id)+'</div><div class="prove">Would prove it: '+esc(x.prove||'confirm in '+P.manager+' and initial the ✓ cell')+'</div></div>'; });
   const ctx=P.contextNote(run); if(ctx) h+='<div class="ctx">'+esc(ctx)+'</div>';
   h+='</div>';
   const miss=run.items.filter(i=>i.result==='MISSING');
   h+='<div class="rsec"><h4><span>§4 Missing and extra</span></h4>';
   if(!miss.length&&!run.extras.length) h+='<p class="empty">None.</p>';
-  miss.forEach(i=>{ h+='<div class="rev"><div class="what">'+chip('MISSING')+' <b>'+esc(TIER[i.tier])+' plan_row '+i.plan_row+'</b> · <span class="mono">'+esc(i.name)+'</span> — '+esc(i.detail)+'</div><div>'+fixButton(i.tier,i.plan_row,'missing')+'</div></div>'; });
-  run.extras.forEach(x=>{ h+='<div class="rev"><div class="what">'+chip('EXTRA')+' <span class="mono">'+esc(x.name)+'</span> · '+esc(x.ad_id)+' — in planned '+esc(TIER.adset)+' <span class="mono">'+esc(x.adset)+'</span>, not in the plan</div><div></div></div>'; });
+  miss.forEach(i=>{ h+='<div class="rev"><div class="what">'+chip('MISSING')+' <b>'+esc(TIER[i.tier])+' plan_row '+i.plan_row+'</b> · <span class="mono">'+esc(i.name)+'</span> · '+esc(i.detail)+'</div><div>'+fixButton(i.tier,i.plan_row,'missing')+'</div></div>'; });
+  run.extras.forEach(x=>{ h+='<div class="rev"><div class="what">'+chip('EXTRA')+' <span class="mono">'+esc(x.name)+'</span> · '+esc(x.ad_id)+' · in planned '+esc(TIER.adset)+' <span class="mono">'+esc(x.adset)+'</span>, not in the plan</div><div></div></div>'; });
   h+='</div>';
-  h+='<div class="rsec"><h4><span>§5 Human checks</span> <small>the export cannot verify these — never a failure</small></h4><div class="hc">'+run.humans.map(x=>'<div><span class="fld">'+esc(x.field)+'</span> · '+esc(TIER[x.tier])+' plan_row '+x.plan_row+' · «'+esc(x.value)+'»</div><div>'+(x.status==='open'?'<span class="chip review">✓ '+esc(x.cell)+' open</span>':'<span class="chip pass">✓ '+esc(x.cell)+' '+esc(x.status)+'</span>')+'</div>').join('')+'</div></div>';
+  h+='<div class="rsec"><h4><span>§5 Human checks</span> <small>the export cannot verify these, never a failure</small></h4><div class="hc">'+run.humans.map(x=>'<div><span class="fld">'+esc(x.field)+'</span> · '+esc(TIER[x.tier])+' plan_row '+x.plan_row+' · «'+esc(x.value)+'»</div><div>'+(x.status==='open'?'<span class="chip review">✓ '+esc(x.cell)+' open</span>':'<span class="chip pass">✓ '+esc(x.cell)+' '+esc(x.status)+'</span>')+'</div>').join('')+'</div></div>';
   const items=[...run.items].sort((a,b)=>order[a.tier]-order[b.tier]||a.plan_row-b.plan_row); const passN=items.filter(i=>i.result==='PASS').length;
   h+='<div class="rsec"><h4><span>§6 Per-item table</span> <small>PASS rows collapsed</small> <button class="btn small quiet" id="toggle-pass" type="button" aria-expanded="false" aria-controls="items-table" style="margin-left:auto">Show '+passN+' PASS rows</button></h4><div class="scroller" style="max-height:480px;overflow:auto"><table class="items" id="items-table"><thead><tr><th>tier</th><th>plan_row</th><th>name</th><th>QA status</th><th>result</th><th>first failing check</th><th>detail</th></tr></thead><tbody>';
   items.forEach(i=>{ h+='<tr class="'+(i.result==='PASS'?'pass-row':'')+'"><td>'+esc(TIER[i.tier])+'</td><td>'+i.plan_row+'</td><td class="mono">'+esc(i.name)+'</td><td>'+esc(i.planRow.qa_status)+'</td><td>'+chip(i.result)+'</td><td class="mono">'+esc(i.first)+'</td><td class="detail">'+esc(i.detail)+'</td></tr>'; });
   h+='</tbody></table></div></div>';
-  h+='<div class="rsec"><h4><span>§7 Proposed rule changes</span> <small>one changelog row each — never applied silently</small></h4>';
+  h+='<div class="rsec"><h4><span>§7 Proposed rule changes</span> <small>one changelog row each, never applied silently</small></h4>';
   if(!run.proposals.length) h+='<p class="empty">Nothing new observed.</p>';
   else h+='<div class="scroller"><table class="ft props"><thead><tr><th>where</th><th>target_key</th><th>before</th><th>after</th><th>reason</th></tr></thead><tbody>'+run.proposals.map(p=>'<tr><td>'+esc(p.tab)+'</td><td class="mono">'+esc(p.target_key)+'</td><td>'+esc(p.before)+'</td><td>'+esc(p.after)+'</td><td>'+esc(p.reason)+'</td></tr>').join('')+'</tbody></table></div>';
   h+='</div>';
@@ -1503,7 +1503,7 @@ const openCount=()=>P.DISC.filter(d=>state.active.has(d.id)).length;
 const setRunning=on=>{ $('#btn-run').disabled=on; $('#btn-reset').disabled=on; $('#btn-break').disabled=on; document.querySelectorAll('.platform button[data-p]').forEach(b=>b.disabled=on); if(on){ document.querySelectorAll('#report-wrap button').forEach(b=>b.disabled=true); refocus(null,$('#log')); } };
 const wait=ms=>new Promise(r=>setTimeout(r,REDUCE?0:ms));
 async function doRun(){
-  const st=state; /* the run belongs to the platform that started it — if that changes under the awaits, abandon it */
+  const st=state; /* the run belongs to the platform that started it; if that changes under the awaits, abandon it */
   setRunning(true); $('#btn-fix-all').disabled=true;
   const ex=P.split(st.exp); const run=runEngine(st.plan,ex);
   const nPlan=st.plan.campaign.length+st.plan.adset.length+st.plan.ad.length, nExp=P.expRows(st.exp);
@@ -1656,9 +1656,9 @@ const META_TABS=[
    const rows=SETS.map((s,i)=>[F(setName(i)),K(CAMPS[s.c].name),T(s.s01),T(s.label.replace(s.s01+'_','')),T('Paused'),D(CAMPS[s.c].goal),K(s.audience),'','','','',s.excluded?T(s.excluded.split(':')[1]):'',s.detailed?T(s.detailed):'',D('Advantage+ placements'),D('Halcyon Web Pixel'),'',D('11/01/2026 12:00 AM'),i===2?AM('12/25/2026 12:00 AM'):D('12/24/2026 11:59 PM'),T(READY),T(setId(i)),'',D(CAMPS[s.c].line),F(pc(i))]);
    return note('Blank targeting cells inherit the <b>AUDIENCES</b> row named in <code>audience</code>. The feed resolves them before the run, so the engine compares countries, ages and audience IDs, never the audience name. Row 6’s end time was typed one minute past the derived value. The cell turns amber, and the run will ask about it.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'Meta Ad Level',html(){ const cols=C([['Ad name','ad_name'],['Campaign','campaign_name'],['Ad set','ad_set_name'],['Concept','a01'],['Length','a02'],['Format','a03'],['Ad source','ad_source'],['Facebook page','facebook_page'],['Instagram','instagram_account'],['Second identity','second_identity'],['Story ID','story_id'],['Creative','creative_name'],['Feed file (1x1)','creative_feed'],['Story / Reels file (9x16)','creative_story'],['Primary text','primary_text_feed'],['Headline','headline_feed'],['Description','description_feed'],['URL','website_url'],['CTA','cta'],['URL parameters','url_parameters'],['Pixel','conversion_tracking_pixels'],['QA status','qa_status'],['Ad ID','ad_id'],['✓ identity','hc_identity']]);
-   const rows=states.meta.plan.ad.map(a=>{ const part=a.ad_source==='Partnership ad'; const cc=CONCEPTS.find(c=>a.creative_name===c[0]+'_'+c[1]); return [F(a.ad_name),K(a.campaign_name),K(a.ad_set_name),T(part?'MayaBrews':(cc?cc[0]:'Roastery')),T(part?'—':(cc?cc[1]:'15s')),T(part?'CreatorPost':'Video'),T(a.ad_source),D(part?'Maya Brews':'Halcyon Coffee Roasters'),D(part?'mayabrews':'halcyoncoffee'),a.second_identity?T(a.second_identity):'',a.story_id?T(a.story_id):'',K(a.creative_name),a.creative_feed?D(a.creative_feed):'',a.creative_story?D(a.creative_story):'',a.primary_text_feed?T(a.primary_text_feed):'',a.headline_feed?T(a.headline_feed):'',a.description_feed?T(a.description_feed):'',a.website_url?D(a.website_url):'',a.cta?D('Shop now'):'','',D('Halcyon Web Pixel'),T(a.qa_status),a.ad_id?T(a.ad_id):'',part?T('open'):'']; });
+   const rows=states.meta.plan.ad.map(a=>{ const part=a.ad_source==='Partnership ad'; const cc=CONCEPTS.find(c=>a.creative_name===c[0]+'_'+c[1]); return [F(a.ad_name),K(a.campaign_name),K(a.ad_set_name),T(part?'MayaBrews':(cc?cc[0]:'Roastery')),T(part?'–':(cc?cc[1]:'15s')),T(part?'CreatorPost':'Video'),T(a.ad_source),D(part?'Maya Brews':'Halcyon Coffee Roasters'),D(part?'mayabrews':'halcyoncoffee'),a.second_identity?T(a.second_identity):'',a.story_id?T(a.story_id):'',K(a.creative_name),a.creative_feed?D(a.creative_feed):'',a.creative_story?D(a.creative_story):'',a.primary_text_feed?T(a.primary_text_feed):'',a.headline_feed?T(a.headline_feed):'',a.description_feed?T(a.description_feed):'',a.website_url?D(a.website_url):'',a.cta?D('Shop now'):'','',D('Halcyon Web Pixel'),T(a.qa_status),a.ad_id?T(a.ad_id):'',part?T('open'):'']; });
    return note('Fifty rows, generated from six build-grid rows and eight concepts. <code>ad_source</code> decides which checks apply and which identity model. On the partnership ad (row 52) the creator is the first identity, and the brand goes in <code>second_identity</code>. The export never carries that field, so it’s a human check with a ✓ cell, never a failure. Row 53 is marked Not Launching, so the run shows it as N/A, not MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
- {name:'PLAN_CHECK',html:()=>planCheck([[F('L001'),F('Meta'),F('120,000'),F('120,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L002'),F('Meta'),F('180,000'),F('180,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L003'),F('TikTok'),F('120,000'),F('—'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')],[F('L004'),F('TikTok'),F('180,000'),F('—'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')]],'Ads Manager')},
+ {name:'PLAN_CHECK',html:()=>planCheck([[F('L001'),F('Meta'),F('120,000'),F('120,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L002'),F('Meta'),F('180,000'),F('180,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L003'),F('TikTok'),F('120,000'),F('–'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')],[F('L004'),F('TikTok'),F('180,000'),F('–'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')]],'Ads Manager')},
  {name:'QA_EXPORT',html(){ const cols=C(['plan_row','campaign_name','ad_set_name','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent'].map(x=>[x,x]));
    const rows=states.meta.plan.ad.map(a=>[a.plan_row,a.campaign_name,a.ad_set_name,a.ad_name,a.ad_id,a.ad_source,a.facebook_page,a.instagram_account,a.story_id,a.primary_text_feed,a.headline_feed,a.website_url,a.cta,a.url_parameters,a.conversion_tracking_pixels,a.qa_status,a.delivery_intent]);
    return note('This is what leaves the workbook for the run. Names are assembled, page and Instagram handles become digits, <code>Shop now</code> becomes <code>SHOP_NOW</code>, and blank URL-parameter cells take the account default. Only fields the export can return are here: the feed is the plan with inheritance resolved.')+sheet(gridHTML(cols,rows,2)); }}
@@ -1675,9 +1675,9 @@ const TT_TABS=[
    const rows=TT_GROUPS.map((g,i)=>{const c=ttCamp(i); return [F(ttGroupName(i)),K(c.name),T(g.s01),T(g.label.replace(g.s01+'_','')),T('Off'),D(c.goalLabel),D(TT_PIXEL_LABEL),c.event?D(c.event):'',D(c.billing),D('Lowest cost'),D('Select placement'),D('TikTok'),D('Off'),K(g.audience),'','',g.languages?T(g.languages):'',g.interest?T(g.interest):'',g.include?T(g.include):'',g.exclude?T(g.exclude):'',D('Standard inventory'),D(c.start),i===0?AM('24/12/2026 22:59'):D(c.end),D('All Day'),T(READY),T(ttGroupId(i)),i===0?T('✓ JK'):'',D(c.line)];});
    return note('The ad group is TikTok’s ad set: six of them, three per campaign, like Meta’s six ad sets. Targeting cells inherit the AUDIENCES row and appear in the feed the way TikTok exports them: location names, age buckets, language names, audience ID lists. The conversion groups carry the pixel event (Complete Payment); the video-view groups leave it blank. Dates sit on the ad group only, exported as <code>yyyy/m/d HH:mm</code>. Toggles that TikTok exports blank when off count as a match for a planned Off. Row 4’s end date was typed day first. It’s the one amber cell in this workbook, and the run will ask about it rather than guess.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'TikTok Ad Level',html(){ const cols=C([['Ad name','ad_name'],['Campaign','campaign_name'],['Ad group','ad_group_name'],['Concept','a01'],['Length','a02'],['Ad source','ad_source'],['Post ID','post_id'],['Identity','identity'],['Identity type','identity_type'],['Identity ID','identity_id'],['Ad format','ad_format'],['Video file','video_file'],['Only show as ad','only_show_as_ad'],['Music sharing','music_sharing'],['Text','text'],['CTA','cta'],['Web URL','web_url'],['Website events pixel','website_events'],['QA status','qa_status'],['Ad ID','ad_id'],['✓ identity','hc_identity']]);
-   const rows=states.tiktok.plan.ad.map(a=>{ const creator=a.ad_source==='Spark Ad — creator post', brandPost=a.ad_source==='Spark Ad — brand post', spark=creator||brandPost; const cc=CONCEPTS.find(c=>a.video_file.indexOf('HAL_'+c[0]+'_'+c[1]+'_')===0); return [F(a.ad_name),K(a.campaign_name),K(a.ad_group_name),T(creator?'MayaBrews':brandPost?'HalcyonPost':(cc?cc[0]:'Roastery')),T(spark?'—':(cc?cc[1]:'15s')),T(a.ad_source),a.post_id?T(a.post_id):'',K(spark?a.identity:a.identity+' (brand)'),F(a.identity_type),F(a.identity_id),F(a.ad_format),a.video_file?D(a.video_file):'',a.only_show_as_ad?D(a.only_show_as_ad):'',D(a.music_sharing),a.text?T(a.text):'',D(a.cta),D(TT_LINK),D(TT_PIXEL_LABEL),T(a.qa_status),a.ad_id?T(a.ad_id):'',creator?T('open'):brandPost?T('✓ AR'):'']; });
+   const rows=states.tiktok.plan.ad.map(a=>{ const creator=a.ad_source==='Spark Ad (creator post)', brandPost=a.ad_source==='Spark Ad (brand post)', spark=creator||brandPost; const cc=CONCEPTS.find(c=>a.video_file.indexOf('HAL_'+c[0]+'_'+c[1]+'_')===0); return [F(a.ad_name),K(a.campaign_name),K(a.ad_group_name),T(creator?'MayaBrews':brandPost?'HalcyonPost':(cc?cc[0]:'Roastery')),T(spark?'–':(cc?cc[1]:'15s')),T(a.ad_source),a.post_id?T(a.post_id):'',K(spark?a.identity:a.identity+' (brand)'),F(a.identity_type),F(a.identity_id),F(a.ad_format),a.video_file?D(a.video_file):'',a.only_show_as_ad?D(a.only_show_as_ad):'',D(a.music_sharing),a.text?T(a.text):'',D(a.cta),D(TT_LINK),D(TT_PIXEL_LABEL),T(a.qa_status),a.ad_id?T(a.ad_id):'',creator?T('open'):brandPost?T('✓ AR'):'']; });
    return note('Fifty-one rows: 48 generated from six build-grid rows and eight concepts, a creator Spark Ad typed by hand (row 52), a brand-owned Spark Ad (row 53) and a Not Launching alternate (row 54). There are three ad sources. An uploaded video uses the brand’s Business Center authorization as its identity. A creator Spark Ad uses the creator’s TikTok account, needs a post ID, and carries the authorization code as a ✓ human check. A brand Spark Ad has the same shape but uses the brand’s own linked account, with no creator authorization to chase. Identity type, ID and ad format are formulas resolved from the pick: the same pattern as Meta’s partnership ads, in TikTok’s formats. Nothing on this level is amber. The one amber cell is the day-first end date on the ad-group level. Row 54 will be N/A in the run, not MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
- {name:'PLAN_CHECK',html(){ const other=(l,b)=>[F(l),F('Meta'),F(b),F('—'),'','','','','','','','','',F('other workbook'),F('built in the Meta workbook')], mine=c=>{const b=(+c.budget).toLocaleString('en-US'); return [F(c.line),F('TikTok'),F(b),F(b),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad groups')];};
+ {name:'PLAN_CHECK',html(){ const other=(l,b)=>[F(l),F('Meta'),F(b),F('–'),'','','','','','','','','',F('other workbook'),F('built in the Meta workbook')], mine=c=>{const b=(+c.budget).toLocaleString('en-US'); return [F(c.line),F('TikTok'),F(b),F(b),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad groups')];};
    return planCheck([other('L001','120,000'),other('L002','180,000'),mine(TT_CAMPS[0]),mine(TT_CAMPS[1])],'TikTok Ads Manager'); }},
  {name:'QA_EXPORT',html(){ const cols=C(['plan_row','campaign_name','ad_group_name','ad_name','ad_id','ad_source','identity_type','identity_id','post_id','ad_format','video_file','only_show_as_ad','text','cta','web_url','website_events','qa_status','delivery_intent'].map(x=>[x,x]));
    const rows=states.tiktok.plan.ad.map(a=>[a.plan_row,a.campaign_name,a.ad_group_name,a.ad_name,a.ad_id,a.ad_source,a.identity_type,a.identity_id,a.post_id,a.ad_format,a.video_file,a.only_show_as_ad,a.text,a.cta,a.web_url,a.website_events,a.qa_status,a.delivery_intent]);
