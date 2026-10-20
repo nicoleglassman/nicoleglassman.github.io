@@ -215,8 +215,8 @@ h3.sub{font-size:var(--t-body);line-height:1.4;font-weight:700}
 .tour-cap .cap-nav button{min-height:40px;padding:0 16px;border-radius:2px;font:600 var(--t-label)/1 var(--sans);cursor:pointer}
 .tour-cap .cap-next{background:var(--accent);color:var(--white);border:1px solid var(--accent)}
 .tour-cap .cap-next:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
-.tour-cap .cap-stop{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.tour-cap .cap-stop:hover{border-color:var(--ink)}
+.tour-cap .cap-pause{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.tour-cap .cap-pause:hover{border-color:var(--ink)}
 .io{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
 .panel{min-width:0;display:flex;flex-direction:column}
 .panel+.panel{border-left:1px solid var(--rule)}
@@ -1569,13 +1569,13 @@ $('#io-toggle').addEventListener('click',e=>{ const io=$('.io'), on=!io.classLis
 /* remember whether the full report was opened, so a re-run keeps it that way */
 document.addEventListener('toggle',e=>{ if(e.target.classList&&e.target.classList.contains('full-report')) fullOpen=e.target.open; },true);
 
-/* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would. It moves one step per click of Next. Stop pauses it; it resumes from the same step until the demo is reset. ---------- */
+/* ---------- the walkthrough: drives the same functions the buttons call, so the register ends exactly as a manual run would. It moves one step per click of Next. Pause keeps its place; it resumes from the same step until the demo is reset. ---------- */
 const tour={on:false,cancel:false,paused:null,serial:0,tookOver:false}; const cap=$('#tour-cap'); const tourBtns=()=>[$('#btn-tour'),$('#btn-hero-tour')]; const TOUR_LABEL=$('#btn-tour').textContent;
-const NAV={next:'<span class="cap-nav"><button type="button" class="cap-next">Next</button><button type="button" class="cap-stop">Stop</button></span>',resume:'<span class="cap-nav"><button type="button" class="cap-resume">Resume</button><button type="button" class="cap-restart">Start over</button></span>'};
+const NAV={next:'<span class="cap-nav"><button type="button" class="cap-next">Next</button><button type="button" class="cap-pause">Pause</button></span>',resume:'<span class="cap-nav"><button type="button" class="cap-resume">Resume</button><button type="button" class="cap-restart">Start over</button></span>'};
 const caption=(step,text,nav)=>{ cap.hidden=false; cap.innerHTML='<b>'+esc(step)+'</b><span class="cap-text">'+esc(text)+'</span>'+(nav?NAV[nav]:''); };
 let advance=null; const release=()=>{ if(advance){ const r=advance; advance=null; r(); } };
 const waitNext=()=>new Promise(r=>{ advance=r; const b=cap.querySelector('.cap-next'); if(b) b.focus({preventScroll:true}); });
-cap.addEventListener('click',e=>{ if(e.target.closest('.cap-next')) release(); else if(e.target.closest('.cap-stop')){ tour.cancel=true; release(); } else if(e.target.closest('.cap-resume')) resumeTour(); else if(e.target.closest('.cap-restart')) runTour(0,false); });
+cap.addEventListener('click',e=>{ if(e.target.closest('.cap-next')) release(); else if(e.target.closest('.cap-pause')){ tour.cancel=true; release(); } else if(e.target.closest('.cap-resume')) resumeTour(); else if(e.target.closest('.cap-restart')) runTour(0,false); });
 document.addEventListener('keydown',e=>{ if(!tour.on) return; if(e.key==='Escape'){ tour.cancel=true; release(); return; } if(e.key==='ArrowRight'&&!e.target.closest('input,textarea,select')){ e.preventDefault(); release(); } });
 const pause=ms=>new Promise(r=>{ const end=performance.now()+(REDUCE?Math.min(ms,350):ms); const tick=()=>{ if(tour.cancel||performance.now()>=end) r(); else setTimeout(tick,50); }; tick(); });
 function spot(el){ document.querySelectorAll('.tour-hi').forEach(e=>e.classList.remove('tour-hi')); if(el){ el.classList.add('tour-hi'); el.scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'center'}); } }
@@ -1584,7 +1584,7 @@ async function hold(stepName,text){ caption(stepName,text,'next'); await waitNex
 const sysFinding=()=>P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sysBtn=()=>{ const f=sysFinding(); return f?document.querySelector('button[data-fix="'+f.id+'"]'):null; };
 /* each step: an action that changes the demo (optional), the screen to hold on, and anything applied after Next (optional) */
 const STEPS=[
-  {n:0, show:()=>hold('start','Nine steps, one per click. Press Next to move on, Stop to pause, or click any demo control to take over.')},
+  {n:0, show:()=>hold('start','Nine steps, one per click. Press Next to move on, Pause to keep your place, or click any demo control to take over.')},
   {n:1, show:()=>{ spot($('.io')); return hold('1 of 9 · the inputs','Two inputs. On the left, the media plan: what was supposed to be built. On the right, the export from '+P.manager+': what was actually built. Eight mistakes are hidden in them.'); }},
   {n:2, act:async()=>{ spot(null); caption('2 of 9 · run','Running the check.'); await doRun(); await step(400); }, show:()=>hold('2 of 9 · run','The check has run. Buildcheck read both files, matched each planned item to the export by its ID, and applied the rules to every field.')},
   {n:3, show:()=>{ spot($('.report .plain')); return hold('3 of 9 · the verdict','The top line is the verdict: READY TO APPROVE: NO. Under it, the findings in plain English, before any detail.'); }},
@@ -1598,9 +1598,9 @@ const STEPS=[
 const canResume=()=>!!tour.paused&&tour.serial===resetSerial&&tour.paused.i<STEPS.length;
 function endTour(paused){
   tour.on=false; advance=null; spot(null); tourBtns().forEach(b=>b.disabled=false);
-  if(paused){ tour.paused=paused; tour.serial=resetSerial; const n=STEPS[paused.i].n; const where=n?' from step '+n+' of 9':'';
-    caption(tour.tookOver?'you’re driving':'paused',(tour.tookOver?'You took over, and the demo is yours. Resume the walkthrough'+where+', or start over.':'Paused. Resume'+where+', or start over. The demo stays as it is either way.'),'resume');
-    $('#btn-tour').textContent='Resume the walkthrough'; const b=cap.querySelector('.cap-resume'); if(b) b.focus({preventScroll:true}); }
+  if(paused){ tour.paused=paused; tour.serial=resetSerial; $('#btn-tour').textContent='Resume the walkthrough';
+    if(tour.tookOver){ cap.hidden=true; } /* the reader is driving; the console button is the way back */
+    else { const n=STEPS[paused.i].n; const where=n?' from step '+n+' of 9':''; caption('paused','Paused. Resume'+where+', or start over. The demo stays as it is either way.','resume'); const b=cap.querySelector('.cap-resume'); if(b) b.focus({preventScroll:true}); } }
   else { tour.paused=null; $('#btn-tour').textContent=TOUR_LABEL; const a=document.activeElement; if(!a||a===document.body||a===cap||a.disabled) $('#btn-tour').focus({preventScroll:true}); }
   tour.tookOver=false;
 }
@@ -1623,8 +1623,10 @@ async function runTour(from,resuming){
 function resumeTour(){ if(canResume()) runTour(tour.paused.i,tour.paused.skipAct); else runTour(0,false); }
 $('#btn-tour').addEventListener('click',resumeTour);
 $('#btn-hero-tour').addEventListener('click',resumeTour);
-/* any click on a demo control while the walkthrough runs hands control back; the caption bar's own buttons don't count */
-document.addEventListener('click',e=>{ if(!tour.on) return; if(e.target.closest('.tour-cap')) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run'); if(c&&!c.disabled){ tour.cancel=true; tour.tookOver=true; release(); } },true);
+/* any click on a demo control while the walkthrough runs hands control back; the caption bar's own buttons don't count. Once paused, the first click in the demo clears the paused note; the console button still reads "Resume the walkthrough". */
+document.addEventListener('click',e=>{ if(e.target.closest('.tour-cap')) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run, #report-wrap button'); if(!c||c.disabled) return;
+  if(tour.on){ if(!c.matches('#report-wrap button')){ tour.cancel=true; tour.tookOver=true; release(); } return; }
+  if(tour.paused&&!cap.hidden&&!c.matches('#btn-tour, #btn-hero-tour')) cap.hidden=true; },true);
 
 /* ---------- engineering notes: collapsed unless the URL points at them ---------- */
 (function(){ const d=$('#eng-details'); if(!d) return; const open=()=>{ if(location.hash==='#engineering') d.open=true; }; open(); addEventListener('hashchange',open); })();
