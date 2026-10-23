@@ -847,10 +847,11 @@ table.words td.diff{color:var(--fail)}
     <section id="try" class="sec g12" aria-labelledby="try-h">
       <div class="sec-head">
         <h2 id="try-h">Try it</h2>
-        <p>A working version of the engine's logic, running in your browser on a synthetic account.</p>
+        <p>One question, asked of every setting: does what was built in Ads Manager match the media plan, exactly? This is the engine's logic, running in your browser on a synthetic account.</p>
       </div>
       <div class="sec-body">
-        <h3 class="sub">How the demo works</h3>
+        <p class="intro">Buildcheck does one thing. It takes the media plan and the platform's own record of what was built, puts them side by side, and shows every place they don't match, setting by setting.</p>
+        <h3 class="sub try-h">How the demo works</h3>
         <ol class="flow">
           <li><span class="fn">Step 1</span><b>The media plan</b><span>What was bought: budget, dates, audience and objective for every buy.</span></li>
           <li><span class="fn">Step 2</span><b>Auto-built from the plan</b><span>In the workbook, one click expands the plan into every campaign, <span data-pw="adset">ad set</span> and ad, names and settings included. Nobody retypes the plan.</span></li>
@@ -1671,10 +1672,10 @@ META.words.other='TikTok';
 /* ---------- page copy that follows the platform ---------- */
 META.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.',catches:'a campaign budget entered as $18,000 instead of $180,000'};
 TIKTOK.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a $180,000 lifetime budget entered as daily.',catches:'a $180,000 lifetime budget entered as daily'};
-META.resetStatus='Eight problems are planted in the inputs, one of them across all 8 ads of an ad set. Run the QA to find them.';
+META.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad set. Run the QA to find them.';
 META.idleLog='Waiting to run. The engine reads both files as text, lists the export\u2019s columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
 TIKTOK.idleLog='Waiting to run. The engine reads the plan feeds and the one wide export sheet as text, splits the sheet into campaign, ad group and ad rows by ID, lists its columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
-TIKTOK.resetStatus='Eight problems are planted in the inputs, one of them across all 8 ads of an ad group. Run the QA to find them.';
+TIKTOK.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad group. Run the QA to find them.';
 /* plain-English summary: (tier|check id) → one business-language sentence; anything unmapped folds into a generic line */
 const money=v=>'$'+(+budget(v)||0).toLocaleString('en-US');
 const count1=(n,one,many)=>n===1?'One '+one:n+' '+many;
@@ -1994,7 +1995,7 @@ async function hold(stepName,text){ caption(stepName,text,'next'); await waitNex
 const sysFinding=()=>P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sysBtn=()=>{ const f=sysFinding(); return f?document.querySelector('button[data-fix="'+f.id+'"]'):null; };
 /* each step: an action that changes the demo (optional), the screen to hold on, and anything applied after Next (optional) */
 const STEPS=[
-  {n:0, show:()=>hold('start','Nine steps, one per click. Press Next to move on, Pause to keep your place, or click any demo control to take over.')},
+  {n:0, show:()=>hold('start','Nine steps, one per click. The question the whole tool answers: does what was built match the plan, exactly? Press Next to move on, Pause to keep your place, or click any demo control to take over.')},
   {n:1, show:()=>{ spot($('.io')); return hold('1 of 9 · the inputs','Two inputs. On the left, the media plan: what was supposed to be built. On the right, the export from '+P.manager+': what was actually built. Eight mistakes are hidden in them.'); }},
   {n:2, act:async()=>{ spot(null); caption('2 of 9 · run','Running the check.'); await doRun(); await step(400); }, show:()=>hold('2 of 9 · run','The check has run. Buildcheck read both files, matched each planned item to the export by its ID, and applied the rules to every field.')},
   {n:3, show:()=>{ spot($('.report .plain')); return hold('3 of 9 · the verdict','The top line is the verdict: READY TO APPROVE: NO. Under it, the findings in plain English, before any detail.'); }},
