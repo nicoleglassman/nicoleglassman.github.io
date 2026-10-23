@@ -190,6 +190,8 @@ h3.sub{font-size:var(--t-body);line-height:1.4;font-weight:700}
 .ai-note{margin-top:28px;max-width:900px;padding:16px 20px;background:var(--soft);border-left:4px solid var(--accent);font-size:var(--t-body);line-height:1.6;color:var(--ink-2);text-wrap:pretty}
 .ai-note b{color:var(--ink)}
 .try-h{margin-top:44px}
+.try-lead{margin-top:10px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.try-lead+.numbered{margin-top:18px}
 .panel-head .pstep{margin-bottom:2px}
 .log-step{padding:14px 24px 0;background:var(--paper);border-top:1px solid var(--rule)}
 .log-step+.log{border-top:0;padding-top:6px}
@@ -198,6 +200,7 @@ h3.sub{font-size:var(--t-body);line-height:1.4;font-weight:700}
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 24px;border-bottom:1px solid var(--rule)}
 .toolbar .btn{min-height:48px}
 .toolbar .spacer{flex:1 1 auto}
+.toolbar .or{font-size:var(--t-label);font-weight:600;color:var(--muted)}
 .breaker{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0;max-width:100%}
 .breaker .lbl{font-size:var(--t-label);font-weight:600;color:var(--muted)}
 .breaker select{min-height:48px;max-width:380px;padding:0 36px 0 12px;border:1px solid var(--line);border-radius:2px;background:var(--white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%231B1A17' stroke-width='1.5'/></svg>") no-repeat right 12px center;appearance:none;-webkit-appearance:none;font:500 var(--t-label)/1.2 var(--sans);color:var(--ink);cursor:pointer}
@@ -673,6 +676,7 @@ table.words td.diff{color:var(--fail)}
   .toolbar .btn{flex:1 1 100%}
   .toolbar .btn.text{flex:0 0 auto}
   .toolbar .spacer{display:none}
+  .toolbar .or{flex:1 1 100%;text-align:center;margin:-2px 0}
   .toolbar .platform{flex:1 1 100%}
   .breaker{flex:1 1 100%;min-width:0;width:100%}
   .breaker .lbl{flex:1 1 100%}
@@ -753,8 +757,8 @@ table.words td.diff{color:var(--fail)}
         <p class="claim">Every ad checked against the plan, with evidence, before it spends.</p>
         <p class="lede">Buildcheck checks that what the team built in Ads Manager matches the media plan, setting by setting, and flags every place it doesn't: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It ran in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
         <div class="actions">
-          <button class="btn" id="btn-hero-run" type="button">Run the QA</button>
-          <button class="ulink" id="btn-hero-tour" type="button">Walk through the demo, step by step</button>
+          <button class="btn" id="btn-hero-tour" type="button">Walk through the demo, step by step</button>
+          <button class="ulink" id="btn-hero-run" type="button">Run the QA yourself</button>
         </div>
       </div>
       <dl class="hero-nums">
@@ -843,6 +847,7 @@ table.words td.diff{color:var(--fail)}
         </ol>
         <p class="ai-note"><b>Where the AI fits.</b> In production, step 4 runs as a Claude skill. It never logs into Ads Manager and has no way to change an account: it reads an export file and writes a report. It works from a written rulebook, cites the plan value, the export value and the rule for every finding, and sends anything it can't prove to a person. This demo runs the same rules as code in your browser, on a fictional coffee brand, so every run is instant and repeatable.</p>
         <h3 class="sub try-h">Try this</h3>
+        <p class="try-lead">Start with <b>Walk through it step by step</b>: nine short captions, one per click, and the QA runs inside it. Or drive it yourself:</p>
         <ol class="numbered two-col">
           <li><span class="t"><b>Run the QA.</b><span>The gate reads NO: <span data-qw="found">12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.</span></span></span></li>
           <li><span class="t"><b>Fix everything, then run it again.</b><span>Buildcheck never changes Ads Manager; the Fix buttons stand in for the builder. The gate turns to YES, and the report lists exactly what changed.</span></span></li>
@@ -856,8 +861,9 @@ table.words td.diff{color:var(--fail)}
         <div class="toolbar">
           <div class="platform" role="group" aria-label="Platform" id="platform-run"><span class="lbl" aria-hidden="true">Platform</span><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div>
           <span class="spacer"></span>
-          <button class="btn" id="btn-run" type="button">Run QA</button>
-          <button class="btn quiet" id="btn-tour" type="button">Walk through it step by step</button>
+          <button class="btn" id="btn-tour" type="button">Walk through it step by step</button>
+          <span class="or" aria-hidden="true">or</span>
+          <button class="btn quiet" id="btn-run" type="button">Run QA yourself</button>
           <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything, as the builder would</button>
           <span class="breaker" id="breaker" hidden><label class="lbl" for="break-pick">Make a mistake in the build</label><select id="break-pick"><option value="">Let the demo choose</option></select><button class="btn quiet" id="btn-break" type="button">Add it</button></span>
           <button class="btn text" id="btn-reset" type="button" hidden>Reset</button>
@@ -1454,7 +1460,7 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     'Normalising: NBSP, %7B%7B → {{, budgets to whole dollars, dates to instants in America/Los_Angeles, multi-value fields to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
     'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
-  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad set. Run QA to find them.',
+  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad set. Walk through it step by step, or run the QA yourself to find them.',
   idleLog:'Waiting to run. The engine parses both files as text, inventories the export\u2019s columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
 
@@ -1623,7 +1629,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     'Normalising: dates yyyy/m/d HH:mm to instants in account time, amounts with cents to whole dollars, blank toggles to Off, age buckets to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
     'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
-  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad group. Run QA to find them.',
+  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad group. Walk through it step by step, or run the QA yourself to find them.',
   idleLog:'Waiting to run. The engine parses the plan feeds and the one wide export sheet as text, splits it into campaign, ad group and ad rows by ID, inventories its columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
 const PLATFORMS={meta:META,tiktok:TIKTOK};
@@ -1634,10 +1640,10 @@ META.words.other='TikTok';
 /* ---------- page copy that follows the platform ---------- */
 META.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.',catches:'a campaign budget entered as $18,000 instead of $180,000'};
 TIKTOK.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a $180,000 lifetime budget entered as daily.',catches:'a $180,000 lifetime budget entered as daily'};
-META.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad set. Run the QA to find them.';
+META.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad set. Walk through it step by step, or run the QA yourself to find them.';
 META.idleLog='Waiting to run. The engine reads both files as text, lists the export\u2019s columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
 TIKTOK.idleLog='Waiting to run. The engine reads the plan feeds and the one wide export sheet as text, splits the sheet into campaign, ad group and ad rows by ID, lists its columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
-TIKTOK.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad group. Run the QA to find them.';
+TIKTOK.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad group. Walk through it step by step, or run the QA yourself to find them.';
 /* plain-English summary: (tier|check id) → one business-language sentence; anything unmapped folds into a generic line */
 const money=v=>'$'+(+budget(v)||0).toLocaleString('en-US');
 const count1=(n,one,many)=>n===1?'One '+one:n+' '+many;
@@ -1896,7 +1902,7 @@ async function doRun(){
 }
 function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Builder fixed it (simulated). Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'The export now reads as if the builder had made that fix. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
 var resetSerial=0;
-function reset(){ resetSerial++; state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
+function reset(){ resetSerial++; state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA yourself'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
 function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; syncBreak(); }
 function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Builder fixed it (simulated). Run again to verify';}); syncFix(); setStatus('Every fix is made, the way the builder would make it in '+P.manager+', plus the one plan cell. Run the QA again to see what changed and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
 function breakOne(){ const sel=$('#break-pick'); const want=sel?sel.value:''; let d=want?P.DISC.find(x=>x.id===want&&!state.active.has(x.id)):null; if(!d){ const pool=P.DISC.filter(x=>!x.planted&&!state.active.has(x.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} d=pool.find(x=>x.id==='ad-body'||x.id==='tt-text')||pool[Math.floor(Math.random()*pool.length)]; } state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('Builder\u2019s slip added: '+breakLabel(d)+'. The '+P.manager+' export changed. Run the QA to find it.'); if(sel) sel.value=''; return true; }
@@ -1914,7 +1920,7 @@ function setPlatform(key){
   $('[data-qw="switch"]').innerHTML='<b>Switch to '+esc(other.label)+' and run it again.</b><span>Same engine, '+esc(other.label)+'’s export and vocabulary. It catches '+esc(other.quick.catches)+'.</span>';
   renderInputs(); renderRegister();
   $('#report-wrap').innerHTML=state.last?state.reportHTML:''; const log=$('#log'); if(state.last&&state.logHTML) log.innerHTML=state.logHTML; else log.textContent=prof.idleLog;
-  $('#btn-run').textContent=state.last?'Re-run QA':'Run QA'; $('#btn-fix-all').disabled=state.fixAllOff; $('#status-line').textContent=state.status; syncToolbar();
+  $('#btn-run').textContent=state.last?'Re-run QA':'Run QA yourself'; $('#btn-fix-all').disabled=state.fixAllOff; $('#status-line').textContent=state.status; syncToolbar();
   book.platform=prof.key; book.tab=0; renderBook();
   try{ const u=new URL(location.href); if(prof.key==='meta') u.searchParams.delete('platform'); else u.searchParams.set('platform',prof.key); history.replaceState(null,'',u.pathname+u.search+u.hash); }catch(e){}
 }
@@ -1989,7 +1995,7 @@ async function runTour(from,resuming){
       if(s.act&&!(resuming&&i===from)){ phase='act'; await s.act(); }
       phase='show'; await s.show();
       if(s.after){ phase='after'; await s.after(); } }
-    spot(null); caption('done','That’s the whole loop. Try it yourself: pick a mistake to make in the build, run the QA, and watch it get caught. Or reset.');
+    spot(null); caption('done','That’s the whole loop. Now try it yourself: pick a mistake to make in the build, run the QA, and watch it get caught. Or reset.');
   }catch(e){ if(!tour.cancel) throw e; paused=(phase==='after')?{i:i+1,skipAct:false}:{i,skipAct:true}; if(paused.i>=STEPS.length) paused=null; }
   finally{ endTour(paused); }
 }
