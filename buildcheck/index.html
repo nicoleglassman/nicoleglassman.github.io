@@ -469,6 +469,18 @@ html:not(.js) .copy-btn{display:none}
 .trio code{margin-top:auto;padding-top:10px;font-family:var(--mono);font-size:var(--t-data);line-height:1.5;color:var(--ink);overflow-wrap:anywhere}
 .trio code.fail{color:var(--fail)}
 .trio .arrow{align-self:center;font-size:22px;line-height:1;color:var(--muted)}
+/* collapsed blocks: one click to open on a call */
+details.more{margin-top:28px;border-top:1px solid var(--ink)}
+details.more>summary{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 0;list-style:none;cursor:pointer;font-size:var(--t-body);font-weight:700;color:var(--ink)}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::before{content:"";flex:0 0 auto;width:9px;height:9px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg);transition:transform .15s}
+details.more[open]>summary::before{transform:rotate(45deg)}
+details.more>summary small{font-weight:400;color:var(--muted)}
+details.more>summary:hover{color:var(--accent-hover)}
+details.more>.more-body{padding-bottom:8px}
+details.more .more-lede{margin:4px 0 12px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.catches details.more{margin-top:0}
+.catches details.more>.more-body{display:grid;gap:28px 32px;padding-top:4px}
 /* where the time goes now */
 .gains-wrap{margin-top:40px;padding-top:20px;border-top:1px solid var(--ink)}
 .gains-wrap h3{font-family:var(--serif);font-size:var(--t-card);line-height:1.15;letter-spacing:-.01em}
@@ -757,7 +769,7 @@ table.words td.diff{color:var(--fail)}
         <p class="kicker"><span>Interactive demo</span><span>Meta and TikTok</span><span>Synthetic data for a fictional brand</span></p>
         <h1 id="title">Buildcheck</h1>
         <p class="claim">Every ad checked against the plan, with evidence, before it spends.</p>
-        <p class="lede">Buildcheck expands the media plan into the full build, then checks the platform's own export against it and flags what doesn't match: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It ran in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
+        <p class="lede">Buildcheck checks that what the team built in Ads Manager matches the media plan, setting by setting, and flags every place it doesn't: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It ran in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
         <div class="actions">
           <button class="btn" id="btn-hero-run" type="button">Run the QA</button>
           <button class="ulink" id="btn-hero-tour" type="button">Walk through the demo, step by step</button>
@@ -949,6 +961,7 @@ table.words td.diff{color:var(--fail)}
             <p class="miss"><b>Why people missed it.</b> A default doesn't look like a decision, so before the tool these weren't on anyone's checklist, and Advantage+ settings went live that nobody had chosen. Now the plan states each one and the run compares it. When Meta adds the next feature, it arrives as a new export column: it starts in the workbook as a custom column the account labels itself, and once a real export has shown it, it becomes a compared field with a rule.</p>
           </article>
 
+          <details class="more"><summary>Two more <small>the translation tables, and the budget, date and ID slips</small></summary><div class="more-body">
           <article class="catch">
             <div class="fh set"><b>Translated before compared</b><span class="nm">"Download" is not "DOWNLOAD", and "Primary Text" is "Body"</span><small>every tier · two translation tables</small></div>
             <p class="what"><b>What happened.</b> Nothing went wrong here. The plan is written in a planner's words and column names. The export is written in the platform's codes and column names. Compare them literally and everything fails; compare them loosely and nothing does. So the workbook keeps two translation tables, and every row in them was confirmed against a real export before it was allowed to decide anything.</p>
@@ -991,33 +1004,9 @@ table.words td.diff{color:var(--fail)}
             <div class="fix-row">Fix: each finding names the exact cell to change, in Ads Manager or in the plan.</div>
           </article>
 
+          </div></details>
         </div>
         <p class="catches-note">All of this is in the production rulebook. Two of the catches are in the demo above, the budget and the copy: pick either from the list of mistakes to make in the build, and the run finds it.</p>
-      </div>
-    </section>
-
-    <section id="how" class="sec g12" aria-labelledby="how-h">
-      <div class="sec-head">
-        <h2 id="how-h">How it works</h2>
-        <p>Five steps, from the media plan to the QA report. Each has fixed inputs and a fixed output, so a batch can be run again until it's clean.</p>
-      </div>
-      <div class="sec-body">
-        <ol class="numbered two-col">
-          <li><span class="t"><b>Paste the media plan</b><span>One row per buy, every platform: budget, flight, market, objective, optimization, funnel, suppression. This is the record of what was bought.</span><span class="tags"><span>MEDIA_PLAN</span></span></span></li>
-          <li><span class="t"><b>Expand it into the build</b><span>Name the ad sets on the build grid, and one menu click generates the campaign, ad sets and ads with derived values filled in. Running it again adds nothing twice.</span><span class="tags"><span>BUILD_ADSETS</span><span>one click</span></span></span></li>
-          <li><span class="t"><b>Clear the gate</b><span>Nine checks per line (market, buy type, flight start and end, budget within tolerance, objective, optimization, funnel, suppression) before anyone opens Ads Manager.</span><span class="tags"><span>PLAN_CHECK</span></span></span></li>
-          <li><span class="t"><b>Build and export</b><span>Build in Ads Manager, paste the campaign, ad set and ad IDs back, and pull the bulk export. The workbook's feeds resolve inheritance and translate labels into the platform's vocabulary.</span><span class="tags"><span>QA_EXPORT feeds</span><span>Ads Manager</span></span></span></li>
-          <li><span class="t"><b>Run the engine</b><span>The feeds and the export go to the AI engine. It returns a QA report with a gate, failures with evidence, reviews, human checks and proposed rule changes, plus a findings block to paste back into the workbook.</span><span class="tags"><span>QA report</span><span>RUN_REGISTER</span></span></span></li>
-        </ol>
-        <div class="primer">
-          <div>
-            <h3>New to paid social?</h3>
-            <p>A build is a tree. Each level has its own settings and its own export columns, so the engine runs a different set of checks at each level. At the ad level the checks also depend on the ad type: an uploaded video, a boosted post from the brand's own page, or a creator's partnership post.</p>
-          </div>
-          <pre class="tree">Campaign     objective · budget · flight
- └ Ad set    audience · placements · goal
-    └ Ad     creative · copy · link · CTA · tracking</pre>
-        </div>
       </div>
     </section>
 
@@ -1073,8 +1062,9 @@ table.words td.diff{color:var(--fail)}
           <div class="phases"><span class="ph-pre">Not started</span><span class="ph-pre">Ready to build</span><span class="ph-build">Building</span><span class="ph-ai">Ready for AI QA</span><span class="ph-human">With a human QA role</span><span class="ph-back">Sent back for edits</span><span class="ph-ok">Client approved, ready to set live</span><span class="ph-ok">Live</span><span class="ph-done">Completed</span></div>
           <p>One status per row, so a manager sees at a glance what is built, what is checked, and what is waiting on whom.</p>
         </div>
-        <p class="intro grids-lead">Below, the whole demo workbook: a synthetic account with two campaigns, six ad sets and fifty ads, filled in the way a real one is. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
       </div>
+      <details class="more full" id="book-more"><summary>Open the full demo workbook <small>every tab, Meta and TikTok</small></summary><div class="more-body">
+      <p class="more-lede">The whole demo workbook: a synthetic account with two campaigns, six ad sets and fifty ads, filled in the way a real one is. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
       <div class="book full" id="book">
         <div class="book-head">
           <div class="tablist" role="tablist" aria-label="Workbook tabs" id="book-tabs"></div>
@@ -1082,6 +1072,7 @@ table.words td.diff{color:var(--fail)}
         </div>
         <div class="book-body" id="book-body" role="tabpanel" aria-labelledby="book-tab-0"></div>
       </div>
+      </div></details>
     </section>
 
     <section id="guardrails" class="sec g12" aria-labelledby="guardrails-h">
@@ -1098,7 +1089,8 @@ table.words td.diff{color:var(--fail)}
           <article><h4>Ship it to real people</h4><p>A media team used it on live batches, and the skill and the media plan are now available agency-wide. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
         </div>
 
-        <div class="block-head block-gap"><h3 class="sub">Six rules, each added after a run got something wrong</h3><p>An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p></div>
+        <details class="more" id="rules"><summary>Six rules, each added after a run got something wrong</summary><div class="more-body">
+        <p class="more-lede">An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p>
         <ol class="numbered two-col">
           <li><span class="t"><b>Proven or unproven.</b><span>Every mapping from a planner's label to a platform value carries a proof status, earned from a real export. A mismatch on a proven rule is a FAIL. On an unproven rule it can only be NEEDS REVIEW, so the engine can't fail a build on a rule nobody has verified.</span></span></li>
           <li><span class="t"><b>A blank is never compared.</b><span>Blank means inherit or not specified, never “should be empty”. The feed resolves inheritance before the run, so the engine compares values, not intentions.</span></span></li>
@@ -1107,8 +1099,9 @@ table.words td.diff{color:var(--fail)}
           <li><span class="t"><b>Proposals, never silent changes.</b><span>Anything new the run sees, like a vocabulary value or a mapping now proven, becomes a changelog proposal for a human to accept. The rules of record live in the workbook and the skill files, never in the model's memory.</span></span></li>
           <li><span class="t"><b>One finding, not a thousand.</b><span>An error repeated across every ad in an ad set is one finding with a count, one card and one fix. The report stays readable and the fix stays obvious.</span></span></li>
         </ol>
+        </div></details>
 
-        <div class="block-head block-gap"><h3 class="sub">Where people stay in the loop</h3><p>The engine checks the build. It also checks that the people did their part.</p></div>
+        <div class="block-head block-gap" style="margin-top:40px"><h3 class="sub">Where people stay in the loop</h3><p>The engine checks the build. It also checks that the people did their part.</p></div>
         <div class="loop">
           <div>
             <h3>Sign-offs are checked too</h3>
@@ -1140,19 +1133,6 @@ table.words td.diff{color:var(--fail)}
           <div><dt>500+</dt><dd>columns in the widest Ads Manager export, handled without a hand-typed column map</dd></div>
           <div><dt>11 releases</dt><dd>in twelve days, each recalculated to 0 errors and regression-tested before it shipped</dd></div>
         </dl>
-        <table class="compare">
-          <thead><tr><th scope="col">Step</th><th scope="col">Before</th><th scope="col">With Buildcheck</th></tr></thead>
-          <tbody>
-            <tr><td>Filling the plan</td><td>Days of rows typed by hand from the media plan and brief</td><td>Minutes. The grid expands into the build, with derived values filled in.</td></tr>
-            <tr><td>Batch QA</td><td>Four people, four days for a 2,000-ad batch</td><td>One 20-minute run, with every finding cited</td></tr>
-            <tr><td>Creative testing</td><td>Fewer variants, because every extra creative was more to check by eye</td><td>Every concept, length and format in the plan, verified as built, in the same 20 minutes</td></tr>
-            <tr><td>First week in flight</td><td>Still checking the build while it spends</td><td>Reading delivery and moving budget to what is working</td></tr>
-            <tr><td>Review before build</td><td>Every row checked by hand</td><td>A nine-check gate per line. Senior reviewers read the grid and the exceptions.</td></tr>
-            <tr><td>QA after build</td><td>Field-by-field comparison by eye, across an export of 100+ columns</td><td>Rules run in code, and every finding cites the plan value, export value and rule</td></tr>
-            <tr><td>Trust</td><td>Depends on who checked</td><td>A proof register: the list of mappings a person has verified against a real export. A FAIL can only rest on one of those.</td></tr>
-            <tr><td>Audit trail</td><td>Chat messages and memory</td><td>A register row per run, a changelog row per rule change, and findings pasted back into the workbook</td></tr>
-          </tbody>
-        </table>
 
         <div class="block-head block-gap"><h3 class="sub">How I taught it</h3><p>A walkthrough, not a course.</p></div>
         <p class="intro">I taught a VP and the analysts to fill the internal media plan (a Google Sheet), build and traffic from it, and self-check each batch with the engine before anyone else read it. The plan is dropdowns, the check is one paste and one click, and the report reads in plain English, so the first batch was the training. The media plan and the Claude skill are now available agency-wide.</p>
@@ -1165,6 +1145,7 @@ table.words td.diff{color:var(--fail)}
         <p>One media plan holds every platform's lines, and each line is checked in the workbook for its platform. The tabs, feeds and engine stay the same. Each platform brings its own export contract, vocabulary and naming profile.</p>
       </div>
       <div class="sec-body" style="border-top:0;padding-top:0">
+        <details class="more" id="plats-more" style="margin-top:0;border-top:0"><summary>Meta in production, TikTok built, three more on paper <small>open for the detail</small></summary><div class="more-body">
         <div class="plats">
           <div class="plat">
             <h3>Meta</h3>
@@ -1203,6 +1184,7 @@ table.words td.diff{color:var(--fail)}
           </ul>
         </div>
       </div>
+        </div></details>
     </section>
 
     <section id="engineering" class="sec g12" aria-labelledby="engineering-h">
@@ -2041,6 +2023,7 @@ document.addEventListener('click',e=>{ if(e.target.closest('.tour-cap')) return;
 
 /* ---------- engineering notes: collapsed unless the URL points at them ---------- */
 (function(){ const d=$('#eng-details'); if(!d) return; const open=()=>{ if(location.hash==='#engineering') d.open=true; }; open(); addEventListener('hashchange',open); })();
+(function(){ const open=()=>{ if(!location.hash) return; const el=document.getElementById(location.hash.slice(1)); if(!el) return; let d=el.tagName==='DETAILS'?el:el.closest('details'); while(d){ d.open=true; d=d.parentElement&&d.parentElement.closest('details'); } }; open(); addEventListener('hashchange',open); })();
 
 /* ---------- the workbook ---------- */
 const D=v=>({v,c:'derived'}), T=v=>({v,c:'typed'}), F=v=>({v,c:'formula'}), K=v=>({v,c:'key'}), OK=v=>({v,c:'ok'}), AM=v=>({v,c:'amber'});
