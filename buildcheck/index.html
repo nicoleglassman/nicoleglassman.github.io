@@ -741,7 +741,7 @@ table.words td.diff{color:var(--fail)}
           <div class="arrow" aria-hidden="true">→</div>
           <div><span class="k">2 · The build</span><b>What the team made in Ads Manager</b><p>Campaigns, ad sets and ads, typed in by hand. The platform's export is its own record of them.</p><code>Campaign Lifetime Budget · 18000</code></div>
           <div class="arrow" aria-hidden="true">→</div>
-          <div><span class="k">3 · The check</span><b>Do they match, field by field?</b><p>Every planned item against its export row, every setting compared, with the rule and the fix.</p><code class="fail">FAIL · Wrong budget · a zero was dropped</code></div>
+          <div><span class="k">3 · The check</span><b>Do they match, field by field?</b><p>Every planned item against its export row, every setting compared, with the rule and the fix for a person to make.</p><code class="fail">FAIL · Wrong budget · a zero was dropped</code></div>
         </div>
         <div class="ba">
           <article class="before">
@@ -761,7 +761,7 @@ table.words td.diff{color:var(--fail)}
               <li><span><b>Fill the Arch Doc.</b> Paste the media plan. One click expands it into every campaign, ad set and ad, named and filled in.</span></li>
               <li><span><b>Build and traffic from it.</b> The team builds in Ads Manager as before, then exports the platform's own record of the build.</span></li>
               <li><span><b>Self-check.</b> The builder runs the engine: every ad, every setting, with the plan value, the built value, the rule and the fix.</span></li>
-              <li><span><b>Fix and run again.</b> The second report reads as a list of what changed.</span></li>
+              <li><span><b>Fix and run again.</b> The builder corrects the setting in Ads Manager, or the planner corrects the plan cell, and re-exports. The second report reads as a list of what changed.</span></li>
               <li><span><b>Sign.</b> The same roles still sign, but they read exceptions, and they initial the few things an export can't show.</span></li>
             </ol>
             <p class="sum">The checking moved from eyes to rules. The judgment stayed with people.</p>
@@ -804,11 +804,11 @@ table.words td.diff{color:var(--fail)}
         <h3 class="sub try-h">Try this</h3>
         <ol class="numbered two-col">
           <li><span class="t"><b>Run the QA.</b><span>The gate reads NO: <span data-qw="found">12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.</span></span></span></li>
-          <li><span class="t"><b>Fix everything, then run it again.</b><span>The gate turns to YES, and the report lists exactly what changed.</span></span></li>
+          <li><span class="t"><b>Fix everything, then run it again.</b><span>Buildcheck never changes Ads Manager; the Fix buttons play the builder. The gate turns to YES, and the report lists exactly what changed.</span></span></li>
           <li><span class="t" data-qw="switch"><b>Switch to TikTok and run it again.</b><span>Same engine, TikTok's export and vocabulary. It catches a $180,000 lifetime budget entered as daily.</span></span></li>
           <li><span class="t"><b>Add a builder mistake, then run again.</b><span>The first slip it adds is French copy pasted over an English ad, the kind of error a reviewer's eye slides past on ad 1,900. Every click after that adds a different one.</span></span></li>
         </ol>
-        <p class="try-note">Eight problems are planted in the inputs: seven in the <span data-pw="manager">Ads Manager</span> export and one in a plan cell. One of them is repeated across every ad in an <span data-pw="adset">ad set</span>. Fixes change the inputs (the export or the plan cell, whichever was wrong), just as they would in a real loop. The demo runs a subset of the production rulebook. When you're done, read <a href="#guardrails">how I keep the AI honest</a>. That's the part worth asking me about.</p>
+        <p class="try-note">Eight problems are planted in the inputs: seven in the <span data-pw="manager">Ads Manager</span> export and one in a plan cell. One of them is repeated across every ad in an <span data-pw="adset">ad set</span>. Buildcheck only reports. In real life the builder fixes the setting in Ads Manager, or the planner fixes the plan cell, and re-exports. In the demo the Fix buttons play that part: they change the export or the plan cell the way a person would, so you can run again. The demo runs a subset of the production rulebook. When you're done, read <a href="#guardrails">how I keep the AI honest</a>. That's the part worth asking me about.</p>
       </div>
 
       <div class="console full" id="console" role="region" aria-label="QA demo">
@@ -817,7 +817,7 @@ table.words td.diff{color:var(--fail)}
           <span class="spacer"></span>
           <button class="btn" id="btn-run" type="button">Run QA</button>
           <button class="btn quiet" id="btn-tour" type="button">Walk through it step by step</button>
-          <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything the report found</button>
+          <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything, as the builder would</button>
           <button class="btn quiet" id="btn-break" type="button" hidden>Add a builder mistake</button>
           <button class="btn text" id="btn-reset" type="button" hidden>Reset</button>
         </div>
@@ -850,7 +850,7 @@ table.words td.diff{color:var(--fail)}
     <section id="catches" class="sec g12" aria-labelledby="catches-h">
       <div class="sec-head">
         <h2 id="catches-h">What it catches that people miss</h2>
-        <p>Five kinds of mistake from real launch batches, shown here on invented values. Each card is the shape of a real finding: what happened in plain words, then the proof.</p>
+        <p>Five kinds of mistake from real launch batches, shown here on invented values. Each card is the shape of a real finding: what happened in plain words, then the proof, then the fix a person makes.</p>
       </div>
       <div class="sec-body">
         <p class="intro">The hard part was never the obvious error. It was the one that looks right at a glance: the right words in the wrong language, the right copy on two placements and a typo on the third, a Meta feature switched on by default that the plan said to leave off.</p>
@@ -1801,7 +1801,7 @@ function renderReport(run,prev,runId){
   fails.forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL'); if(i.tier!=='ad'||fc.length!==1){singles.push(i);return;} const x=fc[0]; const set=i.planRow[P.nameField.adset]; const k=[x.type,x.field,set,x.plan,x.exp].join('|'); (gm[k]=gm[k]||{x,adset:set,items:[]}).items.push(i); });
   Object.values(gm).forEach(g=>{ if(g.items.length>=3) groups.push(g); else singles.push(...g.items); });
   const order={campaign:0,adset:1,ad:2}; singles.sort((a,b)=>order[a.tier]-order[b.tier]||a.plan_row-b.plan_row);
-  h+='<div class="rsec"><h4><span>§2 Failures</span> <small>one card per item; an identical finding across an '+esc(TIER.adset)+' is one card with a count</small></h4>';
+  h+='<div class="rsec"><h4><span>§2 Failures</span> <small>one card per item; an identical finding across an '+esc(TIER.adset)+' is one card with a count. Buildcheck only reports: each Fix button plays the builder, changing the export the way they would in '+esc(P.manager)+', so you can run again.</small></h4>';
   if(!fails.length) h+='<p class="empty">None.</p>';
   groups.forEach(g=>{ const rows=g.items.map(i=>i.plan_row); h+='<div class="fcard"><div class="fh"><b>'+esc(g.x.type)+'</b><span class="cnt">'+g.items.length+' ads</span><span class="nm">'+esc(g.adset)+'</span><small>'+esc(TIER.adset)+' · plan_rows '+rows[0]+'–'+rows[rows.length-1]+'</small></div>'+failTable([g.x])+'<details class="rows"><summary>The '+g.items.length+' ads</summary><ul>'+g.items.map(i=>'<li>'+i.plan_row+' · '+esc(i.name)+'</li>').join('')+'</ul></details><div class="fix-row">Fix: '+(fixButton('ad',rows[0],g.x.id)||fallback)+'</div></div>'; });
   singles.forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL'); const types=[...new Set(fc.map(x=>x.type))].join(' · ');
@@ -1835,7 +1835,7 @@ function renderReport(run,prev,runId){
   h+='<div class="rsec"><h4><span>Findings block</span> <small>plain text · pastes straight back into the workbook, one line per planned ad</small></h4><pre class="block" style="max-height:260px;overflow:auto">plan_row\tresult\tfirst failing check\tdetail\n'+esc(block)+'</pre></div>';
   h+='</details>';
   const openN=P.DISC.filter(d=>state.active.has(d.id)).length;
-  h+='<div class="report-actions"><span class="grow">'+(run.ready?'Clean run. Reset the demo to start again, or add a builder mistake and catch it.':'Apply the fixes above, or fix everything, then re-run to see what changed.')+'</span><button class="btn quiet" id="btn-fix-all-2" type="button"'+(openN?'':' disabled')+'>Fix everything the report found</button><button class="btn" id="btn-rerun" type="button">Re-run QA</button><button class="btn text" id="btn-break-2" type="button">Add a builder mistake</button></div>';
+  h+='<div class="report-actions"><span class="grow">'+(run.ready?'Clean run. Reset the demo to start again, or add a builder mistake and catch it.':'Buildcheck only reports. Play the builder: apply the fixes above, or fix everything, then run again to see what changed.')+'</span><button class="btn quiet" id="btn-fix-all-2" type="button"'+(openN?'':' disabled')+'>Fix everything, as the builder would</button><button class="btn" id="btn-rerun" type="button">Re-run QA</button><button class="btn text" id="btn-break-2" type="button">Add a builder mistake</button></div>';
   return h+'</div>';
 }
 function registerRow(run,runId){ const d=new Date().toISOString().slice(0,10); const c=run.counts; return [runId,d,'QA run',P.label,P.regScope,c.planned,c.pass,c.fail,c.missing,c.review,c.na,c.extra,run.ready?'YES':'NO',run.top,run.proposals.length]; }
@@ -1859,15 +1859,15 @@ async function doRun(){
   const open=openCount();
   $('#btn-fix-all').disabled=!open; setRunning(false); $('#btn-run').textContent='Re-run QA';
   refocus(fk,$('#btn-run')); if(document.activeElement===$('#log')) $('#btn-run').focus({preventScroll:true});
-  setStatus(run.ready?'Clean. '+(run.counts.review?'Answer the reviews, initial the ✓ cells, and the reviewers sign off.':'Ready for the reviewers to sign off.'):open+' thing'+(open>1?'s':'')+' to fix. Use the buttons in the report, or fix everything.');
+  setStatus(run.ready?'Clean. '+(run.counts.review?'Answer the reviews, initial the ✓ cells, and the reviewers sign off.':'Ready for the reviewers to sign off.'):open+' thing'+(open>1?'s':'')+' to fix, by a person. Use the Fix buttons in the report to play the builder, or fix everything.');
   syncToolbar();
   $('#report-wrap').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'});
 }
-function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Applied. Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'Inputs updated. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
+function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Builder fixed it (simulated). Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'The export now reads as if the builder had made that fix. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
 var resetSerial=0;
 function reset(){ resetSerial++; state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
 function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; }
-function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied. Run again to verify';}); syncFix(); setStatus('Everything is corrected in the inputs. Run the QA again to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
+function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Builder fixed it (simulated). Run again to verify';}); syncFix(); setStatus('Every fix is now made in the export, and the one plan cell, as the builder and the planner would. Run the QA again to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
 function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} const first=pool.find(d=>d.id==='ad-body'||d.id==='tt-text'); const d=first||pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run the QA to find it.'); return true; }
 
 /* ---------- platform switch: each platform keeps its own progress; the register is shared ---------- */
@@ -1931,9 +1931,9 @@ const STEPS=[
   {n:2, act:async()=>{ spot(null); caption('2 of 9 · run','Running the check.'); await doRun(); await step(400); }, show:()=>hold('2 of 9 · run','The check has run. Buildcheck read both files, matched each planned item to the export by its ID, and applied the rules to every field.')},
   {n:3, show:()=>{ spot($('.report .plain')); return hold('3 of 9 · the verdict','The top line is the verdict: READY TO APPROVE: NO. Under it, the findings in plain English, before any detail.'); }},
   {n:4, show:()=>{ const sum=$('.report .plain'), cnt=$('.report .fcard .cnt'); spot(cnt?cnt.closest('.fcard'):sum); return hold('4 of 9 · one finding, not eight','The first card is one finding for all 8 ads, because the same mistake was repeated in every ad. One card and one fix, instead of eight.'); }},
-  {n:5, show:()=>{ spot(sysBtn()||$('.report .plain')); return hold('5 of 9 · fix one','Next fixes that one. In real life it is one bulk edit in '+P.manager+'. The export changes now; the report only changes when the check runs again.'); }, after:async()=>{ const f=sysFinding(), b=sysBtn(); if(f&&b) applyFix(f.id,b); await step(600); }},
+  {n:5, show:()=>{ spot(sysBtn()||$('.report .plain')); return hold('5 of 9 · fix one','Buildcheck never touches '+P.manager+'. In real life the builder makes this one bulk edit there and re-exports. Here, Next plays the builder: the export changes as if they had, and the report only changes when the check runs again.'); }, after:async()=>{ const f=sysFinding(), b=sysBtn(); if(f&&b) applyFix(f.id,b); await step(600); }},
   {n:6, act:async()=>{ spot(null); caption('6 of 9 · run again','Running the check on the corrected build.'); await doRun(); await step(400); }, show:()=>{ spot($('.report .diffsec')); return hold('6 of 9 · what changed','The second report starts with what changed since the first: the 8 ads are resolved, the other problems are unchanged. A second check reads as a list of differences, not a fresh report.'); }},
-  {n:7, show:()=>{ spot($('#btn-fix-all-2')); return hold('7 of 9 · fix the rest','Next fixes everything that is left: the remaining export mistakes and the one wrong cell in the plan.'); }, after:async()=>{ fixAll('report'); await step(600); }},
+  {n:7, show:()=>{ spot($('#btn-fix-all-2')); return hold('7 of 9 · fix the rest','Next plays the builder and the planner for everything that is left: the remaining export mistakes, and the one wrong cell in the plan.'); }, after:async()=>{ fixAll('report'); await step(600); }},
   {n:8, act:async()=>{ spot(null); caption('8 of 9 · last run','Running the check once more.'); await doRun(); await step(400); }, show:()=>{ spot($('.report .gate')); return hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built. The one N/A is an ad the plan marks Not Launching, held back on purpose, so it was never expected in the export.'); }},
   {n:9, show:()=>{ spot($('#register')); return hold('9 of 9 · the record','The run register keeps one row per run, so there is a record of each check and what it found.'); }},
 ];
