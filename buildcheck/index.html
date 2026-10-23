@@ -482,17 +482,15 @@ details.more .more-lede{margin:4px 0 12px;font-size:var(--t-body);line-height:1.
 .catches details.more{margin-top:0}
 .catches details.more>.more-body{display:grid;gap:28px 32px;padding-top:4px}
 /* where the time goes now */
-.gains-wrap{margin-top:40px;padding-top:20px;border-top:1px solid var(--ink)}
-.gains-wrap h3{font-family:var(--serif);font-size:var(--t-card);line-height:1.15;letter-spacing:-.01em}
-.gains-wrap>p{margin-top:8px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
 .gains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 28px;margin-top:20px}
 .gains>div{border-top:3px solid var(--accent);padding-top:12px}
 .gains b{display:block;font-size:var(--t-body);line-height:1.4;font-weight:700}
 .gains p{margin-top:6px;font-size:var(--t-label);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
-.gains-wrap .close{margin-top:20px;font-size:var(--t-body);line-height:1.6;color:var(--ink);max-width:820px;text-wrap:pretty}
+.gains-close{margin-top:24px;font-size:var(--t-body);line-height:1.6;color:var(--ink);max-width:820px;text-wrap:pretty}
+#time .gains{margin-top:24px}
 @media (max-width:900px){ .gains{grid-template-columns:minmax(0,1fr)} }
 /* what was checked by eye */
-.bylist{margin-top:40px;padding-top:20px;border-top:1px solid var(--ink)}
+.bylist{margin-top:0;padding-top:4px}
 .bylist h3{font-size:var(--t-body);font-weight:700}
 .bylist p{margin-top:8px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
@@ -532,12 +530,6 @@ table.mini td .chip{vertical-align:middle}
 .mini-key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:var(--t-label);color:var(--muted)}
 .mini-key .pk::before{content:"\25BE";margin-right:6px;color:var(--muted)}
 .mini-key .gn::before{content:"";display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;background:var(--derived);border:1px solid var(--rule)}
-.start{margin-top:28px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;row-gap:16px}
-.start>div{border-top:2px solid var(--accent);padding-top:12px}
-.start .k{font-size:var(--t-label);font-weight:600;color:var(--accent)}
-.start b{display:block;margin-top:4px;font-size:var(--t-body);font-weight:700}
-.start p{margin-top:4px;font-size:var(--t-label);line-height:1.5;color:var(--ink-2)}
-@media (max-width:900px){ .start{grid-template-columns:minmax(0,1fr)} }
 
 /* What it catches */
 .catches{display:grid;grid-template-columns:minmax(0,1fr);gap:28px 32px;margin-top:32px}
@@ -570,7 +562,7 @@ table.words td.diff{color:var(--fail)}
 .split ul,.guards{margin:14px 0 0;padding:0;list-style:none}
 .split li,.guards li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:var(--t-body);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
 .anatomy{margin-top:36px;padding:22px 24px 20px;background:var(--soft)}
-.anatomy h3,.phases-wrap h3{font-size:var(--t-body);font-weight:700}
+.anatomy h3{font-size:var(--t-body);font-weight:700}
 .anatomy .row{display:flex;flex-wrap:wrap;align-items:flex-start;margin-top:14px;font-family:var(--mono);font-size:var(--t-data)}
 .anatomy .part{display:flex;flex-direction:column;align-items:center;margin-bottom:8px}
 .anatomy .part b{font-weight:500;padding:5px 7px;background:var(--white);border:1px solid var(--rule);border-top:3px solid var(--accent);white-space:nowrap}
@@ -583,17 +575,6 @@ table.words td.diff{color:var(--fail)}
 .anatomy .key .s::before{background:var(--pass)}
 .anatomy .key .a::before{background:var(--review)}
 .anatomy p{margin-top:12px;font-size:var(--t-label);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
-.phases-wrap{margin-top:32px}
-.phases{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.phases span{padding:5px 10px;font-size:var(--t-label);line-height:1.4;border:1px solid var(--rule);background:var(--white)}
-.phases .ph-pre{background:var(--derived)}
-.phases .ph-build{background:var(--review-soft)}
-.phases .ph-ai{background:var(--band)}
-.phases .ph-human{background:var(--soft);border-color:var(--accent)}
-.phases .ph-back{background:var(--fail-soft)}
-.phases .ph-ok{background:var(--pass-soft)}
-.phases .ph-done{background:#E4ECF2}
-.phases-wrap p{margin-top:10px;font-size:var(--t-label);color:var(--muted)}
 .grids-lead{margin-top:40px}
 
 /* People in the loop */
@@ -756,10 +737,11 @@ table.words td.diff{color:var(--fail)}
         <li class="menu-sect"><a href="#workbook">The media plan</a></li>
         <li class="menu-sect"><a href="#guardrails">Guardrails</a></li>
         <li class="menu-sect"><a href="#results">Results</a></li>
+        <li class="menu-sect"><a href="#time">Where the time goes</a></li>
       </ul>
     </div>
   </nav>
-  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#why">Why</a><a href="#try">Try it</a><a href="#catches">What it catches</a><a href="#workbook">The media plan</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a></nav>
+  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#why">Why</a><a href="#try">Try it</a><a href="#catches">What it catches</a><a href="#workbook">The media plan</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a><a href="#time">Where the time goes</a></nav>
 </header>
 
 <main id="main" tabindex="-1">
@@ -793,7 +775,7 @@ table.words td.diff{color:var(--fail)}
       <div class="sec-body">
         <p class="intro">A launch batch for one brand can be 2,000 ads, each with 30 to 100 settings. All of it has to match the media plan, the record of what the client bought. One dropped zero spends real money. One wrong link sends real people to the wrong page.</p>
         <div class="trio" aria-label="The media plan, the build, and the check between them">
-          <div><span class="k">1 · The media plan</span><b>What the client bought</b><p>Budget, dates, audience and objective for every line, pasted once.</p><code>Campaign budget · Lifetime · $180,000</code></div>
+          <div><span class="k">1 · The media plan</span><b>What the client bought</b><p>Budget, dates, audience and objective for every line, pasted once into the internal media plan, a Google Sheet.</p><code>Campaign budget · Lifetime · $180,000</code></div>
           <div class="arrow" aria-hidden="true">→</div>
           <div><span class="k">2 · The build</span><b>What the team built in Ads Manager</b><p>Campaigns, ad sets and ads, typed in by hand. The platform's export is its own record of them.</p><code>Campaign Lifetime Budget · 18000</code></div>
           <div class="arrow" aria-hidden="true">→</div>
@@ -830,19 +812,7 @@ table.words td.diff{color:var(--fail)}
           <div class="bar now"><span class="sliver" aria-hidden="true"></span><em>20 minutes, one person. Then the sign-offs read a report.</em></div>
           <span class="note">Drawn to scale against four working days. Twenty minutes is the sliver.</span>
         </div>
-        <div class="gains-wrap">
-          <h3>Where the four days go now</h3>
-          <p>Checking is the floor. The time above it is where campaigns get better and budgets get smarter. This is what a paid social team does with four days back per batch.</p>
-          <div class="gains">
-            <div><b>Test structures</b><p>Design the matched-spend tests that answer real questions: creator against brand against AI creative, intent against interest audiences, one placement against another. Each one is a learning the next plan starts from, and it is where results like a 72% lower cost per interaction came from.</p></div>
-            <div><b>Creators and partners</b><p>Brief, review and boost creator work: the part of paid social that needs a person's judgment, and the part that most often wins the test.</p></div>
-            <div><b>Mid-flight optimization</b><p>With the build verified in twenty minutes, the first week of a flight is spent reading delivery, moving budget to the placements and audiences that are working, and switching off what isn't, instead of still checking the build.</p></div>
-            <div><b>Readouts that compound</b><p>What each campaign taught gets written down and carried into the next plan: which hooks, audiences and placements won. Over a year that is a playbook of tactics proven on the brand's own money.</p></div>
-            <div><b>More variants, verified</b><p>Fifty ads and two thousand take the same twenty minutes to check, so a plan can carry every concept, length and format across Feed, Stories and Reels, each one verified as built. Teams stop testing less than they want to because of the checking.</p></div>
-            <div><b>Money that doesn't leak</b><p>A dropped zero, a wrong link, French copy on an English ad: the errors that quietly spend a client's budget are caught before launch, and the budget goes to the tactics the tests have already proven.</p></div>
-          </div>
-          <p class="close">For an agency, the loop is the same on every account: a new brand is a morning of setup, and the people who used to check builds spend their days on strategy, creators and optimization. For a brand, it means every launch is verified against the plan, and every flight leaves a learning behind.</p>
-        </div>
+        <details class="more" id="by-eye"><summary>Everything four people checked by eye <small>and what the run checks now</small></summary><div class="more-body">
         <div class="bylist">
           <h3>What four people checked by eye, ad by ad</h3>
           <p>Everything below was read against the plan, row by row, by each reviewer in turn. The purple items are now checked by rule on every run. The yellow ones are the few an export can't show, so a person still initials them.</p>
@@ -853,6 +823,7 @@ table.words td.diff{color:var(--fail)}
           <div class="chips-key"><span>checked by rule, every run</span><span class="hc">still a person, initialled in the workbook</span></div>
           <p class="note">And two lines nobody had on their list: the Advantage+ audience and creative options Meta switches on by default. Before the tool, those went live without anyone choosing them. Now the plan states each one and the run compares it.</p>
         </div>
+        </div></details>
       </div>
     </section>
 
@@ -1016,12 +987,7 @@ table.words td.diff{color:var(--fail)}
         <p>A Google Sheet anyone on the team can fill: dropdowns for every setting, names that assemble themselves, and a PASS or FAIL for every ad the moment the export is pasted in.</p>
       </div>
       <div class="sec-body">
-        <p class="intro">The engine needs something to check against, so the plan had to become a Google Sheet nobody could get wrong: the team's internal media plan. Four days of typing and re-typing turned into dropdowns.</p>
-        <div class="start">
-          <div><span class="k">To start a new brand</span><b>Type its basics once</b><p>Page, pixel and time zone, and which name parts it uses. One tab, one morning.</p></div>
-          <div><span class="k">Then</span><b>Paste the client's media plan</b><p>One row per line bought. The grid's columns and dropdowns cover every setting Ads Manager offers, so any account's plan fits without changing the sheet.</p></div>
-          <div><span class="k">Then</span><b>List its audiences and creative files</b><p>One row each. Every ad set and ad then picks them from a dropdown instead of retyping them.</p></div>
-        </div>
+        <p class="intro">Buildcheck is two halves. The engine you ran above is one. This Google Sheet, the team's internal media plan, is the other: it is what the engine checks against, and it is where the build starts. Four days of typing and re-typing turned into dropdowns, and starting a new brand takes a morning: type its basics once, paste its plan, list its audiences and creative files.</p>
         <div class="mini-wrap">
           <h3>1 · The client's media plan, pasted in once</h3>
           <p>One row per thing the client bought. This is the record everything else is checked against.</p>
@@ -1056,11 +1022,6 @@ table.words td.diff{color:var(--fail)}
             <tr><td class="mono">23</td><td><span class="chip missing">MISSING</span></td><td class="mono">…_FreeShipping_6s_Video</td><td class="mono">not in export</td><td class="mono">likely a rename: the export has …_FreeShipping_6s_Video_v2</td></tr>
             <tr><td class="mono">28</td><td><span class="chip fail">FAIL</span></td><td class="mono">…_Broad_Advantage_GiftGuide_15s_Video</td><td class="mono">url_parameters</td><td class="mono">plan «utm_source=meta…» · export «utm_source=facebook…»</td></tr>
             </tbody></table></div>
-        </div>
-        <div class="phases-wrap">
-          <h3>Every row also shows where it is in the approval chain</h3>
-          <div class="phases"><span class="ph-pre">Not started</span><span class="ph-pre">Ready to build</span><span class="ph-build">Building</span><span class="ph-ai">Ready for AI QA</span><span class="ph-human">With a human QA role</span><span class="ph-back">Sent back for edits</span><span class="ph-ok">Client approved, ready to set live</span><span class="ph-ok">Live</span><span class="ph-done">Completed</span></div>
-          <p>One status per row, so a manager sees at a glance what is built, what is checked, and what is waiting on whom.</p>
         </div>
       </div>
       <details class="more full" id="book-more"><summary>Open the full demo workbook <small>every tab, Meta and TikTok</small></summary><div class="more-body">
@@ -1247,6 +1208,25 @@ table.words td.diff{color:var(--fail)}
         </div>
       </div>
     </section>
+    <section id="time" class="sec g12" aria-labelledby="time-h">
+      <div class="sec-head">
+        <h2 id="time-h">Where the four days go now</h2>
+        <p>Checking is the floor. The time above it is where campaigns get better and budgets get smarter.</p>
+      </div>
+      <div class="sec-body">
+        <p class="intro">This is what a paid social team does with four days back per batch.</p>
+        <div class="gains">
+            <div><b>Test structures</b><p>Design the matched-spend tests that answer real questions: creator against brand against AI creative, intent against interest audiences, one placement against another. Each one is a learning the next plan starts from, and it is where results like a 72% lower cost per interaction came from.</p></div>
+            <div><b>Creators and partners</b><p>Brief, review and boost creator work: the part of paid social that needs a person's judgment, and the part that most often wins the test.</p></div>
+            <div><b>Mid-flight optimization</b><p>With the build verified in twenty minutes, the first week of a flight is spent reading delivery, moving budget to the placements and audiences that are working, and switching off what isn't, instead of still checking the build.</p></div>
+            <div><b>Readouts that compound</b><p>What each campaign taught gets written down and carried into the next plan: which hooks, audiences and placements won. Over a year that is a playbook of tactics proven on the brand's own money.</p></div>
+            <div><b>More variants, verified</b><p>Fifty ads and two thousand take the same twenty minutes to check, so a plan can carry every concept, length and format across Feed, Stories and Reels, each one verified as built. Teams stop testing less than they want to because of the checking.</p></div>
+            <div><b>Money that doesn't leak</b><p>A dropped zero, a wrong link, French copy on an English ad: the errors that quietly spend a client's budget are caught before launch, and the budget goes to the tactics the tests have already proven.</p></div>
+          </div>
+        <p class="gains-close">For an agency, the loop is the same on every account: a new brand is a morning of setup, and the people who used to check builds spend their days on strategy, creators and optimization. For a brand, it means every launch is verified against the plan, and every flight leaves a learning behind.</p>
+      </div>
+    </section>
+
   </div>
 </main>
 
