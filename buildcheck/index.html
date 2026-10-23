@@ -198,6 +198,10 @@ h3.sub{font-size:var(--t-body);line-height:1.4;font-weight:700}
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:20px 24px;border-bottom:1px solid var(--rule)}
 .toolbar .btn{min-height:48px}
 .toolbar .spacer{flex:1 1 auto}
+.breaker{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;min-width:0;max-width:100%}
+.breaker .lbl{font-size:var(--t-label);font-weight:600;color:var(--muted)}
+.breaker select{min-height:48px;max-width:380px;padding:0 36px 0 12px;border:1px solid var(--line);border-radius:2px;background:var(--white) url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%231B1A17' stroke-width='1.5'/></svg>") no-repeat right 12px center;appearance:none;-webkit-appearance:none;font:500 var(--t-label)/1.2 var(--sans);color:var(--ink);cursor:pointer}
+.breaker select:disabled{opacity:.6;cursor:not-allowed}
 .platform{display:inline-flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:2px;overflow:hidden}
 .platform .lbl{padding:0 12px;font-size:var(--t-label);font-weight:600;color:var(--muted)}
 .platform button{min-height:44px;padding:0 16px;background:var(--white);border:0;border-left:1px solid var(--line);font-size:var(--t-label);font-weight:600;cursor:pointer}
@@ -436,6 +440,185 @@ html:not(.js) .copy-btn{display:none}
 .colophon a{color:var(--ink)}
 
 /* ≤1100: section heads above their content */
+
+/* Why I built it: before and with */
+.ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:32px;margin-top:32px}
+.ba article{border-top:2px solid var(--ink);padding-top:16px;display:flex;flex-direction:column}
+.ba h3,.split h3,.loop h3{font-family:var(--serif);font-size:var(--t-card);line-height:1.15;letter-spacing:-.01em}
+.ba .tag,.split .tag{display:block;margin-top:6px;font-size:var(--t-label);font-weight:600;color:var(--accent)}
+.ba ol{margin:14px 0 0;padding:0;list-style:none;counter-reset:n}
+.ba li{counter-increment:n;display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:10px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:var(--t-body);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.ba li::before{content:counter(n);font-weight:700;color:var(--accent)}
+.ba li b,.split li b,.guards li b,.catch .what b,.catch .miss b,.catch .slips b{color:var(--ink)}
+.ba .sum{margin-top:14px;font-size:var(--t-body);line-height:1.6;color:var(--ink);text-wrap:pretty}
+.timebar{margin-top:36px;display:grid;grid-template-columns:140px minmax(0,1fr);gap:12px 16px;align-items:center;font-size:var(--t-label)}
+.timebar .lab{font-weight:600}
+.timebar .bar{display:flex;gap:2px;min-height:30px}
+.timebar .bar>span{flex:1 1 0;display:flex;align-items:center;min-width:0;padding:6px 10px;background:var(--band);color:var(--ink);font-family:var(--mono);font-size:var(--t-data);line-height:1.3}
+.timebar .bar.now{align-items:center;gap:12px}
+.timebar .bar.now .sliver{flex:0 0 1%;min-width:3px;height:30px;background:var(--accent)}
+.timebar .bar.now em{font-style:normal;color:var(--ink)}
+.timebar .note{grid-column:2;color:var(--muted)}
+
+/* the one picture: plan, build, check */
+.trio{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);align-items:stretch;column-gap:12px;row-gap:8px;margin-top:28px}
+.trio>div{background:var(--white);border:1px solid var(--rule);border-top:3px solid var(--accent);padding:16px 18px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.trio .k{font-size:var(--t-label);font-weight:600;color:var(--accent)}
+.trio b{font-family:var(--serif);font-size:var(--t-card);line-height:1.15;letter-spacing:-.01em;font-weight:500;text-wrap:balance}
+.trio p{font-size:var(--t-label);line-height:1.5;color:var(--ink-2);text-wrap:pretty}
+.trio code{margin-top:auto;padding-top:10px;font-family:var(--mono);font-size:var(--t-data);line-height:1.5;color:var(--ink);overflow-wrap:anywhere}
+.trio code.fail{color:var(--fail)}
+.trio .arrow{align-self:center;font-size:22px;line-height:1;color:var(--muted)}
+/* collapsed blocks: one click to open on a call */
+details.more{margin-top:28px;border-top:1px solid var(--ink)}
+details.more>summary{display:flex;align-items:center;gap:12px;min-height:56px;padding:8px 0;list-style:none;cursor:pointer;font-size:var(--t-body);font-weight:700;color:var(--ink)}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::before{content:"";flex:0 0 auto;width:9px;height:9px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg);transition:transform .15s}
+details.more[open]>summary::before{transform:rotate(45deg)}
+details.more>summary small{font-weight:400;color:var(--muted)}
+details.more>summary:hover{color:var(--accent-hover)}
+details.more>.more-body{padding-bottom:8px}
+details.more .more-lede{margin:4px 0 12px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.catches details.more{margin-top:0}
+.catches details.more>.more-body{display:grid;gap:28px 32px;padding-top:4px}
+/* where the time goes now */
+.gains-wrap{margin-top:40px;padding-top:20px;border-top:1px solid var(--ink)}
+.gains-wrap h3{font-family:var(--serif);font-size:var(--t-card);line-height:1.15;letter-spacing:-.01em}
+.gains-wrap>p{margin-top:8px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.gains{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px 28px;margin-top:20px}
+.gains>div{border-top:3px solid var(--accent);padding-top:12px}
+.gains b{display:block;font-size:var(--t-body);line-height:1.4;font-weight:700}
+.gains p{margin-top:6px;font-size:var(--t-label);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.gains-wrap .close{margin-top:20px;font-size:var(--t-body);line-height:1.6;color:var(--ink);max-width:820px;text-wrap:pretty}
+@media (max-width:900px){ .gains{grid-template-columns:minmax(0,1fr)} }
+/* what was checked by eye */
+.bylist{margin-top:40px;padding-top:20px;border-top:1px solid var(--ink)}
+.bylist h3{font-size:var(--t-body);font-weight:700}
+.bylist p{margin-top:8px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chips span{padding:5px 10px;font-size:var(--t-label);line-height:1.4;background:var(--band);color:var(--ink)}
+.chips span.hc{background:var(--review-soft)}
+.chips span.hc::before{content:"\2713  ";font-weight:700;color:var(--review)}
+.chips-key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-size:var(--t-label);color:var(--muted)}
+.chips-key span::before{content:"";display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;background:var(--band)}
+.chips-key .hc::before{background:var(--review-soft)}
+.bylist .note{margin-top:14px;color:var(--ink)}
+/* two translation tables in one card */
+.two-tables{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;margin-top:12px;border-top:1px solid var(--rule)}
+.two-tables>div{min-width:0}
+.two-tables h4{padding:12px 16px 0;font-size:var(--t-label);font-weight:600;color:var(--muted)}
+@media (max-width:900px){
+  .trio{grid-template-columns:minmax(0,1fr)}
+  .trio .arrow{justify-self:center;transform:rotate(90deg)}
+  .two-tables{grid-template-columns:minmax(0,1fr)}
+}
+
+/* small grids that stand in for the workbook */
+.mini-wrap{margin-top:28px}
+.mini-wrap h3{font-size:var(--t-body);font-weight:700}
+.mini-wrap>p{margin-top:6px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.mini-scroll{margin-top:12px;overflow-x:auto;border:1px solid var(--rule);background:var(--white)}
+table.mini{border-collapse:collapse;font-size:var(--t-label);min-width:100%}
+table.mini th{padding:8px 12px;background:var(--paper);border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);text-align:left;font-weight:600;color:var(--ink-2);white-space:nowrap}
+table.mini th small{display:block;font-weight:400;color:var(--muted)}
+table.mini td{padding:8px 12px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);white-space:nowrap;vertical-align:top}
+table.mini td.mono{font-family:var(--mono);font-size:var(--t-data)}
+table.mini td.pick{position:relative;padding-right:26px}
+table.mini td.wrap{white-space:normal;max-width:200px;overflow-wrap:anywhere}
+table.mini td.pick::after{content:"\25BE";position:absolute;right:9px;top:8px;color:var(--muted);font-size:12px}
+table.mini td.gen{background:var(--derived);color:var(--ink-2)}
+table.mini td.type{background:var(--white)}
+table.mini td .chip{vertical-align:middle}
+.mini-key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:var(--t-label);color:var(--muted)}
+.mini-key .pk::before{content:"\25BE";margin-right:6px;color:var(--muted)}
+.mini-key .gn::before{content:"";display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;background:var(--derived);border:1px solid var(--rule)}
+.start{margin-top:28px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;row-gap:16px}
+.start>div{border-top:2px solid var(--accent);padding-top:12px}
+.start .k{font-size:var(--t-label);font-weight:600;color:var(--accent)}
+.start b{display:block;margin-top:4px;font-size:var(--t-body);font-weight:700}
+.start p{margin-top:4px;font-size:var(--t-label);line-height:1.5;color:var(--ink-2)}
+@media (max-width:900px){ .start{grid-template-columns:minmax(0,1fr)} }
+
+/* What it catches */
+.catches{display:grid;grid-template-columns:minmax(0,1fr);gap:28px 32px;margin-top:32px}
+.catches-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px}
+.catch table.ft{min-width:640px}
+.catch{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--rule)}
+.catch .fh.set{background:var(--soft)}
+.catch .fh.set b{color:var(--accent-hover)}
+.catch .fh.set .cnt{border-color:var(--accent-hover);color:var(--accent-hover)}
+.catch .what,.catch .miss{padding:14px 16px 0;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.catch .miss{font-size:var(--t-label);line-height:1.55;padding-bottom:16px;color:var(--muted)}
+.catch .scroller{margin-top:12px;border-top:1px solid var(--rule);overflow-x:auto}
+.catch table.ft td.fail{color:var(--fail)}
+.catch table.ft td .chip{vertical-align:middle}
+.catch table.ft .muted{font-weight:400}
+.catch .fix-row{margin-top:auto;border-top:1px solid var(--rule)}
+.catch .slips{margin:12px 16px 0;padding:0;list-style:none}
+.catch .slips li{padding:10px 0;border-top:1px solid var(--rule);font-size:var(--t-body);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+table.words{width:100%;border-collapse:collapse;font-size:var(--t-label)}
+table.words th{padding:10px 16px;border-bottom:1px solid var(--rule);text-align:left;font-weight:500;color:var(--muted);white-space:nowrap}
+table.words td{padding:9px 16px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.words td.mono{font-size:var(--t-data)}
+table.words td.same{color:var(--pass)}
+table.words td.diff{color:var(--fail)}
+.catches-note{margin-top:24px;font-size:var(--t-body);line-height:1.6;color:var(--muted);max-width:820px}
+
+/* One workbook, every account */
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:32px;margin-top:32px}
+.split>div{border-top:2px solid var(--ink);padding-top:16px}
+.split ul,.guards{margin:14px 0 0;padding:0;list-style:none}
+.split li,.guards li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:var(--t-body);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.anatomy{margin-top:36px;padding:22px 24px 20px;background:var(--soft)}
+.anatomy h3,.phases-wrap h3{font-size:var(--t-body);font-weight:700}
+.anatomy .row{display:flex;flex-wrap:wrap;align-items:flex-start;margin-top:14px;font-family:var(--mono);font-size:var(--t-data)}
+.anatomy .part{display:flex;flex-direction:column;align-items:center;margin-bottom:8px}
+.anatomy .part b{font-weight:500;padding:5px 7px;background:var(--white);border:1px solid var(--rule);border-top:3px solid var(--accent);white-space:nowrap}
+.anatomy .part.s b{border-top-color:var(--pass)}
+.anatomy .part.a b{border-top-color:var(--review)}
+.anatomy .part i{font-style:normal;font-family:var(--sans);font-size:11px;line-height:1.3;color:var(--muted);margin-top:4px}
+.anatomy .sep{padding:5px 3px;color:var(--muted)}
+.anatomy .key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:var(--t-label);color:var(--muted)}
+.anatomy .key span::before{content:"";display:inline-block;width:14px;height:3px;margin-right:6px;vertical-align:3px;background:var(--accent)}
+.anatomy .key .s::before{background:var(--pass)}
+.anatomy .key .a::before{background:var(--review)}
+.anatomy p{margin-top:12px;font-size:var(--t-label);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.phases-wrap{margin-top:32px}
+.phases{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.phases span{padding:5px 10px;font-size:var(--t-label);line-height:1.4;border:1px solid var(--rule);background:var(--white)}
+.phases .ph-pre{background:var(--derived)}
+.phases .ph-build{background:var(--review-soft)}
+.phases .ph-ai{background:var(--band)}
+.phases .ph-human{background:var(--soft);border-color:var(--accent)}
+.phases .ph-back{background:var(--fail-soft)}
+.phases .ph-ok{background:var(--pass-soft)}
+.phases .ph-done{background:#E4ECF2}
+.phases-wrap p{margin-top:10px;font-size:var(--t-label);color:var(--muted)}
+.grids-lead{margin-top:40px}
+
+/* People in the loop */
+.loop{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:32px}
+.loop>div{border-top:2px solid var(--ink);padding-top:16px}
+.loop p{margin-top:10px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.hcs{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.hcs span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--review-soft);font-size:var(--t-label);color:var(--ink)}
+.hcs span::before{content:"\2713";font-weight:700;color:var(--review)}
+.routine{margin-top:8px}
+.routine>li{border-bottom:1px solid var(--rule)}
+
+@media (max-width:900px){
+  .ba,.catches-pair,.split,.loop{grid-template-columns:minmax(0,1fr)}
+  .timebar{grid-template-columns:minmax(0,1fr)}
+  .timebar .note{grid-column:1}
+}
+@media (max-width:600px){
+  .timebar .bar{flex-direction:column;gap:2px}
+  .timebar .bar>span{flex:0 0 auto;min-height:30px}
+  .timebar .bar.now{flex-direction:row}
+  .anatomy{padding:16px}
+  .catch table.ft td.mono{overflow-wrap:anywhere;word-break:normal}
+}
+
 @media (max-width:1100px){
   :root{--gutter:48px}
   .hero-text{grid-column:span 7}
@@ -510,6 +693,10 @@ html:not(.js) .copy-btn{display:none}
   .toolbar .btn.text{flex:0 0 auto}
   .toolbar .spacer{display:none}
   .toolbar .platform{flex:1 1 100%}
+  .breaker{flex:1 1 100%;min-width:0;width:100%}
+  .breaker .lbl{flex:1 1 100%}
+  .breaker select{flex:1 1 100%;width:100%;max-width:100%;min-width:0}
+  .breaker .btn{flex:1 1 100%}
   .platform button{flex:1}
   .status,.tour-cap,.log,.log-step{padding-left:var(--gutter);padding-right:var(--gutter)}
   .flow{grid-template-columns:minmax(0,1fr);row-gap:20px}
@@ -563,14 +750,16 @@ html:not(.js) .copy-btn{display:none}
         <li><a href="/#about">About</a></li>
         <li><a class="nav-contact" href="#contact">Contact</a></li>
         <li class="menu-sect-label">On this page</li>
+        <li class="menu-sect"><a href="#why">Why</a></li>
         <li class="menu-sect"><a href="#try">Try it</a></li>
-        <li class="menu-sect"><a href="#how">How it works</a></li>
+        <li class="menu-sect"><a href="#catches">What it catches</a></li>
+        <li class="menu-sect"><a href="#workbook">The media plan</a></li>
         <li class="menu-sect"><a href="#guardrails">Guardrails</a></li>
         <li class="menu-sect"><a href="#results">Results</a></li>
       </ul>
     </div>
   </nav>
-  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#try">Try it</a><a href="#how">How it works</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a></nav>
+  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#why">Why</a><a href="#try">Try it</a><a href="#catches">What it catches</a><a href="#workbook">The media plan</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a></nav>
 </header>
 
 <main id="main" tabindex="-1">
@@ -580,7 +769,7 @@ html:not(.js) .copy-btn{display:none}
         <p class="kicker"><span>Interactive demo</span><span>Meta and TikTok</span><span>Synthetic data for a fictional brand</span></p>
         <h1 id="title">Buildcheck</h1>
         <p class="claim">Every ad checked against the plan, with evidence, before it spends.</p>
-        <p class="lede">Buildcheck expands the media plan into the full build, then checks the platform's own export against it and flags what doesn't match: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It ran in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
+        <p class="lede">Buildcheck checks that what the team built in Ads Manager matches the media plan, setting by setting, and flags every place it doesn't: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It ran in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
         <div class="actions">
           <button class="btn" id="btn-hero-run" type="button">Run the QA</button>
           <button class="ulink" id="btn-hero-tour" type="button">Walk through the demo, step by step</button>
@@ -596,27 +785,100 @@ html:not(.js) .copy-btn{display:none}
 
   <div class="sections wrap">
 
+    <section id="why" class="sec g12" aria-labelledby="why-h">
+      <div class="sec-head">
+        <h2 id="why-h">Why I built it</h2>
+        <p>A paid social launch is thousands of settings, typed by people and checked by people. The checking was the slow part, and it still missed things.</p>
+      </div>
+      <div class="sec-body">
+        <p class="intro">A launch batch for one brand can be 2,000 ads, each with 30 to 100 settings. All of it has to match the media plan, the record of what the client bought. One dropped zero spends real money. One wrong link sends real people to the wrong page.</p>
+        <div class="trio" aria-label="The media plan, the build, and the check between them">
+          <div><span class="k">1 · The media plan</span><b>What the client bought</b><p>Budget, dates, audience and objective for every line, pasted once.</p><code>Campaign budget · Lifetime · $180,000</code></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div><span class="k">2 · The build</span><b>What the team built in Ads Manager</b><p>Campaigns, ad sets and ads, typed in by hand. The platform's export is its own record of them.</p><code>Campaign Lifetime Budget · 18000</code></div>
+          <div class="arrow" aria-hidden="true">→</div>
+          <div><span class="k">3 · The check</span><b>Do they match, field by field?</b><p>Every planned item against its export row, every setting compared, with the rule and the fix for a person to make.</p><code class="fail">FAIL · Wrong budget · a zero was dropped</code></div>
+        </div>
+        <div class="ba">
+          <article class="before">
+            <h3>Before</h3><span class="tag">Four days, four people, by eye</span>
+            <ol>
+              <li><span><b>Build.</b> A builder types the plan into a spreadsheet, then builds 2,000 ads in Ads Manager by hand.</span></li>
+              <li><span><b>Self-check.</b> The builder reads back through their own work.</span></li>
+              <li><span><b>Senior check.</b> A senior re-reads every row against Ads Manager and sends the fixes back.</span></li>
+              <li><span><b>Manager and director.</b> Two more readers, two more rounds, each one starting over after the fixes.</span></li>
+              <li><span><b>Analytics and client.</b> Tracking gets a last look. The client signs.</span></li>
+            </ol>
+            <p class="sum">Every round that found something meant another round. The error on ad 1,900 still got through, because by then everyone was skimming.</p>
+          </article>
+          <article class="after">
+            <h3>With Buildcheck</h3><span class="tag">One run, 20 minutes, by rule</span>
+            <ol>
+              <li><span><b>Fill the internal media plan, a Google Sheet.</b> The client's plan goes in once. From it, the sheet writes out every campaign, ad set and ad the team needs to build, with the names and settings already filled in. Nobody retypes anything.</span></li>
+              <li><span><b>Build and traffic from it.</b> The team builds in Ads Manager as before, then pastes the platform's export back in. Every ad reads PASS or FAIL on the spot.</span></li>
+              <li><span><b>Run the engine.</b> The deep check: every ad, every setting, with the plan value, the built value, the rule and the fix, in plain English.</span></li>
+              <li><span><b>Fix and run again.</b> The builder corrects the setting in Ads Manager, or the planner corrects the plan cell, and re-exports. The second report reads as a list of what changed.</span></li>
+              <li><span><b>Sign.</b> The same roles still sign, but they read exceptions, and they initial the few things an export can't show.</span></li>
+            </ol>
+            <p class="sum">The checking moved from eyes to rules. The judgment stayed with people.</p>
+          </article>
+        </div>
+        <div class="timebar" role="img" aria-label="Time to check a batch of 2,000 ads: four working days before, twenty minutes with Buildcheck">
+          <span class="lab">Before</span>
+          <div class="bar"><span>Day 1 · build and self-check</span><span>Day 2 · senior check</span><span>Day 3 · manager and director</span><span>Day 4 · analytics and client</span></div>
+          <span class="lab">With Buildcheck</span>
+          <div class="bar now"><span class="sliver" aria-hidden="true"></span><em>20 minutes, one person. Then the sign-offs read a report.</em></div>
+          <span class="note">Drawn to scale against four working days. Twenty minutes is the sliver.</span>
+        </div>
+        <div class="gains-wrap">
+          <h3>Where the four days go now</h3>
+          <p>Checking is the floor. The time above it is where campaigns get better and budgets get smarter. This is what a paid social team does with four days back per batch.</p>
+          <div class="gains">
+            <div><b>Test structures</b><p>Design the matched-spend tests that answer real questions: creator against brand against AI creative, intent against interest audiences, one placement against another. Each one is a learning the next plan starts from, and it is where results like a 72% lower cost per interaction came from.</p></div>
+            <div><b>Creators and partners</b><p>Brief, review and boost creator work: the part of paid social that needs a person's judgment, and the part that most often wins the test.</p></div>
+            <div><b>Mid-flight optimization</b><p>With the build verified in twenty minutes, the first week of a flight is spent reading delivery, moving budget to the placements and audiences that are working, and switching off what isn't, instead of still checking the build.</p></div>
+            <div><b>Readouts that compound</b><p>What each campaign taught gets written down and carried into the next plan: which hooks, audiences and placements won. Over a year that is a playbook of tactics proven on the brand's own money.</p></div>
+            <div><b>More variants, verified</b><p>Fifty ads and two thousand take the same twenty minutes to check, so a plan can carry every concept, length and format across Feed, Stories and Reels, each one verified as built. Teams stop testing less than they want to because of the checking.</p></div>
+            <div><b>Money that doesn't leak</b><p>A dropped zero, a wrong link, French copy on an English ad: the errors that quietly spend a client's budget are caught before launch, and the budget goes to the tactics the tests have already proven.</p></div>
+          </div>
+          <p class="close">For an agency, the loop is the same on every account: a new brand is a morning of setup, and the people who used to check builds spend their days on strategy, creators and optimization. For a brand, it means every launch is verified against the plan, and every flight leaves a learning behind.</p>
+        </div>
+        <div class="bylist">
+          <h3>What four people checked by eye, ad by ad</h3>
+          <p>Everything below was read against the plan, row by row, by each reviewer in turn. The purple items are now checked by rule on every run. The yellow ones are the few an export can't show, so a person still initials them.</p>
+          <div class="chips" aria-label="What is checked, and by whom">
+            <span>Campaign, ad set and ad names</span><span>Status: off, paused, live</span><span>Objective</span><span>Buying type</span><span>Budget type</span><span>Budget amount</span><span>Start and end dates</span><span>Countries and regions</span><span>Ages and gender</span><span>Languages</span><span>Custom audiences and exclusions</span><span>Detailed targeting</span><span>Advantage+ audience</span><span>Placements</span><span>Pixel and conversion event</span><span>Attribution and bid strategy</span><span>Facebook Page and Instagram identity</span><span>Creative file per placement</span><span>Primary text per placement</span><span>Headline and description</span><span>Link and display link</span><span>Call to action</span><span>UTM parameters</span><span>Advantage+ creative options</span>
+            <span class="hc">Second identity</span><span class="hc">Block lists and topic exclusions</span><span class="hc">A/B test</span><span class="hc">Brand lift structure</span><span class="hc">Carousel cards</span><span class="hc">Wi-Fi only</span>
+          </div>
+          <div class="chips-key"><span>checked by rule, every run</span><span class="hc">still a person, initialled in the workbook</span></div>
+          <p class="note">And two lines nobody had on their list: the Advantage+ audience and creative options Meta switches on by default. Before the tool, those went live without anyone choosing them. Now the plan states each one and the run compares it.</p>
+        </div>
+      </div>
+    </section>
+
     <section id="try" class="sec g12" aria-labelledby="try-h">
       <div class="sec-head">
         <h2 id="try-h">Try it</h2>
-        <p>A working version of the engine's logic, running in your browser on a synthetic account.</p>
+        <p>One question, asked of every setting: does what was built in Ads Manager match the media plan, exactly? This is the engine's logic, running in your browser on a synthetic account.</p>
       </div>
       <div class="sec-body">
-        <h3 class="sub">How the demo works</h3>
+        <p class="intro">Buildcheck does one thing. It takes the media plan and the platform's own record of what was built, puts them side by side, and shows every place they don't match, setting by setting.</p>
+        <h3 class="sub try-h">How the demo works</h3>
         <ol class="flow">
           <li><span class="fn">Step 1</span><b>The media plan</b><span>What was bought: budget, dates, audience and objective for every buy.</span></li>
-          <li><span class="fn">Step 2</span><b>Auto-built from the plan</b><span>In the workbook, one click expands the plan into every campaign, <span data-pw="adset">ad set</span> and ad, names and settings included. Nobody retypes the plan.</span></li>
+          <li><span class="fn">Step 2</span><b>Written out from the plan</b><span>From the plan, the sheet writes out every campaign, <span data-pw="adset">ad set</span> and ad the team needs to build, with the names and settings already filled in. Nobody retypes the plan.</span></li>
           <li><span class="fn">Step 3</span><b>The platform's export</b><span>The team builds the ads in <span data-pw="manager">Ads Manager</span> and exports them: the platform's own record of what will run.</span></li>
           <li><span class="fn">Step 4</span><b>Checked field by field</b><span>Buildcheck matches each planned item to the export by ID and checks every field: 649 checks in the first Meta run.</span></li>
         </ol>
-        <p class="ai-note"><b>Where the AI fits.</b> In production, step 4 runs as a Claude skill. It works from a written rulebook, cites the plan value, the export value and the rule for every finding, and sends anything it can't prove to a person. This demo runs the same rules as code in your browser, on a fictional coffee brand, so every run is instant and repeatable.</p>
+        <p class="ai-note"><b>Where the AI fits.</b> In production, step 4 runs as a Claude skill. It never logs into Ads Manager and has no way to change an account: it reads an export file and writes a report. It works from a written rulebook, cites the plan value, the export value and the rule for every finding, and sends anything it can't prove to a person. This demo runs the same rules as code in your browser, on a fictional coffee brand, so every run is instant and repeatable.</p>
         <h3 class="sub try-h">Try this</h3>
-        <ol class="numbered three-col">
+        <ol class="numbered two-col">
           <li><span class="t"><b>Run the QA.</b><span>The gate reads NO: <span data-qw="found">12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.</span></span></span></li>
-          <li><span class="t"><b>Fix everything, then run it again.</b><span>The gate turns to YES, and the report lists exactly what changed.</span></span></li>
+          <li><span class="t"><b>Fix everything, then run it again.</b><span>Buildcheck never changes Ads Manager; the Fix buttons stand in for the builder. The gate turns to YES, and the report lists exactly what changed.</span></span></li>
           <li><span class="t" data-qw="switch"><b>Switch to TikTok and run it again.</b><span>Same engine, TikTok's export and vocabulary. It catches a $180,000 lifetime budget entered as daily.</span></span></li>
+          <li><span class="t"><b>Make a mistake in the build, then run again.</b><span>Pick one from the list next to the button, from a dropped zero to a wrong landing page, or let the demo choose: it starts with French copy pasted over an English ad, the kind of error a reviewer's eye slides past on ad 1,900.</span></span></li>
         </ol>
-        <p class="try-note">Eight problems are planted in the inputs: seven in the <span data-pw="manager">Ads Manager</span> export and one in a plan cell. One of them is repeated across every ad in an <span data-pw="adset">ad set</span>. Fixes change the inputs (the export or the plan cell, whichever was wrong), just as they would in a real loop. The demo runs a subset of the production rulebook. When you're done, read <a href="#guardrails">how I keep the AI honest</a>. That's the part worth asking me about.</p>
+        <p class="try-note">Eight problems are planted in the inputs: seven in the <span data-pw="manager">Ads Manager</span> export and one in a plan cell. One of them is repeated across every ad in an <span data-pw="adset">ad set</span>. Buildcheck only reports. In real life the builder fixes the setting in Ads Manager, or the planner fixes the plan cell, and re-exports. In the demo the Fix buttons stand in for that person: they change the export or the plan cell the way a person would, so you can run again. The demo runs a subset of the production rulebook. When you're done, read <a href="#guardrails">how I keep the AI honest</a>. That's the part worth asking me about.</p>
       </div>
 
       <div class="console full" id="console" role="region" aria-label="QA demo">
@@ -625,8 +887,8 @@ html:not(.js) .copy-btn{display:none}
           <span class="spacer"></span>
           <button class="btn" id="btn-run" type="button">Run QA</button>
           <button class="btn quiet" id="btn-tour" type="button">Walk through it step by step</button>
-          <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything the report found</button>
-          <button class="btn quiet" id="btn-break" type="button" hidden>Add a builder mistake</button>
+          <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything, as the builder would</button>
+          <span class="breaker" id="breaker" hidden><label class="lbl" for="break-pick">Make a mistake in the build</label><select id="break-pick"><option value="">Let the demo choose</option></select><button class="btn quiet" id="btn-break" type="button">Add it</button></span>
           <button class="btn text" id="btn-reset" type="button" hidden>Reset</button>
         </div>
         <p class="status" id="status-line" role="status" aria-live="polite"></p>
@@ -655,40 +917,154 @@ html:not(.js) .copy-btn{display:none}
       </div>
     </section>
 
-    <section id="how" class="sec g12" aria-labelledby="how-h">
+    <section id="catches" class="sec g12" aria-labelledby="catches-h">
       <div class="sec-head">
-        <h2 id="how-h">How it works</h2>
-        <p>Five steps, from the media plan to the QA report. Each has fixed inputs and a fixed output, so a batch can be run again until it's clean.</p>
+        <h2 id="catches-h">What it catches that people miss</h2>
+        <p>Five kinds of mistake from real launch batches, shown here on invented values. Each card is the shape of a real finding: what happened in plain words, then the proof, then the fix a person makes.</p>
       </div>
       <div class="sec-body">
-        <p class="intro">A paid social build is a tree of settings: a few campaigns, a dozen ad sets, dozens of ads, each with 30 to 100 fields. Before Buildcheck, the plan was typed by hand and a senior person re-checked every row against Ads Manager. Errors that slipped through spent money.</p>
-        <ol class="numbered two-col" style="margin-top:20px">
-          <li><span class="t"><b>Paste the media plan</b><span>One row per buy, every platform: budget, flight, market, objective, optimization, funnel, suppression. This is the record of what was bought.</span><span class="tags"><span>MEDIA_PLAN</span></span></span></li>
-          <li><span class="t"><b>Expand it into the build</b><span>Name the ad sets on the build grid, and one menu click generates the campaign, ad sets and ads with derived values filled in. Running it again adds nothing twice.</span><span class="tags"><span>BUILD_ADSETS</span><span>one click</span></span></span></li>
-          <li><span class="t"><b>Clear the gate</b><span>Nine checks per line (market, buy type, flight start and end, budget within tolerance, objective, optimization, funnel, suppression) before anyone opens Ads Manager.</span><span class="tags"><span>PLAN_CHECK</span></span></span></li>
-          <li><span class="t"><b>Build and export</b><span>Build in Ads Manager, paste the campaign, ad set and ad IDs back, and pull the bulk export. The workbook's feeds resolve inheritance and translate labels into the platform's vocabulary.</span><span class="tags"><span>QA_EXPORT feeds</span><span>Ads Manager</span></span></span></li>
-          <li><span class="t"><b>Run the engine</b><span>The feeds and the export go to the AI engine. It returns a QA report with a gate, failures with evidence, reviews, human checks and proposed rule changes, plus a findings block to paste back into the workbook.</span><span class="tags"><span>QA report</span><span>RUN_REGISTER</span></span></span></li>
-        </ol>
-        <div class="primer">
-          <div>
-            <h3>New to paid social?</h3>
-            <p>A build is a tree. Each level has its own settings and its own export columns, so the engine runs a different set of checks at each level. At the ad level the checks also depend on the ad type: an uploaded video, a boosted post from the brand's own page, or a creator's partnership post.</p>
-          </div>
-          <pre class="tree">Campaign     objective · budget · flight
- └ Ad set    audience · placements · goal
-    └ Ad     creative · copy · link · CTA · tracking</pre>
+        <p class="intro">The hard part was never the obvious error. It was the one that looks right at a glance: the right words in the wrong language, the right copy on two placements and a typo on the third, a Meta feature switched on by default that the plan said to leave off.</p>
+        <div class="catches">
+
+          <article class="catch">
+            <div class="fh"><b>Wrong copy</b><span class="nm">HAL_CA_Q4-26_HolidayGifting_CONS_VID_Prospecting_CoffeeEnthusiasts_FR_GiftGuide_15s_Video</span><small>ad · the right words in the wrong language</small></div>
+            <p class="what"><b>What happened.</b> A Canadian campaign ran in English and French. In the French ad set, one ad was built with the English primary text. Every other setting on it was right.</p>
+            <div class="scroller"><table class="ft"><thead><tr><th>result</th><th>setting <span class="muted">plan name → export column</span></th><th>planned</th><th>built</th><th>how it's judged</th></tr></thead><tbody>
+              <tr><td><span class="chip fail">FAIL</span></td><td class="mono">primary_text_feed <span class="muted">→ Body</span></td><td class="mono">Des cadeaux pour les accros du café, torréfiés cette semaine et livrés gratuitement dès 40 $.</td><td class="mono fail">Gifts for the coffee-obsessed, roasted this week and shipped free over $40.</td><td>Exact match, once spaces, line breaks and non-breaking spaces are ignored</td></tr>
+              <tr class="ok"><td><span class="chip pass">PASS</span></td><td class="mono">locales <span class="muted">→ Locales</span></td><td class="mono">French (Canada)</td><td class="mono">French (Canada)</td><td>Compared as a set of labels. Passes: the ad set targets French speakers. The copy was the problem.</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Fix: restore the planned French primary text in Ads Manager.</div>
+            <p class="miss"><b>Why people miss it.</b> On ad 1,900 of 2,000, a tired reader sees a sentence about coffee and moves on. The engine compares the two strings, and it reads ad 1,900 the way it read ad 1.</p>
+          </article>
+
+          <article class="catch">
+            <div class="fh"><b>Wrong copy</b><span class="nm">HAL_US_Q4-26_HolidayGifting_CONS_VID_Prospecting_CoffeeEnthusiasts_Roastery_15s_Video</span><small>ad · one placement out of three</small></div>
+            <p class="what"><b>What happened.</b> On Meta, one ad can carry different copy for Feed, Stories and Reels. The plan had one line for all three. In the build, Stories got a version with a typo and no headline at all. Nobody saw it, because the Feed preview is the one everyone looks at. In the table below, Feed and Reels pass; the two Stories rows fail.</p>
+            <div class="scroller"><table class="ft"><thead><tr><th>result</th><th>setting <span class="muted">plan name → export column</span></th><th>planned</th><th>built</th><th>how it's judged</th></tr></thead><tbody>
+              <tr class="ok"><td><span class="chip pass">PASS</span></td><td class="mono">primary_text_feed <span class="muted">→ Body (Default)</span></td><td class="mono">Meet the roastery behind your morning.</td><td class="mono">Meet the roastery behind your morning.</td><td>Feed copy. Exact match.</td></tr>
+              <tr><td><span class="chip fail">FAIL</span></td><td class="mono">primary_text_story <span class="muted">→ Additional Body 1 (facebook story, instagram story)</span></td><td class="mono">Meet the roastery behind your morning. <span class="muted">(inherits Feed)</span></td><td class="mono fail">Meet the roastery behind you morning.</td><td>Exact match, per placement bucket</td></tr>
+              <tr class="ok"><td><span class="chip pass">PASS</span></td><td class="mono">primary_text_reels <span class="muted">→ Additional Body 2 (facebook facebook_reels, instagram reels)</span></td><td class="mono">Meet the roastery behind your morning. <span class="muted">(inherits Feed)</span></td><td class="mono">Meet the roastery behind your morning.</td><td>Exact match, per placement bucket</td></tr>
+              <tr><td><span class="chip fail">FAIL</span></td><td class="mono">headline_story <span class="muted">→ a Title whose placements include Stories</span></td><td class="mono">Roasted in small batches <span class="muted">(inherits Feed)</span></td><td class="mono fail">(blank)</td><td>Coverage: a planned headline has to arrive on a Stories placement</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Fix: correct the Stories primary text and add the Stories headline in Ads Manager, under placement customization.</div>
+            <p class="miss"><b>How it knows which copy is which.</b> The export never says "Stories". It lists each text next to placement tokens such as <span class="mono">facebook story, instagram story</span>. The workbook translates those tokens into four buckets, Feed, Story, Reels and Explore, and checks each bucket against the plan. A blank plan cell means "same as Feed", so the planner writes the copy once.</p>
+          </article>
+
+          <article class="catch">
+            <div class="fh"><b>Wrong setting</b><span class="nm">HAL_US_Q4-26_HolidayGifting_CONV_VID_Retargeting_CartAbandoners30d</span><small>ad set · Advantage+ left on</small></div>
+            <p class="what"><b>What happened.</b> Meta switches on its Advantage+ audience expansion for every new ad set, and its Advantage+ creative options for every new ad, unless the builder turns them off. This ad set was a tight retargeting audience, people who had left items in a cart, so the plan said off. The builder never touched the switch, so it stayed on.</p>
+            <div class="scroller"><table class="ft"><thead><tr><th>result</th><th>setting <span class="muted">plan name → export column</span></th><th>planned</th><th>built</th><th>how it's judged</th></tr></thead><tbody>
+              <tr><td><span class="chip fail">FAIL</span></td><td class="mono">advantage_audience <span class="muted">→ Advantage Audience</span></td><td class="mono">Off</td><td class="mono fail">1</td><td>Off is 0 and On is 1: a translation confirmed on a real export before it was allowed to fail anything</td></tr>
+              <tr class="ok"><td><span class="chip pass">PASS</span></td><td class="mono">advantage_campaign_budget <span class="muted">→ which budget column is filled</span></td><td class="mono">On · Lifetime · 180000</td><td class="mono">Campaign Lifetime Budget 180000 · ad set budgets blank</td><td>Read from which column the export filled, because the export has no column for the switch itself</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Fix: switch Advantage+ audience off on the ad set in Ads Manager. The two Advantage+ creative options on each ad, Optimized Ad Creative and Optimize text per person, are checked the same way, as Yes or No.</div>
+            <p class="miss"><b>Why people missed it.</b> A default doesn't look like a decision, so before the tool these weren't on anyone's checklist, and Advantage+ settings went live that nobody had chosen. Now the plan states each one and the run compares it. When Meta adds the next feature, it arrives as a new export column: it starts in the workbook as a custom column the account labels itself, and once a real export has shown it, it becomes a compared field with a rule.</p>
+          </article>
+
+          <details class="more"><summary>Two more <small>the translation tables, and the budget, date and ID slips</small></summary><div class="more-body">
+          <article class="catch">
+            <div class="fh set"><b>Translated before compared</b><span class="nm">"Download" is not "DOWNLOAD", and "Primary Text" is "Body"</span><small>every tier · two translation tables</small></div>
+            <p class="what"><b>What happened.</b> Nothing went wrong here. The plan is written in a planner's words and column names. The export is written in the platform's codes and column names. Compare them literally and everything fails; compare them loosely and nothing does. So the workbook keeps two translation tables, and every row in them was confirmed against a real export before it was allowed to decide anything.</p>
+            <div class="two-tables">
+              <div>
+                <h4>Words: the plan's label, the export's code</h4>
+                <table class="words"><thead><tr><th>the plan says</th><th>the export says</th><th>read as</th></tr></thead><tbody>
+                  <tr><td>Shop now</td><td class="mono">SHOP_NOW</td><td class="same">the same</td></tr>
+                  <tr><td>Download</td><td class="mono">DOWNLOAD</td><td class="same">the same</td></tr>
+                  <tr><td>Engagement</td><td class="mono">Outcome Engagement</td><td class="same">the same</td></tr>
+                  <tr><td>Off <span class="muted">(switched off before the flight)</span></td><td class="mono">PAUSED</td><td class="same">the same</td></tr>
+                  <tr><td>Learn more</td><td class="mono">SHOP_NOW</td><td class="diff">different: a finding</td></tr>
+                </tbody></table>
+              </div>
+              <div>
+                <h4>Names: the plan's column, the export's column</h4>
+                <table class="words"><thead><tr><th>the plan calls it</th><th>the export calls it</th></tr></thead><tbody>
+                  <tr><td>Primary Text, Feed</td><td class="mono">Body</td></tr>
+                  <tr><td>Headline</td><td class="mono">Title</td></tr>
+                  <tr><td>Website URL</td><td class="mono">Link</td></tr>
+                  <tr><td>URL Parameters</td><td class="mono">URL Tags</td></tr>
+                  <tr><td>End, 11:59 PM on the last day</td><td class="mono">Ad Set Time Stop</td></tr>
+                  <tr><td>Detailed targeting, include</td><td class="mono">Flexible Inclusions</td></tr>
+                  <tr><td>Delivery intent: Off or Paused</td><td class="mono">Ad Set Run Status: PAUSED</td></tr>
+                </tbody></table>
+              </div>
+            </div>
+            <div class="fix-row">Result: a difference in case, or in what a column is called, is never a finding. A different word always is. When Meta renames a column, one row changes here and nothing else moves.</div>
+            <p class="miss"><b>Before any comparison.</b> Spaces trimmed. Non-breaking spaces and line breaks ignored. ID prefixes like <span class="mono">cg:</span> and <span class="mono">tp:</span> stripped. Encoded braces decoded. Budgets read as whole dollars. Dates read as moments in the account's time zone. Lists compared as sets, so "feed, story, reels" equals "reels, feed, story".</p>
+          </article>
+
+          <article class="catch">
+            <div class="fh"><b>Wrong budget</b><span class="nm">and wrong dates, and bad IDs</span><small>the small slips that cost the most</small></div>
+            <ul class="slips">
+              <li><b>$18,000 typed instead of $180,000.</b> One dropped zero would have underspent the flight by $162,000. Caught on the first run.</li>
+              <li><b>$180,000 set as a daily budget instead of lifetime.</b> Budget type is read from which export column was filled, so the mistake can't hide behind a correct number.</li>
+              <li><b>An end date of 12:00 AM on the 25th against 11:59 PM on the 24th.</b> One minute apart and almost always the same intent, so it is flagged for review rather than failed.</li>
+              <li><b>An ID pasted as a number</b> loses digits after the fifteenth. The workbook turns the cell red before any run.</li>
+            </ul>
+            <div class="fix-row">Fix: each finding names the exact cell to change, in Ads Manager or in the plan.</div>
+          </article>
+
+          </div></details>
         </div>
+        <p class="catches-note">All of this is in the production rulebook. Two of the catches are in the demo above, the budget and the copy: pick either from the list of mistakes to make in the build, and the run finds it.</p>
       </div>
     </section>
 
     <section id="workbook" class="sec g12" aria-labelledby="workbook-h">
       <div class="sec-head">
-        <h2 id="workbook-h">Inside the workbook</h2>
-        <p>Where the demo's plan feeds come from.</p>
+        <h2 id="workbook-h">The internal media plan</h2>
+        <p>A Google Sheet anyone on the team can fill: dropdowns for every setting, names that assemble themselves, and a PASS or FAIL for every ad the moment the export is pasted in.</p>
       </div>
       <div class="sec-body">
-        <p class="intro">A synthetic account, filled in the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header. Row 3 is the machine name, the contract every formula, feed and finding refers to, so columns can move without anything breaking. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
+        <p class="intro">The engine needs something to check against, so the plan had to become a Google Sheet nobody could get wrong: the team's internal media plan. Four days of typing and re-typing turned into dropdowns.</p>
+        <div class="start">
+          <div><span class="k">To start a new brand</span><b>Type its basics once</b><p>Page, pixel and time zone, and which name parts it uses. One tab, one morning.</p></div>
+          <div><span class="k">Then</span><b>Paste the client's media plan</b><p>One row per line bought. The grid's columns and dropdowns cover every setting Ads Manager offers, so any account's plan fits without changing the sheet.</p></div>
+          <div><span class="k">Then</span><b>List its audiences and creative files</b><p>One row each. Every ad set and ad then picks them from a dropdown instead of retyping them.</p></div>
+        </div>
+        <div class="mini-wrap">
+          <h3>1 · The client's media plan, pasted in once</h3>
+          <p>One row per thing the client bought. This is the record everything else is checked against.</p>
+          <div class="mini-scroll"><table class="mini"><thead><tr><th>Line</th><th>Partner</th><th>KPI</th><th>Start</th><th>End</th><th>Working media</th><th>Audience</th><th>Objective</th><th>Funnel</th></tr></thead><tbody>
+            <tr><td class="mono">L001</td><td>Meta</td><td>ThruPlay</td><td>11/01/2026</td><td>12/24/2026</td><td>$120,000</td><td>Coffee enthusiasts; lookalike; site visitors</td><td>Engagement</td><td>Consideration</td></tr>
+            <tr><td class="mono">L002</td><td>Meta</td><td>Purchases</td><td>11/01/2026</td><td>12/24/2026</td><td>$180,000</td><td>Broad; cart abandoners; purchasers</td><td>Sales</td><td>Action</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="mini-wrap">
+          <h3>2 · One row per ad, picked from dropdowns</h3>
+          <p>Every setting is a choice from a list, so nothing can be misspelled. The gray Ad name column is not typed: the sheet assembles it from the Concept, Length and Format picked to its left, after the campaign's and the ad set's own parts.</p>
+          <div class="mini-scroll"><table class="mini"><thead><tr><th>Campaign</th><th>Ad set</th><th>Concept</th><th>Length</th><th>Format</th><th>Ad name <small>written by the sheet</small></th><th>Creative</th></tr></thead><tbody>
+            <tr><td class="pick mono wrap">HAL_US_Q4-26_HolidayGifting_CONS_VID</td><td class="pick mono wrap">Prospecting_CoffeeEnthusiasts</td><td class="pick">GiftGuide</td><td class="pick">15s</td><td class="pick">Video</td><td class="gen mono">GiftGuide_15s_Video</td><td class="pick">GiftGuide_15s</td></tr>
+            <tr><td class="pick mono wrap">HAL_US_Q4-26_HolidayGifting_CONS_VID</td><td class="pick mono wrap">Prospecting_CoffeeEnthusiasts</td><td class="pick">Roastery</td><td class="pick">15s</td><td class="pick">Video</td><td class="gen mono">Roastery_15s_Video</td><td class="pick">Roastery_15s</td></tr>
+            <tr><td class="pick mono wrap">HAL_US_Q4-26_HolidayGifting_CONS_VID</td><td class="pick mono wrap">Prospecting_CoffeeEnthusiasts</td><td class="pick">Barista</td><td class="pick">6s</td><td class="pick">Video</td><td class="gen mono">Barista_6s_Video</td><td class="pick">Barista_6s</td></tr>
+            </tbody></table></div>
+          <div class="mini-key"><span class="pk">a dropdown</span><span class="gn">written by the sheet</span></div>
+        </div>
+        <div class="anatomy">
+          <h3>How a name is assembled</h3>
+          <div class="row"><span class="part c"><b>HAL</b><i>Brand</i></span><span class="sep">_</span><span class="part c"><b>US</b><i>Market</i></span><span class="sep">_</span><span class="part c"><b>Q4-26</b><i>Quarter</i></span><span class="sep">_</span><span class="part c"><b>HolidayGifting</b><i>Initiative</i></span><span class="sep">_</span><span class="part c"><b>CONS</b><i>Funnel</i></span><span class="sep">_</span><span class="part c"><b>VID</b><i>Format</i></span><span class="sep">_</span><span class="part s"><b>Prospecting</b><i>Tactic</i></span><span class="sep">_</span><span class="part s"><b>CoffeeEnthusiasts</b><i>Audience</i></span><span class="sep">_</span><span class="part a"><b>GiftGuide</b><i>Concept</i></span><span class="sep">_</span><span class="part a"><b>15s</b><i>Length</i></span><span class="sep">_</span><span class="part a"><b>Video</b><i>Format</i></span></div>
+          <div class="key"><span class="c">campaign parts</span><span class="s">ad set parts</span><span class="a">ad parts</span></div>
+          <p>The campaign tab has six dropdowns (Brand, Market, Quarter, Initiative, Funnel, Format), the ad set tab two (Tactic, Audience) and the ad tab three (Concept, Length, Format). As the builder picks them, the sheet joins the choices with underscores into the name, in this order, on all three levels. Nobody types a name, so nobody mistypes one, and because every name follows one pattern, results can be sliced by any part later: by audience, by concept, by length. A new brand chooses which parts it uses, once, on the setup tab.</p>
+        </div>
+        <div class="mini-wrap">
+          <h3>3 · Export the build from Ads Manager, paste it in, and every ad reads PASS or FAIL on the spot</h3>
+          <p>After building, the builder uses Ads Manager's own Export button. The file it produces is the platform's record of every campaign, ad set and ad as built: names, IDs, status, budgets, dates, audiences, placements, copy, links and tracking, often 100 columns or more. The builder pastes that file into one tab of the plan, and the plan's QA tab compares every planned ad to it instantly, by formula. The engine's run then adds the proof for each finding and the plain-English report you see in the demo above.</p>
+          <div class="mini-scroll"><table class="mini"><thead><tr><th>plan_row</th><th>result</th><th>ad</th><th>first failing check</th><th>detail</th></tr></thead><tbody>
+            <tr><td class="mono">4</td><td><span class="chip pass">PASS</span></td><td class="mono">GiftGuide_15s_Video</td><td class="mono"></td><td class="mono">all 12 checks agree</td></tr>
+            <tr><td class="mono">5</td><td><span class="chip fail">FAIL</span></td><td class="mono">Roastery_15s_Video</td><td class="mono">cta</td><td class="mono">plan «Shop now» · export «LEARN_MORE»</td></tr>
+            <tr><td class="mono">6</td><td><span class="chip pass">PASS</span></td><td class="mono">Barista_6s_Video</td><td class="mono"></td><td class="mono">all 12 checks agree</td></tr>
+            <tr><td class="mono">23</td><td><span class="chip missing">MISSING</span></td><td class="mono">…_FreeShipping_6s_Video</td><td class="mono">not in export</td><td class="mono">likely a rename: the export has …_FreeShipping_6s_Video_v2</td></tr>
+            <tr><td class="mono">28</td><td><span class="chip fail">FAIL</span></td><td class="mono">…_Broad_Advantage_GiftGuide_15s_Video</td><td class="mono">url_parameters</td><td class="mono">plan «utm_source=meta…» · export «utm_source=facebook…»</td></tr>
+            </tbody></table></div>
+        </div>
+        <div class="phases-wrap">
+          <h3>Every row also shows where it is in the approval chain</h3>
+          <div class="phases"><span class="ph-pre">Not started</span><span class="ph-pre">Ready to build</span><span class="ph-build">Building</span><span class="ph-ai">Ready for AI QA</span><span class="ph-human">With a human QA role</span><span class="ph-back">Sent back for edits</span><span class="ph-ok">Client approved, ready to set live</span><span class="ph-ok">Live</span><span class="ph-done">Completed</span></div>
+          <p>One status per row, so a manager sees at a glance what is built, what is checked, and what is waiting on whom.</p>
+        </div>
       </div>
+      <details class="more full" id="book-more"><summary>Open the full demo workbook <small>every tab, Meta and TikTok</small></summary><div class="more-body">
+      <p class="more-lede">The whole demo workbook: a synthetic account with two campaigns, six ad sets and fifty ads, filled in the way a real one is. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
       <div class="book full" id="book">
         <div class="book-head">
           <div class="tablist" role="tablist" aria-label="Workbook tabs" id="book-tabs"></div>
@@ -696,6 +1072,7 @@ html:not(.js) .copy-btn{display:none}
         </div>
         <div class="book-body" id="book-body" role="tabpanel" aria-labelledby="book-tab-0"></div>
       </div>
+      </div></details>
     </section>
 
     <section id="guardrails" class="sec g12" aria-labelledby="guardrails-h">
@@ -709,10 +1086,11 @@ html:not(.js) .copy-btn{display:none}
           <article><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to “check the campaign”. I wrote the rulebook first: what counts as proven, what a blank means, what it must never invent, which ad type gets which checks. The AI gets those rules as versioned reference files, not chat instructions.</p></article>
           <article><h4>Make it show its evidence</h4><p>Each finding has to cite the plan value, the export value and the rule that decided it, down to the plan row and the export cell, or it doesn't go in the report. Anything the engine can't verify is filed as a review rather than a failure, and anything new it comes across goes in as a proposal for a person to accept.</p></article>
           <article><h4>Who did what</h4><p>Claude wrote the build and test scripts to my spec. I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the test fixtures, not into memory.</p></article>
-          <article><h4>Ship it to real people</h4><p>The skill was shared across the organization and used by a media team on live batches. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
+          <article><h4>Ship it to real people</h4><p>A media team used it on live batches, and the skill and the media plan are now available agency-wide. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
         </div>
 
-        <div class="block-head block-gap"><h3 class="sub">Six rules, each added after a run got something wrong</h3><p>An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p></div>
+        <details class="more" id="rules"><summary>Six rules, each added after a run got something wrong</summary><div class="more-body">
+        <p class="more-lede">An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p>
         <ol class="numbered two-col">
           <li><span class="t"><b>Proven or unproven.</b><span>Every mapping from a planner's label to a platform value carries a proof status, earned from a real export. A mismatch on a proven rule is a FAIL. On an unproven rule it can only be NEEDS REVIEW, so the engine can't fail a build on a rule nobody has verified.</span></span></li>
           <li><span class="t"><b>A blank is never compared.</b><span>Blank means inherit or not specified, never “should be empty”. The feed resolves inheritance before the run, so the engine compares values, not intentions.</span></span></li>
@@ -721,6 +1099,24 @@ html:not(.js) .copy-btn{display:none}
           <li><span class="t"><b>Proposals, never silent changes.</b><span>Anything new the run sees, like a vocabulary value or a mapping now proven, becomes a changelog proposal for a human to accept. The rules of record live in the workbook and the skill files, never in the model's memory.</span></span></li>
           <li><span class="t"><b>One finding, not a thousand.</b><span>An error repeated across every ad in an ad set is one finding with a count, one card and one fix. The report stays readable and the fix stays obvious.</span></span></li>
         </ol>
+        </div></details>
+
+        <div class="block-head block-gap" style="margin-top:40px"><h3 class="sub">Where people stay in the loop</h3><p>The engine checks the build. It also checks that the people did their part.</p></div>
+        <div class="loop">
+          <div>
+            <h3>Sign-offs are checked too</h3>
+            <p>A few settings never show up in an export: a second identity on a creator post, block lists, the cards of a carousel. For those, the plan has a sign-off cell where whoever checked it in Ads Manager leaves initials and a date. The run flags any required sign-off still blank, and nothing reads READY TO APPROVE with one open.</p>
+          </div>
+          <div>
+            <h3>Typing mistakes are caught in the sheet, before a run</h3>
+            <ul class="guards">
+              <li><b>Every setting is a dropdown,</b> so a value can't be misspelled.</li>
+              <li><b>Names write themselves,</b> so a name can't be mistyped or duplicated.</li>
+              <li><b>An ID typed as a number turns red,</b> because spreadsheets drop digits after the fifteenth.</li>
+              <li><b>The plan gate has to read READY TO BUILD</b> before anyone opens Ads Manager, and every run is logged with the files it read.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -737,17 +1133,9 @@ html:not(.js) .copy-btn{display:none}
           <div><dt>500+</dt><dd>columns in the widest Ads Manager export, handled without a hand-typed column map</dd></div>
           <div><dt>11 releases</dt><dd>in twelve days, each recalculated to 0 errors and regression-tested before it shipped</dd></div>
         </dl>
-        <table class="compare">
-          <thead><tr><th scope="col">Step</th><th scope="col">Before</th><th scope="col">With Buildcheck</th></tr></thead>
-          <tbody>
-            <tr><td>Filling the plan</td><td>Days of rows typed by hand from the media plan and brief</td><td>Minutes. The grid expands into the build, with derived values filled in.</td></tr>
-            <tr><td>Batch QA</td><td>Four people, four days for a 2,000-ad batch</td><td>One 20-minute run, with every finding cited</td></tr>
-            <tr><td>Review before build</td><td>Every row checked by hand</td><td>A nine-check gate per line. Senior reviewers read the grid and the exceptions.</td></tr>
-            <tr><td>QA after build</td><td>Field-by-field comparison by eye, across an export of 100+ columns</td><td>Rules run in code, and every finding cites the plan value, export value and rule</td></tr>
-            <tr><td>Trust</td><td>Depends on who checked</td><td>A proof register: the list of mappings a person has verified against a real export. A FAIL can only rest on one of those.</td></tr>
-            <tr><td>Audit trail</td><td>Chat messages and memory</td><td>A register row per run, a changelog row per rule change, and findings pasted back into the workbook</td></tr>
-          </tbody>
-        </table>
+
+        <div class="block-head block-gap"><h3 class="sub">How I taught it</h3><p>A walkthrough, not a course.</p></div>
+        <p class="intro">I taught a VP and the analysts to fill the internal media plan (a Google Sheet), build and traffic from it, and self-check each batch with the engine before anyone else read it. The plan is dropdowns, the check is one paste and one click, and the report reads in plain English, so the first batch was the training. The media plan and the Claude skill are now available agency-wide.</p>
       </div>
     </section>
 
@@ -757,6 +1145,7 @@ html:not(.js) .copy-btn{display:none}
         <p>One media plan holds every platform's lines, and each line is checked in the workbook for its platform. The tabs, feeds and engine stay the same. Each platform brings its own export contract, vocabulary and naming profile.</p>
       </div>
       <div class="sec-body" style="border-top:0;padding-top:0">
+        <details class="more" id="plats-more" style="margin-top:0;border-top:0"><summary>Meta in production, TikTok built, three more on paper <small>open for the detail</small></summary><div class="more-body">
         <div class="plats">
           <div class="plat">
             <h3>Meta</h3>
@@ -795,6 +1184,7 @@ html:not(.js) .copy-btn{display:none}
           </ul>
         </div>
       </div>
+        </div></details>
     </section>
 
     <section id="engineering" class="sec g12" aria-labelledby="engineering-h">
@@ -833,8 +1223,7 @@ html:not(.js) .copy-btn{display:none}
         <p class="first">I designed, specified and shipped Buildcheck end to end while working in media operations at a paid social agency.</p>
         <p>It started as a fix for a real problem, a senior team spending days on checks that were mostly mechanical. The fix grew into a workbook that describes itself, an engine that has to show its evidence, and a record of every decision.</p>
         <p>Where it fits is in-house social media marketing and strategy. A brand's social team owns organic and paid together, and the paid side is only as good as its operations: how campaigns get planned, built, checked and launched. This project is that discipline, plus the AI and systems fluency to make a small team run like a large one.</p>
-        <p>Internally, the workbook is known as the Gem Arch Doc, after the agency's term for a campaign architecture document.</p>
-      </div>
+              </div>
       <div class="about-side">
         <div>
           <h3>What it shows</h3>
@@ -933,6 +1322,10 @@ function compare(kind,pv,ev){
 const R={key:'key, then name path',norm:'normalise, then compare',map:'proven label mapping',proof:'proof register (unproven)',cover:'creative coverage',src:'ad source rule',budget:'budget type by which column is filled',budget2:'budget type and amount from explicit columns',dates:'instants in account time',status:'delivery intent → status'};
 function mk(spec,outcome,pv,ev,proven,note){return {id:spec.id,type:spec.type,field:spec.field,col:spec.col,plan:String(pv??''),exp:String(ev??''),outcome,proven:!!proven,rule:spec.rule,note,prove:spec.prove,key:spec.key};}
 const READY='Post-Build_Ready for AI QA';
+const BREAK_LABELS={'camp-budget':'A zero dropped from the campaign budget','as-active':'An ad set set live before launch','as-flex':'Export pulled without the Flexible Inclusions column (flagged for review, not failed)','ad-cta':'One ad'+'\u2019'+'s call to action changed','ad-rename':'An ad renamed in Ads Manager','ad-link':'An ad pointed at the wrong landing page','sys-utm':'Eight ads tagged utm_source=facebook instead of meta','as-end':'The wrong end date typed in the plan (one minute off: flagged for review)','ad-active':'An ad set live before launch','ad-pixel':'The pixel detached from an ad','as-pixel':'The pixel detached from an ad set','ad-body':'French copy pasted over an English ad','ad-title':'A headline mistyped','ad-story':'The wrong post selected on the creator partnership ad',
+ 'tt-budget-type':'A lifetime budget set as daily','tt-g-on':'An ad group switched on before launch','tt-pangle':'Pangle added to an ad group'+'\u2019'+'s placements','tt-pixel-event':'The wrong pixel event picked','tt-rename':'An ad renamed in TikTok Ads Manager','tt-languages':'Export pulled without the Languages column (flagged for review, not failed)','tt-sys-utm':'Eight ads given the wrong landing page tag','tt-g-end':'The wrong end date typed in the plan (one minute off: flagged for review)','tt-ad-on':'An ad switched on before launch','tt-only-show':'\u201cOnly show as ad\u201d switched off','tt-text':'French copy pasted over an English ad','tt-g-pixel':'The pixel detached from an ad group','tt-spark-post':'The wrong post selected on the creator Spark Ad','tt-brand-identity':'The wrong account selected as the brand'+'\u2019'+'s identity'};
+const breakLabel=d=>BREAK_LABELS[d.id]||d.fix;
+function syncBreak(){ const sel=$('#break-pick'); if(!sel||!P||!state) return; const cur=sel.value; sel.innerHTML='<option value="">Let the demo choose</option>'+P.DISC.map(d=>{ const on=state.active.has(d.id); return '<option value="'+d.id+'"'+(on?' disabled':'')+'>'+esc(breakLabel(d))+(on?' (already in the build)':'')+'</option>'; }).join(''); if([...sel.options].some(o=>o.value===cur&&!o.disabled)) sel.value=cur; }
 const CONCEPTS=[['GiftGuide','15s','Gifts for the coffee-obsessed, roasted this week and shipped free over $40.','The Holiday Gift Guide'],['Roastery','15s','Meet the roastery behind your morning.','Roasted in small batches'],['Barista','6s','Six seconds of pour-over, perfected.','Pour-over, perfected'],['FreeShipping','6s','Free shipping on every gift, all season.','Free holiday shipping'],['Subscription','15s','Fresh roast every two weeks, no thinking required.','Coffee on subscription'],['Grinder','15s','The grinder that fixes bad coffee at the source.','Grind fresh, taste more'],['Espresso','6s','Espresso at home, minus the guesswork.','Espresso, simplified'],['GiftCard','6s','When you know they love coffee, but not which one.','The easy gift']];
 
 /* ---------- platform profile: META ---------- */
@@ -1064,16 +1457,16 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     {id:'ad-pixel',planted:false,tier:'ad',row:14,check:'pixel',fix:'Re-attach the pixel to the ad in Ads Manager',apply(x,on){x.ads[A(1,2)]['Conversion Tracking Pixels']=on?'':PIXEL}},
     {id:'ad-story',planted:false,tier:'ad',row:PARTNER_ROW,check:'story_id',fix:'Re-select the creator’s post in Ads Manager',apply(x,on){x.ads[48]['Story ID']=on?'s:10000000000002_5550009':'s:10000000000002_5550001'}},
     {id:'as-pixel',planted:false,tier:'adset',row:8,check:'pixel',fix:'Re-attach the pixel to the ad set in Ads Manager',apply(x,on){x.adsets[4]['Conversion Tracking Pixels']=on?'':PIXEL}},
-    {id:'ad-body',planted:false,tier:'ad',row:37,check:'body',fix:'Restore the planned primary text in Ads Manager',apply(x,on){x.ads[A(4,1)]['Body']=on?'Meet the roastery behind you morning.':CONCEPTS[1][2]}},
+    {id:'ad-body',planted:false,tier:'ad',row:37,check:'body',fix:'Restore the planned English primary text in Ads Manager (the French variant was pasted)',apply(x,on){x.ads[A(4,1)]['Body']=on?'Découvrez la brûlerie derrière votre café du matin.':CONCEPTS[1][2]}},
     {id:'ad-title',planted:false,tier:'ad',row:9,check:'title',fix:'Restore the planned headline in Ads Manager',apply(x,on){x.ads[A(0,5)]['Title']=on?'Grind fresh taste more':CONCEPTS[5][3]}}
   ],
   humans(plan){ const h=[{tier:'campaign',plan_row:4,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'campaign',plan_row:5,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'adset',plan_row:4,field:'publisher_block_lists',value:'HAL_BlockList_2026',cell:'hc_brand_safety',status:'initialled JK'}];
     plan.ad.forEach(a=>{ if(!isBlank(a.second_identity)) h.push({tier:'ad',plan_row:a.plan_row,field:'second_identity',value:a.second_identity,cell:'hc_identity',status:'open'}); }); return h; },
   proposalKey:c=>c.id==='creative_type'?'creative_type|Partnership ad':(c.field+'|'+c.col),
   contextNote:run=>run.context.length?'Context, no action: URL tags matched after %7B%7B → {{ normalisation on '+run.context.length+' ads ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
-  PLAN_VIEWS:[{name:'QA_EXPORT_CAMPAIGN',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buying_type','campaign_objective','campaign_lifetime_budget','campaign_daily_budget','campaign_start_datetime','campaign_end_datetime','qa_status','plan_line']},
-    {name:'QA_EXPORT_ADSET',key:'adset',cols:['plan_row','ad_set_name','ad_set_id','delivery_intent','performance_goal','countries','age_min','age_max','custom_audiences','excluded_custom_audiences','detailed_targeting_include','conversion_tracking_pixels','ad_set_start_datetime','ad_set_end_datetime','qa_status']},
-    {name:'QA_EXPORT (ads)',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','description_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent']}],
+  PLAN_VIEWS:[{name:'Campaign level plan',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buying_type','campaign_objective','campaign_lifetime_budget','campaign_daily_budget','campaign_start_datetime','campaign_end_datetime','qa_status','plan_line']},
+    {name:'Ad set level plan',key:'adset',cols:['plan_row','ad_set_name','ad_set_id','delivery_intent','performance_goal','countries','age_min','age_max','custom_audiences','excluded_custom_audiences','detailed_targeting_include','conversion_tracking_pixels','ad_set_start_datetime','ad_set_end_datetime','qa_status']},
+    {name:'Ad level plan',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','description_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent']}],
   EXP_VIEWS:[{name:'Campaigns',key:'campaigns',tier:'campaign'},{name:'Ad sets',key:'adsets',tier:'adset'},{name:'Ads',key:'ads',tier:'ad'}],
   logLines:(run,nPlan,nExp,presentN)=>['Parsing 3 plan feeds and 1 export as text: '+nPlan+' plan rows, '+nExp+' export rows',
     'Inventory: '+presentN+' export columns present · '+run.absent.length+' absent'+(run.absent.length?' ('+run.absent.join(', ')+')':''),
@@ -1232,7 +1625,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     {id:'tt-ad-on',planted:false,tier:'ad',row:5,check:'status',fix:'Switch the ad off in TikTok Ads Manager',apply(x,on){ttAd(x,0,1)['Ad Status']=on?'On':'Off'}},
     {id:'tt-spark-post',planted:false,tier:'ad',row:TT_SPARK_ROW,check:'post_id',fix:'Re-select the creator’s post in TikTok Ads Manager',apply(x,on){ttById(x,TT_SPARK_ID)['Post ID']=on?'7300000000000000009':TT_POST}},
     {id:'tt-only-show',planted:false,tier:'ad',row:8,check:'only_show_as_ad',fix:'Switch “Only show as ad” back on in TikTok Ads Manager',apply(x,on){ttAd(x,0,4)['Only show as ad']=on?'Off':'On'}},
-    {id:'tt-text',planted:false,tier:'ad',row:37,check:'text',fix:'Restore the planned text in TikTok Ads Manager',apply(x,on){ttAd(x,4,1)['Text']=on?'Meet the roastery behind you morning.':CONCEPTS[1][2]}},
+    {id:'tt-text',planted:false,tier:'ad',row:37,check:'text',fix:'Restore the planned English text in TikTok Ads Manager (the French variant was pasted)',apply(x,on){ttAd(x,4,1)['Text']=on?'Découvrez la brûlerie derrière votre café du matin.':CONCEPTS[1][2]}},
     {id:'tt-g-pixel',planted:false,tier:'adset',row:9,check:'pixel',fix:'Re-attach the pixel to the ad group in TikTok Ads Manager',apply(x,on){ttRows(x,5).forEach(r=>r['TikTok Pixel ID']=on?'':TT_PIXEL)}},
     {id:'tt-brand-identity',planted:false,tier:'ad',row:TT_BRAND_ROW,check:'identity_id',fix:'Re-select the brand’s own TikTok account as the identity in TikTok Ads Manager',apply(x,on){ttById(x,TT_BRAND_ID)['Identity ID']=on?digits(TT_CRE):digits(TT_BRAND_ACC)}}
   ],
@@ -1240,9 +1633,9 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     plan.ad.forEach(a=>{ if(a.ad_source==='Spark Ad (creator post)') h.push({tier:'ad',plan_row:a.plan_row,field:'authorization_code',value:a.identity+' · 365-day authorisation',cell:'hc_identity',status:'open'}); else if(a.ad_source==='Spark Ad (brand post)') h.push({tier:'ad',plan_row:a.plan_row,field:'linked_account',value:a.identity+' · linked in Business Center',cell:'hc_identity',status:'initialled AR'}); }); return h; },
   proposalKey:c=>c.key||(c.field+'|'+c.col),
   contextNote:run=>run.context.length?'Context, no action: toggles exported blank compared as Off on '+run.context.length+' item'+(run.context.length>1?'s':'')+' ('+run.context.slice(0,4).join(' · ')+(run.context.length>4?' …':'')+').':'',
-  PLAN_VIEWS:[{name:'QA_EXPORT_CAMPAIGN',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buy_type','advertising_objective','campaign_budget_optimization','campaign_budget_type','campaign_budget_amount','special_ads_categories','qa_status','plan_line']},
-    {name:'QA_EXPORT_ADGROUP',key:'adset',cols:['plan_row','ad_group_name','ad_group_id','delivery_intent','optimization_goal','billing_method','bid_strategy','placement_types','placements','include_search_results','pixel_id','pixel_event','include_audience_id','exclude_audience_id','location','gender','age','languages','interest_category','inventory_filter','ad_group_budget_type','ad_group_budget_amount','start_datetime','end_datetime','dayparting','delivery_type','qa_status']},
-    {name:'QA_EXPORT (ads)',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','identity_type','identity_id','post_id','ad_format','video_file','only_show_as_ad','text','cta_type','cta','web_url','website_events','qa_status','delivery_intent']}],
+  PLAN_VIEWS:[{name:'Campaign level plan',key:'campaign',cols:['plan_row','campaign_name','campaign_id','delivery_intent','buy_type','advertising_objective','campaign_budget_optimization','campaign_budget_type','campaign_budget_amount','special_ads_categories','qa_status','plan_line']},
+    {name:'Ad group level plan',key:'adset',cols:['plan_row','ad_group_name','ad_group_id','delivery_intent','optimization_goal','billing_method','bid_strategy','placement_types','placements','include_search_results','pixel_id','pixel_event','include_audience_id','exclude_audience_id','location','gender','age','languages','interest_category','inventory_filter','ad_group_budget_type','ad_group_budget_amount','start_datetime','end_datetime','dayparting','delivery_type','qa_status']},
+    {name:'Ad level plan',key:'ad',cols:['plan_row','ad_name','ad_id','ad_source','identity_type','identity_id','post_id','ad_format','video_file','only_show_as_ad','text','cta_type','cta','web_url','website_events','qa_status','delivery_intent']}],
   EXP_VIEWS:[{name:'Campaign columns',key:'campaigns',tier:'campaign'},{name:'Ad group columns',key:'adsets',tier:'adset'},{name:'Ad columns',key:'ads',tier:'ad'}],
   logLines:(run,nPlan,nExp,presentN,ex)=>['Parsing 3 plan feeds and 1 export as text: '+nPlan+' plan rows, '+nExp+' export rows, one wide sheet split into '+ex.campaigns.length+' campaign, '+ex.adsets.length+' ad group and '+ex.ads.length+' ad rows',
     'Inventory: '+new Set([...run.present.campaign,...run.present.adset,...run.present.ad]).size+' export columns present · '+run.absent.length+' absent'+(run.absent.length?' ('+run.absent.join(', ')+')':''),
@@ -1261,10 +1654,10 @@ META.words.other='TikTok';
 /* ---------- page copy that follows the platform ---------- */
 META.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.',catches:'a campaign budget entered as $18,000 instead of $180,000'};
 TIKTOK.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a $180,000 lifetime budget entered as daily.',catches:'a $180,000 lifetime budget entered as daily'};
-META.resetStatus='Eight problems are planted in the inputs, one of them across all 8 ads of an ad set. Run the QA to find them.';
+META.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad set. Run the QA to find them.';
 META.idleLog='Waiting to run. The engine reads both files as text, lists the export\u2019s columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
 TIKTOK.idleLog='Waiting to run. The engine reads the plan feeds and the one wide export sheet as text, splits the sheet into campaign, ad group and ad rows by ID, lists its columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
-TIKTOK.resetStatus='Eight problems are planted in the inputs, one of them across all 8 ads of an ad group. Run the QA to find them.';
+TIKTOK.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad group. Run the QA to find them.';
 /* plain-English summary: (tier|check id) → one business-language sentence; anything unmapped folds into a generic line */
 const money=v=>'$'+(+budget(v)||0).toLocaleString('en-US');
 const count1=(n,one,many)=>n===1?'One '+one:n+' '+many;
@@ -1355,7 +1748,7 @@ function runEngine(plan,exp){
   const present={campaign:keysOf(exp.campaigns),adset:keysOf(exp.adsets),ad:keysOf(exp.ads)};
   const absent=[]; Object.keys(P.NEEDED).forEach(t=>P.NEEDED[t].forEach(c=>{if(!present[t].has(c)&&!absent.includes(c)) absent.push(c)}));
   const items=[]; let byId=0, byName=0; const ID=P.idCol, NM=P.nameCol, IF=P.idField, NF=P.nameField;
-  const naItem=(tier,p,name)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'N/A',first:'–',detail:'QA status '+p.qa_status+': deliberately not built, never MISSING'});
+  const naItem=(tier,p,name)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'N/A',first:'–',detail:'plan says '+p.qa_status+': never built, on purpose, so not missing'});
   const missItem=(tier,p,name,near)=>({tier,plan_row:p.plan_row,name,planRow:p,checks:[],result:'MISSING',first:'not in export',detail:near?('not found by name path. Likely a rename: export has «'+near+'»'):'planned, not found in the export',near});
   plan.campaign.forEach(c=>{
     if(NA_STATUS.includes(c.qa_status)) return items.push(naItem('campaign',c,c[NF.campaign]));
@@ -1437,7 +1830,7 @@ function renderReport(run,prev,runId){
   let h='<div class="report"><header><h3>QA Report · '+esc(P.brand)+' · '+esc(P.label)+' · '+esc(P.scope)+' · '+esc(today)+'</h3><span class="meta">'+esc(runId)+' · checks evaluated: '+run.counts.checks+'</span></header>';
   h+='<div class="gate"><div class="verdict '+(run.ready?'yes':'no')+'">READY TO APPROVE: '+(run.ready?'YES':'NO')+'</div><div class="why">'+esc(run.why)+'</div>';
   const c=run.counts; h+='<div class="counts"><span>planned<b>'+c.planned+'</b></span><span>PASS<b>'+c.pass+'</b></span><span>FAIL<b>'+c.fail+'</b></span><span>MISSING<b>'+c.missing+'</b></span><span>NEEDS REVIEW<b>'+c.review+'</b></span><span>N/A<b>'+c.na+'</b></span><span>EXTRA<b>'+c.extra+'</b></span><span>out of scope<b>0</b></span></div>';
-  if(c.na) h+='<div class="absent">'+(c.na===1?'The N/A row is a planned ad':c.na+' N/A rows are planned ads')+' the plan marks Not Launching: held back on purpose, so not expected in the export and not counted as missing.</div>';
+  if(c.na) h+='<div class="absent">'+(c.na===1?'N/A: one ad the plan lists as not launching. Nobody built it, on purpose, so it is not missing.':'N/A: '+c.na+' ads the plan lists as not launching. Nobody built them, on purpose, so they are not missing.')+'</div>';
   if(run.absent.length) h+='<div class="absent">Columns absent from the export: <span class="mono">'+run.absent.map(esc).join(', ')+'</span>. Checks that need them read “column absent”.</div>';
   h+='</div>';
   h+='<div class="rsec plain"><h4><span>What this run caught</span> <small>in plain English. The sections below carry the evidence</small></h4><ul>'+summaryLines(run).map(l=>'<li>'+esc(l)+'</li>').join('')+'</ul></div>';
@@ -1459,7 +1852,7 @@ function renderReport(run,prev,runId){
   fails.forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL'); if(i.tier!=='ad'||fc.length!==1){singles.push(i);return;} const x=fc[0]; const set=i.planRow[P.nameField.adset]; const k=[x.type,x.field,set,x.plan,x.exp].join('|'); (gm[k]=gm[k]||{x,adset:set,items:[]}).items.push(i); });
   Object.values(gm).forEach(g=>{ if(g.items.length>=3) groups.push(g); else singles.push(...g.items); });
   const order={campaign:0,adset:1,ad:2}; singles.sort((a,b)=>order[a.tier]-order[b.tier]||a.plan_row-b.plan_row);
-  h+='<div class="rsec"><h4><span>§2 Failures</span> <small>one card per item; an identical finding across an '+esc(TIER.adset)+' is one card with a count</small></h4>';
+  h+='<div class="rsec"><h4><span>§2 Failures</span> <small>one card per item; an identical finding across an '+esc(TIER.adset)+' is one card with a count. Buildcheck only reports. Each Fix button stands in for the builder: it changes the export the way they would in '+esc(P.manager)+', so you can run again.</small></h4>';
   if(!fails.length) h+='<p class="empty">None.</p>';
   groups.forEach(g=>{ const rows=g.items.map(i=>i.plan_row); h+='<div class="fcard"><div class="fh"><b>'+esc(g.x.type)+'</b><span class="cnt">'+g.items.length+' ads</span><span class="nm">'+esc(g.adset)+'</span><small>'+esc(TIER.adset)+' · plan_rows '+rows[0]+'–'+rows[rows.length-1]+'</small></div>'+failTable([g.x])+'<details class="rows"><summary>The '+g.items.length+' ads</summary><ul>'+g.items.map(i=>'<li>'+i.plan_row+' · '+esc(i.name)+'</li>').join('')+'</ul></details><div class="fix-row">Fix: '+(fixButton('ad',rows[0],g.x.id)||fallback)+'</div></div>'; });
   singles.forEach(i=>{ const fc=i.checks.filter(x=>x.outcome==='FAIL'); const types=[...new Set(fc.map(x=>x.type))].join(' · ');
@@ -1493,14 +1886,14 @@ function renderReport(run,prev,runId){
   h+='<div class="rsec"><h4><span>Findings block</span> <small>plain text · pastes straight back into the workbook, one line per planned ad</small></h4><pre class="block" style="max-height:260px;overflow:auto">plan_row\tresult\tfirst failing check\tdetail\n'+esc(block)+'</pre></div>';
   h+='</details>';
   const openN=P.DISC.filter(d=>state.active.has(d.id)).length;
-  h+='<div class="report-actions"><span class="grow">'+(run.ready?'Clean run. Reset the demo to start again, or add a builder mistake and catch it.':'Apply the fixes above, or fix everything, then re-run to see what changed.')+'</span><button class="btn quiet" id="btn-fix-all-2" type="button"'+(openN?'':' disabled')+'>Fix everything the report found</button><button class="btn" id="btn-rerun" type="button">Re-run QA</button><button class="btn text" id="btn-break-2" type="button">Add a builder mistake</button></div>';
+  h+='<div class="report-actions"><span class="grow">'+(run.ready?'Clean run. Reset the demo to start again, or add a builder mistake and catch it.':'Buildcheck only reports. The buttons stand in for the builder: apply the fixes above, or fix everything, then run again to see what changed.')+'</span><button class="btn quiet" id="btn-fix-all-2" type="button"'+(openN?'':' disabled')+'>Fix everything, as the builder would</button><button class="btn" id="btn-rerun" type="button">Re-run QA</button><button class="btn text" id="btn-break-2" type="button">Add a builder mistake</button></div>';
   return h+'</div>';
 }
 function registerRow(run,runId){ const d=new Date().toISOString().slice(0,10); const c=run.counts; return [runId,d,'QA run',P.label,P.regScope,c.planned,c.pass,c.fail,c.missing,c.review,c.na,c.extra,run.ready?'YES':'NO',run.top,run.proposals.length]; }
 function renderRegister(){ const tb=$('#register tbody'); if(!runs.length){tb.innerHTML='<tr><td colspan="15" class="muted">No runs yet.</td></tr>';return;} tb.innerHTML=runs.map(r=>'<tr>'+r.map((v,i)=>'<td'+(i===12?' style="color:var(--'+(v==='YES'?'pass':'fail')+')"':'')+'>'+esc(v)+'</td>').join('')+'</tr>').join(''); }
 function setStatus(t){ state.status=t; $('#status-line').textContent=t; }
 const openCount=()=>P.DISC.filter(d=>state.active.has(d.id)).length;
-const setRunning=on=>{ $('#btn-run').disabled=on; $('#btn-reset').disabled=on; $('#btn-break').disabled=on; document.querySelectorAll('.platform button[data-p]').forEach(b=>b.disabled=on); if(on){ document.querySelectorAll('#report-wrap button').forEach(b=>b.disabled=true); refocus(null,$('#log')); } };
+const setRunning=on=>{ $('#btn-run').disabled=on; $('#btn-reset').disabled=on; $('#btn-break').disabled=on; $('#break-pick').disabled=on; document.querySelectorAll('.platform button[data-p]').forEach(b=>b.disabled=on); if(on){ document.querySelectorAll('#report-wrap button').forEach(b=>b.disabled=true); refocus(null,$('#log')); } };
 const wait=ms=>new Promise(r=>setTimeout(r,REDUCE?0:ms));
 async function doRun(){
   const st=state; /* the run belongs to the platform that started it; if that changes under the awaits, abandon it */
@@ -1517,23 +1910,23 @@ async function doRun(){
   const open=openCount();
   $('#btn-fix-all').disabled=!open; setRunning(false); $('#btn-run').textContent='Re-run QA';
   refocus(fk,$('#btn-run')); if(document.activeElement===$('#log')) $('#btn-run').focus({preventScroll:true});
-  setStatus(run.ready?'Clean. '+(run.counts.review?'Answer the reviews, initial the ✓ cells, and the reviewers sign off.':'Ready for the reviewers to sign off.'):open+' thing'+(open>1?'s':'')+' to fix. Use the buttons in the report, or fix everything.');
+  setStatus(run.ready?'Clean. '+(run.counts.review?'Answer the reviews, initial the ✓ cells, and the reviewers sign off.':'Ready for the reviewers to sign off.'):open+' thing'+(open>1?'s':'')+' to fix, by a person. The Fix buttons stand in for the builder: use them one at a time, or fix everything.');
   syncToolbar();
   $('#report-wrap').scrollIntoView({behavior:REDUCE?'auto':'smooth',block:'start'});
 }
-function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Applied. Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'Inputs updated. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
+function applyFix(id,btn){ state.active.delete(id); materialize(); renderInputs(); if(btn){btn.disabled=true; btn.textContent='Builder fixed it (simulated). Run again to verify';} const open=openCount(); setStatus((open?open+' still open · ':'')+'The export now reads as if the builder had made that fix. Run the QA again to see what changed.'); syncFix(); refocus(null,$('#btn-rerun')||$('#btn-run')); }
 var resetSerial=0;
 function reset(){ resetSerial++; state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
-function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; }
-function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied. Run again to verify';}); syncFix(); setStatus('Everything is corrected in the inputs. Run the QA again to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
-function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} const d=pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run the QA to find it.'); return true; }
+function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; syncBreak(); }
+function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Builder fixed it (simulated). Run again to verify';}); syncFix(); setStatus('Every fix is made, the way the builder would make it in '+P.manager+', plus the one plan cell. Run the QA again to see what changed and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
+function breakOne(){ const sel=$('#break-pick'); const want=sel?sel.value:''; let d=want?P.DISC.find(x=>x.id===want&&!state.active.has(x.id)):null; if(!d){ const pool=P.DISC.filter(x=>!x.planted&&!state.active.has(x.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} d=pool.find(x=>x.id==='ad-body'||x.id==='tt-text')||pool[Math.floor(Math.random()*pool.length)]; } state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('Builder\u2019s slip added: '+breakLabel(d)+'. The '+P.manager+' export changed. Run the QA to find it.'); if(sel) sel.value=''; return true; }
 
 /* ---------- platform switch: each platform keeps its own progress; the register is shared ---------- */
 function setPlatform(key){
   const prof=PLATFORMS[key]||META; if(P===prof) return;
   spot(null); if(!tour.on) cap.hidden=true;
   if(P){ state.reportHTML=$('#report-wrap').innerHTML; state.logHTML=$('#log').innerHTML; state.fixAllOff=$('#btn-fix-all').disabled; }
-  P=prof; state=states[prof.key]; if(!state.plan) materialize();
+  P=prof; state=states[prof.key]; if(!state.plan) materialize(); syncBreak();
   document.querySelectorAll('.platform button[data-p]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.p===prof.key)));
   document.querySelectorAll('[data-pw]').forEach(s=>{ s.textContent=prof.words[s.dataset.pw]||s.textContent; });
   const other=PLATFORMS[prof.key==='meta'?'tiktok':'meta'];
@@ -1563,7 +1956,7 @@ $('#btn-break').addEventListener('click',()=>{ breakOne(); if(!state.last) $('#b
 $('#btn-hero-run').addEventListener('click',()=>{ toConsole(); if(!$('#btn-run').disabled) doRun(); });
 $('#btn-reset').addEventListener('click',()=>{ reset(); if(!tour.on){ cap.hidden=true; tour.paused=null; $('#btn-tour').textContent=TOUR_LABEL; } $('#btn-run').focus({preventScroll:true}); });
 /* the fix, mistake and reset buttons only mean something once there is a report */
-function syncToolbar(){ const ran=!!(state&&state.last); ['#btn-fix-all','#btn-break','#btn-reset'].forEach(sel=>{ $(sel).hidden=!ran; }); }
+function syncToolbar(){ const ran=!!(state&&state.last); ['#btn-fix-all','#breaker','#btn-reset'].forEach(sel=>{ $(sel).hidden=!ran; }); }
 /* the two input tables start folded to a few rows */
 $('#io-toggle').addEventListener('click',e=>{ const io=$('.io'), on=!io.classList.contains('show-all'); io.classList.toggle('show-all',on); e.currentTarget.setAttribute('aria-expanded',String(on)); e.currentTarget.textContent=on?'Show fewer rows':'Show all rows'; });
 /* remember whether the full report was opened, so a re-run keeps it that way */
@@ -1584,15 +1977,15 @@ async function hold(stepName,text){ caption(stepName,text,'next'); await waitNex
 const sysFinding=()=>P.DISC.find(d=>d.rows&&state.active.has(d.id)); const sysBtn=()=>{ const f=sysFinding(); return f?document.querySelector('button[data-fix="'+f.id+'"]'):null; };
 /* each step: an action that changes the demo (optional), the screen to hold on, and anything applied after Next (optional) */
 const STEPS=[
-  {n:0, show:()=>hold('start','Nine steps, one per click. Press Next to move on, Pause to keep your place, or click any demo control to take over.')},
+  {n:0, show:()=>hold('start','Nine steps, one per click. The question the whole tool answers: does what was built match the plan, exactly? Press Next to move on, Pause to keep your place, or click any demo control to take over.')},
   {n:1, show:()=>{ spot($('.io')); return hold('1 of 9 · the inputs','Two inputs. On the left, the media plan: what was supposed to be built. On the right, the export from '+P.manager+': what was actually built. Eight mistakes are hidden in them.'); }},
   {n:2, act:async()=>{ spot(null); caption('2 of 9 · run','Running the check.'); await doRun(); await step(400); }, show:()=>hold('2 of 9 · run','The check has run. Buildcheck read both files, matched each planned item to the export by its ID, and applied the rules to every field.')},
   {n:3, show:()=>{ spot($('.report .plain')); return hold('3 of 9 · the verdict','The top line is the verdict: READY TO APPROVE: NO. Under it, the findings in plain English, before any detail.'); }},
   {n:4, show:()=>{ const sum=$('.report .plain'), cnt=$('.report .fcard .cnt'); spot(cnt?cnt.closest('.fcard'):sum); return hold('4 of 9 · one finding, not eight','The first card is one finding for all 8 ads, because the same mistake was repeated in every ad. One card and one fix, instead of eight.'); }},
-  {n:5, show:()=>{ spot(sysBtn()||$('.report .plain')); return hold('5 of 9 · fix one','Next fixes that one. In real life it is one bulk edit in '+P.manager+'. The export changes now; the report only changes when the check runs again.'); }, after:async()=>{ const f=sysFinding(), b=sysBtn(); if(f&&b) applyFix(f.id,b); await step(600); }},
+  {n:5, show:()=>{ spot(sysBtn()||$('.report .plain')); return hold('5 of 9 · fix one','Buildcheck never touches '+P.manager+'. It reads an export and writes a report, so the client account stays in human hands. What it does is tell the builder exactly what to correct: this card names the ads, the setting, the planned value and the built value. In real life the builder makes that one bulk edit in '+P.manager+' and re-exports. Here, Next stands in for the builder. Then we run the check again and watch the finding clear.'); }, after:async()=>{ const f=sysFinding(), b=sysBtn(); if(f&&b) applyFix(f.id,b); await step(600); }},
   {n:6, act:async()=>{ spot(null); caption('6 of 9 · run again','Running the check on the corrected build.'); await doRun(); await step(400); }, show:()=>{ spot($('.report .diffsec')); return hold('6 of 9 · what changed','The second report starts with what changed since the first: the 8 ads are resolved, the other problems are unchanged. A second check reads as a list of differences, not a fresh report.'); }},
-  {n:7, show:()=>{ spot($('#btn-fix-all-2')); return hold('7 of 9 · fix the rest','Next fixes everything that is left: the remaining export mistakes and the one wrong cell in the plan.'); }, after:async()=>{ fixAll('report'); await step(600); }},
-  {n:8, act:async()=>{ spot(null); caption('8 of 9 · last run','Running the check once more.'); await doRun(); await step(400); }, show:()=>{ spot($('.report .gate')); return hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built. The one N/A is an ad the plan marks Not Launching, held back on purpose, so it was never expected in the export.'); }},
+  {n:7, show:()=>{ spot($('#btn-fix-all-2')); return hold('7 of 9 · fix the rest','Now the rest. Next corrects the remaining export mistakes, the way the builder would in '+P.manager+', and the one wrong cell in the plan, the way the planner would. Then the check runs again.'); }, after:async()=>{ fixAll('report'); await step(600); }},
+  {n:8, act:async()=>{ spot(null); caption('8 of 9 · last run','Running the check once more.'); await doRun(); await step(400); }, show:()=>{ spot($('.report .gate')); return hold('8 of 9 · ready','READY TO APPROVE: YES. Every planned item now matches what was built. One row reads N/A: the plan lists that ad as not launching, so nobody built it, and that is correct.'); }},
   {n:9, show:()=>{ spot($('#register')); return hold('9 of 9 · the record','The run register keeps one row per run, so there is a record of each check and what it found.'); }},
 ];
 const canResume=()=>!!tour.paused&&tour.serial===resetSerial&&tour.paused.i<STEPS.length;
@@ -1616,7 +2009,7 @@ async function runTour(from,resuming){
       if(s.act&&!(resuming&&i===from)){ phase='act'; await s.act(); }
       phase='show'; await s.show();
       if(s.after){ phase='after'; await s.after(); } }
-    spot(null); caption('done','That’s the whole loop. Try it yourself: reset, or add a builder mistake and watch it get caught.');
+    spot(null); caption('done','That’s the whole loop. Try it yourself: pick a mistake to make in the build, run the QA, and watch it get caught. Or reset.');
   }catch(e){ if(!tour.cancel) throw e; paused=(phase==='after')?{i:i+1,skipAct:false}:{i,skipAct:true}; if(paused.i>=STEPS.length) paused=null; }
   finally{ endTour(paused); }
 }
@@ -1624,12 +2017,13 @@ function resumeTour(){ if(canResume()) runTour(tour.paused.i,tour.paused.skipAct
 $('#btn-tour').addEventListener('click',resumeTour);
 $('#btn-hero-tour').addEventListener('click',resumeTour);
 /* any click on a demo control while the walkthrough runs hands control back; the caption bar's own buttons don't count. Once paused, the first click in the demo clears the paused note; the console button still reads "Resume the walkthrough". */
-document.addEventListener('click',e=>{ if(e.target.closest('.tour-cap')) return; const c=e.target.closest('#console button, .platform button, a[data-go], #btn-hero-run, #report-wrap button'); if(!c||c.disabled) return;
+document.addEventListener('click',e=>{ if(e.target.closest('.tour-cap')) return; const c=e.target.closest('#console button, #console select, .platform button, a[data-go], #btn-hero-run, #report-wrap button'); if(!c||c.disabled) return;
   if(tour.on){ if(!c.matches('#report-wrap button')){ tour.cancel=true; tour.tookOver=true; release(); } return; }
   if(tour.paused&&!cap.hidden&&!c.matches('#btn-tour, #btn-hero-tour')) cap.hidden=true; },true);
 
 /* ---------- engineering notes: collapsed unless the URL points at them ---------- */
 (function(){ const d=$('#eng-details'); if(!d) return; const open=()=>{ if(location.hash==='#engineering') d.open=true; }; open(); addEventListener('hashchange',open); })();
+(function(){ const open=()=>{ if(!location.hash) return; const el=document.getElementById(location.hash.slice(1)); if(!el) return; let d=el.tagName==='DETAILS'?el:el.closest('details'); while(d){ d.open=true; d=d.parentElement&&d.parentElement.closest('details'); } }; open(); addEventListener('hashchange',open); })();
 
 /* ---------- the workbook ---------- */
 const D=v=>({v,c:'derived'}), T=v=>({v,c:'typed'}), F=v=>({v,c:'formula'}), K=v=>({v,c:'key'}), OK=v=>({v,c:'ok'}), AM=v=>({v,c:'amber'});
@@ -1654,7 +2048,7 @@ function mediaPlan(owner){ const cols=C([['Line','line_id'],['Agency','agency'],
     [F('L002'),'Demo Agency','US','Paid social','Meta','Auction','Purchases','Advantage+ placements','11/01/2026','12/24/2026','180,000','Broad 21-65; Cart abandoners 30d; Purchasers 180d','Yes','Sales','Lowest cost','Conversions','Action','Holiday',K('STANDARD'),K('W1'),...(meta?mine(3):other(3))],
     [F('L003'),'Demo Agency','US','Paid social','TikTok','Auction','Video views','In-feed','11/15/2026','12/24/2026','120,000','Interests 18-34; LAL purchasers; Site visitors 90d','Yes','Video views','Lowest cost','15-second views','Consideration','Holiday',K('STANDARD'),K('W1'),...(meta?other(3):mine(3))],
     [F('L004'),'Demo Agency','US','Paid social','TikTok','Auction','Purchases','In-feed','11/01/2026','12/24/2026','180,000','Broad 21-65; Cart abandoners 30d; Purchasers 180d','Yes','Sales','Lowest cost','Conversions','Action','Holiday',K('STANDARD'),K('W1'),...(meta?other(3):mine(3))]];
-  return note('The media grid pastes in as it is, from column B, and the line ID builds itself. The build picks (recipe, creative wave) and the linked counts on the right belong to the workbook. Everything else is the buyer’s. '+(meta?'Lines 3 and 4 are TikTok buys. They sit on the same plan, but they’re built and checked in the TikTok workbook.':'Lines 3 and 4 are the TikTok buys this workbook owns, so they’re built and checked here. Lines 1 and 2 are Meta buys on the same plan, built and checked in the Meta workbook.'))+sheet(gridHTML(cols,rows)); }
+  return note('The client’s media grid pastes in as it is. The line ID and the counts on the right are written by the sheet; everything else is the plan as bought. '+(meta?'Lines 3 and 4 are TikTok buys. They sit on the same plan, but they’re built and checked in the TikTok workbook.':'Lines 3 and 4 are the TikTok buys this workbook owns, so they’re built and checked here. Lines 1 and 2 are Meta buys on the same plan, built and checked in the Meta workbook.'))+sheet(gridHTML(cols,rows)); }
 const planCheck=(rows,manager)=>{ const cols=C([['Line','line_id'],['Partner','partner'],['Plan working media','plan_working_media'],['Workbook budget','arch_budget'],['Market','chk_market'],['Buy type','chk_buy_type'],['Flight start','chk_flight_start'],['Flight end','chk_flight_end'],['Budget','chk_budget'],['Objective','chk_objective'],['Optimization','chk_optimization'],['Funnel','chk_funnel'],['Suppression','chk_suppression'],['Result','result'],['Detail','detail']]);
   const tier=manager==='Ads Manager'?'Ad sets':'Ad groups';
   return note('The gate. Nine checks per line prove the workbook matches what was bought, with the same proof discipline as the run: an unproven mapping asks for review and never fails. <b>READY TO BUILD</b> must read YES before anyone opens '+manager+'.')+'<div class="two"><div><h3>Summary</h3>'+kvHTML([['Lines on MEDIA_PLAN','4'],['Linked to this workbook','2'],['OK / FAIL / NEEDS REVIEW','2 / 0 / 0'],['NOT LINKED · other workbook','0 · 2'],['Campaign rows with no line','0'],[tier+' off the plan','0']])+'</div><div><h3>Money and gate</h3>'+kvHTML([['Plan working media (this workbook)','$300,000'],['Workbook planned budget','$300,000'],['Difference','$0 (tolerance 1.0 %)'],['Daily-budget lines','0'],['READY TO BUILD','YES']])+'</div></div>'+sheet(gridHTML(cols,rows,17)); };
@@ -1663,16 +2057,16 @@ const META_TABS=[
  {name:'MEDIA_PLAN',html:()=>mediaPlan('meta')},
  {name:'BUILD_ADSETS',html(){ const cols=C([['Line','line'],['Label (s02)','label'],['Audience','audience'],['Goal','goal'],['Placements','placements'],['Platforms','platforms'],['Ad set budget','ad_set_budget'],['Wave','wave'],['Concepts (; = one ad each)','concepts'],['URL','website_url'],['Pixel','pixel'],['CTA','cta'],['In plan','in_plan']]);
    const rows=SETS.map((s,i)=>[K(CAMPS[s.c].line),T(s.label),K(s.audience),D(s.c?'Conversions':'Views'),D('Advantage+ placements'),D('Facebook; Instagram'),'',K('W1'),T(CONCEPTS.map(c=>c[0]+'_'+c[1]).join('; ')),T(LINK),D('Halcyon Web Pixel'),D('Shop now'),OK('OK')]);
-   return note('One row per ad set to build. The number of rows per line is the planned ad-set count that <b>MEDIA_PLAN</b> checks against. The expander reads this grid first: the label becomes the ad-set name part, and a semicolon-separated concept list becomes one ad per concept. Eight concepts here, so 48 ads from six rows.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+   return note('One row per ad set the team plans to build, under its media plan line. Each row picks an audience from the Audiences tab, a goal, placements, a budget, and the creative concepts it will run. One click then expands the plan: the row’s label becomes the ad set’s name, each concept becomes an ad under it, and the audience’s countries, ages and lists fill the ad set’s targeting. The plan check counts these rows and budgets against the media plan line and reads READY TO BUILD only when they match what was bought. Eight concepts here, so 48 ads from six rows.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'Meta Campaign Level',html(){ const cols=C([['Campaign name','campaign_name'],['Brand','c01'],['Market','c02'],['Quarter','c03'],['Initiative','c04'],['Funnel','c05'],['Format','c06'],['Delivery intent','campaign_delivery_intent'],['Buying type','buying_type'],['Objective','campaign_objective'],['Advantage+ campaign budget','advantage_campaign_budget'],['Lifetime budget','campaign_lifetime_budget'],['Daily budget','campaign_daily_budget'],['Start','campaign_start_datetime'],['End','campaign_end_datetime'],['Special ad categories','special_ad_categories'],['QA status','qa_status'],['Campaign ID','campaign_id'],['✓ compliance','hc_compliance'],['Plan line','plan_line'],['Plan check','plan_check'],['Account','account']]);
    const rows=CAMPS.map(c=>[F(c.name),T(c.parts[0]),D(c.parts[1]),T(c.parts[2]),T(c.parts[3]),D(c.parts[4]),T(c.parts[5]),T('Paused'),D('AUCTION'),D(c.objective),D('On'),D(c.budget),'',D('11/01/2026 12:00 AM'),D('12/24/2026 11:59 PM'),T('None'),T(READY),T(c.id),T('✓ AR'),K(c.line),F(c.line+' · Meta · US · $'+(+c.budget).toLocaleString('en-US')+' · OK'),D('DEFAULT')]);
-   return note('Gray cells were filled from the plan line: buying type, objective, budget, flight, funnel. Black cells were typed. Typed always wins, and clearing a typed cell brings the gray value back. The name in column A is built by formula from the name parts and the account’s separator. Nobody types a campaign name, so nobody mistypes one.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+   return note('Gray cells were filled in from the media plan line: buying type, objective, budget, flight, funnel. Black cells were typed by the builder, and a typed value takes precedence. The campaign name in column A is assembled from the name-part dropdowns. Nobody types it.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'Meta Ad Set Level',html(){ const cols=C([['Ad set name','ad_set_name'],['Campaign','campaign_name'],['Tactic','s01'],['Audience label','s02'],['Delivery intent','ad_set_delivery_intent'],['Performance goal','performance_goal'],['Audience','audience'],['Countries','countries'],['Age min','age_min'],['Age max','age_max'],['Custom audiences','custom_audiences'],['Excluded custom audiences','excluded_custom_audiences'],['Detailed targeting (include)','detailed_targeting_include'],['Placements','placements'],['Pixel','conversion_tracking_pixels'],['Lifetime budget','ad_set_lifetime_budget'],['Start','ad_set_start_datetime'],['End','ad_set_end_datetime'],['QA status','qa_status'],['Ad set ID','ad_set_id'],['Plan line','plan_line'],['Plan line (effective)','plan_line_effective'],['Plan check','plan_check']]);
    const rows=SETS.map((s,i)=>[F(setName(i)),K(CAMPS[s.c].name),T(s.s01),T(s.label.replace(s.s01+'_','')),T('Paused'),D(CAMPS[s.c].goal),K(s.audience),'','','','',s.excluded?T(s.excluded.split(':')[1]):'',s.detailed?T(s.detailed):'',D('Advantage+ placements'),D('Halcyon Web Pixel'),'',D('11/01/2026 12:00 AM'),i===2?AM('12/25/2026 12:00 AM'):D('12/24/2026 11:59 PM'),T(READY),T(setId(i)),'',D(CAMPS[s.c].line),F(pc(i))]);
-   return note('Blank targeting cells inherit the <b>AUDIENCES</b> row named in <code>audience</code>. The feed resolves them before the run, so the engine compares countries, ages and audience IDs, never the audience name. Row 6’s end time was typed one minute past the derived value. The cell turns amber, and the run will ask about it.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+   return note('Each ad set picks an audience from the Audiences tab, and its countries, ages and audience lists fill in from there, so targeting is defined once and never retyped. Row 6’s end time was typed one minute later than the plan line’s, on purpose, so the run has something to flag.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'Meta Ad Level',html(){ const cols=C([['Ad name','ad_name'],['Campaign','campaign_name'],['Ad set','ad_set_name'],['Concept','a01'],['Length','a02'],['Format','a03'],['Ad source','ad_source'],['Facebook page','facebook_page'],['Instagram','instagram_account'],['Second identity','second_identity'],['Story ID','story_id'],['Creative','creative_name'],['Feed file (1x1)','creative_feed'],['Story / Reels file (9x16)','creative_story'],['Primary text','primary_text_feed'],['Headline','headline_feed'],['Description','description_feed'],['URL','website_url'],['CTA','cta'],['URL parameters','url_parameters'],['Pixel','conversion_tracking_pixels'],['QA status','qa_status'],['Ad ID','ad_id'],['✓ identity','hc_identity']]);
    const rows=states.meta.plan.ad.map(a=>{ const part=a.ad_source==='Partnership ad'; const cc=CONCEPTS.find(c=>a.creative_name===c[0]+'_'+c[1]); return [F(a.ad_name),K(a.campaign_name),K(a.ad_set_name),T(part?'MayaBrews':(cc?cc[0]:'Roastery')),T(part?'–':(cc?cc[1]:'15s')),T(part?'CreatorPost':'Video'),T(a.ad_source),D(part?'Maya Brews':'Halcyon Coffee Roasters'),D(part?'mayabrews':'halcyoncoffee'),a.second_identity?T(a.second_identity):'',a.story_id?T(a.story_id):'',K(a.creative_name),a.creative_feed?D(a.creative_feed):'',a.creative_story?D(a.creative_story):'',a.primary_text_feed?T(a.primary_text_feed):'',a.headline_feed?T(a.headline_feed):'',a.description_feed?T(a.description_feed):'',a.website_url?D(a.website_url):'',a.cta?D('Shop now'):'','',D('Halcyon Web Pixel'),T(a.qa_status),a.ad_id?T(a.ad_id):'',part?T('open'):'']; });
-   return note('Fifty rows, generated from six build-grid rows and eight concepts. <code>ad_source</code> decides which checks apply and which identity model. On the partnership ad (row 52) the creator is the first identity, and the brand goes in <code>second_identity</code>. The export never carries that field, so it’s a human check with a ✓ cell, never a failure. Row 53 is marked Not Launching, so the run shows it as N/A, not MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+   return note('Fifty rows, generated from six build-grid rows and eight concepts. <code>ad_source</code> decides which checks apply and which identity model. On the partnership ad (row 52) the creator is the first identity, and the brand goes in <code>second_identity</code>. The export never carries that field, so it’s a human check with a ✓ cell, never a failure. Row 53 is marked Not Launching in the plan, so the run shows it as N/A: nobody built it, on purpose, so it is not missing.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'PLAN_CHECK',html:()=>planCheck([[F('L001'),F('Meta'),F('120,000'),F('120,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L002'),F('Meta'),F('180,000'),F('180,000'),...ok9(),OK('OK'),F('9 checks OK · 1 campaign · 3 ad sets')],[F('L003'),F('TikTok'),F('120,000'),F('–'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')],[F('L004'),F('TikTok'),F('180,000'),F('–'),'','','','','','','','','',F('other workbook'),F('built in the TikTok workbook')]],'Ads Manager')},
  {name:'QA_EXPORT',html(){ const cols=C(['plan_row','campaign_name','ad_set_name','ad_name','ad_id','ad_source','facebook_page','instagram_account','story_id','primary_text_feed','headline_feed','website_url','cta','url_parameters','conversion_tracking_pixels','qa_status','delivery_intent'].map(x=>[x,x]));
    const rows=states.meta.plan.ad.map(a=>[a.plan_row,a.campaign_name,a.ad_set_name,a.ad_name,a.ad_id,a.ad_source,a.facebook_page,a.instagram_account,a.story_id,a.primary_text_feed,a.headline_feed,a.website_url,a.cta,a.url_parameters,a.conversion_tracking_pixels,a.qa_status,a.delivery_intent]);
@@ -1682,13 +2076,13 @@ const TT_TABS=[
  {name:'MEDIA_PLAN',html:()=>mediaPlan('tiktok')},
  {name:'BUILD_ADGROUPS',html(){ const cols=C([['Line','line'],['Label (s02)','label'],['Audience','audience'],['Goal','goal'],['Placement types','placement_types'],['Placements','placements'],['Ad group budget','ad_group_budget'],['Wave','wave'],['Concepts (; = one ad each)','concepts'],['URL','web_url'],['Pixel','pixel'],['CTA','cta'],['In plan','in_plan']]);
    const rows=TT_GROUPS.map((g,i)=>{const c=ttCamp(i); return [K(c.line),T(g.label),K(g.audience),D(c.goalLabel),D('Select placement'),D('TikTok'),'',K('W1'),T(CONCEPTS.map(c=>c[0]+'_'+c[1]).join('; ')),T(TT_LINK),D(TT_PIXEL_LABEL),D('Learn more'),OK('OK')];});
-   return note('One row per ad group to build. The ad group is TikTok’s ad set. The number of rows per line is the planned ad-group count that <b>MEDIA_PLAN</b> checks against. The expander reads this grid first: the label becomes the ad-group name part, and a semicolon-separated concept list becomes one ad per concept. Eight concepts here, so 48 ads from six rows. The two Spark Ads are typed by hand on the ad level.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+   return note('One row per ad group the team plans to build, under its media plan line. The ad group is TikTok’s ad set. Each row picks an audience from the Audiences tab, a goal, placements, a budget, and the creative concepts it will run. One click then expands the plan: the row’s label becomes the ad group’s name, each concept becomes an ad under it, and the audience’s targeting fills in. The plan check counts these rows and budgets against the media plan line. Eight concepts here, so 48 ads from six rows. The two Spark Ads are typed by hand on the ad level.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'TikTok Campaign Level',html(){ const cols=C([['Campaign name','campaign_name'],['Brand','c01'],['Market','c02'],['Quarter','c03'],['Initiative','c04'],['Funnel','c05'],['Format','c06'],['Delivery intent','campaign_delivery_intent'],['Buy type','buy_type'],['Advertising objective','advertising_objective'],['Campaign budget optimization','campaign_budget_optimization'],['Budget type','campaign_budget_type'],['Budget amount','campaign_budget_amount'],['Special ads categories','special_ads_categories'],['QA status','qa_status'],['Campaign ID','campaign_id'],['✓ compliance','hc_compliance'],['Plan line','plan_line'],['Plan check','plan_check']]);
    const rows=TT_CAMPS.map(c=>[F(c.name),T(c.parts[0]),D(c.parts[1]),T(c.parts[2]),T(c.parts[3]),D(c.parts[4]),T(c.parts[5]),T('Off'),D('Auction'),D(c.objLabel),D('On'),D('Lifetime'),D(c.budget+'.00'),T('None'),T(READY),T(c.id),T('✓ AR'),K(c.line),F(c.line+' · TikTok · US · $'+(+c.budget).toLocaleString('en-US')+' · OK')]);
    return note('Same design, TikTok vocabulary. The objective, budget and buy type come from plan lines L003 and L004. The TikTok workbook owns those lines, so its PLAN_CHECK reads OK where the Meta workbook read “other workbook”. Reservation buys (TopView, Pulse, Reach &amp; Frequency) never appear in a TikTok export, so the run shows their rows as N/A instead of MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'TikTok Ad Group Level',html(){ const cols=C([['Ad group name','ad_group_name'],['Campaign','campaign_name'],['Tactic','s01'],['Audience label','s02'],['Delivery intent','ad_group_delivery_intent'],['Optimization goal','optimization_goal'],['Pixel','pixel_id'],['Pixel event','pixel_event'],['Billing method','billing_method'],['Bid strategy','bid_strategy'],['Placement types','placement_types'],['Placements','placements'],['Include search results','include_search_results'],['Audience','audience'],['Location','location'],['Age','age'],['Languages','languages'],['Interest category','interest_category'],['Include audience IDs','include_audience_id'],['Exclude audience IDs','exclude_audience_id'],['Inventory filter','inventory_filter'],['Start','start_datetime'],['End','end_datetime'],['Dayparting','dayparting'],['QA status','qa_status'],['Ad group ID','ad_group_id'],['✓ brand safety','hc_brand_safety'],['Plan line (effective)','plan_line_effective']]);
    const rows=TT_GROUPS.map((g,i)=>{const c=ttCamp(i); return [F(ttGroupName(i)),K(c.name),T(g.s01),T(g.label.replace(g.s01+'_','')),T('Off'),D(c.goalLabel),D(TT_PIXEL_LABEL),c.event?D(c.event):'',D(c.billing),D('Lowest cost'),D('Select placement'),D('TikTok'),D('Off'),K(g.audience),'','',g.languages?T(g.languages):'',g.interest?T(g.interest):'',g.include?T(g.include):'',g.exclude?T(g.exclude):'',D('Standard inventory'),D(c.start),i===0?AM('24/12/2026 22:59'):D(c.end),D('All Day'),T(READY),T(ttGroupId(i)),i===0?T('✓ JK'):'',D(c.line)];});
-   return note('The ad group is TikTok’s ad set: six of them, three per campaign, like Meta’s six ad sets. Targeting cells inherit the AUDIENCES row and appear in the feed the way TikTok exports them: location names, age buckets, language names, audience ID lists. The conversion groups carry the pixel event (Complete Payment); the video-view groups leave it blank. Dates sit on the ad group only, exported as <code>yyyy/m/d HH:mm</code>. Toggles that TikTok exports blank when off count as a match for a planned Off. Row 4’s end date was typed day first. It’s the one amber cell in this workbook, and the run will ask about it rather than guess.')+LEGEND+sheet(gridHTML(cols,rows)); }},
+   return note('The ad group is TikTok’s ad set: six of them, three per campaign, like Meta’s six ad sets. Each ad group picks an audience from the Audiences tab, and its targeting appears in the feed the way TikTok exports it: location names, age buckets, language names, audience ID lists. The conversion groups carry the pixel event (Complete Payment); the video-view groups leave it blank. Dates sit on the ad group only, exported as <code>yyyy/m/d HH:mm</code>. Toggles that TikTok exports blank when off count as a match for a planned Off. Row 4’s end date was typed day first. It’s the one amber cell in this workbook, and the run will ask about it rather than guess.')+LEGEND+sheet(gridHTML(cols,rows)); }},
  {name:'TikTok Ad Level',html(){ const cols=C([['Ad name','ad_name'],['Campaign','campaign_name'],['Ad group','ad_group_name'],['Concept','a01'],['Length','a02'],['Ad source','ad_source'],['Post ID','post_id'],['Identity','identity'],['Identity type','identity_type'],['Identity ID','identity_id'],['Ad format','ad_format'],['Video file','video_file'],['Only show as ad','only_show_as_ad'],['Music sharing','music_sharing'],['Text','text'],['CTA','cta'],['Web URL','web_url'],['Website events pixel','website_events'],['QA status','qa_status'],['Ad ID','ad_id'],['✓ identity','hc_identity']]);
    const rows=states.tiktok.plan.ad.map(a=>{ const creator=a.ad_source==='Spark Ad (creator post)', brandPost=a.ad_source==='Spark Ad (brand post)', spark=creator||brandPost; const cc=CONCEPTS.find(c=>a.video_file.indexOf('HAL_'+c[0]+'_'+c[1]+'_')===0); return [F(a.ad_name),K(a.campaign_name),K(a.ad_group_name),T(creator?'MayaBrews':brandPost?'HalcyonPost':(cc?cc[0]:'Roastery')),T(spark?'–':(cc?cc[1]:'15s')),T(a.ad_source),a.post_id?T(a.post_id):'',K(spark?a.identity:a.identity+' (brand)'),F(a.identity_type),F(a.identity_id),F(a.ad_format),a.video_file?D(a.video_file):'',a.only_show_as_ad?D(a.only_show_as_ad):'',D(a.music_sharing),a.text?T(a.text):'',D(a.cta),D(TT_LINK),D(TT_PIXEL_LABEL),T(a.qa_status),a.ad_id?T(a.ad_id):'',creator?T('open'):brandPost?T('✓ AR'):'']; });
    return note('Fifty-one rows: 48 generated from six build-grid rows and eight concepts, a creator Spark Ad typed by hand (row 52), a brand-owned Spark Ad (row 53) and a Not Launching alternate (row 54). There are three ad sources. An uploaded video uses the brand’s Business Center authorization as its identity. A creator Spark Ad uses the creator’s TikTok account, needs a post ID, and carries the authorization code as a ✓ human check. A brand Spark Ad has the same shape but uses the brand’s own linked account, with no creator authorization to chase. Identity type, ID and ad format are formulas resolved from the pick: the same pattern as Meta’s partnership ads, in TikTok’s formats. Nothing on this level is amber. The one amber cell is the day-first end date on the ad-group level. Row 54 will be N/A in the run, not MISSING.')+LEGEND+sheet(gridHTML(cols,rows)); }},
@@ -1700,8 +2094,9 @@ const TT_TABS=[
 ];
 META.tabs=META_TABS; TIKTOK.tabs=TT_TABS;
 const book={platform:'meta',tab:0};
+const TAB_LABELS={'MEDIA_PLAN':'Media plan','BUILD_ADSETS':'Build grid: ad sets','BUILD_ADGROUPS':'Build grid: ad groups','Meta Campaign Level':'Campaign level plan','Meta Ad Set Level':'Ad set level plan','Meta Ad Level':'Ad level plan','TikTok Campaign Level':'Campaign level plan','TikTok Ad Group Level':'Ad group level plan','TikTok Ad Level':'Ad level plan','PLAN_CHECK':'Plan check','QA_EXPORT':'What the engine reads'};
 function renderBook(){ const tabs=$('#book-tabs'), body=$('#book-body'); const set=P.tabs; if(book.tab>=set.length) book.tab=0; const k=focusKey();
-  tabs.innerHTML=set.map((t,i)=>'<button class="tab" role="tab" type="button" id="book-tab-'+i+'" aria-controls="book-body" aria-selected="'+(i===book.tab)+'" tabindex="'+(i===book.tab?0:-1)+'" data-i="'+i+'">'+esc(t.name)+'</button>').join('');
+  tabs.innerHTML=set.map((t,i)=>'<button class="tab" role="tab" type="button" id="book-tab-'+i+'" aria-controls="book-body" aria-selected="'+(i===book.tab)+'" tabindex="'+(i===book.tab?0:-1)+'" data-i="'+i+'">'+esc(TAB_LABELS[t.name]||t.name)+'</button>').join('');
   body.setAttribute('aria-labelledby','book-tab-'+book.tab); body.innerHTML=set[book.tab].html(); refocus(k,null); }
 $('#book-tabs').addEventListener('click',e=>{ const b=e.target.closest('.tab'); if(b){book.tab=+b.dataset.i; renderBook();} });
 tabKeys($('#book-tabs'),b=>{ book.tab=+b.dataset.i; renderBook(); });
