@@ -487,6 +487,32 @@ html:not(.js) .copy-btn{display:none}
   .two-tables{grid-template-columns:minmax(0,1fr)}
 }
 
+/* small grids that stand in for the workbook */
+.mini-wrap{margin-top:28px}
+.mini-wrap h3{font-size:var(--t-body);font-weight:700}
+.mini-wrap>p{margin-top:6px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.mini-scroll{margin-top:12px;overflow-x:auto;border:1px solid var(--rule);background:var(--white)}
+table.mini{border-collapse:collapse;font-size:var(--t-label);min-width:100%}
+table.mini th{padding:8px 12px;background:var(--paper);border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);text-align:left;font-weight:600;color:var(--ink-2);white-space:nowrap}
+table.mini th small{display:block;font-weight:400;color:var(--muted)}
+table.mini td{padding:8px 12px;border-bottom:1px solid var(--rule);border-right:1px solid var(--rule);white-space:nowrap;vertical-align:top}
+table.mini td.mono{font-family:var(--mono);font-size:var(--t-data)}
+table.mini td.pick{position:relative;padding-right:26px}
+table.mini td.wrap{white-space:normal;max-width:200px;overflow-wrap:anywhere}
+table.mini td.pick::after{content:"\25BE";position:absolute;right:9px;top:8px;color:var(--muted);font-size:12px}
+table.mini td.gen{background:var(--derived);color:var(--ink-2)}
+table.mini td.type{background:var(--white)}
+table.mini td .chip{vertical-align:middle}
+.mini-key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:var(--t-label);color:var(--muted)}
+.mini-key .pk::before{content:"\25BE";margin-right:6px;color:var(--muted)}
+.mini-key .gn::before{content:"";display:inline-block;width:12px;height:12px;margin-right:6px;vertical-align:-1px;background:var(--derived);border:1px solid var(--rule)}
+.start{margin-top:28px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;row-gap:16px}
+.start>div{border-top:2px solid var(--accent);padding-top:12px}
+.start .k{font-size:var(--t-label);font-weight:600;color:var(--accent)}
+.start b{display:block;margin-top:4px;font-size:var(--t-body);font-weight:700}
+.start p{margin-top:4px;font-size:var(--t-label);line-height:1.5;color:var(--ink-2)}
+@media (max-width:900px){ .start{grid-template-columns:minmax(0,1fr)} }
+
 /* What it catches */
 .catches{display:grid;grid-template-columns:minmax(0,1fr);gap:28px 32px;margin-top:32px}
 .catches-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px}
@@ -697,13 +723,13 @@ table.words td.diff{color:var(--fail)}
         <li class="menu-sect"><a href="#why">Why</a></li>
         <li class="menu-sect"><a href="#try">Try it</a></li>
         <li class="menu-sect"><a href="#catches">What it catches</a></li>
-        <li class="menu-sect"><a href="#workbook">Any account</a></li>
+        <li class="menu-sect"><a href="#workbook">The media plan</a></li>
         <li class="menu-sect"><a href="#guardrails">Guardrails</a></li>
         <li class="menu-sect"><a href="#results">Results</a></li>
       </ul>
     </div>
   </nav>
-  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#why">Why</a><a href="#try">Try it</a><a href="#catches">What it catches</a><a href="#workbook">Any account</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a></nav>
+  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#why">Why</a><a href="#try">Try it</a><a href="#catches">What it catches</a><a href="#workbook">The media plan</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a></nav>
 </header>
 
 <main id="main" tabindex="-1">
@@ -758,9 +784,9 @@ table.words td.diff{color:var(--fail)}
           <article class="after">
             <h3>With Buildcheck</h3><span class="tag">One run, 20 minutes, by rule</span>
             <ol>
-              <li><span><b>Fill the Arch Doc.</b> Paste the media plan. One click expands it into every campaign, ad set and ad, named and filled in.</span></li>
-              <li><span><b>Build and traffic from it.</b> The team builds in Ads Manager as before, then exports the platform's own record of the build.</span></li>
-              <li><span><b>Self-check.</b> The builder runs the engine: every ad, every setting, with the plan value, the built value, the rule and the fix.</span></li>
+              <li><span><b>Fill the internal media plan.</b> Paste the client's plan once. One click expands it into every campaign, ad set and ad, named and filled in.</span></li>
+              <li><span><b>Build and traffic from it.</b> The team builds in Ads Manager as before, then pastes the platform's export back in. Every ad reads PASS or FAIL on the spot.</span></li>
+              <li><span><b>Run the engine.</b> The deep check: every ad, every setting, with the plan value, the built value, the rule and the fix, in plain English.</span></li>
               <li><span><b>Fix and run again.</b> The builder corrects the setting in Ads Manager, or the planner corrects the plan cell, and re-exports. The second report reads as a list of what changed.</span></li>
               <li><span><b>Sign.</b> The same roles still sign, but they read exceptions, and they initial the few things an export can't show.</span></li>
             </ol>
@@ -965,47 +991,57 @@ table.words td.diff{color:var(--fail)}
 
     <section id="workbook" class="sec g12" aria-labelledby="workbook-h">
       <div class="sec-head">
-        <h2 id="workbook-h">One workbook, every account</h2>
-        <p>Every brand has its own naming, funnel stages, IDs and approval chain. One setup tab absorbs the differences, so the plan tabs, the rules and the engine never have to learn a new account.</p>
+        <h2 id="workbook-h">The internal media plan</h2>
+        <p>A spreadsheet anyone on the team can fill: dropdowns for every setting, names that write themselves, and a PASS or FAIL for every ad the moment the export is pasted in.</p>
       </div>
       <div class="sec-body">
-        <p class="intro">Onboarding an account is a morning's work: fill the blue cells on one setup tab, paste the media plan, add the audiences and the creative files. From then on the workbook generates the names, fills in the derived settings, checks the plan before anything is built, and feeds the engine after it.</p>
-        <div class="split">
-          <div>
-            <h3>What changes per account</h3><span class="tag">One tab, blue cells only</span>
-            <ul>
-              <li><b>Name parts.</b> The taxonomy generator: Brand, Market, Quarter, Initiative, Funnel, Format, with more slots in reserve on every tier. Switch a slot on and it joins every generated name. Switch it off and it disappears, header included.</li>
-              <li><b>The approval chain.</b> The roles a team signs with, in order. Mine were Builder, Senior, Manager, Director, Analytics and Client. Rename one or switch it off, and the status list and the tick boxes follow.</li>
-              <li><b>Identity and time.</b> Page, Instagram and pixel IDs, the account's time zone, the flight-end convention, the default tracking parameters.</li>
-              <li><b>Which blocks show.</b> Reach and frequency, regional, brand safety, carousel: column groups an account turns on or off.</li>
-              <li><b>Five custom columns</b> the account labels itself, for whatever the platform adds next.</li>
-              <li><b>The media plan switch,</b> and how far a planned budget may drift from the plan before the gate fails.</li>
-            </ul>
-          </div>
-          <div>
-            <h3>What never changes</h3><span class="tag">So nobody relearns the tool</span>
-            <ul>
-              <li><b>Three plan tabs,</b> one row per campaign, ad set and ad. Every setting is a dropdown with one owner list, so a value can't be misspelled. Names assemble themselves. Gray cells are derived. Amber means a typed value differs from the derived one. Red means a duplicate name, a missing file, or an ID typed as a number.</li>
-              <li><b>Audiences.</b> One row per targeting definition, laid out the way Ads Manager asks for it: locations, demographics, languages, custom and lookalike, detailed targeting. An ad set picks one and overrides only the cells that differ.</li>
-              <li><b>Creatives.</b> One row per file or post: aspect ratio, which placements it serves, language, and the creator's identity on partnership posts. An ad picks a concept and the file names fill in.</li>
-              <li><b>Build recipes.</b> How one media plan line becomes a campaign, its ad sets and its ads, with the derived values in gray.</li>
-              <li><b>The menu.</b> Expand the build. Apply the account profile. Running either twice adds nothing.</li>
-              <li><b>The feeds, the rulebook and the engine.</b></li>
-            </ul>
-          </div>
+        <p class="intro">The engine needs something to check against, so the plan had to become a spreadsheet nobody could get wrong. Four days of typing and re-typing turned into dropdowns.</p>
+        <div class="start">
+          <div><span class="k">To start a new brand</span><b>Type its basics once</b><p>Page, pixel and time zone, and which name parts it uses. One tab, one morning.</p></div>
+          <div><span class="k">Then</span><b>Paste its media plan</b><p>The client's plan, one row per line bought, straight from the media grid.</p></div>
+          <div><span class="k">Then</span><b>List its audiences and creative files</b><p>One row each, so every ad can pick them from a dropdown.</p></div>
+        </div>
+        <div class="mini-wrap">
+          <h3>1 · The client's media plan, pasted in once</h3>
+          <p>One row per thing the client bought. This is the record everything else is checked against.</p>
+          <div class="mini-scroll"><table class="mini"><thead><tr><th>Line</th><th>Partner</th><th>KPI</th><th>Start</th><th>End</th><th>Working media</th><th>Audience</th><th>Objective</th><th>Funnel</th></tr></thead><tbody>
+            <tr><td class="mono">L001</td><td>Meta</td><td>ThruPlay</td><td>11/01/2026</td><td>12/24/2026</td><td>$120,000</td><td>Coffee enthusiasts; lookalike; site visitors</td><td>Engagement</td><td>Consideration</td></tr>
+            <tr><td class="mono">L002</td><td>Meta</td><td>Purchases</td><td>11/01/2026</td><td>12/24/2026</td><td>$180,000</td><td>Broad; cart abandoners; purchasers</td><td>Sales</td><td>Action</td></tr>
+          </tbody></table></div>
+        </div>
+        <div class="mini-wrap">
+          <h3>2 · One row per ad, picked from dropdowns</h3>
+          <p>Every setting is a choice from a list, so nothing can be misspelled. The gray column is written by the sheet from the choices to its left.</p>
+          <div class="mini-scroll"><table class="mini"><thead><tr><th>Campaign</th><th>Ad set</th><th>Concept</th><th>Length</th><th>Format</th><th>Ad name <small>written by the sheet</small></th><th>Creative</th></tr></thead><tbody>
+            <tr><td class="pick mono wrap">HAL_US_Q4-26_HolidayGifting_CONS_VID</td><td class="pick mono wrap">Prospecting_CoffeeEnthusiasts</td><td class="pick">GiftGuide</td><td class="pick">15s</td><td class="pick">Video</td><td class="gen mono">GiftGuide_15s_Video</td><td class="pick">GiftGuide_15s</td></tr>
+            <tr><td class="pick mono wrap">HAL_US_Q4-26_HolidayGifting_CONS_VID</td><td class="pick mono wrap">Prospecting_CoffeeEnthusiasts</td><td class="pick">Roastery</td><td class="pick">15s</td><td class="pick">Video</td><td class="gen mono">Roastery_15s_Video</td><td class="pick">Roastery_15s</td></tr>
+            <tr><td class="pick mono wrap">HAL_US_Q4-26_HolidayGifting_CONS_VID</td><td class="pick mono wrap">Prospecting_CoffeeEnthusiasts</td><td class="pick">Barista</td><td class="pick">6s</td><td class="pick">Video</td><td class="gen mono">Barista_6s_Video</td><td class="pick">Barista_6s</td></tr>
+            </tbody></table></div>
+          <div class="mini-key"><span class="pk">a dropdown</span><span class="gn">written by the sheet</span></div>
         </div>
         <div class="anatomy">
-          <h3>A name you can read, assembled from the plan</h3>
+          <h3>Names write themselves</h3>
           <div class="row"><span class="part c"><b>HAL</b><i>Brand</i></span><span class="sep">_</span><span class="part c"><b>US</b><i>Market</i></span><span class="sep">_</span><span class="part c"><b>Q4-26</b><i>Quarter</i></span><span class="sep">_</span><span class="part c"><b>HolidayGifting</b><i>Initiative</i></span><span class="sep">_</span><span class="part c"><b>CONS</b><i>Funnel</i></span><span class="sep">_</span><span class="part c"><b>VID</b><i>Format</i></span><span class="sep">_</span><span class="part s"><b>Prospecting</b><i>Tactic</i></span><span class="sep">_</span><span class="part s"><b>CoffeeEnthusiasts</b><i>Audience</i></span><span class="sep">_</span><span class="part a"><b>GiftGuide</b><i>Concept</i></span><span class="sep">_</span><span class="part a"><b>15s</b><i>Length</i></span><span class="sep">_</span><span class="part a"><b>Video</b><i>Format</i></span></div>
           <div class="key"><span class="c">campaign parts</span><span class="s">ad set parts</span><span class="a">ad parts</span></div>
-          <p>Every part is a dropdown from the account's own vocabulary, joined by the account's separator, so a name can't be misspelled and the same parts drive the reporting. Switch a part off for an account and it leaves every name at once.</p>
+          <p>Every campaign, ad set and ad name on Meta is built from these dropdown choices: six for the campaign, two for the ad set, three for the ad. Nobody types a name, so nobody mistypes one, and every name follows the same pattern, which is what makes the reporting line up later. A new brand picks which parts it uses, once.</p>
+        </div>
+        <div class="mini-wrap">
+          <h3>3 · Paste the export in, and every ad reads PASS or FAIL on the spot</h3>
+          <p>The builder pastes the platform's export into one tab. The plan's QA tab compares every planned ad to it instantly, by formula. The engine's run then adds the proof for each finding and the plain-English report you see in the demo above.</p>
+          <div class="mini-scroll"><table class="mini"><thead><tr><th>plan_row</th><th>result</th><th>ad</th><th>first failing check</th><th>detail</th></tr></thead><tbody>
+            <tr><td class="mono">4</td><td><span class="chip pass">PASS</span></td><td class="mono">GiftGuide_15s_Video</td><td class="mono"></td><td class="mono">all 12 checks agree</td></tr>
+            <tr><td class="mono">5</td><td><span class="chip fail">FAIL</span></td><td class="mono">Roastery_15s_Video</td><td class="mono">cta</td><td class="mono">plan «Shop now» · export «LEARN_MORE»</td></tr>
+            <tr><td class="mono">6</td><td><span class="chip pass">PASS</span></td><td class="mono">Barista_6s_Video</td><td class="mono"></td><td class="mono">all 12 checks agree</td></tr>
+            <tr><td class="mono">23</td><td><span class="chip missing">MISSING</span></td><td class="mono">…_FreeShipping_6s_Video</td><td class="mono">not in export</td><td class="mono">likely a rename: the export has …_FreeShipping_6s_Video_v2</td></tr>
+            <tr><td class="mono">28</td><td><span class="chip fail">FAIL</span></td><td class="mono">…_Broad_Advantage_GiftGuide_15s_Video</td><td class="mono">url_parameters</td><td class="mono">plan «utm_source=meta…» · export «utm_source=facebook…»</td></tr>
+            </tbody></table></div>
         </div>
         <div class="phases-wrap">
-          <h3>Where every row is in the approval chain, by color</h3>
+          <h3>Every row also shows where it is in the approval chain</h3>
           <div class="phases"><span class="ph-pre">Not started</span><span class="ph-pre">Ready to build</span><span class="ph-build">Building</span><span class="ph-ai">Ready for AI QA</span><span class="ph-human">With a human QA role</span><span class="ph-back">Sent back for edits</span><span class="ph-ok">Client approved, ready to set live</span><span class="ph-ok">Live</span><span class="ph-done">Completed</span></div>
-          <p>One status column drives the row tint on every plan tab, and a tracker tab counts what is waiting on whom.</p>
+          <p>One status per row, so a manager sees at a glance what is built, what is checked, and what is waiting on whom.</p>
         </div>
-        <p class="intro grids-lead">Below, the demo workbook's own grids. A synthetic account, filled in the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header. Row 3 is the machine name, the contract every formula, feed and finding refers to, so columns can move without anything breaking. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
+        <p class="intro grids-lead">Below, the whole demo workbook: a synthetic account with two campaigns, six ad sets and fifty ads, filled in the way a real one is. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
       </div>
       <div class="book full" id="book">
         <div class="book-head">
@@ -1027,7 +1063,7 @@ table.words td.diff{color:var(--fail)}
           <article><h4>Write the rules before the prompt</h4><p>I didn't ask an AI to “check the campaign”. I wrote the rulebook first: what counts as proven, what a blank means, what it must never invent, which ad type gets which checks. The AI gets those rules as versioned reference files, not chat instructions.</p></article>
           <article><h4>Make it show its evidence</h4><p>Each finding has to cite the plan value, the export value and the rule that decided it, down to the plan row and the export cell, or it doesn't go in the report. Anything the engine can't verify is filed as a review rather than a failure, and anything new it comes across goes in as a proposal for a person to accept.</p></article>
           <article><h4>Who did what</h4><p>Claude wrote the build and test scripts to my spec. I owned the architecture, the rules, the test plan, the rollout and every changelog row. When a run got something wrong, the fix went into the rules and the test fixtures, not into memory.</p></article>
-          <article><h4>Ship it to real people</h4><p>The skill was shared across the organization and used by a media team on live batches. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
+          <article><h4>Ship it to real people</h4><p>A media team used it on live batches. That feedback loop produced eleven releases in twelve days. A manager's “this doesn't read as auto-fill” became the gray-cell design two versions later.</p></article>
         </div>
 
         <div class="block-head block-gap"><h3 class="sub">Six rules, each added after a run got something wrong</h3><p>An AI that reads a 100-column export and writes a confident report is dangerous unless it's boxed in. Each of these was written after a real run got something wrong.</p></div>
@@ -1040,23 +1076,19 @@ table.words td.diff{color:var(--fail)}
           <li><span class="t"><b>One finding, not a thousand.</b><span>An error repeated across every ad in an ad set is one finding with a count, one card and one fix. The report stays readable and the fix stays obvious.</span></span></li>
         </ol>
 
-        <div class="block-head block-gap"><h3 class="sub">Where people stay in the loop</h3><p>The engine checks what the export can prove. People check the rest, and the file is built so their slips are caught before a run.</p></div>
+        <div class="block-head block-gap"><h3 class="sub">Where people stay in the loop</h3><p>The engine checks the build. It also checks that the people did their part.</p></div>
         <div class="loop">
           <div>
-            <h3>What a computer can't see, a person initials</h3>
-            <p>Some settings never come back in an export: the second identity on a partnership ad, publisher block lists, topic exclusions, an A/B test, a brand lift study's structure, the cards of a carousel. Each block of the plan that holds one ends in a ✓ cell, where whoever checked it in Ads Manager leaves initials and a date. The run lists them as human checks, never as failures, and the account isn't ready until none are open.</p>
-            <div class="hcs" aria-label="The human-check cells, by block"><span>Strategy</span><span>Budget and flight</span><span>Testing</span><span>Delivery</span><span>Audience</span><span>Placements</span><span>Brand safety</span><span>Regional</span><span>Identity</span><span>Destination</span><span>Carousel</span></div>
+            <h3>Sign-offs are checked too</h3>
+            <p>A few settings never show up in an export: a second identity on a creator post, block lists, the cards of a carousel. For those, the plan has a sign-off cell where whoever checked it in Ads Manager leaves initials and a date. The run flags any required sign-off still blank, and nothing reads READY TO APPROVE with one open.</p>
           </div>
           <div>
-            <h3>Where people slip, the file catches it first</h3>
+            <h3>Typing mistakes are caught in the sheet, before a run</h3>
             <ul class="guards">
-              <li><b>Every dropdown reads one list</b> with one owner, so a setting can't be misspelled into existence.</li>
-              <li><b>Names are generated.</b> A missing part turns the cell amber. A duplicate turns it red.</li>
+              <li><b>Every setting is a dropdown,</b> so a value can't be misspelled.</li>
+              <li><b>Names write themselves,</b> so a name can't be mistyped or duplicated.</li>
               <li><b>An ID typed as a number turns red,</b> because spreadsheets drop digits after the fifteenth.</li>
-              <li><b>A file not on the creatives tab,</b> or an audience not on the audiences tab, turns red.</li>
-              <li><b>The export tab is paste-only,</b> and every derived value lives on a hidden tab, so a 500-column paste can't overwrite a formula.</li>
-              <li><b>The plan gate has to read READY TO BUILD</b> before anyone opens Ads Manager.</li>
-              <li><b>Every run is logged</b> with the files it read, so a report can't quietly be re-run on stale inputs.</li>
+              <li><b>The plan gate has to read READY TO BUILD</b> before anyone opens Ads Manager, and every run is logged with the files it read.</li>
             </ul>
           </div>
         </div>
@@ -1088,8 +1120,8 @@ table.words td.diff{color:var(--fail)}
           </tbody>
         </table>
 
-        <div class="block-head block-gap"><h3 class="sub">How I taught it</h3></div>
-        <p class="intro">I taught a VP and the analysts to fill the Arch Doc, build and traffic from it, and self-check each batch with the engine before anyone else read it. The workbook's first tab is the training: three verbs (paste, pick, read) and a nine-step daily run. The engine is available to everyone at the agency as a Claude skill.</p>
+        <div class="block-head block-gap"><h3 class="sub">How I taught it</h3><p>A walkthrough, not a course.</p></div>
+        <p class="intro">I taught a VP and the analysts to fill the internal media plan, build and traffic from it, and self-check each batch with the engine before anyone else read it. The plan is dropdowns, the check is one paste and one click, and the report reads in plain English, so the first batch was the training.</p>
       </div>
     </section>
 
@@ -1175,8 +1207,7 @@ table.words td.diff{color:var(--fail)}
         <p class="first">I designed, specified and shipped Buildcheck end to end while working in media operations at a paid social agency.</p>
         <p>It started as a fix for a real problem, a senior team spending days on checks that were mostly mechanical. The fix grew into a workbook that describes itself, an engine that has to show its evidence, and a record of every decision.</p>
         <p>Where it fits is in-house social media marketing and strategy. A brand's social team owns organic and paid together, and the paid side is only as good as its operations: how campaigns get planned, built, checked and launched. This project is that discipline, plus the AI and systems fluency to make a small team run like a large one.</p>
-        <p>Internally, the workbook is known as the Gem Arch Doc, after the agency's term for a campaign architecture document.</p>
-      </div>
+              </div>
       <div class="about-side">
         <div>
           <h3>What it shows</h3>
