@@ -190,6 +190,8 @@ h3.sub{font-size:var(--t-body);line-height:1.4;font-weight:700}
 .ai-note{margin-top:28px;max-width:900px;padding:16px 20px;background:var(--soft);border-left:4px solid var(--accent);font-size:var(--t-body);line-height:1.6;color:var(--ink-2);text-wrap:pretty}
 .ai-note b{color:var(--ink)}
 .try-h{margin-top:44px}
+.try-lead{margin-top:10px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);max-width:820px;text-wrap:pretty}
+.try-lead+.numbered{margin-top:18px}
 .panel-head .pstep{margin-bottom:2px}
 .log-step{padding:14px 24px 0;background:var(--paper);border-top:1px solid var(--rule)}
 .log-step+.log{border-top:0;padding-top:6px}
@@ -753,8 +755,8 @@ table.words td.diff{color:var(--fail)}
         <p class="claim">Every ad checked against the plan, with evidence, before it spends.</p>
         <p class="lede">Buildcheck checks that what the team built in Ads Manager matches the media plan, setting by setting, and flags every place it doesn't: a wrong budget, a wrong link, a missing headline. Each finding shows the plan value, the export value and the rule that decided it. It ran in production on Meta, where a media team used it on live batches, and it turned a four-day, four-person review into one 20-minute run.</p>
         <div class="actions">
-          <button class="btn" id="btn-hero-run" type="button">Run the QA</button>
-          <button class="ulink" id="btn-hero-tour" type="button">Walk through the demo, step by step</button>
+          <button class="btn" id="btn-hero-tour" type="button">Walk through the demo, step by step</button>
+          <button class="ulink" id="btn-hero-run" type="button">Run the QA yourself</button>
         </div>
       </div>
       <dl class="hero-nums">
@@ -843,6 +845,7 @@ table.words td.diff{color:var(--fail)}
         </ol>
         <p class="ai-note"><b>Where the AI fits.</b> In production, step 4 runs as a Claude skill. It never logs into Ads Manager and has no way to change an account: it reads an export file and writes a report. It works from a written rulebook, cites the plan value, the export value and the rule for every finding, and sends anything it can't prove to a person. This demo runs the same rules as code in your browser, on a fictional coffee brand, so every run is instant and repeatable.</p>
         <h3 class="sub try-h">Try this</h3>
+        <p class="try-lead">Start with <b>Walk through it step by step</b>: nine short captions, one per click, and the QA runs inside it. Or drive it yourself:</p>
         <ol class="numbered two-col">
           <li><span class="t"><b>Run the QA.</b><span>The gate reads NO: <span data-qw="found">12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.</span></span></span></li>
           <li><span class="t"><b>Fix everything, then run it again.</b><span>Buildcheck never changes Ads Manager; the Fix buttons stand in for the builder. The gate turns to YES, and the report lists exactly what changed.</span></span></li>
@@ -856,8 +859,8 @@ table.words td.diff{color:var(--fail)}
         <div class="toolbar">
           <div class="platform" role="group" aria-label="Platform" id="platform-run"><span class="lbl" aria-hidden="true">Platform</span><button type="button" aria-pressed="true" data-p="meta">Meta</button><button type="button" aria-pressed="false" data-p="tiktok">TikTok</button></div>
           <span class="spacer"></span>
-          <button class="btn" id="btn-run" type="button">Run QA</button>
-          <button class="btn quiet" id="btn-tour" type="button">Walk through it step by step</button>
+          <button class="btn" id="btn-tour" type="button">Walk through it step by step</button>
+          <button class="btn quiet" id="btn-run" type="button">Run QA</button>
           <button class="btn quiet" id="btn-fix-all" type="button" disabled hidden>Fix everything, as the builder would</button>
           <span class="breaker" id="breaker" hidden><label class="lbl" for="break-pick">Make a mistake in the build</label><select id="break-pick"><option value="">Let the demo choose</option></select><button class="btn quiet" id="btn-break" type="button">Add it</button></span>
           <button class="btn text" id="btn-reset" type="button" hidden>Reset</button>
@@ -1454,7 +1457,7 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     'Normalising: NBSP, %7B%7B → {{, budgets to whole dollars, dates to instants in America/Los_Angeles, multi-value fields to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
     'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
-  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad set. Run QA to find them.',
+  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad set. Walk through it step by step, or press Run QA to find them yourself.',
   idleLog:'Waiting to run. The engine parses both files as text, inventories the export\u2019s columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
 
@@ -1623,7 +1626,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     'Normalising: dates yyyy/m/d HH:mm to instants in account time, amounts with cents to whole dollars, blank toggles to Off, age buckets to token sets',
     'Evaluating the rules · '+run.counts.checks+' checks across '+run.counts.planned+' planned items',
     'Report ready: READY TO APPROVE: '+(run.ready?'YES':'NO')],
-  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad group. Run QA to find them.',
+  resetStatus:'8 problems are planted in the inputs, one of them across all 8 ads of an ad group. Walk through it step by step, or press Run QA to find them yourself.',
   idleLog:'Waiting to run. The engine parses the plan feeds and the one wide export sheet as text, splits it into campaign, ad group and ad rows by ID, inventories its columns, matches rows by ID (then by name path), normalises both sides, and evaluates the rules.'
 };
 const PLATFORMS={meta:META,tiktok:TIKTOK};
@@ -1634,10 +1637,10 @@ META.words.other='TikTok';
 /* ---------- page copy that follows the platform ---------- */
 META.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.',catches:'a campaign budget entered as $18,000 instead of $180,000'};
 TIKTOK.quick={found:'12 failures and a missing ad, caught before a dollar is spent. One is a $180,000 lifetime budget entered as daily.',catches:'a $180,000 lifetime budget entered as daily'};
-META.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad set. Run the QA to find them.';
+META.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad set. Walk through it step by step, or press Run QA to find them yourself.';
 META.idleLog='Waiting to run. The engine reads both files as text, lists the export\u2019s columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
 TIKTOK.idleLog='Waiting to run. The engine reads the plan feeds and the one wide export sheet as text, splits the sheet into campaign, ad group and ad rows by ID, lists its columns, matches rows by ID (then by name path), normalizes both sides and applies the rules.';
-TIKTOK.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad group. Run the QA to find them.';
+TIKTOK.resetStatus='The plan on the left, what was built on the right. They should match exactly. Eight problems are planted, one of them across all 8 ads of an ad group. Walk through it step by step, or press Run QA to find them yourself.';
 /* plain-English summary: (tier|check id) → one business-language sentence; anything unmapped folds into a generic line */
 const money=v=>'$'+(+budget(v)||0).toLocaleString('en-US');
 const count1=(n,one,many)=>n===1?'One '+one:n+' '+many;
@@ -1989,7 +1992,7 @@ async function runTour(from,resuming){
       if(s.act&&!(resuming&&i===from)){ phase='act'; await s.act(); }
       phase='show'; await s.show();
       if(s.after){ phase='after'; await s.after(); } }
-    spot(null); caption('done','That’s the whole loop. Try it yourself: pick a mistake to make in the build, run the QA, and watch it get caught. Or reset.');
+    spot(null); caption('done','That’s the whole loop. Now try it yourself: pick a mistake to make in the build, run the QA, and watch it get caught. Or reset.');
   }catch(e){ if(!tour.cancel) throw e; paused=(phase==='after')?{i:i+1,skipAct:false}:{i,skipAct:true}; if(paused.i>=STEPS.length) paused=null; }
   finally{ endTour(paused); }
 }
