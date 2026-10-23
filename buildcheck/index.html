@@ -436,6 +436,106 @@ html:not(.js) .copy-btn{display:none}
 .colophon a{color:var(--ink)}
 
 /* ≤1100: section heads above their content */
+
+/* Why I built it: before and with */
+.ba{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:32px;margin-top:32px}
+.ba article{border-top:2px solid var(--ink);padding-top:16px;display:flex;flex-direction:column}
+.ba h3,.split h3,.loop h3{font-family:var(--serif);font-size:var(--t-card);line-height:1.15;letter-spacing:-.01em}
+.ba .tag,.split .tag{display:block;margin-top:6px;font-size:var(--t-label);font-weight:600;color:var(--accent)}
+.ba ol{margin:14px 0 0;padding:0;list-style:none;counter-reset:n}
+.ba li{counter-increment:n;display:grid;grid-template-columns:26px minmax(0,1fr);column-gap:10px;padding:10px 0;border-bottom:1px solid var(--rule);font-size:var(--t-body);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.ba li::before{content:counter(n);font-weight:700;color:var(--accent)}
+.ba li b,.split li b,.guards li b,.catch .what b,.catch .miss b,.catch .slips b{color:var(--ink)}
+.ba .sum{margin-top:14px;font-size:var(--t-body);line-height:1.6;color:var(--ink);text-wrap:pretty}
+.timebar{margin-top:36px;display:grid;grid-template-columns:140px minmax(0,1fr);gap:12px 16px;align-items:center;font-size:var(--t-label)}
+.timebar .lab{font-weight:600}
+.timebar .bar{display:flex;gap:2px;min-height:30px}
+.timebar .bar>span{flex:1 1 0;display:flex;align-items:center;min-width:0;padding:6px 10px;background:var(--band);color:var(--ink);font-family:var(--mono);font-size:var(--t-data);line-height:1.3}
+.timebar .bar.now{align-items:center;gap:12px}
+.timebar .bar.now .sliver{flex:0 0 1%;min-width:3px;height:30px;background:var(--accent)}
+.timebar .bar.now em{font-style:normal;color:var(--ink)}
+.timebar .note{grid-column:2;color:var(--muted)}
+
+/* What it catches */
+.catches{display:grid;grid-template-columns:minmax(0,1fr);gap:28px 32px;margin-top:32px}
+.catches-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 32px}
+.catch table.ft{min-width:640px}
+.catch{display:flex;flex-direction:column;background:var(--white);border:1px solid var(--rule)}
+.catch .fh.set{background:var(--soft)}
+.catch .fh.set b{color:var(--accent-hover)}
+.catch .fh.set .cnt{border-color:var(--accent-hover);color:var(--accent-hover)}
+.catch .what,.catch .miss{padding:14px 16px 0;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.catch .miss{font-size:var(--t-label);line-height:1.55;padding-bottom:16px;color:var(--muted)}
+.catch .scroller{margin-top:12px;border-top:1px solid var(--rule);overflow-x:auto}
+.catch table.ft td.fail{color:var(--fail)}
+.catch table.ft tr.ok td:nth-child(3){color:var(--pass)}
+.catch table.ft .muted{font-weight:400}
+.catch .fix-row{margin-top:auto;border-top:1px solid var(--rule)}
+.catch .slips{margin:12px 16px 0;padding:0;list-style:none}
+.catch .slips li{padding:10px 0;border-top:1px solid var(--rule);font-size:var(--t-body);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+table.words{width:100%;border-collapse:collapse;font-size:var(--t-label)}
+table.words th{padding:10px 16px;border-bottom:1px solid var(--rule);text-align:left;font-weight:500;color:var(--muted);white-space:nowrap}
+table.words td{padding:9px 16px;border-bottom:1px solid var(--rule);vertical-align:top}
+table.words td.mono{font-size:var(--t-data)}
+table.words td.same{color:var(--pass)}
+table.words td.diff{color:var(--fail)}
+.catches-note{margin-top:24px;font-size:var(--t-body);line-height:1.6;color:var(--muted);max-width:820px}
+
+/* One workbook, every account */
+.split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:32px;margin-top:32px}
+.split>div{border-top:2px solid var(--ink);padding-top:16px}
+.split ul,.guards{margin:14px 0 0;padding:0;list-style:none}
+.split li,.guards li{padding:10px 0;border-bottom:1px solid var(--rule);font-size:var(--t-body);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.anatomy{margin-top:36px;padding:22px 24px 20px;background:var(--soft)}
+.anatomy h3,.phases-wrap h3{font-size:var(--t-body);font-weight:700}
+.anatomy .row{display:flex;flex-wrap:wrap;align-items:flex-start;margin-top:14px;font-family:var(--mono);font-size:var(--t-data)}
+.anatomy .part{display:flex;flex-direction:column;align-items:center;margin-bottom:8px}
+.anatomy .part b{font-weight:500;padding:5px 7px;background:var(--white);border:1px solid var(--rule);border-top:3px solid var(--accent);white-space:nowrap}
+.anatomy .part.s b{border-top-color:var(--pass)}
+.anatomy .part.a b{border-top-color:var(--review)}
+.anatomy .part i{font-style:normal;font-family:var(--sans);font-size:11px;line-height:1.3;color:var(--muted);margin-top:4px}
+.anatomy .sep{padding:5px 3px;color:var(--muted)}
+.anatomy .key{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px;font-size:var(--t-label);color:var(--muted)}
+.anatomy .key span::before{content:"";display:inline-block;width:14px;height:3px;margin-right:6px;vertical-align:3px;background:var(--accent)}
+.anatomy .key .s::before{background:var(--pass)}
+.anatomy .key .a::before{background:var(--review)}
+.anatomy p{margin-top:12px;font-size:var(--t-label);line-height:1.55;color:var(--ink-2);text-wrap:pretty}
+.phases-wrap{margin-top:32px}
+.phases{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.phases span{padding:5px 10px;font-size:var(--t-label);line-height:1.4;border:1px solid var(--rule);background:var(--white)}
+.phases .ph-pre{background:var(--derived)}
+.phases .ph-build{background:var(--review-soft)}
+.phases .ph-ai{background:var(--band)}
+.phases .ph-human{background:var(--soft);border-color:var(--accent)}
+.phases .ph-back{background:var(--fail-soft)}
+.phases .ph-ok{background:var(--pass-soft)}
+.phases .ph-done{background:#E4ECF2}
+.phases-wrap p{margin-top:10px;font-size:var(--t-label);color:var(--muted)}
+.grids-lead{margin-top:40px}
+
+/* People in the loop */
+.loop{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:32px;row-gap:32px}
+.loop>div{border-top:2px solid var(--ink);padding-top:16px}
+.loop p{margin-top:10px;font-size:var(--t-body);line-height:1.6;color:var(--ink-2);text-wrap:pretty}
+.hcs{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.hcs span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;background:var(--review-soft);font-size:var(--t-label);color:var(--ink)}
+.hcs span::before{content:"\2713";font-weight:700;color:var(--review)}
+.routine{margin-top:8px}
+.routine>li{border-bottom:1px solid var(--rule)}
+
+@media (max-width:900px){
+  .ba,.catches-pair,.split,.loop{grid-template-columns:minmax(0,1fr)}
+  .timebar{grid-template-columns:minmax(0,1fr)}
+  .timebar .note{grid-column:1}
+}
+@media (max-width:600px){
+  .timebar .bar{flex-direction:column;gap:2px}
+  .timebar .bar>span{flex:0 0 auto;min-height:30px}
+  .timebar .bar.now{flex-direction:row}
+  .anatomy{padding:16px}
+  .catch table.ft td.mono{overflow-wrap:anywhere;word-break:normal}
+}
+
 @media (max-width:1100px){
   :root{--gutter:48px}
   .hero-text{grid-column:span 7}
@@ -563,14 +663,16 @@ html:not(.js) .copy-btn{display:none}
         <li><a href="/#about">About</a></li>
         <li><a class="nav-contact" href="#contact">Contact</a></li>
         <li class="menu-sect-label">On this page</li>
+        <li class="menu-sect"><a href="#why">Why</a></li>
         <li class="menu-sect"><a href="#try">Try it</a></li>
-        <li class="menu-sect"><a href="#how">How it works</a></li>
+        <li class="menu-sect"><a href="#catches">What it catches</a></li>
+        <li class="menu-sect"><a href="#workbook">Any account</a></li>
         <li class="menu-sect"><a href="#guardrails">Guardrails</a></li>
         <li class="menu-sect"><a href="#results">Results</a></li>
       </ul>
     </div>
   </nav>
-  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#try">Try it</a><a href="#how">How it works</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a></nav>
+  <nav class="subnav wrap" aria-label="On this page"><span class="lbl">On this page</span><a href="#why">Why</a><a href="#try">Try it</a><a href="#catches">What it catches</a><a href="#workbook">Any account</a><a href="#guardrails">Guardrails</a><a href="#results">Results</a></nav>
 </header>
 
 <main id="main" tabindex="-1">
@@ -596,6 +698,47 @@ html:not(.js) .copy-btn{display:none}
 
   <div class="sections wrap">
 
+    <section id="why" class="sec g12" aria-labelledby="why-h">
+      <div class="sec-head">
+        <h2 id="why-h">Why I built it</h2>
+        <p>A paid social launch is thousands of settings, typed by people and checked by people. The checking was the slow part, and it still missed things.</p>
+      </div>
+      <div class="sec-body">
+        <p class="intro">A launch batch for one brand can be 2,000 ads. Each ad sits inside an ad set (the audience and the placements), inside a campaign (the goal and the budget), and every level carries 30 to 100 settings: dates, budget, link, tracking tag, and the copy for each placement. All of it has to match the media plan, the record of what the client bought. One dropped zero in a budget spends real money. One wrong link sends real people to the wrong page.</p>
+        <div class="ba">
+          <article class="before">
+            <h3>Before</h3><span class="tag">Four days, four people, by eye</span>
+            <ol>
+              <li><span><b>Build.</b> A builder types the plan into a spreadsheet, then builds every campaign, ad set and ad in Ads Manager by hand.</span></li>
+              <li><span><b>Self-check.</b> The builder reads back through their own work.</span></li>
+              <li><span><b>Senior check.</b> A senior strategist re-reads every row against Ads Manager, finds a wrong date or a wrong budget, and sends it back.</span></li>
+              <li><span><b>Manager and director checks.</b> Two more readers, two more rounds, each one starting over after the fixes.</span></li>
+              <li><span><b>Analytics and client sign-off.</b> Tracking and pixels get a last look. The client approves.</span></li>
+            </ol>
+            <p class="sum">Every round that found something meant another round. And the error on ad 1,900 still got through, because by then everyone was skimming.</p>
+          </article>
+          <article class="after">
+            <h3>With Buildcheck</h3><span class="tag">One run, 20 minutes, by rule</span>
+            <ol>
+              <li><span><b>Paste the media plan.</b> One row per thing the client bought.</span></li>
+              <li><span><b>Expand it.</b> One click turns each plan row into its campaign, ad sets and ads, named and filled in. Nobody retypes anything.</span></li>
+              <li><span><b>Build and export.</b> The team builds in Ads Manager as before, then downloads the platform's own export: its record of what will actually run.</span></li>
+              <li><span><b>Run.</b> Every planned item is matched to the export and every setting compared. Each finding shows the planned value, the built value, the rule that decided it, and the fix.</span></li>
+              <li><span><b>Sign.</b> The same people still sign, but they read a short list of exceptions instead of a 2,000-row spreadsheet, and they initial the few things a computer can't see.</span></li>
+            </ol>
+            <p class="sum">The checking moved from eyes to rules. The judgment stayed with people.</p>
+          </article>
+        </div>
+        <div class="timebar" role="img" aria-label="Time to check a batch of 2,000 ads: four working days before, twenty minutes with Buildcheck">
+          <span class="lab">Before</span>
+          <div class="bar"><span>Day 1 · build and self-check</span><span>Day 2 · senior check</span><span>Day 3 · manager and director</span><span>Day 4 · analytics and client</span></div>
+          <span class="lab">With Buildcheck</span>
+          <div class="bar now"><span class="sliver" aria-hidden="true"></span><em>20 minutes, one person. Then the sign-offs read a report.</em></div>
+          <span class="note">Drawn to scale against four working days. Twenty minutes is the sliver.</span>
+        </div>
+      </div>
+    </section>
+
     <section id="try" class="sec g12" aria-labelledby="try-h">
       <div class="sec-head">
         <h2 id="try-h">Try it</h2>
@@ -611,10 +754,11 @@ html:not(.js) .copy-btn{display:none}
         </ol>
         <p class="ai-note"><b>Where the AI fits.</b> In production, step 4 runs as a Claude skill. It works from a written rulebook, cites the plan value, the export value and the rule for every finding, and sends anything it can't prove to a person. This demo runs the same rules as code in your browser, on a fictional coffee brand, so every run is instant and repeatable.</p>
         <h3 class="sub try-h">Try this</h3>
-        <ol class="numbered three-col">
+        <ol class="numbered two-col">
           <li><span class="t"><b>Run the QA.</b><span>The gate reads NO: <span data-qw="found">12 failures and a missing ad, caught before a dollar is spent. One is a campaign budget entered as $18,000 instead of $180,000.</span></span></span></li>
           <li><span class="t"><b>Fix everything, then run it again.</b><span>The gate turns to YES, and the report lists exactly what changed.</span></span></li>
           <li><span class="t" data-qw="switch"><b>Switch to TikTok and run it again.</b><span>Same engine, TikTok's export and vocabulary. It catches a $180,000 lifetime budget entered as daily.</span></span></li>
+          <li><span class="t"><b>Add a builder mistake, then run again.</b><span>The first slip it adds is French copy pasted over an English ad, the kind of error a reviewer's eye slides past on ad 1,900. Every click after that adds a different one.</span></span></li>
         </ol>
         <p class="try-note">Eight problems are planted in the inputs: seven in the <span data-pw="manager">Ads Manager</span> export and one in a plan cell. One of them is repeated across every ad in an <span data-pw="adset">ad set</span>. Fixes change the inputs (the export or the plan cell, whichever was wrong), just as they would in a real loop. The demo runs a subset of the production rulebook. When you're done, read <a href="#guardrails">how I keep the AI honest</a>. That's the part worth asking me about.</p>
       </div>
@@ -655,6 +799,100 @@ html:not(.js) .copy-btn{display:none}
       </div>
     </section>
 
+    <section id="catches" class="sec g12" aria-labelledby="catches-h">
+      <div class="sec-head">
+        <h2 id="catches-h">What it catches that people miss</h2>
+        <p>Mistakes from real launch batches, shown here on invented values, plus the two translation tables that make catching them possible. Each card is the shape of a real finding: what happened in plain words, then the proof.</p>
+      </div>
+      <div class="sec-body">
+        <p class="intro">The hard part was never the obvious error. It was the one that looks right at a glance: the right words in the wrong language, the right copy on two placements and a typo on the third, a Meta feature switched on by default that the plan said to leave off.</p>
+        <div class="catches">
+
+          <article class="catch">
+            <div class="fh"><b>Wrong copy</b><span class="nm">HAL_CA_Q4-26_HolidayGifting_CONS_VID_Prospecting_CoffeeEnthusiasts_FR_GiftGuide_15s_Video</span><small>ad · the right words in the wrong language</small></div>
+            <p class="what"><b>What happened.</b> A Canadian campaign ran in English and French. In the French ad set, one ad was built with the English primary text. Every other setting on it was right.</p>
+            <div class="scroller"><table class="ft"><thead><tr><th>setting <span class="muted">plan name → export column</span></th><th>planned</th><th>built</th><th>how it's judged</th></tr></thead><tbody>
+              <tr><td class="mono">primary_text_feed <span class="muted">→ Body</span></td><td class="mono">Des cadeaux pour les accros du café, torréfiés cette semaine et livrés gratuitement dès 40 $.</td><td class="mono fail">Gifts for the coffee-obsessed, roasted this week and shipped free over $40.</td><td>Exact match, once spaces, line breaks and non-breaking spaces are ignored</td></tr>
+              <tr class="ok"><td class="mono">locales <span class="muted">→ Locales</span></td><td class="mono">French (Canada)</td><td class="mono">French (Canada)</td><td>Compared as a set of labels. Passes: the ad set targets French speakers. The copy was the problem.</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Fix: restore the planned French primary text in Ads Manager.</div>
+            <p class="miss"><b>Why people miss it.</b> On ad 1,900 of 2,000, a tired reader sees a sentence about coffee and moves on. The engine compares the two strings, and it reads ad 1,900 the way it read ad 1.</p>
+          </article>
+
+          <article class="catch">
+            <div class="fh"><b>Wrong copy</b><span class="nm">HAL_US_Q4-26_HolidayGifting_CONS_VID_Prospecting_CoffeeEnthusiasts_Roastery_15s_Video</span><small>ad · one placement out of three</small></div>
+            <p class="what"><b>What happened.</b> On Meta, one ad can carry different copy for Feed, Stories and Reels. The plan had one line for all three. In the build, Stories got a version with a typo and no headline at all. Nobody saw it, because the Feed preview is the one everyone looks at.</p>
+            <div class="scroller"><table class="ft"><thead><tr><th>setting <span class="muted">plan name → export column</span></th><th>planned</th><th>built</th><th>how it's judged</th></tr></thead><tbody>
+              <tr class="ok"><td class="mono">primary_text_feed <span class="muted">→ Body (Default)</span></td><td class="mono">Meet the roastery behind your morning.</td><td class="mono">Meet the roastery behind your morning.</td><td>Feed copy. Exact match.</td></tr>
+              <tr><td class="mono">primary_text_story <span class="muted">→ Additional Body 1 (facebook story, instagram story)</span></td><td class="mono">Meet the roastery behind your morning. <span class="muted">(inherits Feed)</span></td><td class="mono fail">Meet the roastery behind you morning.</td><td>Exact match, per placement bucket</td></tr>
+              <tr class="ok"><td class="mono">primary_text_reels <span class="muted">→ Additional Body 2 (facebook facebook_reels, instagram reels)</span></td><td class="mono">Meet the roastery behind your morning. <span class="muted">(inherits Feed)</span></td><td class="mono">Meet the roastery behind your morning.</td><td>Exact match, per placement bucket</td></tr>
+              <tr><td class="mono">headline_story <span class="muted">→ a Title whose placements include Stories</span></td><td class="mono">Roasted in small batches <span class="muted">(inherits Feed)</span></td><td class="mono fail">(blank)</td><td>Coverage: a planned headline has to arrive on a Stories placement</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Fix: correct the Stories primary text and add the Stories headline in Ads Manager, under placement customization.</div>
+            <p class="miss"><b>How it knows which copy is which.</b> The export never says "Stories". It lists each text next to placement tokens such as <span class="mono">facebook story, instagram story</span>. The workbook translates those tokens into four buckets, Feed, Story, Reels and Explore, and checks each bucket against the plan. A blank plan cell means "same as Feed", so the planner writes the copy once.</p>
+          </article>
+
+          <article class="catch">
+            <div class="fh"><b>Wrong setting</b><span class="nm">HAL_US_Q4-26_HolidayGifting_CONV_VID_Retargeting_CartAbandoners30d</span><small>ad set · Advantage+ left on</small></div>
+            <p class="what"><b>What happened.</b> Meta switches on its Advantage+ audience expansion for every new ad set unless the builder turns it off. This ad set was a tight retargeting audience, people who had left items in a cart, so the plan said off. The builder never touched the switch, so it stayed on.</p>
+            <div class="scroller"><table class="ft"><thead><tr><th>setting <span class="muted">plan name → export column</span></th><th>planned</th><th>built</th><th>how it's judged</th></tr></thead><tbody>
+              <tr><td class="mono">advantage_audience <span class="muted">→ Advantage Audience</span></td><td class="mono">Off</td><td class="mono fail">1</td><td>Off is 0 and On is 1: a translation confirmed on a real export before it was allowed to fail anything</td></tr>
+              <tr class="ok"><td class="mono">advantage_campaign_budget <span class="muted">→ which budget column is filled</span></td><td class="mono">On · Lifetime · 180000</td><td class="mono">Campaign Lifetime Budget 180000 · ad set budgets blank</td><td>Read from which column the export filled, because the export has no column for the switch itself</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Fix: switch Advantage+ audience off on the ad set in Ads Manager. The two Advantage+ creative options on each ad, Optimized Ad Creative and Optimize text per person, are checked the same way, as Yes or No.</div>
+            <p class="miss"><b>Why people miss it.</b> A default doesn't look like a decision. And when Meta adds a feature, it arrives as a new export column. In the workbook a new setting starts as a custom column the account labels itself; once a real export has shown it, it becomes a compared field with a rule.</p>
+          </article>
+
+          <div class="catches-pair">
+          <article class="catch">
+            <div class="fh set"><b>Vocabulary</b><span class="nm">"Download" is not "DOWNLOAD", and both are right</span><small>every tier · translated, never retyped</small></div>
+            <p class="what"><b>What happened.</b> The plan is written in a planner's words. The export is written in the platform's codes. Compare them literally and everything fails; compare them loosely and nothing does. The workbook keeps a translation table, one row per word, and each row is confirmed against a real export before it is allowed to fail anything.</p>
+            <div class="scroller"><table class="words"><thead><tr><th>the plan says</th><th>the export says</th><th>read as</th></tr></thead><tbody>
+              <tr><td>Shop now</td><td class="mono">SHOP_NOW</td><td class="same">the same</td></tr>
+              <tr><td>Download</td><td class="mono">DOWNLOAD</td><td class="same">the same</td></tr>
+              <tr><td>Engagement</td><td class="mono">Outcome Engagement</td><td class="same">the same</td></tr>
+              <tr><td>Off <span class="muted">(switched off before the flight)</span></td><td class="mono">PAUSED</td><td class="same">the same</td></tr>
+              <tr><td>Learn more</td><td class="mono">SHOP_NOW</td><td class="diff">different: a finding</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Result: a difference in case is never a finding. A different word always is.</div>
+            <p class="miss"><b>Before any comparison.</b> Spaces trimmed. Non-breaking spaces and line breaks ignored. ID prefixes like <span class="mono">cg:</span> and <span class="mono">tp:</span> stripped. Encoded braces decoded. Budgets read as whole dollars. Dates read as moments in the account's time zone. Lists compared as sets, so "feed, story, reels" equals "reels, feed, story".</p>
+          </article>
+
+          <article class="catch">
+            <div class="fh set"><b>Field names</b><span class="nm">The plan and the export call the same thing by different names</span><small>every tier · one dictionary</small></div>
+            <p class="what"><b>What happened.</b> Nothing went wrong here. This is the dictionary that makes the other cards possible: every planned setting paired with the export column that proves it. Nobody memorizes an export that can run 500+ columns wide, and when Meta renames or moves a column, one row in the dictionary changes. The plan tabs, the rules and the report don't.</p>
+            <div class="scroller"><table class="words"><thead><tr><th>the plan calls it</th><th>the export calls it</th></tr></thead><tbody>
+              <tr><td>Primary Text, Feed</td><td class="mono">Body</td></tr>
+              <tr><td>Headline</td><td class="mono">Title</td></tr>
+              <tr><td>Description</td><td class="mono">Link Description</td></tr>
+              <tr><td>Website URL</td><td class="mono">Link</td></tr>
+              <tr><td>URL Parameters</td><td class="mono">URL Tags</td></tr>
+              <tr><td>Pixel</td><td class="mono">Conversion Tracking Pixels (tp:…)</td></tr>
+              <tr><td>End, 11:59 PM on the last day</td><td class="mono">Ad Set Time Stop</td></tr>
+              <tr><td>Detailed targeting, include</td><td class="mono">Flexible Inclusions</td></tr>
+              <tr><td>Delivery intent: Off or Paused</td><td class="mono">Ad Set Run Status: PAUSED</td></tr>
+              <tr><td>Facebook Page</td><td class="mono">Link Object ID (o:…)</td></tr>
+            </tbody></table></div>
+            <div class="fix-row">Where it lives: one data dictionary in the workbook, read by the formulas, the feeds and the engine alike.</div>
+          </article>
+
+          </div>
+          <article class="catch">
+            <div class="fh"><b>Wrong budget</b><span class="nm">and wrong dates, and bad IDs</span><small>the small slips that cost the most</small></div>
+            <ul class="slips">
+              <li><b>$18,000 typed instead of $180,000.</b> One dropped zero would have underspent the flight by $162,000. Caught on the first run.</li>
+              <li><b>$180,000 set as a daily budget instead of lifetime.</b> Budget type is read from which export column was filled, so the mistake can't hide behind a correct number.</li>
+              <li><b>An end date of 12:00 AM on the 25th against 11:59 PM on the 24th.</b> One minute apart and almost always the same intent, so it is flagged for review rather than failed.</li>
+              <li><b>An ID pasted as a number</b> loses digits after the fifteenth. The workbook turns the cell red before any run.</li>
+            </ul>
+            <div class="fix-row">Fix: each finding names the exact cell to change, in Ads Manager or in the plan.</div>
+          </article>
+
+        </div>
+        <p class="catches-note">Everything on these cards is in the production rulebook. Two of the catches are in the demo above, the budget and the copy: add a builder mistake and the first one it adds is the French copy.</p>
+      </div>
+    </section>
+
     <section id="how" class="sec g12" aria-labelledby="how-h">
       <div class="sec-head">
         <h2 id="how-h">How it works</h2>
@@ -683,11 +921,47 @@ html:not(.js) .copy-btn{display:none}
 
     <section id="workbook" class="sec g12" aria-labelledby="workbook-h">
       <div class="sec-head">
-        <h2 id="workbook-h">Inside the workbook</h2>
-        <p>Where the demo's plan feeds come from.</p>
+        <h2 id="workbook-h">One workbook, every account</h2>
+        <p>Every brand has its own naming, funnel stages, IDs and approval chain. One setup tab absorbs the differences, so the plan tabs, the rules and the engine never have to learn a new account.</p>
       </div>
       <div class="sec-body">
-        <p class="intro">A synthetic account, filled in the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header. Row 3 is the machine name, the contract every formula, feed and finding refers to, so columns can move without anything breaking. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
+        <p class="intro">Onboarding an account is a morning's work: fill the blue cells on one setup tab, paste the media plan, add the audiences and the creative files. From then on the workbook generates the names, fills in the derived settings, checks the plan before anything is built, and feeds the engine after it.</p>
+        <div class="split">
+          <div>
+            <h3>What changes per account</h3><span class="tag">One tab, blue cells only</span>
+            <ul>
+              <li><b>Name parts.</b> The taxonomy generator: Brand, Market, Quarter, Initiative, Funnel, Format, with more slots in reserve on every tier. Switch a slot on and it joins every generated name. Switch it off and it disappears, header included.</li>
+              <li><b>The approval chain.</b> The roles this team signs with, in order. The demo account uses Builder, Senior, Manager, Director, Analytics and Client. Rename one or switch it off, and the status list and the tick boxes follow.</li>
+              <li><b>Identity and time.</b> Page, Instagram and pixel IDs, the account's time zone, the flight-end convention, the default tracking parameters.</li>
+              <li><b>Which blocks show.</b> Reach and frequency, regional, brand safety, carousel: column groups an account turns on or off.</li>
+              <li><b>Five custom columns</b> the account labels itself, for whatever the platform adds next.</li>
+              <li><b>The media plan switch,</b> and how far a planned budget may drift from the plan before the gate fails.</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What never changes</h3><span class="tag">So nobody relearns the tool</span>
+            <ul>
+              <li><b>Three plan tabs,</b> one row per campaign, ad set and ad. Every setting is a dropdown with one owner list, so a value can't be misspelled. Names assemble themselves. Gray cells are derived. Amber means a typed value differs from the derived one. Red means a duplicate name, a missing file, or an ID typed as a number.</li>
+              <li><b>Audiences.</b> One row per targeting definition, laid out the way Ads Manager asks for it: locations, demographics, languages, custom and lookalike, detailed targeting. An ad set picks one and overrides only the cells that differ.</li>
+              <li><b>Creatives.</b> One row per file or post: aspect ratio, which placements it serves, language, and the creator's identity on partnership posts. An ad picks a concept and the file names fill in.</li>
+              <li><b>Build recipes.</b> How one media plan line becomes a campaign, its ad sets and its ads, with the derived values in gray.</li>
+              <li><b>The menu.</b> Expand the build. Apply the account profile. Running either twice adds nothing.</li>
+              <li><b>The feeds, the rulebook and the engine.</b></li>
+            </ul>
+          </div>
+        </div>
+        <div class="anatomy">
+          <h3>A name you can read, assembled from the plan</h3>
+          <div class="row"><span class="part c"><b>HAL</b><i>Brand</i></span><span class="sep">_</span><span class="part c"><b>US</b><i>Market</i></span><span class="sep">_</span><span class="part c"><b>Q4-26</b><i>Quarter</i></span><span class="sep">_</span><span class="part c"><b>HolidayGifting</b><i>Initiative</i></span><span class="sep">_</span><span class="part c"><b>CONS</b><i>Funnel</i></span><span class="sep">_</span><span class="part c"><b>VID</b><i>Format</i></span><span class="sep">_</span><span class="part s"><b>Prospecting</b><i>Tactic</i></span><span class="sep">_</span><span class="part s"><b>CoffeeEnthusiasts</b><i>Audience</i></span><span class="sep">_</span><span class="part a"><b>GiftGuide</b><i>Concept</i></span><span class="sep">_</span><span class="part a"><b>15s</b><i>Length</i></span><span class="sep">_</span><span class="part a"><b>Video</b><i>Format</i></span></div>
+          <div class="key"><span class="c">campaign parts</span><span class="s">ad set parts</span><span class="a">ad parts</span></div>
+          <p>Every part is a dropdown from the account's own vocabulary, joined by the account's separator, so a name can't be misspelled and the same parts drive the reporting. Switch a part off for an account and it leaves every name at once.</p>
+        </div>
+        <div class="phases-wrap">
+          <h3>Where every row is in the approval chain, by color</h3>
+          <div class="phases"><span class="ph-pre">Not started</span><span class="ph-pre">Ready to build</span><span class="ph-build">Building</span><span class="ph-ai">Ready for AI QA</span><span class="ph-human">With a human QA role</span><span class="ph-back">Sent back for edits</span><span class="ph-ok">Client approved, ready to set live</span><span class="ph-ok">Live</span><span class="ph-done">Completed</span></div>
+          <p>One status column drives the row tint on every plan tab, and a tracker tab counts what is waiting on whom.</p>
+        </div>
+        <p class="intro grids-lead">Below, the demo workbook's own grids. A synthetic account, filled in the way a real one is: two campaigns, six ad sets, fifty ads. Row 2 is the human header. Row 3 is the machine name, the contract every formula, feed and finding refers to, so columns can move without anything breaking. Switch to TikTok to see the same design on another platform. The grids scroll both ways.</p>
       </div>
       <div class="book full" id="book">
         <div class="book-head">
@@ -721,6 +995,27 @@ html:not(.js) .copy-btn{display:none}
           <li><span class="t"><b>Proposals, never silent changes.</b><span>Anything new the run sees, like a vocabulary value or a mapping now proven, becomes a changelog proposal for a human to accept. The rules of record live in the workbook and the skill files, never in the model's memory.</span></span></li>
           <li><span class="t"><b>One finding, not a thousand.</b><span>An error repeated across every ad in an ad set is one finding with a count, one card and one fix. The report stays readable and the fix stays obvious.</span></span></li>
         </ol>
+
+        <div class="block-head block-gap"><h3 class="sub">Where people stay in the loop</h3><p>The engine checks what the export can prove. People check the rest, and the file is built so their slips are caught before a run.</p></div>
+        <div class="loop">
+          <div>
+            <h3>What a computer can't see, a person initials</h3>
+            <p>Some settings never come back in an export: the second identity on a partnership ad, publisher block lists, topic exclusions, an A/B test, a brand lift study's structure, the cards of a carousel. Each block of the plan that holds one ends in a ✓ cell, where whoever checked it in Ads Manager leaves initials and a date. The run lists them as human checks, never as failures, and the account isn't ready until none are open.</p>
+            <div class="hcs" aria-label="The human-check cells, by block"><span>Strategy</span><span>Budget and flight</span><span>Testing</span><span>Delivery</span><span>Audience</span><span>Placements</span><span>Brand safety</span><span>Regional</span><span>Identity</span><span>Destination</span><span>Carousel</span></div>
+          </div>
+          <div>
+            <h3>Where people slip, the file catches it first</h3>
+            <ul class="guards">
+              <li><b>Every dropdown reads one list</b> with one owner, so a setting can't be misspelled into existence.</li>
+              <li><b>Names are generated.</b> A missing part turns the cell amber. A duplicate turns it red.</li>
+              <li><b>An ID typed as a number turns red,</b> because spreadsheets drop digits after the fifteenth.</li>
+              <li><b>A file not on the creatives tab,</b> or an audience not on the audiences tab, turns red.</li>
+              <li><b>The export tab is paste-only,</b> and every derived value lives on a hidden tab, so a 500-column paste can't overwrite a formula.</li>
+              <li><b>The plan gate has to read READY TO BUILD</b> before anyone opens Ads Manager.</li>
+              <li><b>Every run is logged</b> with the files it read, so a report can't quietly be re-run on stale inputs.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -748,6 +1043,20 @@ html:not(.js) .copy-btn{display:none}
             <tr><td>Audit trail</td><td>Chat messages and memory</td><td>A register row per run, a changelog row per rule change, and findings pasted back into the workbook</td></tr>
           </tbody>
         </table>
+
+        <div class="block-head block-gap"><h3 class="sub">The routine, as I teach it</h3><p>Three verbs cover the workbook: paste the plan and the export, pick every setting from a dropdown, read the report. The daily run is nine steps, written on the workbook's first tab, and that tab is the training.</p></div>
+        <ol class="numbered three-col routine">
+          <li><span class="t"><b>Paste the media plan.</b><span>One row per line the client bought.</span></span></li>
+          <li><span class="t"><b>Pick the line each campaign builds.</b><span>The plan gate must read READY TO BUILD.</span></span></li>
+          <li><span class="t"><b>Pick names, audience, creative and copy.</b><span>The sheet generates the rest.</span></span></li>
+          <li><span class="t"><b>Build in Ads Manager.</b><span>Paste the campaign, ad set and ad IDs back.</span></span></li>
+          <li><span class="t"><b>Export, and paste it in.</b><span>The platform's own record of the build.</span></span></li>
+          <li><span class="t"><b>Run the engine.</b><span>Paste its findings back next to each ad.</span></span></li>
+          <li><span class="t"><b>Fix, re-export, re-run.</b><span>Until the summary reads READY = YES.</span></span></li>
+          <li><span class="t"><b>Sign.</b><span>Each role ticks its box. The ✓ cells get initials.</span></span></li>
+          <li><span class="t"><b>Log the run.</b><span>One register row: inputs, counts, verdict.</span></span></li>
+        </ol>
+        <p class="try-note">A builder's first batch is run alongside me. The second, they run alone.</p>
       </div>
     </section>
 
@@ -1064,7 +1373,7 @@ const META={key:'meta',label:'Meta',manager:'Ads Manager',brand:'Halcyon Coffee 
     {id:'ad-pixel',planted:false,tier:'ad',row:14,check:'pixel',fix:'Re-attach the pixel to the ad in Ads Manager',apply(x,on){x.ads[A(1,2)]['Conversion Tracking Pixels']=on?'':PIXEL}},
     {id:'ad-story',planted:false,tier:'ad',row:PARTNER_ROW,check:'story_id',fix:'Re-select the creator’s post in Ads Manager',apply(x,on){x.ads[48]['Story ID']=on?'s:10000000000002_5550009':'s:10000000000002_5550001'}},
     {id:'as-pixel',planted:false,tier:'adset',row:8,check:'pixel',fix:'Re-attach the pixel to the ad set in Ads Manager',apply(x,on){x.adsets[4]['Conversion Tracking Pixels']=on?'':PIXEL}},
-    {id:'ad-body',planted:false,tier:'ad',row:37,check:'body',fix:'Restore the planned primary text in Ads Manager',apply(x,on){x.ads[A(4,1)]['Body']=on?'Meet the roastery behind you morning.':CONCEPTS[1][2]}},
+    {id:'ad-body',planted:false,tier:'ad',row:37,check:'body',fix:'Restore the planned English primary text in Ads Manager (the French variant was pasted)',apply(x,on){x.ads[A(4,1)]['Body']=on?'Découvrez la brûlerie derrière votre café du matin.':CONCEPTS[1][2]}},
     {id:'ad-title',planted:false,tier:'ad',row:9,check:'title',fix:'Restore the planned headline in Ads Manager',apply(x,on){x.ads[A(0,5)]['Title']=on?'Grind fresh taste more':CONCEPTS[5][3]}}
   ],
   humans(plan){ const h=[{tier:'campaign',plan_row:4,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'campaign',plan_row:5,field:'special_ad_categories',value:'None',cell:'hc_compliance',status:'initialled AR'},{tier:'adset',plan_row:4,field:'publisher_block_lists',value:'HAL_BlockList_2026',cell:'hc_brand_safety',status:'initialled JK'}];
@@ -1232,7 +1541,7 @@ const TIKTOK={key:'tiktok',label:'TikTok',manager:'TikTok Ads Manager',brand:'Ha
     {id:'tt-ad-on',planted:false,tier:'ad',row:5,check:'status',fix:'Switch the ad off in TikTok Ads Manager',apply(x,on){ttAd(x,0,1)['Ad Status']=on?'On':'Off'}},
     {id:'tt-spark-post',planted:false,tier:'ad',row:TT_SPARK_ROW,check:'post_id',fix:'Re-select the creator’s post in TikTok Ads Manager',apply(x,on){ttById(x,TT_SPARK_ID)['Post ID']=on?'7300000000000000009':TT_POST}},
     {id:'tt-only-show',planted:false,tier:'ad',row:8,check:'only_show_as_ad',fix:'Switch “Only show as ad” back on in TikTok Ads Manager',apply(x,on){ttAd(x,0,4)['Only show as ad']=on?'Off':'On'}},
-    {id:'tt-text',planted:false,tier:'ad',row:37,check:'text',fix:'Restore the planned text in TikTok Ads Manager',apply(x,on){ttAd(x,4,1)['Text']=on?'Meet the roastery behind you morning.':CONCEPTS[1][2]}},
+    {id:'tt-text',planted:false,tier:'ad',row:37,check:'text',fix:'Restore the planned English text in TikTok Ads Manager (the French variant was pasted)',apply(x,on){ttAd(x,4,1)['Text']=on?'Découvrez la brûlerie derrière votre café du matin.':CONCEPTS[1][2]}},
     {id:'tt-g-pixel',planted:false,tier:'adset',row:9,check:'pixel',fix:'Re-attach the pixel to the ad group in TikTok Ads Manager',apply(x,on){ttRows(x,5).forEach(r=>r['TikTok Pixel ID']=on?'':TT_PIXEL)}},
     {id:'tt-brand-identity',planted:false,tier:'ad',row:TT_BRAND_ROW,check:'identity_id',fix:'Re-select the brand’s own TikTok account as the identity in TikTok Ads Manager',apply(x,on){ttById(x,TT_BRAND_ID)['Identity ID']=on?digits(TT_CRE):digits(TT_BRAND_ACC)}}
   ],
@@ -1526,7 +1835,7 @@ var resetSerial=0;
 function reset(){ resetSerial++; state.active=new Set(P.DISC.filter(d=>d.planted).map(d=>d.id)); state.last=null; state.marks=null; state.reportHTML=''; state.logHTML=''; runs=runs.filter(r=>r[3]!==P.label); if(!runs.length) runN=0; materialize(); renderInputs(); renderRegister(); $('#report-wrap').innerHTML=''; $('#log').textContent=P.idleLog; $('#btn-run').textContent='Run QA'; $('#btn-fix-all').disabled=true; setStatus(P.resetStatus); syncToolbar(); }
 function syncFix(){ const open=openCount(); $('#btn-fix-all').disabled=!open; const b2=$('#btn-fix-all-2'); if(b2) b2.disabled=!open; }
 function fixAll(from){ P.DISC.forEach(d=>state.active.delete(d.id)); materialize(); renderInputs(); document.querySelectorAll('button[data-fix]').forEach(b=>{b.disabled=true;b.textContent='Applied. Run again to verify';}); syncFix(); setStatus('Everything is corrected in the inputs. Run the QA again to see the diff and the gate flip.'); refocus(null,from==='report'?($('#btn-rerun')||$('#btn-run')):$('#btn-run')); }
-function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} const d=pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run the QA to find it.'); return true; }
+function breakOne(){ const pool=P.DISC.filter(d=>!d.planted&&!state.active.has(d.id)); if(!pool.length){setStatus('Every extra mistake is already in play. Run the QA or reset.');return false;} const first=pool.find(d=>d.id==='ad-body'||d.id==='tt-text'); const d=first||pool[Math.floor(Math.random()*pool.length)]; state.active.add(d.id); materialize(); renderInputs(); syncFix(); setStatus('A builder\u2019s slip just changed the '+P.manager+' export. Run the QA to find it.'); return true; }
 
 /* ---------- platform switch: each platform keeps its own progress; the register is shared ---------- */
 function setPlatform(key){
